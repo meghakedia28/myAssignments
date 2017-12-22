@@ -1,5 +1,5 @@
 ﻿<!---check if logout or not--->
-<cfif structKeyExists(URL,'logOut')>	
+<cfif structKeyExists(URL,'logOut')>
 	<cfset createObject("component",'assign_10.components.authentication').doLogOut()/>
 </cfif>
 <!---form processing--->
@@ -33,7 +33,7 @@
 						<cfoutput>
 							<cfloop array="#aErrorMessages#" index="message">
 								<p class="error" id="error">#message#</p>
-							</cfloop> 
+							</cfloop>
 						</cfoutput>
 					</cfif>
 					<cfif structKeyExists(variables,'isUserLoggedIn') AND isUserLoggedIn EQ false>
@@ -41,7 +41,7 @@
 					</cfif>
 					<cfif structKeyExists(session,'stLoggedInUser')>
 						<cfif session.stLoggedInUser.roleId EQ 1>
-							
+
 							<cflocation URL="../admin/home.cfm" />
 						</cfif>
 						<cfif session.stLoggedInUser.roleId EQ 2>
@@ -64,6 +64,6 @@
 				</cfif>
 			</cfform>
 		</div>
-	</div> 
+	</div>
 </body>
 </html>
