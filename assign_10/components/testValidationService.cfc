@@ -5,18 +5,19 @@
 		<cfset startTime =  #testDetails.startDateTime# />
 		<cfset endTime =  #testDetails.endDateTime# />
 		<cfset var currentTime = (DateFormat(now(),'yyyy-mm-dd') & ' ' & LSTimeFormat(now(),'hh:mm:ss')) />
-		<cfif !((#currentTime# GTE #startTime#) AND (#currentTime# LTE #endTime#))>
+		<cfquery name="checkTestOver">
+			SELECT [score].[scoreId] FROM [score] JOIN [quizQuestion]
+			ON [score].[quizQuestionId] = [quizQuestion].[quizQuestionId]
+			WHERE [score].[userId] = <cfqueryparam value="#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint"> AND
+			[quizQuestion].[quizId] = <cfqueryparam value="#testDetails.quizId#" cfsqltype="cf_sql_bigint">
+		</cfquery>
+		<cfif !((#currentTime# GTE #startTime#) AND (#currentTime# LTE #endTime#) AND (checkTestOver.RecordCount EQ 0)) >
 			<cfreturn false>
 		<cfelse>
 			<cflock scope="session" timeout="30" >
 				<cfset session.stQuizStarts = {'quizId' = #testDetails.quizId# , 'startTime' = #testDetails.startDateTime#, 'endTime' = #testDetails.endDateTime# } />
 			</cflock>
-			<cfreturn true>
-		</cfif>
-	</cffunction>
-	<cffunction name="destroySession" output="false" access="remote">
-		<cfif structKeyExists(session, 'stQuizStarts') >
-			<cfset structdelete(session, 'stLoggedInUser') />
+				<cfreturn true>
 		</cfif>
 	</cffunction>
 </cfcomponent>

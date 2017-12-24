@@ -1,8 +1,8 @@
 ﻿<cfcomponent output="false">
 	<cfset variables.errorStruct = {elementId={},errorId={}}>
 	<cfset variables.insertionStruct = {successfull={},message={}}>
-	
-	<cffunction name="validateAllFields" output="false" access="remote" returntype="struct" returnformat="JSON" > 
+
+	<cffunction name="validateAllFields" output="false" access="remote" returntype="struct" returnformat="JSON" >
 		<cfif StructKeyExists(URL,'question')>
 			<cfset validateQuestion('#URL.question#')>
 		</cfif>
@@ -41,7 +41,7 @@
 		<cfargument name="element" required="true" >
 		<cfif element EQ ''>
 				<cfset variables.errorStruct.elementId.question = element>
-				<cfset variables.errorStruct.errorId.error_question = "You can't leave this empty.">	
+				<cfset variables.errorStruct.errorId.error_question = "You can't leave this empty.">
 		</cfif>
 	</cffunction>
 	<!---option A--->
@@ -49,7 +49,7 @@
 		<cfargument name="element" required="true" >
 		<cfif element EQ ''>
 				<cfset variables.errorStruct.elementId.optionA = element>
-				<cfset variables.errorStruct.errorId.error_optionA = "You can't leave this empty.">	
+				<cfset variables.errorStruct.errorId.error_optionA = "You can't leave this empty.">
 		</cfif>
 	</cffunction>
 	<!---option B--->
@@ -57,7 +57,7 @@
 		<cfargument name="element" required="true" >
 		<cfif element EQ ''>
 				<cfset variables.errorStruct.elementId.optionB = element>
-				<cfset variables.errorStruct.errorId.error_optionB = "You can't leave this empty.">	
+				<cfset variables.errorStruct.errorId.error_optionB = "You can't leave this empty.">
 		</cfif>
 	</cffunction>
 	<!---option C--->
@@ -65,7 +65,7 @@
 		<cfargument name="element" required="true" >
 		<cfif element EQ ''>
 				<cfset variables.errorStruct.elementId.optionC = element>
-				<cfset variables.errorStruct.errorId.error_optionC = "You can't leave this empty.">	
+				<cfset variables.errorStruct.errorId.error_optionC = "You can't leave this empty.">
 		</cfif>
 	</cffunction>
 	<!---option D--->
@@ -73,7 +73,7 @@
 		<cfargument name="element" required="true" >
 		<cfif element EQ ''>
 				<cfset variables.errorStruct.elementId.optionD = element>
-				<cfset variables.errorStruct.errorId.error_optionD = "You can't leave this empty.">	
+				<cfset variables.errorStruct.errorId.error_optionD = "You can't leave this empty.">
 		</cfif>
 	</cffunction>
 	<!---answer--->
@@ -81,13 +81,13 @@
 		<cfargument name="element" required="true" >
 		<cfif element EQ ''>
 				<cfset variables.errorStruct.elementId.correctAnswer = element>
-				<cfset variables.errorStruct.errorId.error_correctAnswer = "You can't leave this empty.">	
+				<cfset variables.errorStruct.errorId.error_correctAnswer = "You can't leave this empty.">
 		</cfif>
 	</cffunction>
-	 
+
 	<cffunction name="insertQuestions" access="remote" output="false" returntype="boolean" >
-		<cfargument name="data" required="true" type="struct" >  
-		<cfargument name="id" required="true" type="numeric" >  
+		<cfargument name="data" required="true" type="struct" >
+		<cfargument name="id" required="true" type="numeric" >
 		<cftry>
 		<cftransaction>
 			<cfquery name="questions">
@@ -100,22 +100,13 @@
 					<cfqueryparam value="#data.optiond#" cfsqltype="cf_sql_varchar" >,
 					<cfqueryparam value="#data.answer#" cfsqltype="cf_sql_varchar" >,
 					<cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" >)
-				</cfquery> 
+				</cfquery>
 				<cfreturn true>
 				</cftransaction>
 				<cfcatch type="any" >
 					<cfreturn false>
 				</cfcatch>
 			</cftry>
-		
+
 	</cffunction>
-	<cffunction name="setQuiz" access="remote" output="false" returntype="boolean" >
-		<cfquery name="quiz">
-			<cftry>
-				
-				<cfcatch type="any" >
-				</cfcatch>
-			</cftry>
-		</cfquery> 
-	</cffunction> 
 </cfcomponent>

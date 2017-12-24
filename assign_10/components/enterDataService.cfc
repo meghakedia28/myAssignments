@@ -1,7 +1,7 @@
 ﻿<cfcomponent output="false">
 	<cffunction name="insertData" access="public" output="false" returnType="boolean" >
-		<cfargument name="data" type="struct" required="true" > 
-		<cfargument name="role"	type="numeric" required="true">	
+		<cfargument name="data" type="struct" required="true" >
+		<cfargument name="role"	type="numeric" required="true">
 		<cftry>
 			<!---insert subject--->
 			<cftransaction>
@@ -14,7 +14,7 @@
 					<cfquery name="getSubjectId">
 						SELECT [subjectId] FROM [subject]
 						WHERE [name] = <cfqueryparam value="#data.subject#" cfsqltype="cf_sql_varchar" >
-					</cfquery> 
+					</cfquery>
 				</cfif>
 				<cfquery name="insertion">
 					INSERT INTO [user]
@@ -25,11 +25,11 @@
 					<cfqueryparam value="#data.contactNumber#" cfsqltype="cf_sql_varchar" >,
 					<cfqueryparam value="#role#" cfsqltype="cf_sql_integer" >,
 					0)
-				</cfquery> 
+				</cfquery>
 				<cfquery name="getUserId">
 					SELECT [userId] FROM [user]
 					WHERE [emailid] = <cfqueryparam value="#data.email#" cfsqltype="cf_sql_varchar" >
-				</cfquery> 
+				</cfquery>
 				<cfset var code = Hash(GenerateSecretKey("AES"),"SHA-512" )>
 				<cfquery name="insertSalt">
 					UPDATE [user]
@@ -41,7 +41,7 @@
 						INSERT INTO [userSubject]
 						(userId,subjectId) VALUES (#getUserId.userId#, #getSubjectId.subjectId#)
 					</cfquery>
-				</cfif> 
+				</cfif>
 				<!---create mailService object--->
 					<cfset mailObject = createobject('component','assign_10/components/mailService').sendMails('#data.email#',"#data.firstName#","#code#")/>
 			</cftransaction>

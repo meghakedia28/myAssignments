@@ -2,17 +2,17 @@
 		<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfif structKeyExists(URL,'noaccess')>
-	<p>You can access the test page only at the time of test.</p>
+	<p>You have already submitted your test OR the time of test has not yet started.</p>
 </cfif>
-<!--- <cfif structKeyExists(form,'startTest')> --->
-<!--- 	<cfset testValidation = createobject("component",'assign_10.components.testValidationService') /> --->
-<!--- 	<cfset validTime =  testValidation.checkTestTime() /> --->
-<!--- 	<cfdump var = #session# abort="true"/> --->
-<!--- </cfif> --->
+
+<cfif structKeyExists(URL,'error')>
+	<p>Something went wrong.</p>
+</cfif>
+
 <cfmodule template="../customTags/studentFront.cfm" >
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="../js/testValidate.js"></script>
+
 		<div class="page-title">
 			<div class="container">
 				<h2>Add questions</h2>
@@ -25,11 +25,24 @@
 				<div class="row">
 					<div class="col-md-12">
 							<div class="boxed-section request-form">
+								<cfif structKeyExists(URL, 'endTest')>
+									<p>the test has ended</p>
+								</cfif>
 								<h2 class="section-title text-center">Question Details:</h2>
 								<cfform name="questionsForm" id="questionsForm" action="testStart.cfm">
 									<p class="section-title text-center">
 										<cfset object =  createobject("component",'assign_10.components.getQuizDetails') />
 										<cfset testDetails = object.quizDetails()>
+										<cfif structKeyExists(URL,'submitEnd')>
+											<p class="section-title text-center">successfully submitted</p>
+											<cfinput name="startTime" id="startTime" type="hidden" value="">
+											<cfinput name="endTime" id="endTime" type="hidden" value="">
+											<cfinput name="nowTime" id="nowTime" type="hidden" value="">
+										<cfelse>
+											<cfinput name="startTime" id="startTime" type="hidden" value="#testDetails.startDateTime#">
+											<cfinput name="endTime" id="endTime" type="hidden" value="#testDetails.endDateTime#">
+											<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & LSTimeFormat(now(),'hh:mm:ss')#">
+										</cfif>
 										<cfoutput>
 										<h3 class="section-title text-center"> Next test is at : #testDetails.startDateTime#</h3>
 										<h3 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h3>
@@ -37,11 +50,6 @@
 										<h3 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h3>
 										</cfoutput>
 									</p>
-									<cfinput type="hidden" name="randomString" id="randomString" value="">
-									<cfinput name="startTime" id="startTime" type="hidden" value="#testDetails.startDateTime#">
-									<cfinput name="endTime" id="endTime" type="hidden" value="#testDetails.endDateTime#">
-									<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & LSTimeFormat(now(),'hh:mm:ss')#">
-
 									<div class="field no-label">
 									<div class="control  text-center">
  											<!--<button type="submit" class="button text-center" id="startTest" name="startTest" value="<cfoutput>#testDetails.quizId#</cfoutput>" disabled="true" >Start test</button> -->
@@ -76,4 +84,5 @@
 				}
 			})();
 		</script>
+		<script src="../js/testValidate.js"></script>
 </cfmodule>

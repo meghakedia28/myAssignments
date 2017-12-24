@@ -1,5 +1,4 @@
-﻿<cfdump var = #form# abort="true" >
-<cfparam name="form.submitted" default="0" />
+﻿<cfparam name="form.submitted" default="0" />
 <cfparam name="form.gender" default="Female"/>
 <cfparam name="form.currentCountry" default="" />
 <cfparam name="form.currentState" default="" />
@@ -23,10 +22,10 @@
 			<cfset checkCaptcha = #checkCaptcha()#/>
 <cfelse>
 	<cflocation url = "https://localhost/assign_9/registrationFormUsingJQuery.cfm?restartapp">
-</cfif>	
+</cfif>
 <cffunction name = "validFirstName" output="false" access="public" returntype="boolean">
 	<cfset var flag=0>
-	<cfset name=#form.f_name#/>	
+	<cfset name=#form.f_name#/>
 	<cfset length = #len(name)#/>
 	<cfif #name# EQ ''>
 			<cfset errorStruct.struct1.f_name='#form.f_name#'>
@@ -35,7 +34,7 @@
 	<cfelseif #length# GTE 31>
 			<cfset errorStruct.struct1.f_name='#form.f_name#'>
 			<cfset errorStruct.struct2.error_f_name="Length of the input should be less than 30">
-			<cfset flag=1>	 
+			<cfset flag=1>
 	<cfelse>
 		<cfloop index="i" from="1" to="#length#">
 			<cfif !((#name.charAt(i-1)# GTE 'a' AND #name.charAt(i-1)# LTE 'z') OR
@@ -46,7 +45,7 @@
 				<cfbreak>
 			</cfif>
 		</cfloop>
-	</cfif>	
+	</cfif>
 	<cfif flag EQ 0>
 				<cfreturn true>
 	<cfelse>
@@ -75,7 +74,7 @@
 				<cfbreak>
 			</cfif>
 		</cfloop>
-	</cfif>	
+	</cfif>
 	<cfif flag EQ 0>
 				<cfreturn true>
 	<cfelse>
@@ -91,7 +90,7 @@
 		<cfreturn false>
 	<cfelse>
 		<cfreturn true>
-	</cfif>		
+	</cfif>
 </cffunction>
 <!---password--->
 <cffunction name="validPassword" output="false" returntype="boolean" >
@@ -152,7 +151,7 @@
 		</cfif>
 	<cfelse>
 		<cfreturn true>
-	</cfif>	
+	</cfif>
 </cffunction>
 <!---country--->
 <cffunction name="checkCountry" output="false" returntype="boolean" >
@@ -164,7 +163,7 @@
 	<cfelse>
 		<cfreturn true>
 	</cfif>
-</cffunction> 
+</cffunction>
 <!---state--->
 <cffunction name="checkState" output="false" returntype="boolean" >
 	<cfset state = #form.currentState#>
@@ -175,7 +174,7 @@
 	<cfelse>
 		<cfreturn true>
 	</cfif>
-</cffunction> 
+</cffunction>
 <!---city--->
 <cffunction name="checkCity" output="false" returntype="boolean" >
 
@@ -185,7 +184,7 @@
 		<cfset errorStruct.struct2.error_currentCity = "Please enter your valid current city: use (a-z) OR (A-Z) between 1 to 30 characters.">
 		<cfreturn false>
 	<cfelse>
-		<cfreturn true>	
+		<cfreturn true>
 	</cfif>
 </cffunction>
 <!---address--->
@@ -223,23 +222,23 @@
 		<cfset structdelete(session,'structOfError')/>
 		<!---check if the user is registred--->
 			<cfquery name="checkRegistered" >
-				SELECT * FROM [dbo].[userInfo] 
+				SELECT * FROM [dbo].[userInfo]
 				WHERE userInfo.email = <cfqueryparam value="#form.email#" cfsqltype="cf_sql_varchar" />
 			</cfquery>
 		<cfif checkRegistered.RecordCount EQ 0>
 			<!---insert in db--->
 			<cfoutput>#insertData()#</cfoutput>
-		<cfelse>	
+		<cfelse>
 			<cflocation url = "https://localhost/assign_9/registrationSuccessfull.cfm?registered">
 		</cfif>
 </cfif>
 <!---insert data--->
-<cffunction name = "insertData" output="false" returntype="void" >	
-		<cfset variables.salt = Hash(GenerateSecretKey("AES"), "SHA-512") /> 
+<cffunction name = "insertData" output="false" returntype="void" >
+		<cfset variables.salt = Hash(GenerateSecretKey("AES"), "SHA-512") />
 		<cfset variables.hashPassword = Hash(form.password & variables.salt, "SHA-512") />
 		<cftry >
 			<cfquery name="insertQuery"  >
-			INSERT into [registrationForm].[dbo].[userInfo] 
+			INSERT into [registrationForm].[dbo].[userInfo]
 			values (
 				<cfqueryparam value='#form.f_name#' cfsqltype="cf_sql_varchar"  > ,
 				<cfqueryparam value='#form.l_name#' cfsqltype="cf_sql_varchar"  >,

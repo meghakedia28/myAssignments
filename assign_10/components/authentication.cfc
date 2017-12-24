@@ -21,7 +21,7 @@
 			<cfquery name="getPasswordSalt">
 				SELECT [user].[hashPassword], [user].[salt] FROM [user]
 				WHERE [user].[emailid] = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar" />
-			</cfquery> 
+			</cfquery>
 			<cfif getPasswordSalt.recordCount EQ 1>
 				<cfset var.password = Hash(arguments.password & getPasswordSalt.salt,'SHA-512' ) />
 				<cfquery name="LoginUser">
@@ -29,22 +29,22 @@
  							FROM [demoProject].[dbo].[user] JOIN
  							[demoProject].[dbo].[role] ON
  							[demoProject].[dbo].[user].[roleId] = [demoProject].[dbo].[role].[roleId]
- 							WHERE [user].[emailid] = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar" / > AND 
+ 							WHERE [user].[emailid] = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar" / > AND
 						 	[user].[hashPassword] = <cfqueryparam value="#var.password#" cfsqltype="cf_sql_varchar" / >	AND
-							[user].[active] = <cfqueryparam value= 1 cfsqltype="cf_sql_integer" / > 
+							[user].[active] = <cfqueryparam value= 1 cfsqltype="cf_sql_integer" / >
 				</cfquery>
 				<cfif LoginUser.recordCount EQ 1>
 					<cflogin applicationtoken="DemoApplication" >
 						<cfloginuser name="#LoginUser.firstName# #LoginUser.LastName#" password="#LoginUser.hashPassword#" roles="#LoginUser.role#" >
-					</cflogin>				
+					</cflogin>
 					<cflock scope="session" timeout="30" >
-					<cfset session.stLoggedInUser = {'userFirstName' = #LoginUser.firstName#, 'userLastName' = #LoginUser.LastName#, 'userId' = #LoginUser.userId#, 'roleId' = #LoginUser.roleId#, 'userRole' = #LoginUser.role#}>
+						<cfset session.stLoggedInUser = {'userFirstName' = #LoginUser.firstName#, 'userLastName' = #LoginUser.LastName#, 'userId' = #LoginUser.userId#, 'roleId' = #LoginUser.roleId#, 'userRole' = #LoginUser.role#}>
 					<cfset isUserLoggedIn = true />
 					</cflock>
 				</cfif>
 			</cfif>
 			<cfreturn isUserLoggedIn/>
-		</cffunction> 
+		</cffunction>
 	<!---doLogOut method--->
 	<cffunction name="doLogOut" access="public" returntype="void">
 		<cfset structdelete(session,'stLoggedInUser')/>
