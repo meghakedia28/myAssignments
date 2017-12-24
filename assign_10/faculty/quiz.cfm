@@ -1,13 +1,13 @@
 ﻿<cfif NOT isUserLoggedIn() || session.stLoggedInUser.roleId NEQ 2>
 		<cflocation url = "../comman/loginPage.cfm?noaccess">
-</cfif> 
+</cfif>
   <cfmodule template="../customTags/facultyFront.cfm" >
   	   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	 <link rel="stylesheet" href="../css/heights.css">
 	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
-	
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
 	<script>
 		$.noConflict();
@@ -62,18 +62,18 @@
 										<div class="control">
 											<input type="submit" class="button" value="Submit request">
 										</div>
-									</div>															
+									</div>
 							</div> <!-- .boxed-section .request-form -->
-						</div>						
+						</div>
 								<div class="container">
 									<div class="row">
-										<div class="boxed-section w3-container w3-responsive">										
+										<div class="boxed-section w3-container w3-responsive">
 											<cfquery name = "list">
 												Select questionId,question,option1,option2,option3,option4,correctAnswer
 												FROM [questionBank]
-												WHERE userId = #session.stLoggedInUser.userId#
-											</cfquery>	
-										<div class="error-msg" id="error_questions"></div>	
+												WHERE userId =<cfqueryparam value="#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint" />
+											</cfquery>
+										<div class="error-msg" id="error_questions"></div>
 											<h1>Question Bank </h1>
 											<table class="w3-card-4 w3-small" id="questions" name="questions">
 												<tr>
@@ -88,19 +88,19 @@
 												<cfoutput query= "list">
 													<tr>
 														<td><cfinput type="checkbox" class="question" name="questionId" id ="questionId_#questionId#" value="#questionId#"></td>
-													 	<td>#question#</td> 
+													 	<td>#question#</td>
 													 	<td>#option1#</td>
 												 		<td>#option2#</td>
 														<td>#option3#</td>
 														<td>#option4#</td>
 														<td>#correctAnswer#</td>
 													 </tr>
-												</cfoutput>	
+												</cfoutput>
 											</table>
-											
+
 										</cfform>
 									</div>
 								</div>
 							</div>
-						</main>						
+						</main>
 </cfmodule>

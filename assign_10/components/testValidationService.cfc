@@ -5,11 +5,13 @@
 		<cfset startTime =  #testDetails.startDateTime# />
 		<cfset endTime =  #testDetails.endDateTime# />
 		<cfset var currentTime = (DateFormat(now(),'yyyy-mm-dd') & ' ' & LSTimeFormat(now(),'hh:mm:ss')) />
+		<cftry>
+		<cftransaction>
 		<cfquery name="checkTestOver">
-			SELECT [score].[scoreId] FROM [score] JOIN [quizQuestion]
-			ON [score].[quizQuestionId] = [quizQuestion].[quizQuestionId]
+			SELECT [score].[scoreId] FROM [score] JOIN [quiz]
+			ON [score].[quizId] = [quiz].[quizId]
 			WHERE [score].[userId] = <cfqueryparam value="#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint"> AND
-			[quizQuestion].[quizId] = <cfqueryparam value="#testDetails.quizId#" cfsqltype="cf_sql_bigint">
+			[quiz].[quizId] = <cfqueryparam value="#testDetails.quizId#" cfsqltype="cf_sql_bigint">
 		</cfquery>
 		<cfif !((#currentTime# GTE #startTime#) AND (#currentTime# LTE #endTime#) AND (checkTestOver.RecordCount EQ 0)) >
 			<cfreturn false>
@@ -19,5 +21,11 @@
 			</cflock>
 				<cfreturn true>
 		</cfif>
+		</cftransaction>
+		<cfreturn true>
+		<cfcatch type="any">
+			<cfreturn false>
+		</cfcatch>
+		</cftry>
 	</cffunction>
 </cfcomponent>

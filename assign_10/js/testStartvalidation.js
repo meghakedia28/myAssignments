@@ -17,7 +17,7 @@ $(document).ready(function(){
 	$("#startTest").submit(function(event) {
 		event.preventDefault();
 		$.ajax({
-			url : "../components/onTestSubmit.cfc?method=insertTest&"+$('#startTest').serialize(),
+			url : "../components/onTestSubmit.cfc?method=insertScore&"+$('#startTest').serialize(),
 			data : {},
 			success : function(result) {
 				var obj = $.parseJSON(result);

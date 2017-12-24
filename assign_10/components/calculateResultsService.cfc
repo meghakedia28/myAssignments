@@ -6,5 +6,6 @@
 				WHERE [score].[userId] = "#sessionn.stLoggedInUser#" AND
 				[quizQuestion].[quizId] = "#session.stQuizStarts.quizId#"
 			</cfquery>
+			
 		</cffunction>
 </cfcomponent>

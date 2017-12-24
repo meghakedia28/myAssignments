@@ -20,13 +20,15 @@
 		<main class="main-content">
 			<div class="container">
 				<div class="row">
+					<div class="col-md-10">
+						<h3>NOTE:<br/>
+							The test will end on :<cfoutput> #session.stQuizStarts.endTime#</cfoutput><br />
+							You can submit the test only once.<br />
+							It is a MCQ based test, and one correct answer for each question.</h3>
+					</div>
 					<div class="col-md-12">
 						<div class="boxed-section request-form">
-						<h2>NOTE:<br/>
-							The test will end on :<cfoutput> #session.stQuizStarts.endTime#</cfoutput>
-							You can submit the test only once.<br />
-							It is a MCQ based test, and onec correct answer for each question.</h2>
-							<h2 class="section-title text-center">Questions:</h2>
+						<h2 class="section-title text-center">Questions:</h2>
 								<cfform name="startTest" id="startTest" action="">
 									<p class="section-title text-center">
 									<cfinput name="startTime" id="startTime" type="hidden" value="#session.stQuizStarts.startTime#">
