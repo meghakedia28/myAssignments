@@ -2,7 +2,7 @@
 	<cffunction name="insertTest" access="remote" output="false" returntype="boolean" returnformat="JSON">
 		<cftry>
  			<cftransaction>
-				<cfquery name ="getQuizQuestion">
+				<cfquery name ="getQuizQuestion" >
 					SELECT [quizQuestionId] FROM [quizQuestion]
 					WHERE [quizId] = <cfqueryparam value = "#session.stQuizStarts.quizId#" cfsqltype="cf_sql_bigint" />
 					ORDER BY [quizQuestionId];
