@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Basic Form</title>
+		<link rel="stylesheet" href="css/Body.css">
+		<link rel="stylesheet" href="css/form-basic.css">
+		<style>
+			body{
+			background-image: url("pics/back.jpg");
+			}
+		</style>
+	</head>
+	<header>
+		 <img src= "pics/banner.gif"  style="height: 250px; width: 100%;" alt="banner">    
+    </header>
+    <div class="main-content">
+        <!-- You only need this form and the form-basic.css -->
+        <form class="form-basic" method="post" action="#">
+            <div class="form-title-row">
+                <h1>Registration Page</h1>
+				<!-- logo-->
+				<img src="pics/logo.jpg" style="float: left; height: 50px; width: 50px;" alt="logo">
+            </div>
+			<div class="form-row">
+                <label>
+                    <span>First name</span>
+                    <input type="text" name="f_name" placeholder="First name">
+					<span>Middle name</span>
+					<input type="text" name="m_name" placeholder="Middle name">
+					<span>Last name</span>
+					<input type="text" name="l_name" placeholder="Last name">
+                </label>
+            </div>
+            <div class="form-row">
+                <label>
+                    <span>Email</span>
+                    <input type="email" name="user_id" placeholder="abc@example.com">
+                </label>
+            </div>
+			<div class ="form-row">
+				<label>
+					<span>Phone Number:</span>
+					<input type="text" name="phone_number" placeholder="Phone Number" >
+				</label>
+			</div>
+			<div class ="form-row">
+			<label> 
+					<span> Password:</span>
+					<input type="password" name="password" placeholder = "Password">
+					</label>
+			</div>
+			<div class ="form-row">
+			<label> 
+					<span> Confirm Password:</span>
+					<input type="password" name="c_password" placeholder = "Confirm Password">
+					</label>
+			</div>
+			<div class="form-row">
+				<label>
+					<span>Date of Birth</span>
+					<input type="date" name="dob">
+				</label>
+			</div>
+			<div class="form-row">
+                <label><span>Gender:</span></label>
+                <div class="form-radio-buttons">
+                    <div>
+                        <label>
+                            <input type="radio" name="gender" value="female">
+                            <span>Female</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="radio" name="gender" value="male">
+                            <span>Male</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="radio" name="gender" value="others">
+                            <span>Others</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <label>
+                    <span>Current Address:</span> </label>
+					<div class="form-radio-buttons">
+                    <span><div><label><input type="textarea" name="block/street_no" placeholder="Block/Street no."></label></div>
+					<div><label><input type="text" name="city" placeholder="City"></label></div>
+					<div><label><input type="text" name="State" placeholder="State"></label></div>
+					<div><label><input type="text" name="country" placeholder="Country"></label></div>
+					<div><label><input type="number" maxlength="6" name="zipcode" placeholder="Zipcode"></label></div></span>
+				    </div>
+            </div>
+			<div class="form-row">
+                <label>
+                    <span>Permanent Address:</span></label>
+					<div class="form-radio-buttons">
+						<span><div><label><input type="textarea" name="p_block/street_no" placeholder="Block/Street no."></label></div>
+						<div><label><input type="text" name="p_city" placeholder="City"></label></div>
+						<div><label><input type="text" name="p_State" placeholder="State"></label></div>
+						<div><label><input type="text" name="p_country" placeholder="Country"></label></div>
+						<div><label><input type="number" maxlength="6" name="p_zipcode" placeholder="Zipcode"></label></div></span>			
+					</div>
+            </div>
+            <div class="form-row">
+                <label><span>Interests:</span></label>
+					<div class="form-radio-buttons">
+				<table>
+				<th></th>
+				<tr>
+                   <td><div>
+						<label>
+							<input type="checkbox" name="checkbox" value="kitchen"><span>Kitchen</span>
+						</label>
+					</div></td>
+				   <td><div>
+						<label>
+							<input type="checkbox" name="checkbox" value="sports"><span>Sports</span>
+						</label>
+					</div></td>
+				</tr>
+				<tr>
+				   <td><div>
+						<label>
+							<input type="checkbox" name="checkbox" value="fashion"><span>Fashion</span>
+						</label>
+					</div></td>
+					<td><div>
+						<label>
+							<input type="checkbox" name="checkbox" value="gadgets"><span>Electoric Gadgets</span>
+						</label>
+					</div></td>
+				</tr>
+				<tr>
+					<td><div>
+						<label>
+							<input type="checkbox" name="checkbox" value="library"><span>Library</span>
+						</label>
+					</div></td>
+					<td><div>
+						<label>
+							<input type="checkbox" name="checkbox" value="music"><span>Music</span>
+						</label>
+					</div></td>
+				</tr>
+				<tr>
+					<td><div>
+						<label>
+							<input type="checkbox" name="checkbox" value="home_decore"><span>Home Decore</span>
+						</label>
+					</div><td>
+				</tr>
+					</table>
+                </div>
+            </div>
+            <div class="form-row">
+                <label>
+                    <span>Other Interests</span>
+                    <textarea name="textarea"></textarea>
+                </label>
+            </div>
+            <div class="form-row">
+                <button type="submit">Submit</button>
+			</div>
+        </form>
+    </div>
+</body>
+</html>

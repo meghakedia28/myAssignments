@@ -1,0 +1,53 @@
+﻿<cfcomponent output="false" >
+	<!---validation--->
+		<cffunction name="userValidation" returnType="array" access="public" >
+			<cfargument name="email" type="string" required="true" >
+			<cfargument name="password" type="string" required="true" >
+			<cfset var aErrorMessage = ArrayNew(1)>
+			<!---validate user email id--->
+			<cfif ((NOT isValid("Email",arguments.email )) OR arguments.email EQ '')>
+				<cfset arrayAppend( aErrorMessage,'Please enter a valid email Id')>
+			</cfif>
+			<!---validate user password--->
+			<cfif arguments.password EQ ''>
+				<cfset arrayAppend (aErrorMessage,'Please provide the password to access')>
+			</cfif>
+			<cfreturn aErrorMessage>
+		</cffunction> <!---end of function do validation--->
+		<cffunction name="doLogin"  access="public" output="false" returnType="boolean">
+			<cfargument name="email" type="string" required="true" >
+			<cfargument name="password" type="string" required="true" >
+			<cfset var isUserLoggedIn = false/>
+			<cfquery name="getPasswordSalt">
+				SELECT [user].[hashPassword], [user].[salt] FROM [user]
+				WHERE [user].[emailid] = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar" />
+			</cfquery> 
+			<cfif getPasswordSalt.recordCount EQ 1>
+				<cfset var.password = Hash(arguments.password & getPasswordSalt.salt,'SHA-512' ) />
+				<cfquery name="LoginUser">
+					SELECT [user].[firstName], [user].[lastName], [user].[userId], [user].[emailid], [user].[hashPassword],[user].[roleId], [role].[name] as role
+ 							FROM [demoProject].[dbo].[user] JOIN
+ 							[demoProject].[dbo].[role] ON
+ 							[demoProject].[dbo].[user].[roleId] = [demoProject].[dbo].[role].[roleId]
+ 							WHERE [user].[emailid] = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar" / > AND 
+						 	[user].[hashPassword] = <cfqueryparam value="#var.password#" cfsqltype="cf_sql_varchar" / >	AND
+							[user].[active] = <cfqueryparam value= 1 cfsqltype="cf_sql_integer" / > 
+				</cfquery>
+				<cfif LoginUser.recordCount EQ 1>
+					<cflogin applicationtoken="DemoApplication" >
+						<cfloginuser name="#LoginUser.firstName# #LoginUser.LastName#" password="#LoginUser.hashPassword#" roles="#LoginUser.role#" >
+					</cflogin>				
+					<cflock scope="session" timeout="30" >
+					<cfset session.stLoggedInUser = {'userFirstName' = #LoginUser.firstName#, 'userLastName' = #LoginUser.LastName#, 'userId' = #LoginUser.userId#, 'roleId' = #LoginUser.roleId#, 'userRole' = #LoginUser.role#}>
+					<cfset isUserLoggedIn = true />
+					</cflock>
+				</cfif>
+			</cfif>
+			<cfreturn isUserLoggedIn/>
+		</cffunction> 
+	<!---doLogOut method--->
+	<cffunction name="doLogOut" access="public" returntype="void">
+		<cfset structdelete(session,'stLoggedInUser')/>
+		<cflogout />
+	</cffunction>
+</cfcomponent>

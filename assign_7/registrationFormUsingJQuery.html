@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Registration Page</title>
+		<link rel="stylesheet" href="css/registrationFormUsingJQuery(CSS).css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script type="text/javascript" src="JQuery/registrationFormUsingJquery.js"></script>
+		
+	</head>	
+	<body>
+		<div class="outter-div">
+			<div class="inner-div"><h1>Sign up:</h1></div><br>			
+			<div class="inner-div div-form">
+				<!--form-->
+				<form name="registrationForm" action="asp/RegistrationFormUsingJQueryDirectory.asp" method="post">
+					<span class="star-info">The fields with <label class="star">*</label>are mandatory</span>
+					<br><br>
+					<!--first name-->					
+					<div><label class="in gein margin-10" for="f_name">First name:<label class="star">*</label></label>
+                    <input class="box-style" type="text" id="f_name" name="f_name" placeholder="First name"  >
+					<div class="error-msg" id="error_f_name"></div>
+					</div>
+					<!--last name-->					
+					<div><label class="in gein margin-10" for="l_name">Last name:<label class="star">*</label></label>
+                    <input class="box-style" type="text" id="l_name" name="l_name" placeholder="Last name"   >						
+					<div class="error-msg" id="error_l_name"></div>
+					</div>
+					<!--email-->					
+					<div><label class="in gein margin-10" for="email">E-mail:<label class="star">*</label></label>
+                    <input class="box-style" type="email" id="email" name="email" placeholder="abc@gmail.com"   >						
+					<div class="error-msg" id="error_email"></div>
+					</div>
+					<!--password-->					
+					<div><label class="in gein margin-10" for="password">Password:<label class="star">*</label></label>
+                    <input class="box-style" type="password" id="password" name="password" placeholder="Password"   >						
+					<div class="error-msg" id="error_password"></div>
+					</div>
+					<div>
+					<label class="in gein margin-10" for="c_password">Confirm Password:<label class="star">*</label></label>
+                    <input class="box-style" type="password" id="c_password" name="c_password" placeholder="Re-type password"   >
+					<div class="error-msg" id="error_c_password"></div>
+					</div>						
+					<!--gender-->					
+					<div><label class="gen gein margin-10" for="gender">
+						Gender:<label class="star">*</label>
+					</label>					
+					<label>
+                        <input class="margin-10" type="radio" id="female" name="gender" value="Female" checked>
+                        <label for="female" >Female</label>                                            
+                        <input class="margin-10" type="radio" id="male" name="gender" value="Male">
+                        <label for="male">Male</label>                    
+                        <input class="margin-10" type="radio" id="others" name="gender" value="Others">
+                        <label for="others">Others</label>
+                    </label>
+					</div>
+					<!-- phone number-->					
+					<div><label class="in gein margin-10" for="contact">Contact Number:<label class="star">*</label></label>
+                    <input class="box-style" type="text" id="contact" name="contact" placeholder="Contact Number" maxlength="10"  >
+					<div class="error-msg" id="error_contact"></div>
+					</div>
+					<div>
+					<label class="in gein margin-10" for="alt_contact">Alternate Contact Number:</label>
+                    <input class="box-style" type="text" id="alt_contact" name="alt_contact" placeholder="Alternate Contact Number" maxlength="10" >
+					<div class="error-msg" id="error_alt_contact"></div>
+					</div>
+					<!--current address-->		
+						
+					<label class="in gein margin-10 pc-add" for="current address">Current address:<label class="star">*</label></label>					
+					<br>
+										
+					<label class="in gein margin-10" for="currentCountry">Country:<label class="star">*</label></label>						
+					<select class="box-style" name="currentCountry" id="currentCountry">
+						<option value="">Select Country</option>
+												<option value="United States">United States</option>
+												<option value="India">India</option>
+												<option value="Brazil">Brazil</option>
+												<option value="German">German</option>
+					</select>
+					<div class="error-msg" id="error_currentCountry"></div>
+					
+					<label class="in gein margin-10" for="currentState">State:<label class="star">*</label></label>					
+					<select class="box-style" name="currentState" id="currentState">
+						<option value="">Select State</option>
+					</select>	
+					<div class="error-msg" id="error_currentState"></div>
+					<label class="in gein margin-10" for="currentCity">City:<label class="star">*</label></label>
+					<input class="box-style" name="currentCity" id="currentCity" placeholder="City"   >						
+					<div class="error-msg" id="error_currentCity"></div>
+					<label class="in gein margin-10" for="currentAddress">Address 1:<label class="star">*</label></label>
+					<input class="box-style" type="textarea" id="currentAddress" name="currentAddress" placeholder="Street/Block, House no."   >					
+					<div class="error-msg" id="error_currentAddress"></div>
+					<!--permanent address-->					
+					<label class="in gein margin-10 pc-add" for="permanent address">Permanent address:</label>					
+					<br>
+										
+					<label class="in gein margin-10" for="permanentCountry">Country:</label>					
+					<select class="box-style" name="permanentCountry" id="permanentCountry"  >
+						<option value="">Select Country</option>
+												<option value="United States">United States</option>
+												<option value="India">India</option>
+												<option value="Brazil">Brazil</option>
+												<option value="German">German</option>
+					</select>
+					<div class="error-msg" id="error_permanentCountry"></div>
+					
+					<label class="in gein margin-10" for="permanentState">State: </label>					
+					<select class="box-style" name="permanentState" id="permanentState">
+						<option value="">Select State</option>
+					</select>
+					<div class="error-msg" id="error_permanentState"></div>
+					
+					<label class="in gein margin-10" for="permanentCity" >City: </label>
+					<input class="box-style" id="permanentCity" name="permanentCity" placeholder="City" >						
+					<div class="error-msg" id="error_permanentCity"></div>
+					<label class="in gein margin-10" for="permanentAddress">Address 2: </label>
+					<input class="box-style" type="textarea" id="permanentAddress" name="permanentAddress" placeholder="Street/Block, House no.">						
+					<div class="error-msg" id="error_permanentAddress"></div>
+					<br><br>
+					<label class="news margin-10" for="news" ><span>Subscribe Newsletter?</span></label>					
+					<label>
+                        <input type="radio" name="news" value="Yes" checked>
+                        <span>Yes</span>                    
+                        <input type="radio" name="news" value="No">
+                        <span>No</span>
+                    </label>
+					<br><br>
+					Calculate the captcha and enter your answer:<br><br>
+					<label id = "digit1"></label>
+					<label id = "operator"></label>
+					<label id = "digit2"></label>
+					<input class="refresh" type="button" id = "refresh" >
+					</button><br><br>
+					<input class="answer" type="text" id="answer"><br><br>
+					<div class="error-msg-captcha" id="error_answer"></div><br>
+					<button class="button" id="submit" type= "submit" onclick="return validate()">Submit</button>
+					<br><br><br>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

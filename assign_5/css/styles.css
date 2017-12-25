@@ -1,0 +1,94 @@
+body {
+	background-image: url("../pics/back.jpg");
+}
+.outter-div {
+	font-family: arial;
+}
+.inner-div, .div-form {
+	width: 38%;
+	margin: 0 auto;
+	color: #000000;
+	text-align: center;
+	background-color: #4CAF50;
+	border-radius: 22px 22px 0px 0px;
+	padding: 1px;
+	border: 1px solid black;
+	box-shadow: 10px 10px 20px #888888;
+	text-shadow: 0px 0px 5px white;
+}
+.div-form {
+	background-color: #f2f2f2;
+	border-radius: 0px 0px 22px 22px;
+	border: 2.5px solid #4CAF50;
+	opacity: 0.95;
+}
+.star {
+	color: #ff0000;
+	font-size: 13px;
+}
+input[type="text"], input[type="email"], input[type="textarea"], input[type="password"], #country, #state1, #state2 {
+	color: #5f5f5f;
+	box-sizing: border-box;
+	width: 240px;
+	margin-top: 10px;
+	box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.18);
+	padding: 12px 40px 12px 5px;
+	border: 1.5px solid #dbdbdb;
+}
+#f_name, #l_name {
+	background-image: url('../pics/name.png');
+	background-position: 200px 7px;
+	background-repeat: no-repeat;
+}
+#email {
+	background-image: url('../pics/email.png');
+	background-position: 200px 7px;
+	background-repeat: no-repeat;
+}
+#password ,#c_password {
+	background-image: url('../pics/lock.png');
+	background-position: 203px 10px;
+	background-repeat: no-repeat;
+}
+#contact_no_1 ,#contact_no_2 {
+	background-image: url('../pics/phone.png');
+	background-position: 200px 10px;
+	background-repeat: no-repeat;
+}
+.button {
+	width: 120px;
+	background-color: #4CAF50;
+	height: 40px;
+	border-radius: 4px;
+	font-size: 18px;
+	font-family: arial;
+	border-radius: 10px;
+	border: 2px solid #D3D3D3;
+}
+.news {
+	padding: 25px;
+}
+.in {
+	width: 230px;
+	vertical-align: top;
+	padding: 12px 25px;
+}
+.gen {
+	width: 155px;
+	margin-right:40px;
+}
+.pc-add {
+	font-size:19px;
+}
+.star-info {
+	text-align: right;
+	margin-left: 280px;
+}
+.margin-10 {
+	margin-top: 10px;
+}
+.gein{
+	display: inline-block;
+	box-sizing: border-box;
+	text-align: left;
+}

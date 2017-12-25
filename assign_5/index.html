@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Registration Page</title>
+		<link rel="stylesheet" href="css/styles.css">
+	</head>	
+	<body>
+		<div class="outter-div">
+			<div class="inner-div"><h1>Registration Page</h1></div>			
+			<br>			
+			<div class="div-form">
+				<!--form-->
+				<form action="#" method="post">
+					<span class="star-info">The fields with <label class="star">*</label> are mandatory</span>
+					<br><br>
+					<!--first name-->					
+					<label class="in gein margin-10" for="fname">First name:<label class="star">*</label></label>
+                    <input type="text" id="f_name" name="first name" placeholder="First name" required >						
+					<!--last name-->					
+					<label class="in gein margin-10" for="lname">Last name:<label class="star">*</label></label>
+                    <input type="text" id="l_name" name="last name" placeholder="Last name" required >						
+					<!--email-->					
+					<label class="in gein margin-10" for="email">E-mail:<label class="star">*</label></label>
+                    <input type="email" id="email" name="email" placeholder="abc@gmail.com" required >						
+					<!--password-->					
+					<label class="in gein margin-10" for="password">Password:<label class="star">*</label></label>
+                    <input type="password" id="password" name="password" placeholder="Password" required >						
+					<label class="in gein margin-10" for="c_password">Confirm Password:<label class="star">*</label></label>
+                    <input type="password" id="c_password" name="confirm password" placeholder="Re-type password" required >
+											
+					<!--gender-->					
+					<label class="gen gein margin-10" for="gender">
+						Gender:<label class="star">*</label>
+					</label>					
+					<label>
+                        <input class="margin-10" type="radio" id="female" name="gender" value="Female">
+                        <span>Female</span>                                            
+                        <input class="margin-10" type="radio" id="male" name="gender" value="Male">
+                        <span>Male</span>                    
+                        <input class="margin-10" type="radio" id="others" name="gender" value="Others">
+                        <span>Others</span>
+                    </label>					
+					<!-- phone number-->					
+					<label class="in gein margin-10" for="contact_no_1">Contact Number:<label class="star">*</label></label>
+                    <input type="text" id="contact_no_1" name="contact number 1" placeholder="Contact Number" maxlength="10" required>
+					<label class="in gein margin-10" for="contact_no_2">Alternate Contact Number:</label>
+                    <input type="text" id="contact_no_2" name="contact number 2" placeholder="Alternate Contact Number" maxlength="10">
+					<!--country-->					
+					<label class="in gein margin-10" for="country">Country:<label class="star">*</label></label>						
+					<select name="country" id="country" required>
+						<option value="">Select</option>
+						<option value="United States" id="US">United States</option>
+						<option value="India" id="IN">India</option>
+						<option value="Brazil" id="BR">Brazil</option>
+						<option value="Germany" id="DE">Germany</option>
+					</select>					
+					<!--current address-->					
+					<label class="in gein margin-10 pc-add" for="current address">Current address:<label class="star">*</label></label>					
+					<br>					
+					<label class="in gein margin-10" for="state">State:<label class="star">*</label></label>					
+					<select name="state1" id="state1" required >
+						<option value="">Select</option>	
+						<option value="california" id="CA_1">California</option>
+						<option value="florida" id="FL_1">Florida</option>
+						<option value="mumbai" id="MUM_1">Mumbai</option>
+						<option value="delhi" id="DL_1">Delhi</option>
+						<option value="para" id="PA_1">Para</option>
+						<option value="bahia" id="BA_1">Bahia</option>
+						<option value="berlin" id="BER_1">Berlin</option>
+						<option value="humburg" id="HUM_1">Humburg</option>
+					</select>					
+					<label class="in gein margin-10" for="city1">City:<label class="star">*</label></label>
+					<input type="text" id="city1" name="city1" placeholder="City" required >						
+					<label class="in gein margin-10" for="address1">Address 1:<label class="star">*</label></label>
+					<input type="textarea" id="address1" name="address1" placeholder="Street/Block, House no." required >					
+					<!--permanent address-->					
+					<label class="in gein margin-10 pc-add" for="permanent address">Permanent address:</label>					
+					<br>					
+					<label class="in gein margin-10" for="state2">State: </label>					
+					<select name="State2" id="state2">
+						<option value="">Select</option>
+						<option value="california" id="CA_2">California</option>
+						<option value="florida" id="FL_2">Florida</option>
+						<option value="mumbai" id="MUM_2">Mumbai</option>
+						<option value="delhi" id="DL_2">Delhi</option>
+						<option value="para" id="PA_2">Para</option>
+						<option value="bahia" id="BA_2">Bahia</option>
+						<option value="berlin" id="BER_2">Berlin</option>
+						<option value="humburg" id="HUM_2">Humburg</option>
+					</select>					
+					<label class="in gein margin-10" for="city2" >City: </label>
+					<input type="text" id="city2" name="city2" placeholder="City">						
+					<label class="in gein margin-10" for="address2">Address 2: </label>
+					<input type="textarea" id="address2" name="address2" placeholder="Street/Block, House no.">						
+					<!--subcribe-->				
+					<br><br>
+					<label class="news margin-10" for="news" ><span>Subscribe News letter?</span></label>					
+					<label>
+                        <input type="radio" name="news" value="Yes" checked>
+                        <span>Yes</span>                    
+                        <input type="radio" name="news" value="No">
+                        <span>No</span>
+                    </label>
+					<br><br><br>
+					<button class="button" type= "submit">Submit</button>
+					<br><br><br>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

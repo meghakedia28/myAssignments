@@ -1,0 +1,94 @@
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+
+*{
+    margin: 0;
+ 
+      padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+
+body{
+
+	font:14px/1.5 Arial, Helvetica, sans-serif;
+
+	margin:0;
+	border: 2px solid black;
+
+	background-attachment: fixed;
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 1000px) {
+
+
+
+    header h1{
+
+        float: none;
+
+    }
+
+
+    header a{
+
+        margin-top: 25px;
+
+        float: none;
+
+    }
+
+
+}
+
+.main-content{
+
+    margin-bottom: 75px;
+
+}
+
+/* -- Demo ads -- */
+
+
+
+@media (max-width: 1200px) {
+
+	#bsaHolder{
+		 display:none;
+		}
+		
+}
+
+/* -- Link to Tutorialzine -- */
+
+
+.tz-link{
+
+	text-decoration: none;
+
+	color: #fff !important;
+
+	font: bold 36px Arial,Helvetica,sans-serif !important;
+
+}
+
+
+.tz-link span{
+
+	color: #da431c;
+
+}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Registration Page</title>
+		<link rel="stylesheet" href="css/registrationFormUsingJS(CSS).css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="javascript/registrationFormUsingJS(JS).js"></script>
+		<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+		<script src="//geodata.solutions/includes/countrystatecity.js"></script>-->
+	</head>	
+	<body onLoad="rand()">
+		<div class="outter-div">
+			<div class="inner-div"><h1>Sign up:</h1></div><br>			
+			<div class="inner-div div-form">
+				<!--form-->
+				<form name="registrationForm" action="asp/directory.asp" method="post">
+					<span class="star-info">The fields with <label class="star">*</label>are mandatory</span>
+					<br><br>
+					<!--first name-->					
+					<label class="in gein margin-10" for="f_name">First name:<label class="star">*</label></label>
+                    <input class="box-style" type="text" id="f_name" name="f_name" placeholder="First name" OnFocus="focusIn('f_name','error_f_name')" OnFocusout="return wordOut('f_name','error_f_name')" required>
+					<div class="error-msg" id="error_f_name"></div>
+					<!--last name-->					
+					<label class="in gein margin-10" for="l_name">Last name:<label class="star">*</label></label>
+                    <input class="box-style" type="text" id="l_name" name="l_name" placeholder="Last name" OnFocus="focusIn('l_name','error_l_name')" OnFocusout="return wordOut('l_name','error_l_name')" required >						
+					<div class="error-msg" id="error_l_name"></div>
+					<!--email-->					
+					<label class="in gein margin-10" for="email">E-mail:<label class="star">*</label></label>
+                    <input class="box-style" type="email" id="email" name="email" placeholder="abc@gmail.com" OnFocus="focusIn('email','error_email')" OnFocusout="return emailOut()" required >						
+					<div class="error-msg" id="error_email"></div>
+					<!--password-->					
+					<label class="in gein margin-10" for="password">Password:<label class="star">*</label></label>
+                    <input class="box-style" type="password" id="password" name="password" placeholder="Password" OnFocus="focusIn('password','error_password')" OnFocusout="return passwordOut()" required >						
+					<div class="error-msg" id="error_password"></div>
+					<label class="in gein margin-10" for="c_password">Confirm Password:<label class="star">*</label></label>
+                    <input class="box-style" type="password" id="c_password" name="c_password" placeholder="Re-type password" OnFocus="focusIn('c_password','error_c_password')" OnFocusout="return c_passwordOut()" required >
+					<div class="error-msg" id="error_c_password"></div>
+											
+					<!--gender-->					
+					<label class="gen gein margin-10" for="gender">
+						Gender:<label class="star">*</label>
+					</label>					
+					<label>
+                        <input class="margin-10" type="radio" id="female" name="gender" value="Female" checked>
+                        <label for="female" >Female</label>                                            
+                        <input class="margin-10" type="radio" id="male" name="gender" value="Male">
+                        <label for="male">Male</label>                    
+                        <input class="margin-10" type="radio" id="others" name="gender" value="Others">
+                        <label for="others">Others</label>
+                    </label>					
+					<!-- phone number-->					
+					<label class="in gein margin-10" for="contact">Contact Number:<label class="star">*</label></label>
+                    <input class="box-style" type="text" id="contact" name="contact" placeholder="Contact Number" maxlength="10" OnFocus="focusIn('contact','error_contact')" OnFocusout="return contactOut()" required>
+					<div class="error-msg" id="error_contact"></div>
+					<label class="in gein margin-10" for="alt_contact">Alternate Contact Number:</label>
+                    <input class="box-style" type="text" id="alt_contact" name="alt_contact" placeholder="Alternate Contact Number" maxlength="10" OnFocus="focusIn('alt_contact','error_alt_contact')" OnFocusout="return alt_contactOut()" >
+					<div class="error-msg" id="error_alt_contact"></div>
+					
+					<!--current address-->					
+					<!--<label class="in gein margin-10 pc-add" for="current address">Current address:<label class="star">*</label></label>					
+					<br>
+										
+					<label class="in gein margin-10" for="country1">Country:<label class="star">*</label></label>						
+					<select class="countries box-style" name="country1" id="country1" OnFocus="focusIn('country1','error_country1')" OnFocusout="return countryStateOut('country1','error_country1')" required>
+						<option value="-1">Select Country</option>
+					</select>
+					<div class="error-msg" id="error_country1"></div>
+					
+					<label class="in gein margin-10" for="state1">State:<label class="star">*</label></label>					
+					<select class="states box-style" name="state1" id="state1" OnFocus="focusIn('state1','error_state1')" OnFocusout="return countryStateOut('state1','error_state1')" required >
+						<option value="-1">Select State</option>
+					</select>	
+					<div class="error-msg" id="error_state1"></div>
+					
+					<label class="in gein margin-10" for="city1">City:<label class="star">*</label></label>
+					<select class="cities box-style" name="city1" id="city1" OnFocus="focusIn('city1','error_city1')" OnFocusout="return wordOut('city1','error_city1')"  required >						
+						<option value="-1">Select City</option>
+					</select>
+					<div class="error-msg" id="error_city1"></div>
+					<label class="in gein margin-10" for="address1">Address 1:<label class="star">*</label></label>
+					<input class="box-style" type="textarea" id="address1" name="address1" placeholder="Street/Block, House no." OnFocus="focusIn('address1','error_address1')" OnFocusout="return address1Out()"  required >					
+					<div class="error-msg" id="error_address1"></div>-->
+					<!--permanent address-->					
+					<!--<label class="in gein margin-10 pc-add" for="permanent address">Permanent address:</label>					
+					<br>
+										
+					<label class="in gein margin-10" for="country2">Country:</label>					
+					<select class="countries box-style" name="country2" id="country2" OnFocus="focusIn('country2','error_country2')" OnFocusout="countryState2Out('country2')" required>
+						<option value="-1">Select Country</option>
+					</select>
+					<div class="error-msg" id="error_country2"></div>
+					
+					<label class="in gein margin-10" for="state2">State: </label>					
+					<select class="states box-style" name="State2" id="state2" OnFocus="focusIn('state2','error_state2')" OnFocusout="countryState2Out('state2')">
+						<option value="-1">Select State</option>
+					</select>
+					<div class="error-msg" id="error_state2"></div>
+					
+					<label class="in gein margin-10" for="city2" >City: </label>
+					<select class="cities box-style" id="city2" name="city2" OnFocus="focusIn('city2','error_city2')" OnFocusout="return city2Out()" >						
+						<option value="-1">Select City</option>
+					</select>
+					<div class="error-msg" id="error_city2"></div>
+					
+					<label class="in gein margin-10" for="address2">Address 2: </label>
+					<input class="box-style" type="textarea" id="address2" name="address2" placeholder="Street/Block, House no." OnFocus="focusIn('address2','error_address2')" OnFocusout="return address2Out()" >						
+					<div class="error-msg" id="error_address2"></div>
+					<select name="country" class="countries order-alpha" id="countryId">
+						<option value="">Select Country</option>
+					</select>
+					<select name="state" class="states order-alpha" id="stateId">
+						<option value="">Select State</option>
+					</select>
+					<select name="city" class="cities order-alpha" id="cityId">
+						<option value="">Select City</option>
+					</select>-->
+										<!--current address-->					
+					<label class="in gein margin-10 pc-add" for="current address">Current address:<label class="star">*</label></label>					
+					<br>
+					<!--country-->					
+					<label class="in gein margin-10" for="country1">Country:<label class="star">*</label></label>						
+					<select class="box-style" name="country1" id="country1" OnFocus="focusIn('country1','error_country1')" OnFocusout="return countryStateOut('country1','error_country1')" required>
+					</select>
+					<div class="error-msg" id="error_country1"></div>
+					<label class="in gein margin-10" for="state1">State:<label class="star">*</label></label>					
+					<select class="box-style" name="state1" id="state1" OnFocus="focusIn('state1','error_state1')" OnFocusout="return countryStateOut('state1','error_state1')" required >
+					</select>	
+					<div class="error-msg" id="error_state1"></div>
+					<label class="in gein margin-10" for="city1">City:<label class="star">*</label></label>
+					<input class="box-style" type="text" id="city1" name="city1" placeholder="City" OnFocus="focusIn('city1','error_city1')" OnFocusout="return wordOut('city1','error_city1')"  required >						
+					<div class="error-msg" id="error_city1"></div>
+					<label class="in gein margin-10" for="address1">Address 1:<label class="star">*</label></label>
+					<input class="box-style" type="textarea" id="address1" name="address1" placeholder="Street/Block, House no." OnFocus="focusIn('address1','error_address1')" OnFocusout="return address1Out()"  required >					
+					<div class="error-msg" id="error_address1"></div>
+					<!--permanent address-->					
+					<label class="in gein margin-10 pc-add" for="permanent address">Permanent address:</label>					
+					<br>
+					<!--country-->					
+					<label class="in gein margin-10" for="country2">Country:</label>					
+					<select class="box-style" name="country2" id="country2" OnFocus="focusIn('country2','error_country2')" OnFocusout="countryState2Out('country2')" required>
+					</select>
+					<div class="error-msg" id="error_country2"></div>
+					<!--state-->
+					<label class="in gein margin-10" for="state2">State: </label>					
+					<select class="box-style" name="State2" id="state2" OnFocus="focusIn('state2','error_state2')" OnFocusout="countryState2Out('state2')">
+					</select>
+					<div class="error-msg" id="error_state2"></div>
+					<script language="javascript" >
+						populateCountries("country1", "state1");
+						populateCountries("country2", "state2");
+					</script>
+					<label class="in gein margin-10" for="city2" >City: </label>
+					<input class="box-style" type="text" id="city2" name="city2" placeholder="City" OnFocus="focusIn('city2','error_city2')" OnFocusout="return city2Out()" >						
+					<div class="error-msg" id="error_city2"></div>
+					<label class="in gein margin-10" for="address2">Address 2: </label>
+					<input class="box-style" type="textarea" id="address2" name="address2" placeholder="Street/Block, House no." OnFocus="focusIn('address2','error_address2')" OnFocusout="return address2Out()" >						
+					<div class="error-msg" id="error_address2"></div>
+					<!--subcribe-->				
+					<br><br>
+					<label class="news margin-10" for="news" ><span>Subscribe Newsletter?</span></label>					
+					<label>
+                        <input type="radio" name="news" value="Yes" checked>
+                        <span>Yes</span>                    
+                        <input type="radio" name="news" value="No">
+                        <span>No</span>
+                    </label>
+					<br><br>
+					Calculate the captcha and enter your answer:<br><br>
+					<label id = "digit1"></label>
+					<label id = "operator"></label>
+					<label id = "digit2"></label>
+					<input class="refresh" type="button" type = "refresh" onclick="rand()">
+					</button><br><br>
+					<input class="answer" type="text" id="answer" OnFocus="focusIn('answer','error_answer')" OnFocusout="return captchaOut()" ><br><br>
+					<div class="error-msg-captcha" id="error_answer"></div><br>
+					<button class="button" id="submit" type= "submit" onclick="return validate();">Submit</button>
+					<br><br><br>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
