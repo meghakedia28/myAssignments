@@ -15,7 +15,7 @@
 
 		<div class="page-title">
 			<div class="container">
-				<h2>Add questions</h2>
+				<h2>Give Quiz:/h2>
 			</div>
 		</div>
 	</header>

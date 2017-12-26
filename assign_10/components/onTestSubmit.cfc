@@ -1,11 +1,11 @@
 <cfcomponent output="false">
-	<!---insert Score into db--->
+	<!---insert scoreDetails into db--->
 	<cffunction name="insertScore" access="remote" output="false" returntype="boolean" returnformat="JSON">
 		<cfset var score = #getScore(#URL#)# />
 			<cftry>
 				<cftransaction>
 					<cfquery name="insertScore">
-						INSERT INTO [score]
+						INSERT INTO [scoreDetails]
 							VALUES (
 							<cfqueryparam value = "#session.stQuizStarts.quizId#" cfsqltype="cf_sql_bigint">,
 							<cfqueryparam value= "#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint">,0,

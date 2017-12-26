@@ -8,9 +8,9 @@
 		<cftry>
 		<cftransaction>
 		<cfquery name="checkTestOver">
-			SELECT [score].[scoreId] FROM [score] JOIN [quiz]
-			ON [score].[quizId] = [quiz].[quizId]
-			WHERE [score].[userId] = <cfqueryparam value="#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint"> AND
+			SELECT [scoreDetails].[scoreId] FROM [scoreDetails] JOIN [quiz]
+			ON [scoreDetails].[quizId] = [quiz].[quizId]
+			WHERE [scoreDetails].[userId] = <cfqueryparam value="#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint"> AND
 			[quiz].[quizId] = <cfqueryparam value="#testDetails.quizId#" cfsqltype="cf_sql_bigint">
 		</cfquery>
 		<cfif !((#currentTime# GTE #startTime#) AND (#currentTime# LTE #endTime#) AND (checkTestOver.RecordCount EQ 0)) >
