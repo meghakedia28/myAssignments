@@ -1,30 +1,30 @@
 $(document).ready(function(){
-	$("#quizForm").submit(function(event){
-		/*
-var valid = validate();
-*/
+	$("#quizForm").submit(function(event){	
+	var valid = validate();
 		event.preventDefault();
-		$.ajax({
-			url : "../components/enterQuiz.cfc?method=validateAllFields&"+$("#quizForm").serialize(),
-			data : {},
-				success : function(result){
-					var obj = $.parseJSON(result);
-					if (obj.SUCCESSFULL != null){						
-						alert (obj.MESSAGE);
-						if(obj.SUCCESSFULL == true){
-							$("#quizForm").trigger('reset');
-							$(".error-msg").text("");
+		if (valid) {
+			$.ajax({
+				url : "../components/enterQuiz.cfc?method=validateAllFields&"+$("#quizForm").serialize(),
+				data : {},
+					success : function(result){
+						var obj = $.parseJSON(result);
+						if (obj.SUCCESSFULL != null){						
+							alert (obj.MESSAGE);
+							if(obj.SUCCESSFULL == true){
+								$("#quizForm").trigger('reset');
+								$(".error-msg").text("");
+							}
+						}
+						if (obj.ERRORID != null){
+							for (keys in obj.ERRORID){
+								var id = '#'+(keys.toLowerCase());
+								$(id).text(obj.ERRORID[keys]);
+							}
 						}
 					}
-					if (obj.ERRORID != null){
-						for (keys in obj.ERRORID){
-							var id = '#'+(keys.toLowerCase());
-							$(id).text(obj.ERRORID[keys]);
-						}
-					}
-				}
-		}) ;
-	});
+				}) ;
+			}
+		});
 	$("input,select").focus(function(){
 		$(this).css("border","");
 		$(this).next(".error-msg").text("");
@@ -52,16 +52,26 @@ var valid = validate();
 			$("#startTime").css("border","2px solid red");
 			return false;
 		}
-		$.ajax({
-			url : "../components/enterQuiz.cfc?method=checkDate",
-				data : {
-					startDate : start
-				},
-				success: function(result) {
-					$("#error_starttime").text(result);
-				}
-			});	
-	});
+		else{
+			$.ajax({
+				url : "../components/enterQuiz.cfc?method=checkDate",
+					data : {
+						startDate : start
+					},
+					success: function(result) {
+						var obj = $.parseJSON(result);
+						if (obj.status = "success"){
+							$("#error_starttime").text(obj.MESSAGE);
+							return true;
+						}
+							else {
+								$("#error_starttime").text(obj.MESSAGE);
+								return false;
+							}
+					}	
+				});	
+			}
+		});
 	$("#endTime").focusout(function(){
 		var end = $("#endTime").val();
 		if(end == "" || end == null){
@@ -102,16 +112,19 @@ function checkBoxEmpty(elementId,errorId){
 	var q = $('[name="questionId"]')
 	var c = 0
 	for (i=0;i<n;i++){
-		if(q[i].checked)
-		c = c+1;
-		break;
+		if(q[i].checked){
+			c = c+1;
+			break;
 		}
+	}
 	if (c == 0) {
 		$(errorId).text("You should select atleast some questions before setting a quiz");
 		return false;
 	}
-	else 
+	else {
+		$(errorId).text("");
 		return true;
+	}
 }
 function validate(){
 	var name = wordCheck("#quizName","#error_quizname");

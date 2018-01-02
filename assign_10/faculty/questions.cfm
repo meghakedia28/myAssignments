@@ -1,10 +1,11 @@
 ﻿<cfif NOT isUserLoggedIn() || session.stLoggedInUser.roleId NEQ 2>
 		<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
-	<cfmodule template="../customTags/facultyFront.cfm" >
+<cfimport taglib = "../customTags/" prefix="tags">
+	<tags:facultyFront>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../js/validQuestions.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/validQuestions.js"></script>
 		<div class="page-title">
 			<div class="container">
 				<h2>Add questions</h2>
@@ -63,22 +64,6 @@
 								</cfform>
 							</div> <!-- .boxed-section .request-form -->
 						</div>
-						<div class="col-md-6">
-							<div class="boxed-section best-students">
-								<h2 class="section-title  text-center">Other activities:</h2>
-								<div class="field no-label">
-										<div class="control text-center">
-											<a href = "">View question Bank</a>
-										</div>
-										<div class="control text-center">
-											<a href = "">Set a quiz</a>
-										</div>
-										<div class="control text-center">
-											<a href = "">View results</a>
-										</div>
-								</div>
-							</div>
-						</div>
 					</div>
-		</main>
-</cfmodule>
+			</main>
+	</tags:facultyFront>

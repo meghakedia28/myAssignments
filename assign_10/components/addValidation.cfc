@@ -44,7 +44,7 @@
 		<cfif (phoneNumber EQ '')>
 			<cfset variables.errorStruct.errorId.error_contactnumber="You can't leave this empty.">
 		<cfelseif !((isValid("telephone",phoneNumber)))>
-			<cfset errorStruct.errorId.error_contact="Please enter only numbers(0-9) of 10 digits.">
+			<cfset variables.errorStruct.errorId.error_contact="Please enter only numbers(0-9) of 10 digits.">
 		</cfif>
 	</cffunction>
 	<!---subject---->

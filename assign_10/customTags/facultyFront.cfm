@@ -5,14 +5,14 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
-		
-		<title>Lincoln High School</title>
+
+		<title>St. Joseph's High School</title>
 		<!-- Loading third party fonts -->
 		<link href="http://fonts.googleapis.com/css?family=Arvo:400,700|" rel="stylesheet" type="text/css">
 		<link href="../fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
-		<!-- Loading main css file -->	
+		<!-- Loading main css file -->
 		<link rel="stylesheet" href="../css/style.css">
-		
+
 		<script src="../js/jquery-1.11.1.min.js"></script>
 		<script src="../js/plugins.js"></script>
 		<script src="../js/app.js"></script>
@@ -31,21 +31,22 @@
 							<img src="../images/logo.png" alt="Lincoln high School">
 							<h1 class="site-title">St. Joseph's High School</h1>
 						</a> <!-- #branding -->
-						
+
 						<div class="main-navigation">
 							<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
 							<ul class="menu">
 								<li class="menu-item"><a href="home.cfm">Home</a></li>
 								<li class="menu-item"><a href="questions.cfm">Question Bank</a></li>
 								<li class="menu-item"><a href="quiz.cfm">Set a quiz</a></li>
-								<li class="menu-item"><a href="results.cfm">results</a></li>
+								<li class="menu-item"><a href="results.cfm">Results</a></li>
+								<li class="menu-item"><a href="studentsProfile.cfm">Student's Profile</a></li>
 								<li class="menu-item"><a href="../comman/loginPage.cfm?logout">LogOut</a></li>
 							</ul> <!-- .menu -->
 						</div> <!-- .main-navigation -->
 						<div class="mobile-navigation"></div>
 					</div> <!-- .container -->
 				</div> <!-- .primary-header -->
-			
+
 	<!---end of header---->
 	<cfelse>
 	<!---start of footer--->

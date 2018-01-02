@@ -1,7 +1,8 @@
 ﻿<cfif NOT isUserLoggedIn() || session.stLoggedInUser.roleId NEQ 2>
 		<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
-		<cfmodule template = "../customTags/facultyFront.cfm">
+		<cfimport taglib = "../customTags/" prefix="tags">
+			<tags:facultyFront>
 				<div class="home-slider">
 					<div class="container">
 						<div class="slider">
@@ -34,4 +35,4 @@
 	<!---end of header--->
 		</header>
 	</div>
-</cfmodule>
+</tags:facultyFront>

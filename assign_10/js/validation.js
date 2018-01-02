@@ -51,7 +51,7 @@ $(document).ready(function(){
 		}
 	});
 	$('#contactNumber').focusout(function(){
-		numberCheck('#contactNumber','#error_contactNumber');
+		numberCheck('#contactNumber','#error_contactnumber');
 	});
 	$('#subject').focusout(function(){
 		var subjectVal = $('#subject').val();
@@ -88,7 +88,7 @@ function wordCheck(elementId,errorId){
 }
 function emailCheck(elementId,errorId){
 	var id = $(elementId).val();
-	var regid = /^[a-zA-Z][a-zA-Z0-9\s,'-.!@#\$%\^&\*]{1,40}$/;
+	var regid = /^[a-zA-Z][a-zA-Z0-9\s,'-.!@#\$%\^&\*]{8,40}$/;
 	var atposition = id.indexOf("@");
 	var dotposition = id.lastIndexOf(".");
 	if (id == "" || id == null){
@@ -97,7 +97,7 @@ function emailCheck(elementId,errorId){
 		return false;
 	}
 	if (!(regid.test(id))){
-		$(errorId).text("Please use alphabets (a-z) or (A-Z) between 1 and 30 characters");
+		$(errorId).text("Please use alphabets (a-z) or (A-Z) between 8 and 30 characters");
 		$(elementId).css("border","2px solid red");
 	}
 	if (atposition < 1 || dotposition < atposition+2 || dotposition+2 >= id.length){

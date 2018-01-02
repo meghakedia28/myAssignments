@@ -1,4 +1,4 @@
-﻿<cfif NOT isUserLoggedIn() || session.stLoggedInUser.roleId NEQ 2>
+<cfif NOT isUserLoggedIn() || session.stLoggedInUser.roleId NEQ 2>
 		<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 		<div class="page-title">
 			<div class="container">
-				<h2>View results</h2>
+				<h2>View Students Profile</h2>
 			</div>
 		</div>
 	</header>
@@ -17,28 +17,24 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
-							<cfset results =  createobject("component",'assign_10.components.facultyResultSet').generateResultSet() />
+							<cfset results =  createobject("component",'assign_10.components.getStudents').getStudentsDetails() />
 							  <cfset Slno = 0>
 								<table class="w3-centered col-md-12 " id="result" name="result">
 									<tr>
 										<th>Sl No.</th>
-										<th>Quiz Name</th>
-										<th>Start time</th>
-										<th>End time</th>
-										<th>Student's name</th>
-										<th>Score percentage</th>
-										<th>Rank</th>
+										<th>Name</th>
+										<th>email Id</th>
+										<th>Contact No.</th>
+										<th>View Scores</th>
 									</tr>
 									<cfoutput query="results">
 										<tr>
 											<cfset Slno = Slno + 1 />
 											<td>#Slno#</td>
-											<td>#name#</td>
-										 	<td>#startDateTime#</td>
-										 	<td>#endDateTime#</td>
-									 		<td>#firstName# #lastName#</td>
-									 		<td>#score# %</td>
-											<td>#RANK#</td>
+											<td>#firstName# #lastName#</td>
+											<td>#emailid#</td>
+											<td>#contactNumber#</td>
+											<td><a href="studentsResults.cfm?Id=#userId#" target="_blank">view all tests scores</a></td>
 										</tr>
 									</cfoutput>
 								</table><br>

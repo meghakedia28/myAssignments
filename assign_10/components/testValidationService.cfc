@@ -1,10 +1,10 @@
 <cfcomponent output="false" >
 	<cffunction name="checkTestTime" output="false" access="remote" returntype="boolean" returnformat="JSON">
-		<cfset object =  createobject("component",'assign_10.components.getQuizDetails') />
-		<cfset testDetails = object.quizDetails()>
-		<cfset startTime =  #testDetails.startDateTime# />
-		<cfset endTime =  #testDetails.endDateTime# />
-		<cfset var currentTime = (DateFormat(now(),'yyyy-mm-dd') & ' ' & LSTimeFormat(now(),'hh:mm:ss')) />
+		<cfset var object =  createobject("component",'assign_10.components.getQuizDetails') />
+		<cfset var testDetails = object.quizDetails()>
+		<cfset var startTime =  #testDetails.startDateTime# />
+		<cfset var endTime =  #testDetails.endDateTime# />
+		<cfset var currentTime = (DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')) />
 		<cftry>
 		<cftransaction>
 		<cfquery name="checkTestOver">

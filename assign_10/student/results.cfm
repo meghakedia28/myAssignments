@@ -1,25 +1,25 @@
 ﻿<cfif NOT isUserLoggedIn()>
 		<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
-<cfmodule template="../customTags/studentFront.cfm" >
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<div class="page-title">
-				<div class="container">
-					<h2>Results:</h2>
+<cfimport taglib = "../customTags/" prefix="tags">
+	<tags:studentFront>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<div class="page-title">
+					<div class="container">
+						<h2>Performance Report:</h2>
+					</div>
 				</div>
-			</div>
-		</header>
-	</div>
-	<main class="main-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-
+			</header>
+		</div>
+		<main class="main-content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
 						<cfset object =  createobject("component",'assign_10.components.viewResultsService') />
-							<cfset marks = object.userResult()>
-							<cfset Slno = 0>
+						<cfset marks = object.userResult(#session.stLoggedInUser.userId#)>
+						<cfset Slno = 0>
 								<table class="w3-centered col-md-12 " id="result" name="result">
 									<tr>
 										<th>Sl No.</th>
@@ -35,7 +35,7 @@
 										 	<td>#name#</td>
 										 	<td>#startDateTime#</td>
 									 		<td>#score# %</td>
-									 		<cfset rank = object.getRanks(#marks.quizId#)/>
+									 		<cfset rank = object.getRanks(#marks.quizId#, #session.stLoggedInUser.userId#)/>
 											<td>#rank#</td>
 										</tr>
 									</cfoutput>
@@ -46,4 +46,4 @@
 							</div> <!-- .boxed-section .request-form -->
 						</div>
 						</main>
-</cfmodule>
+</tags:studentFront>

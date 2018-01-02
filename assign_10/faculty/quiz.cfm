@@ -1,24 +1,24 @@
 ﻿<cfif NOT isUserLoggedIn() || session.stLoggedInUser.roleId NEQ 2>
 		<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
-  <cfmodule template="../customTags/facultyFront.cfm" >
-  	   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	 <link rel="stylesheet" href="../css/heights.css">
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
-	<script>
-		$.noConflict();
-		jQuery(document).ready(function($){
-			$('#startTime').datetimepicker({
-				 formatDate:'Y/m/d',
-				minDate:0
+<cfimport taglib = "../customTags/" prefix="tags">
+	<tags:facultyFront>
+  	   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="../css/heights.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
+		<script>
+			$.noConflict();
+			jQuery(document).ready(function($){
+				$('#startTime').datetimepicker({
+					 formatDate:'Y/m/d',
+					minDate:0
+				});
 			});
-		});
-	</script>
-<script src="../js/quizValidation.js"></script>
+		</script>
+		<script src="../js/quizValidation.js"></script>
 		<div class="page-title">
 			<div class="container">
 				<h2>Set a quiz</h2>
@@ -49,7 +49,7 @@
 																<option value="">Select the correct option</option>
 																<option value="15">15 mins</option>
 																<option value="30">30 mins</option>
-																<option value="45">45 minsC</option>
+																<option value="45">45 mins</option>
 																<option value="60">60 mins</option>
 																<option value="75">1 hr 15 mins</option>
 																<option value="90">1hr 30 mins</option>
@@ -97,10 +97,9 @@
 													 </tr>
 												</cfoutput>
 											</table>
-
 										</cfform>
 									</div>
 								</div>
 							</div>
 						</main>
-</cfmodule>
+</tags:facultyFront>

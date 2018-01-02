@@ -1,7 +1,8 @@
 ﻿<cfif NOT isUserLoggedIn()>
-		<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
-	<cfmodule template="../customTags/studentFront.cfm" >
+<cfimport taglib = "../customTags/" prefix="tags">
+	<tags:studentFront>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -13,7 +14,7 @@
 		</header>
 	</div>
 	<cfif structKeyExists(session,'stQuizStarts') >
-	<cfif (#session.stQuizStarts.endTime# LT #now()#)  >
+		<cfif (#session.stQuizStarts.endTime# LT #now()#)  >
 			<h1> Test time has ended, please come back in the next test </h1>
 			<div id="testEndMsg" name="testEndMsg"></div>
 		<cfelse>
@@ -33,7 +34,7 @@
 									<p class="section-title text-center">
 									<cfinput name="startTime" id="startTime" type="hidden" value="#session.stQuizStarts.startTime#">
 									<cfinput name="endTime" id="endTime" type="hidden" value="#session.stQuizStarts.endTime#">
-									<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & LSTimeFormat(now(),'hh:mm:ss')#">
+									<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
 
 										<cfset object =  createobject("component",'assign_10.components.getQuizQuestions') />
 										<cfset questions = object.quizQuestions(#session.stQuizStarts.quizId#)>
@@ -74,4 +75,4 @@
 			<cflocation url = "tests.cfm?noaccess">
 		</cfif>
 		<script src="../js/testStartValidation.js"></script>
-</cfmodule>
+</tags:studentFront>

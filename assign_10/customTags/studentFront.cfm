@@ -5,14 +5,14 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
-		
-		<title>Lincoln High School</title>
+
+		<title>St.Joseph's High School</title>
 		<!-- Loading third party fonts -->
 		<link href="http://fonts.googleapis.com/css?family=Arvo:400,700|" rel="stylesheet" type="text/css">
 		<link href="../fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<!-- Loading main css file -->
 		<link rel="stylesheet" href="../css/style.css">
-		
+
 		<!--[if lt IE 9]>
 		<script src="js/ie-support/html5.js"></script>
 		<script src="js/ie-support/respond.js"></script>
@@ -28,7 +28,7 @@
 							<img src="../images/logo.png" alt="Lincoln high School">
 							<h1 class="site-title">St. Joseph's High School</h1>
 						</a> <!-- #branding -->
-						
+
 						<div class="main-navigation">
 							<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
 							<ul class="menu">
@@ -41,7 +41,7 @@
 						<div class="mobile-navigation"></div>
 					</div> <!-- .container -->
 				</div> <!-- .primary-header -->
-			
+
 	<!---end of header---->
 	<cfelse>
 	<!---start of footer--->

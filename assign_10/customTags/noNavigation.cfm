@@ -1,4 +1,4 @@
-﻿<cfif thistag.executionMode EQ 'start'>
+<cfif thistag.executionMode EQ 'start'>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -13,11 +13,9 @@
 		<!-- Loading main css file -->
 		<link rel="stylesheet" href="../css/style.css">
 
-		<!--[if lt IE 9]>
-		<script src="js/ie-support/html5.js"></script>
-		<script src="js/ie-support/respond.js"></script>
-		<![endif]-->
-
+		<script src="../js/jquery-1.11.1.min.js"></script>
+		<script src="../js/plugins.js"></script>
+		<script src="../js/app.js"></script>
 	</head>
 	<body>
 		<div id="site-content">
@@ -28,17 +26,6 @@
 							<img src="../images/logo.png" alt="Lincoln high School">
 							<h1 class="site-title">St. Joseph's High School</h1>
 						</a> <!-- #branding -->
-
-						<div class="main-navigation">
-							<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
-							<ul class="menu">
-								<li class="menu-item"><a href="home.cfm">Home</a></li>
-								<li class="menu-item"><a href="faculties.cfm">Faculties</a></li>
-								<li class="menu-item"><a href="students.cfm">Students</a></li>
-								<li class="menu-item"><a href="../comman/loginPage.cfm?logout">LogOut</a></li>
-							</ul> <!-- .menu -->
-						</div> <!-- .main-navigation -->
-						<div class="mobile-navigation"></div>
 					</div> <!-- .container -->
 				</div> <!-- .primary-header -->
 
@@ -101,9 +88,6 @@
 				<div class="copy">Copyright 2014 Lincoln High School. All rights reserved.</div>
 			</div>
 		</footer>
-		<script src="../js/jquery-1.11.1.min.js"></script>
-		<script src="../js/plugins.js"></script>
-		<script src="../js/app.js"></script>
 	</body>
 </html>
 </cfif>
