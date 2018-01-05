@@ -19,7 +19,10 @@ background-color: #FFF;
 padding: 20px;
 border-radius: 5px
 }
-
+.error{
+	font-size: 14px;
+	color: #ff0000;
+}
 .app-title {
 text-align: center;
 color: #777;

@@ -1,4 +1,29 @@
  $(document).ready(function(){
+	$("#resetForm").submit(function(event){
+		event.preventDefault();
+		var checkPassword = passwordOut('#password','#error_password');
+		var checkConfirmPassword = c_passwordOut('#confirmPassword','#error_confirmPassword');
+		if (checkPassword && checkConfirmPassword) {
+			$.ajax({
+				url : "../components/resetPasswordService.cfc?method=validate&"+$("#resetForm").serialize(),
+				data : {},
+					success : function(result){
+						var obj = $.parseJSON(result);
+						if (obj.ERRORID == "") {
+							$("#resetForm").trigger('reset');
+							$(".error-msg").text("");
+							window.location.replace("loginPage.cfm");
+						}
+						else {
+							for (keys in obj.ERRORID) {
+								var id = '#'+(keys.toLowerCase());
+								$(id).text(obj.ERRORID[keys]);
+							}
+						}
+					}
+			}) ;
+		}
+	});
 	$("input").focus(function(){
         $(this).css("background-color", "#e6f9ff");
 		$(this).css("border","");
@@ -34,12 +59,12 @@ function c_passwordOut(){
 	var cpaswrd = $("#confirmPassword").val();
 	//var regpassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 	if (cpaswrd == "" || cpaswrd == null){
-		$("#error_confirmPassword").text("You can't leave this empty.");
+		$("#error_confirmpassword").text("You can't leave this empty.");
 		$("#confirmPassword").css("border","2px solid red");
 		return false;
 	}
 	else if (paswrd != cpaswrd){
-		$("#error_confirmPassword").text("Confirm password did not match with the password.");
+		$("#error_confirmpassword").text("Confirm password did not match with the password.");
 		$("#confirmPassword").css("border","2px solid red");
 		return false;
 	}

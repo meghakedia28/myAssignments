@@ -8,7 +8,7 @@
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 		<div class="page-title">
 			<div class="container">
-				<h2>View Students Profile</h2>
+				<h2 style="font-weight: bold;">View Students Profile</h2>
 			</div>
 		</div>
 	</header>

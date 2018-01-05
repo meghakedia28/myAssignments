@@ -20,17 +20,8 @@
 	<body>
 		<div id="site-content">
 			<header class="site-header">
-				<div class="primary-header">
-					<div class="container">
-						<a href="home.html" id="branding">
-							<img src="../images/logo.png" alt="Lincoln high School">
-							<h1 class="site-title">St. Joseph's High School</h1>
-						</a> <!-- #branding -->
-					</div> <!-- .container -->
-				</div> <!-- .primary-header -->
-
 	<!---end of header---->
-	<cfelse>
+<cfelse>
 	<!---start of footer--->
 		<footer class="site-footer">
 			<div class="container">

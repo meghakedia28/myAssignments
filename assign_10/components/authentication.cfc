@@ -12,6 +12,18 @@
 			<cfif arguments.password EQ ''>
 				<cfset arrayAppend (aErrorMessage,'Please provide the password to access')>
 			</cfif>
+			<cfif ArrayisEmpty(aErrorMessage)>
+				<cfquery name="getPasswordSalt">
+					SELECT [user].[salt], [user].[hashPassword] FROM [user]
+					WHERE [user].[emailid] = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar" />
+				</cfquery>
+				<cfif getPasswordSalt.recordCount EQ 1>
+					<cfset var passwordHased = Hash(arguments.password & getPasswordSalt.salt,'SHA-512' ) />
+					<cfif passwordHased NEQ getPasswordSalt.hashPassword >
+						<cfset arrayAppend (aErrorMessage,'The Password did not match. Please try again')>
+					</cfif>
+				</cfif>
+			</cfif>
 			<cfreturn aErrorMessage>
 		</cffunction> <!---end of function user validation--->
 		<cffunction name="doLogin"  access="public" output="false" returnType="boolean">

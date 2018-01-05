@@ -37,7 +37,7 @@
 					</cfif>
 					<!---check if the user is logged in--->
 					<cfif structKeyExists(variables,'isUserLoggedIn') AND isUserLoggedIn EQ false>
-						<p class="error" id="error">User not found. Please register before login or contact administrator.</p>
+						<p class="error" id="error">User not found. Please contact the administrator at : "megha.kedia28@gmail.com" to get registered.</p>
 					</cfif>
 					<!---redirect to the page accordimg their roles--->
 					<cfif structKeyExists(session,'stLoggedInUser')>

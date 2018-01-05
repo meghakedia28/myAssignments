@@ -4,9 +4,17 @@
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:facultyFront>
   	   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<div class="page-title">
+			<div class="container">
+				<h2 style="font-weight: bold;">Set a quiz</h2>
+			</div>
+		</div>
+	</header>
+</div>
+		<script src="../js/quizValidation.js"></script>
 	  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-		<link rel="stylesheet" href="../css/heights.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
 		<script>
@@ -18,14 +26,6 @@
 				});
 			});
 		</script>
-		<script src="../js/quizValidation.js"></script>
-		<div class="page-title">
-			<div class="container">
-				<h2>Set a quiz</h2>
-			</div>
-		</div>
-	</header>
-</div>
  	<main class="main-content">
 			<div class="container">
 				<div class="row">

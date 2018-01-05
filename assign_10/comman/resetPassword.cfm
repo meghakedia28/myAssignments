@@ -22,15 +22,18 @@
 						<h2> It seems that you have already set the password.<br>
 						You can login from <a href="../comman/loginPage.cfm">HERE</a>.</h2>
 					<cfelse>
-						<cfform action="resetPasswordValidation.cfm?id=#URL.id#" method="post" name="resetForm" id="resetForm" class="form-signin">
-						    <h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
+						<cfform action="" method="post" name="resetForm" id="resetForm" class="form-signin">
+						    <h3 class="form-signin-heading">Welcome !</h3>
 							  <hr class="colorgraph"><br>
-							  <cfinput type="password" class="form-control" id="password" name="password" placeholder="Password" required="true" autofocus="" />
+							  <cfinput type="password" class="form-control" id="password" name="password" placeholder="Password" />
 							 	 <div class="error-msg" id="error_password"></div>
-							  <cfinput type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Re-type Password" required="true"/>
-							 	 <div class="error-msg" id="error_confirmPassword"></div>
-							  <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Set" type="Submit">Login</button>
+							  <cfinput type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Re-type Password" />
+							 	 <div class="error-msg" id="error_confirmpassword"></div>
+							  <cfinput type="hidden" id="id" name="id" value="#URL.id#">
+							  	<div class="error-msg" id="error_insert"></div>
+							  <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Set" type="Submit">Confirm</button>
 						</cfform>
+							<h4 class="message">After setting the password you will be redirected to the login portal.</h4>
 					</cfif>
 				<cfelse>
 					<h2>You have requested a wrong Link. Please try again.</h2>
