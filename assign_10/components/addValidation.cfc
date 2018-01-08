@@ -77,7 +77,6 @@
 			<cfset var role = 2>
 		</cfif>
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
-
 			<cfset insertion = createobject('component','assign_10.components.enterDataService').insertData('#URL#','#role#')/>
 				<cfif (insertion) >
 					<cfset variables.insertionStruct.successfull = 'true'>

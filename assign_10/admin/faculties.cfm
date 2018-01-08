@@ -1,4 +1,4 @@
-﻿<cfif NOT isUserLoggedIn() || session.stLoggedInUser.roleId NEQ 1>
+﻿<cfif NOT (isUserLoggedIn() AND session.stLoggedInUser.roleId EQ 1)>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
@@ -57,8 +57,8 @@
 									</div>
 								</cfform>
 							</div> <!-- .boxed-section .request-form -->
-						</div>
-					</div>
-				</div>
+						</div> <!--col-md-6-->
+					</div><!--row-->
+				</div><!--container-->
 			</main>
 </tags:front>

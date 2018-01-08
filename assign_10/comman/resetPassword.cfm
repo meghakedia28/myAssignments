@@ -38,7 +38,7 @@
 				<cfelse>
 					<h2>You have requested a wrong Link. Please try again.</h2>
 				</cfif>
-			</div>
-		</div>
+			</div><!--wrapper-->
+		</div><!--container-->
 	</body>
 </html>

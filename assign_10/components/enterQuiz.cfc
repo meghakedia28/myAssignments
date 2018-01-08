@@ -29,13 +29,13 @@
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
 			<cfset var insertion = setQuiz("#URL#","#session.stLoggedInUser.userId#")>
 			<cfif (insertion) >
-					<cfset variables.insertionStruct.successfull = 'true'>
-					<cfset variables.insertionStruct.message = 'Quiz has been successfully set'>
-					<cfreturn variables.insertionStruct>
-				<cfelse>
-					<cfset variables.insertionStruct.successfull = 'false'>
-					<cfset variables.insertionStruct.message = 'Error occured while insertion of data'>
-					<cfreturn variables.insertionStruct>
+				<cfset variables.insertionStruct.successfull = 'true'>
+				<cfset variables.insertionStruct.message = 'Quiz has been successfully set'>
+				<cfreturn variables.insertionStruct>
+			<cfelse>
+				<cfset variables.insertionStruct.successfull = 'false'>
+				<cfset variables.insertionStruct.message = 'Error occured while insertion of data'>
+				<cfreturn variables.insertionStruct>
 			</cfif>
 		<cfelse>
 			<cfreturn variables.errorStruct>
@@ -50,7 +50,7 @@
 			<cfset var.stStatus.status = "error" />
 			<cfset var.stStatus.message = "You can't leave this empty." />
 			<cfreturn var.stStatus>
-		<cfelseif !(isValid("regex",name,"^[a-zA-Z0-9 ]{1,30}$" )) >
+		<cfelseif !(isValid("regex",name,"^[a-zA-Z][a-zA-Z0-9 ]{1,30}$" )) >
 			<cfset var.stStatus.status = "error" />
 			<cfset var.stStatus.message = "Please enter your valid quiz name: use (a-z) OR (A-Z) OR (0-9) between 1 to 30 characters." />
 			<cfreturn var.stStatus>
@@ -108,8 +108,8 @@
 	<cffunction name ="checkEndTime" output="false" access="public" returntype="void" >
 		<cfargument name="element" required="true" type="string" >
 		<cfif element EQ ''>
-				<cfset variables.errorStruct.elementId.endTime = element>
-				<cfset variables.errorStruct.errorId.error_endtime = "You can't leave this empty.">
+			<cfset variables.errorStruct.elementId.endTime = element>
+			<cfset variables.errorStruct.errorId.error_endtime = "You can't leave this empty.">
 		</cfif>
 	</cffunction>
 	<cffunction name="checkQuestionList" output="false" access="public" returntype="void" >
@@ -126,47 +126,47 @@
 		<cfset questionsList = #data.questionId#>
 		<cftry>
 			<cftransaction>
-			<cfquery name="insertQuiz">
-				INSERT INTO [quiz]
-					VALUES (
-					<cfqueryparam value="#data.quizName#" cfsqltype="cf_sql_varchar" >,
-					<cfqueryparam value="#data.startTime#" cfsqltype="cf_sql_datetime" >,
-					<cfqueryparam value="#data.startTime#" cfsqltype="cf_sql_datetime" >,
-					<cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" >)
-			</cfquery>
-			<cfquery name="getQuizId">
-				SELECT [quiz].[quizId] FROM [quiz]
-					WHERE [name] = <cfqueryparam value ="#data.quizName#" cfsqltype="cf_sql_varchar" >
-			</cfquery>
-			<cfif getQuizId.RecordCount EQ 1>
-				<cfquery name="getEndDateTime">
-					SELECT [endDateTime] FROM [QUIZ]
+				<cfquery name="insertQuiz">
+					INSERT INTO [quiz]
+						VALUES (
+						<cfqueryparam value="#data.quizName#" cfsqltype="cf_sql_varchar" >,
+						<cfqueryparam value="#data.startTime#" cfsqltype="cf_sql_datetime" >,
+						<cfqueryparam value="#data.startTime#" cfsqltype="cf_sql_datetime" >,
+						<cfqueryparam value="#id#" cfsqltype="cf_sql_bigint" >)
+				</cfquery>
+				<cfquery name="getQuizId">
+					SELECT [quiz].[quizId] FROM [quiz]
 						WHERE [name] = <cfqueryparam value ="#data.quizName#" cfsqltype="cf_sql_varchar" >
 				</cfquery>
-				<cfquery name="addEndDateTime" >
-					select DATEADD (n, #data.endTime#,'#getEndDateTime.endDateTime#') 'RESULT'
-				</cfquery>
-				<cfquery name="updateEndDateTime">
-					UPDATE [quiz]
-						SET [endDateTime] = <cfqueryparam value= #addEndDateTime.RESULT# cfsqltype="cf_sql_datetime" >
-						WHERE [quizId] = <cfqueryparam value="#getQuizId.quizId#" cfsqltype="cf_sql_bigint">
-				</cfquery>
-				<cfloop list="#questionsList#" delimiters="," index="ind">
-					<cfquery name="insertQuizQuestion">
-						INSERT INTO [quizQuestion]
-							VALUES (
-							<cfqueryparam value="#ind#" cfsqltype="cf_sql_numeric" >,
-							<cfqueryparam value="#getQuizId.quizId#" cfsqltype="cf_sql_bigint">)
+				<cfif getQuizId.RecordCount EQ 1>
+					<cfquery name="getEndDateTime">
+						SELECT [endDateTime] FROM [QUIZ]
+							WHERE [name] = <cfqueryparam value ="#data.quizName#" cfsqltype="cf_sql_varchar" >
 					</cfquery>
-				</cfloop>
-			<cfelse >
-				<cfreturn false>
-			</cfif>
-				<cfreturn true>
+					<cfquery name="addEndDateTime" >
+						select DATEADD (n, #data.endTime#,'#getEndDateTime.endDateTime#') 'RESULT'
+					</cfquery>
+					<cfquery name="updateEndDateTime">
+						UPDATE [quiz]
+							SET [endDateTime] = <cfqueryparam value= #addEndDateTime.RESULT# cfsqltype="cf_sql_datetime" >
+							WHERE [quizId] = <cfqueryparam value="#getQuizId.quizId#" cfsqltype="cf_sql_bigint">
+					</cfquery>
+					<cfloop list="#questionsList#" delimiters="," index="ind">
+						<cfquery name="insertQuizQuestion">
+							INSERT INTO [quizQuestion]
+								VALUES (
+								<cfqueryparam value="#ind#" cfsqltype="cf_sql_numeric" >,
+								<cfqueryparam value="#getQuizId.quizId#" cfsqltype="cf_sql_bigint">)
+						</cfquery>
+					</cfloop>
+				<cfelse >
+					<cfreturn false>
+				</cfif>
+					<cfreturn true>
 			</cftransaction>
-		<cfcatch type="any" >
-			<cfreturn false>
-		</cfcatch>
+			<cfcatch type="any" >
+				<cfreturn false>
+			</cfcatch>
 		</cftry>
 	</cffunction>
 </cfcomponent>

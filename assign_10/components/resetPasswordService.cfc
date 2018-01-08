@@ -5,13 +5,13 @@
 		<cfset checkPassword(#URL.confirmPassword#, #URL.password#)>
 			<cfif StructIsEmpty(variables.errorStruct.errorId) >
 				<cfset insert = insertPassword(#URL.password#, #URL.id#)>
-					<cfif insert>
-						<cfset variables.errorStruct.errorId = ''>
-						<cfreturn variables.errorStruct>
-					<cfelse>
-						<cfset variables.errorStruct.errorId.error_insert = "error occured while insertion of data" >
-						<cfreturn variables.errorStruct>
-					</cfif>
+				<cfif insert>
+					<cfset variables.errorStruct.errorId = ''>
+					<cfreturn variables.errorStruct>
+				<cfelse>
+					<cfset variables.errorStruct.errorId.error_insert = "error occured while insertion of data" >
+					<cfreturn variables.errorStruct>
+				</cfif>
 			<cfelse>
 				<cfreturn variables.errorStruct>
 			</cfif>
@@ -44,16 +44,19 @@
 	<cffunction name = "insertPassword" output="false" return type="boolean">
 		<cfargument name="passwords" required="true" type="string">
 		<cfargument name="id" required="true" type="string">
-			<!--- <cfset var password = Hash(arguments.passwords & arguments.id, "SHA-512") /> --->
-<!--- 			<cftransaction> --->
-<!--- 				<cfquery name ="updatePassword"> --->
-<!--- 					UPDATE [user] --->
-<!--- 					SET hashPassword = '#local.password#', active = 1 --->
-<!--- 					WHERE [user].[salt] = '#arguments.id#' --->
-<!--- 				</cfquery> --->
-<!--- 				<cfreturn true> --->
-<!--- 			</cftransaction> --->
-<!--- 				<cfreturn false> --->
-<cfreturn true>
+			<cfset var password = Hash(arguments.passwords & arguments.id, "SHA-512") />
+ 			<cftry>
+				<cftransaction>
+	 				<cfquery name ="updatePassword">
+	 					UPDATE [user]
+						SET hashPassword = '#local.password#', active = 1
+	 					WHERE [user].[salt] = '#arguments.id#'
+	 				</cfquery>
+				</cftransaction>
+				<cfreturn true>
+			<cfcatch type="any">
+ 				<cfreturn false>
+			</cfcatch>
+		</cftry>
 	</cffunction>
 </cfcomponent>

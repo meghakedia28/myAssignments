@@ -89,7 +89,7 @@ $(document).ready(function(){
 });
 function wordCheck(elementId,errorId){
 	var word = $(elementId).val();
-	var regword = /^[a-zA-Z0-9 ]{1,30}$/;
+	var regword = /^[a-zA-Z][a-zA-Z0-9 ]{1,30}$/;
 	if ( word == "" || word == null){
 		$(errorId).text("You can't leave this empty.");
 		$(elementId).css("border","2px solid red");

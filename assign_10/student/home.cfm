@@ -1,4 +1,4 @@
-﻿<cfif NOT isUserLoggedIn()>
+﻿<cfif NOT (isUserLoggedIn() AND session.stLoggedInUser.roleId EQ 3)>
 		<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 	<cfimport taglib = "../customTags/" prefix="tags">

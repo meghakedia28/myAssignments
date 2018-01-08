@@ -38,6 +38,7 @@
 								<li class="menu-item"><a href="home.cfm">Home</a></li>
 								<li class="menu-item"><a href="questions.cfm">Question Bank</a></li>
 								<li class="menu-item"><a href="quiz.cfm">Set a quiz</a></li>
+								<li class="menu-item"><a href="viewQuiz.cfm">View quiz</a></li>
 								<li class="menu-item"><a href="results.cfm">Results</a></li>
 								<li class="menu-item"><a href="studentsProfile.cfm">Student's Profile</a></li>
 								<li class="menu-item"><a href="../comman/loginPage.cfm?logout">LogOut</a></li>

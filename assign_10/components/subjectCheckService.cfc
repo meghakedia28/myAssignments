@@ -1,5 +1,4 @@
 ﻿<cfcomponent output="false">
-
 	<cffunction name="subjectCheck" access="remote" returnformat="JSON" returntype="string">
 		<cfargument name="subject" required="true" type="string" >
 		<cfquery name="subjectCount" >
@@ -17,7 +16,7 @@
 		<cfquery name="emailCheck">
 			SELECT [user].[userId] FROM [user]
 			WHERE [user].[emailid] = <cfqueryparam value="#arguments.email#" cfsqltype="cf_sql_varchar" >
-		</cfquery>  
+		</cfquery>
 		<cfif emailCheck.RecordCount NEQ 0>
 			<cfreturn 'User already exists'>
 		<cfelse>
