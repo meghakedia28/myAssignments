@@ -30,9 +30,10 @@
 								<cfform name="questionsForm" id="questionsForm" action="testStart.cfm">
 									<p class="section-title text-center">
 										<cfset object =  createobject("component",'assign_10.components.getQuizDetails') />
-										<cfset testDetails = object.quizDetails()>
+										<cfset currentTime = "#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#" />
+										<cfset testDetails = object.quizDetails(currentTime)>
 										<cfif structKeyExists(URL,'submitEnd')>
-											<p class="section-title text-center">successfully submitted</p>
+											<p class="section-title text-center">Congratulations! You have completed today's challenge.</p>
 											<cfinput name="startTime" id="startTime" type="hidden" value="">
 											<cfinput name="endTime" id="endTime" type="hidden" value="">
 											<cfinput name="nowTime" id="nowTime" type="hidden" value="">
@@ -44,10 +45,20 @@
 										<cfoutput>
 											<!--- <cfdump var = #testDetails.quizId# abort="true"> --->
 											<cfif testDetails.quizId NEQ '' >
-												<h3 class="section-title text-center"> Next test is at : #testDetails.startDateTime#</h3>
-												<h3 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h3>
-												<h3 class="section-title text-center"> Subject : #testDetails.subjectName#</h3>
-												<h3 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h3>
+												<!--- <cfif ((now() GTE #testDetails.startDateTime#) AND (now()LTE #testDetails.endDateTime#))> --->
+												<div id="onGoingTest" style="display:none">
+													<h3 class=" text-center"> Hurry up! give the test before it ends.</h3>
+													<h3 class=" text-center"> ON going test, started at : #testDetails.startDateTime#</h3>
+													<h3 class=" text-center"> The test Ends on : #testDetails.endDateTime#</h3>
+												</div>
+											<!--- <cfelse> --->
+												<div id="upComingTest" style="display:block">
+													<h3 class="section-title text-center"> Next test is at : #testDetails.startDateTime#</h3>
+												</div>
+												<!--- </cfif> --->
+													<h3 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h3>
+													<h3 class="section-title text-center"> Subject : #testDetails.subjectName#</h3>
+													<h3 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h3>
 											<cfelse>
 												<h2> No test is yet to come.<br /> Tests will be displayed once the faculties set the upcoming tests.</h2>
 											</cfif>
@@ -56,7 +67,7 @@
 									<div class="field no-label">
 									<div class="control  text-center">
  											<!--<button type="submit" class="button text-center" id="startTest" name="startTest" value="<cfoutput>#testDetails.quizId#</cfoutput>" disabled="true" >Start test</button> -->
- 											<span id="fooBar">&nbsp;</span>
+ 											<span id="startTestButton">&nbsp;</span>
 									</div>
  									</div>
 								</cfform>
@@ -82,8 +93,13 @@
 
 				function createButton(time){
 					var element = $('<button type="submit" class="button text-center" id="startTest" name="startTest">Start test</button>');
-					$('#fooBar').append(element);
-					setTimeout(function(){$('#startTest').remove();},time);
+					$('#startTestButton').append(element);
+					$('#onGoingTest').show();
+					$('#upComingTest').hide();
+					setTimeout(function(){
+						$('#startTest').remove();
+						location.reload();
+							},time);
 				}
 			})();
 		</script>

@@ -39,7 +39,14 @@ $(document).ready(function(){
 					name : quiz
 				},
 				success : function(result) {
-					$("#error_quizname").text(result);
+					var obj = $.parseJSON(result);
+					if (obj.STATUS == "success"){
+						return true;
+					}
+						else {
+							$("#error_quizname").text(obj.MESSAGE);
+							return false;
+						}
 				}
 			});
 		}
@@ -54,14 +61,13 @@ $(document).ready(function(){
 		}
 		else{
 			$.ajax({
-				url : "../components/enterQuiz.cfc?method=checkDate",
+				url : "../components/enterQuiz.cfc?method=checkStartTime",
 					data : {
 						startDate : start
 					},
 					success: function(result) {
 						var obj = $.parseJSON(result);
-						if (obj.status = "success"){
-							$("#error_starttime").text(obj.MESSAGE);
+						if (obj.STATUS == "success"){
 							return true;
 						}
 							else {
@@ -83,14 +89,14 @@ $(document).ready(function(){
 });
 function wordCheck(elementId,errorId){
 	var word = $(elementId).val();
-	var regword = /^[a-zA-Z]{1,30}$/;
+	var regword = /^[a-zA-Z0-9 ]{1,30}$/;
 	if ( word == "" || word == null){
 		$(errorId).text("You can't leave this empty.");
 		$(elementId).css("border","2px solid red");
 		return false;
 	}
 	else if (!(regword.test(word))){
-		$(errorId).text("Please use only letters(a-z) or (A-Z)\nbetween 1 and 30 characters.");
+		$(errorId).text("Please enter your valid quiz name: use (a-z) OR (A-Z) OR (0-9) \nbetween 1 and 30 characters.");
 		$(elementId).css("border","2px solid red");
 		return false;
 	}

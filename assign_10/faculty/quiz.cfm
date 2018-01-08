@@ -45,17 +45,18 @@
 									</div>
 									<div class="field">
 										<label for="endTime">Enter the end Time:</label>
-										<div class="control"><cfselect id="endTime" name="endTime" >
-																<option value="">Select the correct option</option>
-																<option value="15">15 mins</option>
-																<option value="30">30 mins</option>
-																<option value="45">45 mins</option>
-																<option value="60">60 mins</option>
-																<option value="75">1 hr 15 mins</option>
-																<option value="90">1hr 30 mins</option>
-																<option value="105">1hr 45 mins</option>
-																<option value="120">2hrs</option>
-															</cfselect>
+										<div class="control">
+										<cfselect id="endTime" name="endTime" >
+											<option value="">Select the correct option</option>
+											<option value="15">15 mins</option>
+											<option value="30">30 mins</option>
+											<option value="45">45 mins</option>
+											<option value="60">60 mins</option>
+											<option value="75">1 hr 15 mins</option>
+											<option value="90">1hr 30 mins</option>
+											<option value="105">1hr 45 mins</option>
+											<option value="120">2hrs</option>
+										</cfselect>
 										<div class="error-msg" id="error_endtime"></div></div>
 									</div>
 									<div class="field no-label">
@@ -67,36 +68,40 @@
 						</div>
 								<div class="container">
 									<div class="row">
+										<div class="col-md-6">
 										<div class="boxed-section w3-container w3-responsive">
 											<cfquery name = "list">
 												Select questionId,question,option1,option2,option3,option4,correctAnswer
 												FROM [questionBank]
 												WHERE userId =<cfqueryparam value="#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint" />
 											</cfquery>
-										<div class="error-msg" id="error_questions"></div>
-											<h1>Question Bank </h1>
-											<table class="w3-card-4 w3-small" id="questions" name="questions">
-												<tr>
-													<th></th>
-													<th>questions</th>
-													<th>option1</th>
-													<th>option2</th>
-													<th>option3</th>
-													<th>option4</th>
-													<th>answer</th>
-												</tr>
-												<cfoutput query= "list">
+											<div class="error-msg" id="error_questions"></div>
+											<h2 class="section-title text-center">Question Bank:</h2>
+											<div class="container_table">
+												<table class="w3-card-4 w3-small" id="questions" name="questions">
 													<tr>
-														<td><cfinput type="checkbox" class="question" name="questionId" id ="questionId_#questionId#" value="#questionId#"></td>
-													 	<td>#question#</td>
-													 	<td>#option1#</td>
-												 		<td>#option2#</td>
-														<td>#option3#</td>
-														<td>#option4#</td>
-														<td>#correctAnswer#</td>
-													 </tr>
-												</cfoutput>
-											</table>
+														<th></th>
+														<th>questions</th>
+														<th>option1</th>
+														<th>option2</th>
+														<th>option3</th>
+														<th>option4</th>
+														<th>answer</th>
+													</tr>
+													<cfoutput query= "list">
+														<tr>
+															<td><cfinput type="checkbox" class="question" name="questionId" id ="questionId_#questionId#" value="#questionId#"></td>
+														 	<td>#question#</td>
+														 	<td>#option1#</td>
+													 		<td>#option2#</td>
+															<td>#option3#</td>
+															<td>#option4#</td>
+															<td>#correctAnswer#</td>
+														 </tr>
+													</cfoutput>
+												</table>
+											</div>
+											</div>
 										</cfform>
 									</div>
 								</div>

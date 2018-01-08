@@ -26,6 +26,9 @@
 							The test will end on :<cfoutput> #session.stQuizStarts.endTime#</cfoutput><br />
 							You can submit the test only once.<br />
 							It is a MCQ based test, and one correct answer for each question.</h3>
+							<h3 style="color:#FF0000" align="center">
+ 								You will be logged out in : <span id='timer'></span>
+ 							</h3>
 					</div>
 					<div class="col-md-12">
 						<div class="boxed-section request-form">
