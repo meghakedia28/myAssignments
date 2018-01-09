@@ -12,7 +12,7 @@
 </head>
 <body>
 	<cfquery name="userSet">
-	SELECT [active] FROM [user]
+	SELECT [active], [firstName], [lastName] FROM [user]
 	WHERE [salt] = <cfqueryparam value="#URL.id#" cfsqltype="cf_sql_varchar" >
 	</cfquery>
 		<div class = "container">
@@ -22,8 +22,11 @@
 						<h2> It seems that you have already set the password.<br>
 						You can login from <a href="../comman/loginPage.cfm">HERE</a>.</h2>
 					<cfelse>
+						<cfif structKeyExists(session, 'stLoggedInUser') >
+							<cfset structdelete(session, 'stLoggedInUser') />
+						</cfif>
 						<cfform action="" method="post" name="resetForm" id="resetForm" class="form-signin">
-						    <h3 class="form-signin-heading">Welcome !</h3>
+						    <h3 class="form-signin-heading">Welcome <cfoutput>#userSet.firstName# #userSet.lastName#</cfoutput> !</h3>
 							  <hr class="colorgraph"><br>
 							  <cfinput type="password" class="form-control" id="password" name="password" placeholder="Password" />
 							 	 <div class="error-msg" id="error_password"></div>

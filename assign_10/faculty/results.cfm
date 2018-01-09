@@ -1,5 +1,11 @@
-﻿<cfif NOT (isUserLoggedIn() AND session.stLoggedInUser.roleId EQ 2)>
-		<cflocation url = "../comman/loginPage.cfm?noaccess">
+﻿<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
+<cfif NOT isUserLoggedIn()>
+	<cflocation url = "../comman/loginPage.cfm?noaccess">
+</cfif>
+<cfif NOT(sessionExists)>
+	<cflocation url = "../comman/loginPage.cfm?noaccess">
+<cfelseif session.stLoggedInUser.roleId NEQ 2>
+	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:facultyFront>

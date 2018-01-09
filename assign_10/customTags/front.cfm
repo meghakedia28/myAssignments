@@ -39,9 +39,10 @@
 							</ul> <!-- .menu -->
 						</div> <!-- .main-navigation -->
 						<div class="mobile-navigation"></div>
+						<!-- <h4 class="site-title">Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#<br /> -->
+<!-- 						EmailId : #session.stLoggedInUser.userEmailId# </cfoutput></h4> -->
 					</div> <!-- .container -->
 				</div> <!-- .primary-header -->
-
 	<!---end of header---->
 	<cfelse>
 	<!---start of footer--->

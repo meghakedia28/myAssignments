@@ -20,7 +20,7 @@
 			<cfif getPasswordSalt.recordCount EQ 1>
 				<cfset var passwordHased = Hash(arguments.password & getPasswordSalt.salt,'SHA-512' ) />
 				<cfif passwordHased NEQ getPasswordSalt.hashPassword >
-					<cfset arrayAppend (aErrorMessage,'The Password did not match. Please try again')>
+					<cfset arrayAppend (aErrorMessage,'The Id and the Password did not match. Please try again or contact the administrator at : "megha.kedia28@gmail.com".')>
 				</cfif>
 			</cfif>
 		</cfif>
@@ -46,11 +46,14 @@
 					[user].[active] = <cfqueryparam value= 1 cfsqltype="cf_sql_integer" / >
 			</cfquery>
 			<cfif LoginUser.recordCount EQ 1>
+				<cfif structKeyExists(session, 'stLoggedInUser') >
+					<cfset structdelete(session, 'stLoggedInUser') />
+				</cfif>
 				<cflogin applicationtoken="DemoApplication" >
 					<cfloginuser name="#LoginUser.firstName# #LoginUser.LastName#" password="#LoginUser.hashPassword#" roles="#LoginUser.role#" >
 				</cflogin>
 				<cflock scope="session" timeout="30" >
-					<cfset session.stLoggedInUser = {'userFirstName' = #LoginUser.firstName#, 'userLastName' = #LoginUser.LastName#, 'userId' = #LoginUser.userId#, 'roleId' = #LoginUser.roleId#, 'userRole' = #LoginUser.role#}>
+					<cfset session.stLoggedInUser = {'userFirstName' = #LoginUser.firstName#, 'userLastName' = #LoginUser.LastName#, 'userEmailId' = #LoginUser.emailid#,'userId' = #LoginUser.userId#, 'roleId' = #LoginUser.roleId#, 'userRole' = #LoginUser.role#}>
 				<cfset var.isUserLoggedIn = true />
 				</cflock>
 			</cfif>

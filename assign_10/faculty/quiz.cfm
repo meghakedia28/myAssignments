@@ -1,5 +1,11 @@
-﻿<cfif NOT (isUserLoggedIn() AND session.stLoggedInUser.roleId EQ 2)>
-		<cflocation url = "../comman/loginPage.cfm?noaccess">
+﻿<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
+<cfif NOT isUserLoggedIn()>
+	<cflocation url = "../comman/loginPage.cfm?noaccess">
+</cfif>
+<cfif NOT(sessionExists)>
+	<cflocation url = "../comman/loginPage.cfm?noaccess">
+<cfelseif session.stLoggedInUser.roleId NEQ 2>
+	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:facultyFront>
@@ -27,48 +33,49 @@
 			});
 		</script>
  	<main class="main-content">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6">
-							<div class="boxed-section request-form">
-								<h2 class="section-title text-center">Quiz information:</h2>
-								<cfform action="" name="quizForm" id="quizForm">
-									<div class="field">
-										<label for="quizName">Name of the quiz:</label>
-										<div class="control"><cfinput type="text" id="quizName" name="quizName" placeholder="Give a name to the quiz">
-										<div class="error-msg" id="error_quizname"></div></div>
-									</div>
-									<div class="field">
-										<label for="startTime">Enter the start Time:</label>
-										<div class="control"><cfinput type="text" id="startTime" name="startTime" placeholder="Enter the start date time">
-										<div class="error-msg" id="error_starttime"></div></div>
-									</div>
-									<div class="field">
-										<label for="endTime">Enter the end Time:</label>
-										<div class="control">
-										<cfselect id="endTime" name="endTime" >
-											<option value="">Select the correct option</option>
-											<option value="15">15 mins</option>
-											<option value="30">30 mins</option>
-											<option value="45">45 mins</option>
-											<option value="60">60 mins</option>
-											<option value="75">1 hr 15 mins</option>
-											<option value="90">1hr 30 mins</option>
-											<option value="105">1hr 45 mins</option>
-											<option value="120">2hrs</option>
-										</cfselect>
-										<div class="error-msg" id="error_endtime"></div></div>
-									</div>
-									<div class="field no-label">
-										<div class="control">
-											<input type="submit" class="button" value="Submit request">
-										</div>
-									</div>
-							</div> <!-- .boxed-section .request-form -->
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="boxed-section request-form">
+						<h2 class="section-title text-center">Quiz information:</h2>
+						<cfform action="" name="quizForm" id="quizForm">
+							<div class="field">
+								<label for="quizName">Name of the quiz:</label>
+								<div class="control"><cfinput type="text" id="quizName" name="quizName" placeholder="Give a name to the quiz">
+								<div class="error-msg" id="error_quizname"></div></div>
+							</div>
+							<div class="field">
+								<label for="startTime">Enter the start Time:</label>
+								<div class="control"><cfinput type="text" id="startTime" name="startTime" placeholder="Enter the start date time">
+								<div class="error-msg" id="error_starttime"></div></div>
+							</div>
+							<div class="field">
+								<label for="endTime">Enter the end Time:</label>
+								<div class="control">
+								<cfselect id="endTime" name="endTime" >
+									<option value="">Select the correct option</option>
+									<option value="15">15 mins</option>
+									<option value="30">30 mins</option>
+									<option value="45">45 mins</option>
+									<option value="60">60 mins</option>
+									<option value="75">1 hr 15 mins</option>
+									<option value="90">1hr 30 mins</option>
+									<option value="105">1hr 45 mins</option>
+									<option value="120">2hrs</option>
+								</cfselect>
+								<div class="error-msg" id="error_endtime"></div>
+								</div>
+							</div>
+							<div class="field no-label">
+								<div class="control">
+									<input type="submit" class="button" value="Submit request">
+								</div>
+							</div>
+					</div> <!-- .boxed-section .request-form -->
 						</div>
-								<div class="container">
-									<div class="row">
-										<div class="col-md-6">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-6">
 										<div class="boxed-section w3-container w3-responsive">
 											<cfquery name = "list">
 												Select questionId,question,option1,option2,option3,option4,correctAnswer
