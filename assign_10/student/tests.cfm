@@ -71,10 +71,10 @@
 										</cfoutput>
 									</p>
 									<div class="field no-label">
-									<div class="control  text-center">
- 											<!--<button type="submit" class="button text-center" id="startTest" name="startTest" value="<cfoutput>#testDetails.quizId#</cfoutput>" disabled="true" >Start test</button> -->
- 											<span id="startTestButton">&nbsp;</span>
-									</div>
+										<div class="control  text-center">
+	 											<!--<button type="submit" class="button text-center" id="startTest" name="startTest" value="<cfoutput>#testDetails.quizId#</cfoutput>" disabled="true" >Start test</button> -->
+	 											<span id="startTestButton">&nbsp;</span>
+										</div>
  									</div>
 								</cfform>
 							</div> <!-- .boxed-section .request-form -->

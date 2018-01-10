@@ -17,7 +17,7 @@
   	<title>Login Form</title>
     <link rel="stylesheet" href="../css/LogInStyle.css">
 </head>
-  <body>
+<body>
 	<div class="login">
 		<div class="login-screen">
 			<div class="app-title">

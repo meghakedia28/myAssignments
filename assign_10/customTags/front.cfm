@@ -28,7 +28,6 @@
 							<img src="../images/logo.png" alt="Lincoln high School">
 							<h1 class="site-title">St. Joseph's High School</h1>
 						</a> <!-- #branding -->
-
 						<div class="main-navigation">
 							<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
 							<ul class="menu">
@@ -39,9 +38,11 @@
 							</ul> <!-- .menu -->
 						</div> <!-- .main-navigation -->
 						<div class="mobile-navigation"></div>
-						<!-- <h4 class="site-title">Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#<br /> -->
-<!-- 						EmailId : #session.stLoggedInUser.userEmailId# </cfoutput></h4> -->
-					</div> <!-- .container -->
+							<div class="user"><br /><h4 class="user">
+							<br/>Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#<br />
+ 								EmailId : #session.stLoggedInUser.userEmailId# </cfoutput></h4>
+							</div>
+					</div><!--container-->
 				</div> <!-- .primary-header -->
 	<!---end of header---->
 	<cfelse>

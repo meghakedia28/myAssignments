@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 	$("#form").submit(function(event){
 		var valid = validate();
@@ -68,7 +67,6 @@ $(document).ready(function(){
 			});
 		}	
 	});
-
 });
 function wordCheck(elementId,errorId){
 	var word = $(elementId).val();

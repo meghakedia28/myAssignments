@@ -2,28 +2,23 @@ $(document).ready(function(){
 	var serverTime = new Date($('#nowTime').val()).getTime();
 	var startTime = new Date($('#startTime').val()).getTime();
 	var endTime = new Date($('#endTime').val()).getTime();
-	var c  = (endTime - serverTime)/1000 ;
+	var timer  = (endTime - serverTime)/1000 ;
 	var t;
     timedCount();
-
     function timedCount()
 	{
-
-    	var hours = parseInt( c / 3600 ) % 24;
-    	var minutes = parseInt( c / 60 ) % 60;
-    	var seconds = c % 60;
-
-    	var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);
-
-        
+    	var hours = parseInt( timer / 3600 ) % 24;
+    	var minutes = parseInt( timer / 60 ) % 60;
+    	var seconds = timer % 60;
+    	var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);       
     	$('#timer').html(result);
-        if(c == 0 )
+        if(timer == 0 )
 		{
-        	//setConfirmUnload(false);
-            //$("#quiz_form").submit();
+        	setConfirmUnload(false);
+            $("#startTest").submit();
 			window.location="tests.cfm?submitEnd";
 		}
-        c = c - 1;
+        timer = timer - 1;
         t = setTimeout(function()
 		{
 		 timedCount()

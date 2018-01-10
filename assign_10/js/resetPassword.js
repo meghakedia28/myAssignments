@@ -2,7 +2,7 @@
 	$("#resetForm").submit(function(event){
 		event.preventDefault();
 		var checkPassword = passwordOut('#password','#error_password');
-		var checkConfirmPassword = c_passwordOut('#confirmPassword','#error_confirmPassword');
+		var checkConfirmPassword = c_passwordOut('#confirmPassword','#error_confirmpassword');
 		if (checkPassword && checkConfirmPassword) {
 			$.ajax({
 				url : "../components/resetPasswordService.cfc?method=validate&"+$("#resetForm").serialize(),
@@ -10,6 +10,7 @@
 					success : function(result){
 						var obj = $.parseJSON(result);
 						if (obj.ERRORID == "") {
+							alert("The password has been succesfully set!");
 							$("#resetForm").trigger('reset');
 							$(".error-msg").text("");
 							window.location.replace("loginPage.cfm");
@@ -21,9 +22,9 @@
 							}
 						}
 					}
-			}) ;
-		}
-	});
+				}) ;
+			}
+		});
 	$("input").focus(function(){
         $(this).css("background-color", "#e6f9ff");
 		$(this).css("border","");
@@ -33,7 +34,7 @@
 		passwordOut('#password','#error_password');
 	});
 	$("#confirmPassword").focusout(function(){
-		c_passwordOut('#confirmPassword','#error_confirmPassword');
+		c_passwordOut('#confirmPassword','#error_confirmpassword');
 	});
 });
 function passwordOut(){

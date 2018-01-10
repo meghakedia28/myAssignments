@@ -45,6 +45,10 @@
 							</ul> <!-- .menu -->
 						</div> <!-- .main-navigation -->
 						<div class="mobile-navigation"></div>
+						<div class="user"><br /><h4 class="user">
+							<br/>Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#<br />
+ 								EmailId : #session.stLoggedInUser.userEmailId# </cfoutput></h4>
+							</div>
 					</div> <!-- .container -->
 				</div> <!-- .primary-header -->
 

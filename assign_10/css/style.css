@@ -19,6 +19,10 @@ body {
 	overflow-y:auto;
 	max-height: 390px;
 }
+.user{
+	color: white;
+	font-weight: 300;
+}
 .error-msg{
 	margin-left: 10%;
 	color: red;

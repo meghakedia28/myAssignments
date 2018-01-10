@@ -18,7 +18,7 @@
 		</div>
 	</header>
 </div>
-		<script type="text/javascript" src="../js/validQuestions.js"></script>
+	<script type="text/javascript" src="../js/validQuestions.js"></script>
 		<main class="main-content">
 			<div class="container">
 				<div class="row">
@@ -53,14 +53,16 @@
 								</div>
 								<div class="field">
 									<label for="correctAnswer">Correct Answer:</label>
-									<div class="control"><cfselect id="answer" name="answer" >
-															<option value="">Select the correct option</option>
-															<option value="option1">option A</option>
-															<option value="option2">option B</option>
-															<option value="option3">option C</option>
-															<option value="option4">option D</option>
-														</cfselect>
-									<div class="error-msg" id="error_answer"></div></div>
+									<div class="control">
+										<cfselect id="answer" name="answer" >
+											<option value="">Select the correct option</option>
+											<option value="option1">option A</option>
+											<option value="option2">option B</option>
+											<option value="option3">option C</option>
+											<option value="option4">option D</option>
+										</cfselect>
+										<div class="error-msg" id="error_answer"></div>
+									</div>
 								</div>
 								<div class="field no-label">
 									<div class="control">
@@ -69,7 +71,8 @@
 								</div>
 							</cfform>
 						</div> <!-- .boxed-section .request-form -->
-					</div>
-				</div>
-			</main>
+					</div><!--col-md-6-->
+				</div><!--row-->
+			</div><!--container-->
+		</main>
 	</tags:facultyFront>

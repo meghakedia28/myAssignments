@@ -20,6 +20,12 @@
 	<body>
 		<div id="site-content">
 			<header class="site-header">
+				<div class="container">
+				<a href="home.cfm" id="branding">
+					<img src="../images/logo.png" alt="Lincoln high School">
+					<h1 class="site-title">St. Joseph's High School</h1>
+				</a> <!-- #branding -->
+				</div>
 	<!---end of header---->
 <cfelse>
 	<!---start of footer--->
