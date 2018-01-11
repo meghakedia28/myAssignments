@@ -11,4 +11,15 @@
 		</cfquery>
 		<cfreturn testDetails>
 	</cffunction>
+	<cffunction name="getScore" access="public" returntype="query">
+		<cfargument name = "userId" required="true" type="numeric" >
+		<cfargument name="quizId" required="true" type="numeric">
+			<cfquery name="testScore">
+					SELECT [scoreDetails].[score] FROM [scoreDetails] JOIN [quiz]
+					ON [scoreDetails].[quizId] = [quiz].[quizId]
+					WHERE [scoreDetails].[userId] = <cfqueryparam value="#arguments.userId#" cfsqltype="cf_sql_bigint"> AND
+					[quiz].[quizId] = <cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">
+			</cfquery>
+			<cfreturn testScore>
+	</cffunction>
 </cfcomponent>

@@ -1,6 +1,6 @@
 ﻿<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
 <cfif NOT isUserLoggedIn()>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../comman/loginPage.cfm?noaccessz">
 </cfif>
 <cfif NOT(sessionExists)>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
@@ -11,7 +11,6 @@
 	<tags:studentFront>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 			<div class="page-title">
 				<div class="container">
 					<h2>Add questions</h2>
@@ -46,11 +45,10 @@
 									<cfinput name="startTime" id="startTime" type="hidden" value="#session.stQuizStarts.startTime#">
 									<cfinput name="endTime" id="endTime" type="hidden" value="#session.stQuizStarts.endTime#">
 									<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
-
 										<cfset object =  createobject("component",'assign_10.components.getQuizQuestions') />
 										<cfset questions = object.quizQuestions(#session.stQuizStarts.quizId#)>
 										<cfset questionNumber = 0>
-											<table class="w3-large w3-striped w3-bordered" id="questions" name="questions">
+											<table class="table" id="questions" name="questions">
 												<tr>
 													<th>Sl No.</th>
 													<th>questions</th>

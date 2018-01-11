@@ -11,7 +11,7 @@
 	<tags:front>
 	<div class="page-title">
 			<div class="container">
-				<h2 style="font-weight: bold;">Add faculties</h2>
+				<h2>Add faculties</h2>
 			</div>
 		</div>
 	</header>

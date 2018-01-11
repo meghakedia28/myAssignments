@@ -54,7 +54,7 @@
 						<!---enter userId and password--->
 						<div class="control-group">
 							<label class="login-field-icon fui-user" for="email"></label>
-							<cfinput type="text" class="login-field" id="email" name="email" placeholder="UserId">
+							<cfinput type="text" class="login-field" id="email" name="email" placeholder="User Id">
 						</div>
 						<div class="control-group">
 							<label class="login-field-icon fui-lock" for="password"></label>

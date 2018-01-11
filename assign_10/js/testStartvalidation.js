@@ -16,7 +16,8 @@ $(document).ready(function(){
 		{
         	setConfirmUnload(false);
             $("#startTest").submit();
-			window.location="tests.cfm?submitEnd";
+			window.location.replace="tests.cfm?submitEnd";
+			
 		}
         timer = timer - 1;
         t = setTimeout(function()
@@ -25,37 +26,39 @@ $(document).ready(function(){
 		},
 		1000);
     }
-//	setTimeOut();
-//	function setTimeOut() {
-//		if (serverTime >= startTime && serverTime <= endTime){
-//			var timer  = endTime - serverTime;
-//			setTimeout(function(){
-//				onTimeOut();
-//			},timer);
-//		}
-//		else {
-//			onTimeOut();
-//		}
-//	}
+    $(':input').bind(
+            'change', function() { setConfirmUnload(true); });
+
+    function setConfirmUnload(on) {
+        window.onbeforeunload = (on) ? unloadMessage : null;
+   }
+
+   function unloadMessage() {
+
+        return 'You have started filling out this application.' +
+           ' If you navigate away from this page without' +           
+           ' first saving your data, the changes will be' +
+           ' lost.';
+   }
+ 
 	$("#startTest").submit(function(event) {
-		event.preventDefault();
-		$.ajax({
-			url : "../components/onTestSubmit.cfc?method=insertScore&"+$('#startTest').serialize(),
-			data : {},
-			success : function(result) {
-				var obj = $.parseJSON(result);
-				if (obj == true){
-				window.location.replace("tests.cfm?submitEnd");
+//		event.preventDefault();
+	 	setConfirmUnload(false);
+	 	 if(confirm("Do you really want to submit the test?")){ 
+			$.ajax({
+				url : "../components/onTestSubmit.cfc?method=insertScore&"+$('#startTest').serialize(),
+				data : {},
+				success : function(result) {
+					var obj = $.parseJSON(result);
+					if (obj == true){
+					window.location.replace("tests.cfm?submitEnd");
+					}
+					else
+						window.location.replace("tests.cfm?error");
 				}
-				else
-					window.location.replace("tests.cfm?error");
-			}
-		});
-		
+			});
+	 	 }
+	 	 else
+	 		 return false;
 	});
-	
-	function onTimeOut() {		
-		window.location.replace("tests.cfm?endTest");
-		
-	}
 });

@@ -12,12 +12,10 @@
 		<link href="../fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<!-- Loading main css file -->
 		<link rel="stylesheet" href="../css/style.css">
-
 		<!--[if lt IE 9]>
 		<script src="js/ie-support/html5.js"></script>
 		<script src="js/ie-support/respond.js"></script>
 		<![endif]-->
-
 	</head>
 	<body>
 		<div id="site-content">
@@ -38,11 +36,12 @@
 							</ul> <!-- .menu -->
 						</div> <!-- .main-navigation -->
 						<div class="mobile-navigation"></div>
-							<div class="user"><br /><h4 class="user">
-							<br/>Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#<br />
- 								EmailId : #session.stLoggedInUser.userEmailId# </cfoutput></h4>
-							</div>
 					</div><!--container-->
+					<div class="container">
+						<h6 class="user">
+						<br/>Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#<br />
+								Email Id : #session.stLoggedInUser.userEmailId# </cfoutput></h6>
+					</div>
 				</div> <!-- .primary-header -->
 	<!---end of header---->
 	<cfelse>
@@ -106,6 +105,9 @@
 		<script src="../js/jquery-1.11.1.min.js"></script>
 		<script src="../js/plugins.js"></script>
 		<script src="../js/app.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	</body>
 </html>
 </cfif>

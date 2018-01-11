@@ -17,7 +17,7 @@ body {
 }
 .container_table{
 	overflow-y:auto;
-	max-height: 390px;
+	max-height: 310px;
 }
 .user{
 	color: white;
@@ -2197,7 +2197,7 @@ form textarea{
   max-width: 100%;
 }
 .slider .slide-caption {
-  width: 670px;
+  width: 650px;
   float: left;
 }
 @media screen and (max-width: 800px) {

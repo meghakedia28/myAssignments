@@ -34,12 +34,15 @@
 								</cfif>
 								<h2 class="section-title text-center">Quiz Details:</h2>
 								<cfform name="questionsForm" id="questionsForm" action="testStart.cfm">
+									<cfoutput>
 									<p class="section-title text-center">
 										<cfset object =  createobject("component",'assign_10.components.getQuizDetails') />
 										<cfset currentTime = "#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#" />
 										<cfset testDetails = object.quizDetails(currentTime)>
-										<cfif structKeyExists(URL,'submitEnd')>
+										<cfset testScore = object.getScore(#session.stLoggedInUser.userId#, #testDetails.quizId#)>
+										<cfif (structKeyExists(URL,'submitEnd') AND (testScore.RecordCount NEQ 0))>
 											<p class="section-title text-center">Congratulations! You have completed today's challenge.</p>
+											<p class="section-title text-center">You have scored: #testScore.score# </p>
 											<cfinput name="startTime" id="startTime" type="hidden" value="">
 											<cfinput name="endTime" id="endTime" type="hidden" value="">
 											<cfinput name="nowTime" id="nowTime" type="hidden" value="">
@@ -48,20 +51,20 @@
 												<cfinput name="endTime" id="endTime" type="hidden" value="#testDetails.endDateTime#">
 												<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
 										</cfif>
-										<cfoutput>
-											<!--- <cfdump var = #testDetails.quizId# abort="true"> --->
+
 											<cfif testDetails.quizId NEQ '' >
-												<!--- <cfif ((now() GTE #testDetails.startDateTime#) AND (now()LTE #testDetails.endDateTime#))> --->
 												<div id="onGoingTest" style="display:none">
-													<h3 class=" text-center"> Hurry up! give the test before it ends.</h3>
+													<cfif (testScore.RecordCount EQ 0) >
+														<h3 class=" text-center"> Hurry up! give the test before it ends.</h3>
+													<cfelse>
+														<h3 class=" text-center">You have completed today's challenge.</h3>
+													</cfif>
 													<h3 class=" text-center"> ON going test, started at : #testDetails.startDateTime#</h3>
 													<h3 class=" text-center"> The test Ends on : #testDetails.endDateTime#</h3>
 												</div>
-											<!--- <cfelse> --->
 												<div id="upComingTest" style="display:block">
 													<h3 class="section-title text-center"> Next test is at : #testDetails.startDateTime#</h3>
 												</div>
-												<!--- </cfif> --->
 													<h3 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h3>
 													<h3 class="section-title text-center"> Subject : #testDetails.subjectName#</h3>
 													<h3 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h3>
@@ -80,34 +83,5 @@
 							</div> <!-- .boxed-section .request-form -->
 						</div>
 		</main>
-		<script>
-			(function(){
-				var serverTime = new Date($('#nowTime').val()).getTime();
-				var startTime = new Date($('#startTime').val()).getTime();
-				var endTime = new Date($('#endTime').val()).getTime();
-				var displayDiff = startTime - serverTime ;
-				var escapeDiff = endTime - startTime;
-				var diff = endTime - serverTime;
-				if (serverTime < startTime){
-					setTimeout(function(){createButton(escapeDiff);},displayDiff);
-				}
-				else if (serverTime >= startTime && serverTime <= endTime){
-					createButton(diff);
-				}
-
-				var questionsForm = $('#questionsForm');
-
-				function createButton(time){
-					var element = $('<button type="submit" class="button text-center" id="startTest" name="startTest">Start test</button>');
-					$('#startTestButton').append(element);
-					$('#onGoingTest').show();
-					$('#upComingTest').hide();
-					setTimeout(function(){
-						$('#startTest').remove();
-						location.reload();
-							},time);
-				}
-			})();
-		</script>
 		<script src="../js/testValidate.js"></script>
 </tags:studentFront>

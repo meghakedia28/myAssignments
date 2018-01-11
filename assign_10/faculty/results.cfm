@@ -9,13 +9,9 @@
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:facultyFront>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 		<div class="page-title">
 			<div class="container">
-				<h2 style="font-weight: bold;">View results</h2>
+				<h2>View results</h2>
 			</div>
 		</div>
 	</header>
@@ -31,8 +27,8 @@
 									<tr>
 										<th>Sl No.</th>
 										<th>Quiz Name</th>
-										<th>Start time</th>
-										<th>End time</th>
+										<th>Start date time</th>
+										<th>End date time</th>
 										<th>Student's name</th>
 										<th>Score percentage</th>
 										<th>Rank</th>

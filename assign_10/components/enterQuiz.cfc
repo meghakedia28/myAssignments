@@ -50,7 +50,7 @@
 			<cfset var.stStatus.status = "error" />
 			<cfset var.stStatus.message = "You can't leave this empty." />
 			<cfreturn var.stStatus>
-		<cfelseif !(isValid("regex",name,"^[a-zA-Z][a-zA-Z0-9 ]{1,30}$" )) >
+		<cfelseif !(isValid("regex",name,"^[a-zA-Z0-9 ]{1,30}$" )) >
 			<cfset var.stStatus.status = "error" />
 			<cfset var.stStatus.message = "Please enter your valid quiz name: use (a-z) OR (A-Z) OR (0-9) between 1 to 30 characters." />
 			<cfreturn var.stStatus>

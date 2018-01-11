@@ -13,15 +13,14 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<div class="page-title">
 			<div class="container">
-				<h2 style="font-weight: bold;">Set a quiz</h2>
+				<h2>Set a quiz</h2>
 			</div>
 		</div>
 	</header>
 </div>
 		<script src="../js/quizValidation.js"></script>
-	  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
+		<link rel="stylesheet" href="../css/table.css">
+	  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
 		<script>
 			$.noConflict();
@@ -74,20 +73,16 @@
 							</div> <!-- .boxed-section .request-form -->
 						</div><!--col-md-6-->
 						<div class="col-md-6">
-							<div class="boxed-section w3-container w3-responsive">
-								<cfquery name = "list">
-									Select questionId,question,option1,option2,option3,option4,correctAnswer
-									FROM [questionBank]
-									WHERE userId =<cfqueryparam value="#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint" />
-								</cfquery>
+							<div class="boxed-section">
+								<cfset questionList = createObject("component",'assign_10/components/getQuestionsService').getQuestions(#session.stLoggedInUser.userId#) >
 								<div class="error-msg" id="error_questions"></div>
 								<h2 class="section-title text-center">Question Bank:</h2>
 								<div class="container_table">
-									<cfif list.recordcount EQ 0>
+									<cfif questionList.recordcount EQ 0>
 										<h2>No questions has been set.<br />
 										Please <a href="questions.cfm">set questions</a> before setting a quiz.</h2>
 									<cfelse>
-										<table class="w3-small" id="questions" name="questions">
+										<table class="table" id="questions" name="questions">
 											<tr>
 												<th></th>
 												<th>questions</th>
@@ -97,15 +92,15 @@
 												<th>option4</th>
 												<th>answer</th>
 											</tr>
-											<cfoutput query= "list">
+											<cfoutput query= "questionList">
 												<tr>
-													<td><cfinput type="checkbox" class="question" name="questionId" id ="questionId_#questionId#" value="#questionId#"></td>
-												 	<td>#question#</td>
-												 	<td>#option1#</td>
-											 		<td>#option2#</td>
-													<td>#option3#</td>
-													<td>#option4#</td>
-													<td>#correctAnswer#</td>
+													<td><cfinput type="checkbox" class="question" name="questionId" id ="questionId_#questionList.questionId#" value="#questionList.questionId#"></td>
+												 	<td>#encodeForHtml(questionList.question)#</td>
+												 	<td>#encodeForHtml(questionList.option1)#</td>
+											 		<td>#encodeForHtml(questionList.option2)#</td>
+													<td>#encodeForHtml(questionList.option3)#</td>
+													<td>#encodeForHtml(questionList.option4)#</td>
+													<td>#encodeForHtml(questionList.correctAnswer)#</td>
 												 </tr>
 											</cfoutput>
 										</table>
