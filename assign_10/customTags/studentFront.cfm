@@ -40,7 +40,7 @@
 					</div><!--container-->
 					<div class="container">
 						<h6 class="user">
-						<br/>Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#<br />
+						<br/>Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName# (student)<br />
 								Email Id : #session.stLoggedInUser.userEmailId# </cfoutput></h6>
 					</div>
 				</div> <!-- .primary-header -->

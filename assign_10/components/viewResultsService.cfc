@@ -7,6 +7,7 @@
 			[quiz].[quizId] = [scoreDetails].[quizId]
 			JOIN [user] ON [user].[userId] = [scoreDetails].[userId]
 			WHERE [scoreDetails].[userId] = <cfqueryparam value="#arguments.Id#" cfsqltype="cf_sql_bigint">
+			ORDER BY [quiz].[startDateTime] DESC;
 		</cfquery>
 		<cfreturn getResults>
 	</cffunction>

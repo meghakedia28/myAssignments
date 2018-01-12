@@ -41,8 +41,8 @@
 										<cfset testDetails = object.quizDetails(currentTime)>
 										<cfset testScore = object.getScore(#session.stLoggedInUser.userId#, #testDetails.quizId#)>
 										<cfif (structKeyExists(URL,'submitEnd') AND (testScore.RecordCount NEQ 0))>
-											<p class="section-title text-center">Congratulations! You have completed today's challenge.</p>
-											<p class="section-title text-center">You have scored: #testScore.score# </p>
+											<h3 class="section-title text-center">Congratulations! You have completed today's challenge.</h3>
+											<h3 class="section-title text-center">You have scored: #testScore.score# </h3>
 											<cfinput name="startTime" id="startTime" type="hidden" value="">
 											<cfinput name="endTime" id="endTime" type="hidden" value="">
 											<cfinput name="nowTime" id="nowTime" type="hidden" value="">
@@ -51,7 +51,6 @@
 												<cfinput name="endTime" id="endTime" type="hidden" value="#testDetails.endDateTime#">
 												<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
 										</cfif>
-
 											<cfif testDetails.quizId NEQ '' >
 												<div id="onGoingTest" style="display:none">
 													<cfif (testScore.RecordCount EQ 0) >
@@ -63,7 +62,9 @@
 													<h3 class=" text-center"> The test Ends on : #testDetails.endDateTime#</h3>
 												</div>
 												<div id="upComingTest" style="display:block">
-													<h3 class="section-title text-center"> Next test is at : #testDetails.startDateTime#</h3>
+													<cfif !((#currentTime# GT #testDetails.startDateTime#) AND (#currentTime# LT #testDetails.endDateTime#)) >
+														<h3 class="section-title text-center"> Next test is at : #testDetails.startDateTime#</h3>
+													</cfif>
 												</div>
 													<h3 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h3>
 													<h3 class="section-title text-center"> Subject : #testDetails.subjectName#</h3>

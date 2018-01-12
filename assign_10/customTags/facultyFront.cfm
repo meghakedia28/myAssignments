@@ -26,7 +26,6 @@
 							<img src="../images/logo.png" alt="Lincoln high School">
 							<h1 class="site-title">St. Joseph's High School</h1>
 						</a> <!-- #branding -->
-
 						<div class="main-navigation">
 							<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
 							<ul class="menu">
@@ -43,7 +42,7 @@
 					</div><!--container-->
 					<div class="container">
 						<h6 class="user">
-						<br/>Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName#<br />
+						<br/>Hi, <cfoutput>#session.stLoggedInUser.userFirstName# #session.stLoggedInUser.userLastName# (faculty)<br />
 								Email Id : #session.stLoggedInUser.userEmailId# </cfoutput></h6>
 					</div>
 				</div> <!-- .primary-header -->

@@ -89,7 +89,7 @@
 			</cfquery>
 			<cfif quizNameCount.RecordCount NEQ 0>
 				<cfset var.stStatus.status = "error" />
-				<cfset var.stStatus.message = "This date is already selected by other faculty" />
+				<cfset var.stStatus.message = "This date is already selected for a quiz. Please select another date." />
 				<cfreturn var.stStatus >
 			<cfelse>
 				<cfif now() GTE #arguments.startDate# >

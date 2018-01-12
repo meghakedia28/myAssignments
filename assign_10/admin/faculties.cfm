@@ -79,6 +79,7 @@
 										<th>Subject</th>
 										<th>Name</th>
 										<th>Email ID</th>
+										<th>Active</th>
 										<th>Contact Number</th>
 									</tr>
 									<cfoutput query= "getFacultyList">
@@ -88,6 +89,7 @@
 											<td>#getFacultyList.subject#</td>
 											<td>#getFacultyList.firstName# #getFacultyList.lastName#</td>
 										 	<td>#getFacultyList.emailid#</td>
+										 	<td>#getFacultyList.active#</td>
 									 		<td>#getFacultyList.contactNumber#</td>
 										</tr>
 									</cfoutput>

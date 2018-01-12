@@ -76,15 +76,17 @@
 									<th>SL No.</th>
 									<th>Name</th>
 									<th>Email ID</th>
+									<th>Active</th>
 									<th>Contact Number</th>
 								</tr>
 								<cfoutput query= "getFacultyList">
 									<tr>
 										<cfset slNo = slNo + 1 />
 										<td>#slNo#</td>
-										<td>#firstName# #lastName#</td>
-									 	<td>#emailid#</td>
-								 		<td>#contactNumber#</td>
+										<td>#getFacultyList.firstName# #getFacultyList.lastName#</td>
+									 	<td>#getFacultyList.emailid#</td>
+								 		<td>#getFacultyList.active#</td>
+								 		<td>#getFacultyList.contactNumber#</td>
 									</tr>
 								</cfoutput>
 							</table>

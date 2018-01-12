@@ -6,9 +6,9 @@
 			WHERE [subject].[name] = <cfqueryparam value="#arguments.subject#" cfsqltype="cf_sql_varchar" >
 		</cfquery>
 		<cfif subjectCount.RecordCount NEQ 0>
-			<cfreturn 'this subject already exists'>
+			<cfreturn 'This subject already exists'>
 		<cfelse>
-			<cfreturn 'this subject is new and will be added once you click DONE'>
+			<cfreturn 'This subject is new and will be added once you click DONE'>
 		</cfif>
 	</cffunction>
 	<cffunction name="userCheck" access="remote" returntype="string" returnformat="JSON" >

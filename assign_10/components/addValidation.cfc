@@ -22,19 +22,19 @@
 	<!---email--->
 	<cffunction name="validateEmail" output="false" returntype="void" access="public" >
 		<cfargument name="emailId" type="string" required="true" >
-		<cfquery name="alreadyExists" >
-			SELECT [user].[userId] FROM [user]
-			WHERE [user].[emailid] = <cfqueryparam value="#arguments.emailId#" cfsqltype="cf_sql_varchar" >
-		</cfquery>
 		<cfset variables.errorStruct.elementId.email = emailId>
 		<cfif emailID EQ ''>
 			<cfset variables.errorStruct.errorId.error_email = "You can't leave this empty.">
 		<cfelseif !(isValid("eMail", emailID)) >
 			<cfset variables.errorStruct.errorId.error_email="Please enter the valid email address">
-		<cfelseif alreadyExists.recordCount NEQ 0>
-			<cfset variables.errorStruct.errorId.error_email="User already exists">
-		<cfelseif structKeyExists(variables.errorStruct.errorId, 'error_email')>
-			<cfset structdelete(variables.errorStruct.errorId, 'error_email') />
+		<cfelse>
+			<cfquery name="alreadyExists" >
+				SELECT [user].[userId] FROM [user]
+				WHERE [user].[emailid] = <cfqueryparam value="#arguments.emailId#" cfsqltype="cf_sql_varchar" >
+			</cfquery>
+			<cfif alreadyExists.recordCount NEQ 0>
+				<cfset variables.errorStruct.errorId.error_email="User already exists">
+			</cfif>
 		</cfif>
 	</cffunction>
 	<!---phone Number--->
@@ -55,6 +55,14 @@
 			<cfset variables.errorStruct.errorId.error_subject = "You can't leave this empty.">
 		<cfelseif (!isValid("regex",name,"^[a-zA-Z ]{1,30}"))>
 			<cfset variables.errorStruct.errorId.error_subject = "Please use only letters(a-z) or (A-Z)\nbetween 1 and 30 characters.">
+		<cfelse>
+			<cfquery name="subjectCount" >
+				SELECT [subject].[subjectId] FROM [subject]
+				WHERE [subject].[name] = <cfqueryparam value="#arguments.name#" cfsqltype="cf_sql_varchar" >
+			</cfquery>
+			<cfif subjectCount.RecordCount NEQ 0>
+				<cfset variables.errorStruct.errorId.error_subject = "This subject already exists">
+			</cfif>
 		</cfif>
 	</cffunction>
 	<!---validate all fields--->

@@ -99,7 +99,7 @@ function emailCheck(elementId,errorId){
 		$(elementId).css("border","2px solid red");
 	}
 	if (atposition < 1 || dotposition < atposition+2 || dotposition+2 >= id.length){
-		$(errorId).text("It should be of the format 'abc@gamil.com'");
+		$(errorId).text("It should be of the format 'abc@gmail.com'");
 		$(elementId).css("border","2px solid red");
 		return false;
 	}
