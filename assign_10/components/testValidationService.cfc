@@ -17,9 +17,11 @@
 					<cfreturn false>
 				<cfelse>
 					<cflock scope="session" timeout="30" >
-						<cfset session.stQuizStarts = {'quizId' = #testDetails.quizId# , 'startTime' = #testDetails.startDateTime#, 'endTime' = #testDetails.endDateTime# } />
+						<cfif checkTestOver.recordCount EQ 0>
+							<cfset session.stQuizStarts = {'quizId' = #testDetails.quizId# , 'startTime' = #testDetails.startDateTime#, 'endTime' = #testDetails.endDateTime# } />
+						</cfif>
 					</cflock>
-						<cfreturn true>
+					<cfreturn true>
 				</cfif>
 			</cftransaction>
 			<cfreturn true>

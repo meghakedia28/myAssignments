@@ -39,47 +39,49 @@
 										<cfset object =  createobject("component",'assign_10.components.getQuizDetails') />
 										<cfset currentTime = "#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#" />
 										<cfset testDetails = object.quizDetails(currentTime)>
-										<cfset testScore = object.getScore(#session.stLoggedInUser.userId#, #testDetails.quizId#)>
-										<cfif (structKeyExists(URL,'submitEnd') AND (testScore.RecordCount NEQ 0))>
-											<h3 class="section-title text-center">Congratulations! You have completed today's challenge.</h3>
-											<h3 class="section-title text-center">You have scored: #testScore.score# </h3>
-											<cfinput name="startTime" id="startTime" type="hidden" value="">
-											<cfinput name="endTime" id="endTime" type="hidden" value="">
-											<cfinput name="nowTime" id="nowTime" type="hidden" value="">
-										<cfelse>
+										<cfif testDetails.quizId NEQ '' >
+											<cfset testScore = object.getScore(#session.stLoggedInUser.userId# , #testDetails.quizId#)>
+											<cfif testScore.RecordCount EQ 0>
 												<cfinput name="startTime" id="startTime" type="hidden" value="#testDetails.startDateTime#">
 												<cfinput name="endTime" id="endTime" type="hidden" value="#testDetails.endDateTime#">
 												<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
-										</cfif>
-											<cfif testDetails.quizId NEQ '' >
-												<div id="onGoingTest" style="display:none">
+											<cfelse>
+												<cfinput name="startTime" id="startTime" type="hidden" value="">
+												<cfinput name="endTime" id="endTime" type="hidden" value="">
+												<cfinput name="nowTime" id="nowTime" type="hidden" value="">
+											</cfif>
+											<cfif (structKeyExists(URL,'submitEnd') AND (testScore.RecordCount NEQ 0))>
+												<h3 class="section-title text-center">Congratulations! You have completed today's challenge.</h3>
+												<h3 class="section-title text-center">You have scored: #testScore.score# </h3>
+											</cfif>
+											<cfif ((#currentTime# GTE #testDetails.startDateTime#) AND (#currentTime# LTE #testDetails.endDateTime#)) >
+												<div id="onGoingTest">
 													<cfif (testScore.RecordCount EQ 0) >
 														<h3 class=" text-center"> Hurry up! give the test before it ends.</h3>
-													<cfelse>
+													<cfelseif NOT(structKeyExists(URL,'submitEnd'))>
 														<h3 class=" text-center">You have completed today's challenge.</h3>
 													</cfif>
 													<h3 class=" text-center"> ON going test, started at : #testDetails.startDateTime#</h3>
 													<h3 class=" text-center"> The test Ends on : #testDetails.endDateTime#</h3>
 												</div>
-												<div id="upComingTest" style="display:block">
-													<cfif !((#currentTime# GT #testDetails.startDateTime#) AND (#currentTime# LT #testDetails.endDateTime#)) >
-														<h3 class="section-title text-center"> Next test is at : #testDetails.startDateTime#</h3>
-													</cfif>
-												</div>
-													<h3 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h3>
-													<h3 class="section-title text-center"> Subject : #testDetails.subjectName#</h3>
-													<h3 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h3>
 											<cfelse>
-												<h2> No test is yet to come.<br /> Tests will be displayed once the faculties set the upcoming tests.</h2>
+												<div id="upComingTest">
+													<h3 class="section-title text-center"> Next test is at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")# </h3>
+												</div>
 											</cfif>
-										</cfoutput>
-									</p>
-									<div class="field no-label">
-										<div class="control  text-center">
-	 											<!--<button type="submit" class="button text-center" id="startTest" name="startTest" value="<cfoutput>#testDetails.quizId#</cfoutput>" disabled="true" >Start test</button> -->
-	 											<span id="startTestButton">&nbsp;</span>
-										</div>
- 									</div>
+												<h3 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h3>
+												<h3 class="section-title text-center"> Subject : #testDetails.subjectName#</h3>
+												<h3 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h3>
+										<cfelse>
+											<h2> No test is yet to come.<br /> Tests will be displayed once the faculties set the upcoming tests.</h2>
+										</cfif>
+									</cfoutput>
+								</p>
+								<div class="field no-label">
+									<div class="control  text-center">
+ 											<span id="startTestButton">&nbsp;</span>
+									</div>
+									</div>
 								</cfform>
 							</div> <!-- .boxed-section .request-form -->
 						</div>

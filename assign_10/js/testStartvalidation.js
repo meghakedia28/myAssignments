@@ -16,7 +16,7 @@ $(document).ready(function(){
 		{
         	setConfirmUnload(false);
             $("#startTest").submit();
-			window.location.replace="tests.cfm?submitEnd";
+            window.location.replace("/tests.cfm?submitEnd");
 			
 		}
         timer = timer - 1;
@@ -25,36 +25,35 @@ $(document).ready(function(){
 		 timedCount()
 		},
 		1000);
-    }
-    $(':input').bind(
-            'change', function() { setConfirmUnload(true); });
+    } 
 
     function setConfirmUnload(on) {
         window.onbeforeunload = (on) ? unloadMessage : null;
    }
-
-   function unloadMessage() {
+    function unloadMessage() {
 
         return 'You have started filling out this application.' +
            ' If you navigate away from this page without' +           
            ' first saving your data, the changes will be' +
            ' lost.';
    }
- 
+    $(':input').bind(
+            'change', function() { setConfirmUnload(true); });
+    
 	$("#startTest").submit(function(event) {
 //		event.preventDefault();
 	 	setConfirmUnload(false);
-	 	 if(confirm("Do you really want to submit the test?")){ 
+	 	 if(timer == 0 || confirm("Do you really want to submit the test?")){ 
 			$.ajax({
 				url : "../components/onTestSubmit.cfc?method=insertScore&"+$('#startTest').serialize(),
 				data : {},
 				success : function(result) {
 					var obj = $.parseJSON(result);
 					if (obj == true){
-					window.location.replace("tests.cfm?submitEnd");
+						window.location.replace("/tests.cfm?submitEnd");
 					}
 					else
-						window.location.replace("tests.cfm?error");
+						window.location.replace("/tests.cfm?error");
 				}
 			});
 	 	 }
