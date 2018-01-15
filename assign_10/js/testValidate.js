@@ -18,8 +18,6 @@ $(document).ready(function(){
 		function createButton(time){
 			var element = $('<button type="submit" class="button text-center" id="startTest" name="startTest">Start test</button>');
 			$('#startTestButton').append(element);
-			$('#onGoingTest').show();
-			$('#upComingTest').hide();
 			setTimeout(function(){
 				$('#startTest').remove();
 				location.reload();
