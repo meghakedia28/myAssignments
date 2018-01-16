@@ -74,7 +74,7 @@
 	<cffunction name="checkStartTime" access="remote" returnformat="JSON" returntype="struct">
 		<cfargument name="startDate" required="true" type="any" >
 		<cfset var stStatus = {status = {} , message = {}} >
-		<cfif startDate EQ ''>
+		<cfif arguments.startDate EQ ''>
 			<cfset var.stStatus.status = "error" />
 			<cfset var.stStatus.message = "You can't leave this empty." />
 			<cfreturn var.stStatus >
@@ -107,14 +107,14 @@
 	<!---endtime--->
 	<cffunction name ="checkEndTime" output="false" access="public" returntype="void" >
 		<cfargument name="element" required="true" type="string" >
-		<cfif element EQ ''>
+		<cfif arguments.element EQ ''>
 			<cfset variables.errorStruct.elementId.endTime = element>
 			<cfset variables.errorStruct.errorId.error_endtime = "You can't leave this empty.">
 		</cfif>
 	</cffunction>
 	<cffunction name="checkQuestionList" output="false" access="public" returntype="void" >
 		<cfargument name="element" required="true" type="string">
-		<cfif element EQ ''>
+		<cfif arguments.element EQ ''>
 			<cfset variables.errorStruct.elementId.questions = element>
 			<cfset variables.errorStruct.errorId.error_questions = "You have to select the questions to set the quiz.">
 		</cfif>
