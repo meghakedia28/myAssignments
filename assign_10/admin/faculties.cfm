@@ -71,7 +71,7 @@
 							<cfset getFacultyList = createobject("component",'assign_10/components/viewListOfUser').getFacultyList()/>
 							<div class="error-msg" id="error_questions"></div>
 							<h2 class="section-title text-center">List of faculties:</h2>
-							<div class="container_table">
+							<div class="container_table" id="list">
 								<cfset slNo = 0>
 								<table class="table table-sm" id="listOfFaculties" name="listOfFaculties">
 									<tr>
