@@ -13,6 +13,7 @@ $(document).ready(function(){
 							alert ('A mail has been send to your email id to set the password');
 							$("#form").trigger('reset');
 							$(".error-msg").text("");
+							$("#list").load(document.URL + ' #list');
 						}
 					}
 					if (obj.ERRORID != null){
@@ -39,12 +40,19 @@ $(document).ready(function(){
 		var validate = emailCheck('#email','#error_email');
 		if (validate){
 			$.ajax({
-				url : "../components/subjectCheckService.cfc?method=userCheck",
+				url : "../components/addValidation.cfc?method=validateEmail",
 				data : {
-					email : id
+					emailId : id
 				},
 				success : function(result) {
-					$('#error_email').text(result);
+					var obj = $.parseJSON(result);
+					if (obj.STATUS == "success"){
+						return true;
+					}
+						else {
+							$("#error_email").text(obj.MESSAGE);
+							return false;
+						}
 				}
 			});
 		}
@@ -57,12 +65,19 @@ $(document).ready(function(){
 		var validate = wordCheck('#subject','#error_subject');
 		if (validate){
 			$.ajax({
-				url : "../components/subjectCheckService.cfc?method=subjectCheck",
+				url : "../components/addValidation.cfc?method=validateSubject",
 				data : {
-					subject : subjectVal
+					name : subjectVal
 				},
 				success: function(result) {
-					$('#error_subject').text(result);
+					var obj = $.parseJSON(result);
+					if (obj.STATUS == "success"){
+						return true;
+					}
+						else {
+							$("#error_subject").text(obj.MESSAGE);
+							return false;
+						}
 				}
 			});
 		}	
