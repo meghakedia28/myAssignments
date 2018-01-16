@@ -42,6 +42,10 @@
 			<cfset variables.errorStruct.elementId.question = element>
 			<cfset variables.errorStruct.errorId.error_question = "You can't leave this empty.">
 		</cfif>
+		<cfif element.len LT 3 OR element.len GT 50>
+			<cfset variables.errorStruct.elementId.question = element>
+			<cfset variables.errorStruct.errorId.error_question = "Please enter characters of length between 3 to 50.">
+		</cfif>
 	</cffunction>
 	<!---option A--->
 	<cffunction name ="validateOptionA" output="false" access="public" returntype="void" >
@@ -49,6 +53,10 @@
 		<cfif element EQ ''>
 			<cfset variables.errorStruct.elementId.optionA = element>
 			<cfset variables.errorStruct.errorId.error_optionA = "You can't leave this empty.">
+		</cfif>
+		<cfif element.len LT 3 OR element.len GT 50>
+			<cfset variables.errorStruct.elementId.question = element>
+			<cfset variables.errorStruct.errorId.error_question = "Please enter characters of length between 3 to 50.">
 		</cfif>
 	</cffunction>
 	<!---option B--->
@@ -58,6 +66,10 @@
 			<cfset variables.errorStruct.elementId.optionB = element>
 			<cfset variables.errorStruct.errorId.error_optionB = "You can't leave this empty.">
 		</cfif>
+		<cfif element.len LT 3 OR element.len GT 50>
+			<cfset variables.errorStruct.elementId.question = element>
+			<cfset variables.errorStruct.errorId.error_question = "Please enter characters of length between 3 to 50.">
+		</cfif>
 	</cffunction>
 	<!---option C--->
 	<cffunction name ="validateOptionC" output="false" access="public" returntype="void" >
@@ -65,6 +77,10 @@
 		<cfif element EQ ''>
 			<cfset variables.errorStruct.elementId.optionC = element>
 			<cfset variables.errorStruct.errorId.error_optionC = "You can't leave this empty.">
+		</cfif>
+		<cfif element.len LT 3 OR element.len GT 50>
+			<cfset variables.errorStruct.elementId.question = element>
+			<cfset variables.errorStruct.errorId.error_question = "Please enter characters of length between 3 to 50.">
 		</cfif>
 	</cffunction>
 	<!---option D--->
@@ -74,6 +90,10 @@
 			<cfset variables.errorStruct.elementId.optionD = element>
 			<cfset variables.errorStruct.errorId.error_optionD = "You can't leave this empty.">
 		</cfif>
+		<cfif element.len LT 3 OR element.len GT 50>
+			<cfset variables.errorStruct.elementId.question = element>
+			<cfset variables.errorStruct.errorId.error_question = "Please enter characters of length between 3 to 50.">
+		</cfif>
 	</cffunction>
 	<!---answer--->
 	<cffunction name ="validateAnswer" output="false" access="public" returntype="void" >
@@ -81,6 +101,10 @@
 		<cfif element EQ ''>
 			<cfset variables.errorStruct.elementId.correctAnswer = element>
 			<cfset variables.errorStruct.errorId.error_correctAnswer = "You can't leave this empty.">
+		</cfif>
+		<cfif element.len LT 3 OR element.len GT 50>
+			<cfset variables.errorStruct.elementId.question = element>
+			<cfset variables.errorStruct.errorId.error_question = "Please enter characters of length between 3 to 50.">
 		</cfif>
 	</cffunction>
 	<!---insert Questions--->
