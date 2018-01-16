@@ -19,7 +19,8 @@
 		</header>
 	</div>
 	<cfif structKeyExists(session,'stQuizStarts') >
-		<cfif (#session.stQuizStarts.endTime# LT #now()#)  >
+		<cfset testScore = createobject("component",'assign_10.components.getQuizDetails').getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
+		<cfif (#session.stQuizStarts.endTime# LT #now()# ||testScore.recordCount NEQ 0)  >
 			<h1> Test time has ended, please come back in the next test </h1>
 			<div id="testEndMsg" name="testEndMsg"></div>
 		<cfelse>
