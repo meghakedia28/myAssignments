@@ -16,7 +16,7 @@ $(document).ready(function(){
 		{
         	setConfirmUnload(false);
             $("#startTest").submit();
-            window.location.replace("/tests.cfm?submitEnd");
+            window.location.replace("tests.cfm?submitEnd");
 			
 		}
         timer = timer - 1;
@@ -41,7 +41,7 @@ $(document).ready(function(){
             'change', function() { setConfirmUnload(true); });
     
 	$("#startTest").submit(function(event) {
-//		event.preventDefault();
+		event.preventDefault();
 	 	setConfirmUnload(false);
 	 	 if(timer == 0 || confirm("Do you really want to submit the test?")){ 
 			$.ajax({
@@ -50,10 +50,10 @@ $(document).ready(function(){
 				success : function(result) {
 					var obj = $.parseJSON(result);
 					if (obj == true){
-						window.location.replace("/tests.cfm?submitEnd");
+						location.replace("tests.cfm?submitEnd");
 					}
 					else
-						window.location.replace("/tests.cfm?error");
+						location.replace("tests.cfm?error");
 				}
 			});
 	 	 }
