@@ -68,11 +68,11 @@
 											 			<tr>
 												 			<cfset questionNumber = questionNumber + 1 />
 												 			<td>#questionNumber#</td>
-												 			<td>#questionList.question#</td>
-												 			<td>#questionList.option1#</td>
-												 			<td>#questionList.option2#</td>
-												 			<td>#questionList.option3#</td>
-												 			<td>#questionList.option4#</td>
+												 			<td>#encodeForHtml(questionList.question)#</td>
+												 			<td>#encodeForHtml(questionList.option1)#</td>
+												 			<td>#encodeForHtml(questionList.option2)#</td>
+												 			<td>#encodeForHtml(questionList.option3)#</td>
+												 			<td>#encodeForHtml(questionList.option4)#</td>
 												 		</tr>
 									 				</cfloop>
 									 			</table>
