@@ -568,7 +568,6 @@ form input, form textarea, form datefield, form select {
 }
 form select{
   padding-right: 35px;
-  background-image: url("../images/select.png");
   background-repeat: no-repeat;
   background-position: right center;
 }
