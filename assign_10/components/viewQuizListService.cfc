@@ -3,6 +3,7 @@
 		<cfargument name="Id" required="true" type="numeric">
 		<cfquery name="quizList">
 			SELECT * FROM [quiz] WHERE [quiz].[userId] = <cfqueryparam value="#arguments.Id#" cfsqltype="cf_sql_bigint">
+			ORDER BY [quiz].[startDateTime] DESC;
 		</cfquery>
 		<cfreturn  quizList>
 	</cffunction>
