@@ -1,6 +1,6 @@
 ﻿<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
 <cfif NOT isUserLoggedIn()>
-	<cflocation url = "../comman/loginPage.cfm?noaccessz">
+	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfif NOT(sessionExists)>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
@@ -19,6 +19,10 @@
 		</header>
 	</div>
 	<cfif structKeyExists(session,'stQuizStarts') >
+		<cfif !(#session.stQuizStarts.endTime# GT #now()# && #session.stQuizStarts.startTime# LT #now()#)  >
+			<cfset killSession = createobject("component",'assign_10.components.onTestSubmit').destroySession() >
+			<cflocation url = "tests.cfm?noaccess">
+		</cfif>
 		<cfset testScore = createobject("component",'assign_10.components.getQuizDetails').getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
 		<cfif (#session.stQuizStarts.endTime# LT #now()# ||testScore.recordCount NEQ 0)  >
 			<h1> Test time has ended, please come back in the next test </h1>
@@ -29,7 +33,7 @@
 				<div class="row">
 					<div class="col-md-10">
 						<h3>NOTE:<br/>
-							The test will end on :<cfoutput> #session.stQuizStarts.endTime#</cfoutput><br />
+							The test will end on : <cfoutput>#DateTimeFormat(session.stQuizStarts.endTime, "dd MMMMM,yyyy hh:nn tt")#</cfoutput><br />
 							You can submit the test only once.<br />
 							It is a MCQ based test, and one correct answer for each question.<br />
 							Donot navigate while you are giving the test.<br />
@@ -62,11 +66,11 @@
 													<tr>
 														<cfset questionNumber = questionNumber + 1 />
 														<td>#questionNumber#</td>
-													 	<td>#question#</td>
-													 	<td><cfinput type="radio" name="#quizQuestionId#" id="option1" value= "option1">#option1#</td>
-												 		<td><cfinput type="radio" name="#quizQuestionId#" id="option2" value= "option2">#option2#</td>
-														<td><cfinput type="radio" name="#quizQuestionId#" id="option3" value= "option3">#option3#</td>
-														<td><cfinput type="radio" name="#quizQuestionId#" id="option4" value= "option4">#option4#</td>
+													 	<td>#encodeForHtml(question)#</td>
+													 	<td><cfinput type="radio" name="#quizQuestionId#" id="option1" value= "option1">#encodeForHtml(option1)#</td>
+												 		<td><cfinput type="radio" name="#quizQuestionId#" id="option2" value= "option2">#encodeForHtml(option2)#</td>
+														<td><cfinput type="radio" name="#quizQuestionId#" id="option3" value= "option3">#encodeForHtml(option3)#</td>
+														<td><cfinput type="radio" name="#quizQuestionId#" id="option4" value= "option4">#encodeForHtml(option4)#</td>
 													</tr>
 												</cfoutput>
 											</table><br>
