@@ -61,8 +61,8 @@
 													<cfelseif NOT(structKeyExists(URL,'submitEnd'))>
 														<h3 class=" text-center">You have completed today's challenge.</h3>
 													</cfif>
-													<h3 class=" text-center"> ON going test, started at : #testDetails.startDateTime#</h3>
-													<h3 class=" text-center"> The test Ends on : #testDetails.endDateTime#</h3>
+													<h3 class=" text-center"> ON going test, started at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</h3>
+													<h3 class=" text-center"> The test Ends on : #DateTimeFormat(testDetails.endDateTime, "dd MMMMM,yyyy hh:nn tt")#</h3>
 												</div>
 											<cfelse>
 												<div id="upComingTest">
