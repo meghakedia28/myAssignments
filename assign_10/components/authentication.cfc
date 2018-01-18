@@ -6,7 +6,7 @@
 		<cfset var aErrorMessage = ArrayNew(1)>
 		<!---validate user email id--->
 		<cfif ((NOT isValid("Email",arguments.email )) OR arguments.email EQ '')>
-			<cfset arrayAppend( aErrorMessage,'Please enter a valid email Id')>
+			<cfset arrayAppend( aErrorMessage,'Please enter a valid User Id')>
 		</cfif>
 		<!---validate user password--->
 		<cfif arguments.password EQ ''>
@@ -20,7 +20,7 @@
 			<cfif getPasswordSalt.recordCount EQ 1>
 				<cfset var passwordHased = Hash(arguments.password & getPasswordSalt.salt,'SHA-512' ) />
 				<cfif passwordHased NEQ getPasswordSalt.hashPassword >
-					<cfset arrayAppend (aErrorMessage,'The Id and the Password did not match. Please try again or contact the administrator at : "megha.kedia28@gmail.com".')>
+					<cfset arrayAppend (aErrorMessage,'The User Id and the Password did not match. Please try again or contact the administrator at : "megha.kedia28@gmail.com".')>
 				</cfif>
 			</cfif>
 		</cfif>
