@@ -24,9 +24,8 @@
 			<cflocation url = "tests.cfm?noaccess">
 		</cfif>
 		<cfset testScore = createobject("component",'assign_10.components.getQuizDetails').getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
-		<cfif (#session.stQuizStarts.endTime# LT #now()# ||testScore.recordCount NEQ 0)  >
-			<h1> Test time has ended, please come back in the next test </h1>
-			<div id="testEndMsg" name="testEndMsg"></div>
+		<cfif (#session.stQuizStarts.endTime# LT #now()# || (#testScore.recordCount# NEQ 0))  >
+			<div id="testEndMsg" name="testEndMsg"><h1> Test time has ended, please come back in the next test </h1></div>
 		<cfelse>
 		<main class="main-content">
 			<div class="container">
@@ -47,9 +46,9 @@
 						<h2 class="section-title text-center">Questions:</h2>
 								<cfform name="startTest" id="startTest" action="">
 									<p class="section-title text-center">
-									<cfinput name="startTime" id="startTime" type="hidden" value="#session.stQuizStarts.startTime#">
-									<cfinput name="endTime" id="endTime" type="hidden" value="#session.stQuizStarts.endTime#">
-									<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
+										<cfinput name="startTime" id="startTime" type="hidden" value="#DateFormat(session.stQuizStarts.startTime,'yyyy/mm/dd') & ' ' & TimeFormat(session.stQuizStarts.startTime,'HH:nn:ss')#">
+										<cfinput name="endTime" id="endTime" type="hidden" value="#DateFormat(session.stQuizStarts.endTime,'yyyy/mm/dd') & ' ' & TimeFormat(session.stQuizStarts.endTime,'HH:nn:ss')#">
+										<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy/mm/dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
 										<cfset object =  createobject("component",'assign_10.components.getQuizQuestions') />
 										<cfset questions = object.quizQuestions(#session.stQuizStarts.quizId#)>
 										<cfset questionNumber = 0>
