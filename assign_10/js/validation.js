@@ -2,28 +2,30 @@ $(document).ready(function(){
 	$("#form").submit(function(event){
 		var valid = validate();
 		event.preventDefault();
-		$.ajax({
-			url : "../components/addValidation.cfc?method=validateAllFields&"+$("#form").serialize(),
-			data : {},
-				success : function(result){
-					var obj = $.parseJSON(result);
-					if (obj.SUCCESSFULL != null){						
-						alert (obj.MESSAGE);
-						if(obj.SUCCESSFULL == true){
-							alert ('A mail has been send to your email id to set the password');
-							$("#form").trigger('reset');
-							$(".error-msg").text("");
-							$("#list").load(document.URL + ' #list');
+		if (valid) {
+			$.ajax({
+				url : "../components/addValidation.cfc?method=validateAllFields&"+$("#form").serialize(),
+				data : {},
+					success : function(result){
+						var obj = $.parseJSON(result);
+						if (obj.SUCCESSFULL != null){						
+							alert (obj.MESSAGE);
+							if(obj.SUCCESSFULL == true){
+								alert ('A mail has been send to your email id to set the password');
+								$("#form").trigger('reset');
+								$(".error-msg").text("");
+								$("#list").load(document.URL + ' #list');
+							}
+						}
+						if (obj.ERRORID != null){
+							for (keys in obj.ERRORID){
+								var id = '#'+(keys.toLowerCase());
+								$(id).text(obj.ERRORID[keys]);
+							}
 						}
 					}
-					if (obj.ERRORID != null){
-						for (keys in obj.ERRORID){
-							var id = '#'+(keys.toLowerCase());
-							$(id).text(obj.ERRORID[keys]);
-						}
-					}
-				}
-		}) ;
+			}) ;
+		}
 	});
 	$("input").focus(function(){
 		$(this).css("border","");
