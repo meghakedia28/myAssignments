@@ -4,13 +4,20 @@
 		<cfset var score = getScore(#URL#) />
 			<cftry>
 				<cftransaction>
-					<cfquery name="insertScore">
-						INSERT INTO [scoreDetails]
-							VALUES (
-							<cfqueryparam value = "#session.stQuizStarts.quizId#" cfsqltype="cf_sql_bigint">,
-							<cfqueryparam value= "#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint">,0,
-							<cfqueryparam value = "#score#" cfsqltype="cf_sql_decimal" scale="2" > );
+					<cfquery name ="checkScoreExists">
+						SELECT [scoreDetails].[scoreId] FROM [scoreDetails]
+							WHERE [scoreDetails].[quizId] = <cfqueryparam value = "#session.stQuizStarts.quizId#" cfsqltype="cf_sql_bigint">
+							AND [scoreDetails].[userId] = <cfqueryparam value= "#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint">
+					</cfquery>
+					<cfif checkScoreExists.recordCount EQ 0>
+						<cfquery name="insertScore">
+							INSERT INTO [scoreDetails]
+								VALUES (
+								<cfqueryparam value = "#session.stQuizStarts.quizId#" cfsqltype="cf_sql_bigint">,
+								<cfqueryparam value= "#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint">,0,
+								<cfqueryparam value = "#score#" cfsqltype="cf_sql_decimal" scale="2" > );
 						</cfquery>
+					</cfif>
 					<cfset destroySession() />
 				</cftransaction>
 				<cfreturn true>
