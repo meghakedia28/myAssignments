@@ -32,10 +32,7 @@ $(document).ready(function(){
    }
     function unloadMessage() {
 
-        return 'You have started filling out this application.' +
-           ' If you navigate away from this page without' +           
-           ' first saving your data, the changes will be' +
-           ' lost.';
+        return 'You have started giving the test. If you navigate away from this page the changes made will be lost.';
    }
     $(':input').bind(
             'change', function() { setConfirmUnload(true); });
