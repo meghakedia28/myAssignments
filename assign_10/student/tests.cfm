@@ -37,14 +37,14 @@
 									<cfoutput>
 									<p class="section-title text-center">
 										<cfset object =  createobject("component",'assign_10.components.getQuizDetails') />
-										<cfset currentTime = "#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#" />
+										<cfset currentTime = "#DateFormat(now(),'yyyy/mm/dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#" />
 										<cfset testDetails = object.quizDetails(currentTime)>
 										<cfif testDetails.quizId NEQ '' >
 											<cfset testScore = object.getScore(#session.stLoggedInUser.userId# , #testDetails.quizId#)>
 											<cfif testScore.RecordCount EQ 0>
-												<cfinput name="startTime" id="startTime" type="hidden" value="#testDetails.startDateTime#">
-												<cfinput name="endTime" id="endTime" type="hidden" value="#testDetails.endDateTime#">
-												<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
+												<cfinput name="startTime" id="startTime" type="hidden" value="#DateFormat(testDetails.startDateTime,'yyyy/mm/dd') & ' ' & TimeFormat(testDetails.startDateTime,'HH:nn:ss')#">
+												<cfinput name="endTime" id="endTime" type="hidden" value="#DateFormat(testDetails.endDateTime,'yyyy/mm/dd') & ' ' & TimeFormat(testDetails.endDateTime,'HH:nn:ss')#">
+												<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy/mm/dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
 											<cfelse>
 												<cfinput name="startTime" id="startTime" type="hidden" value="">
 												<cfinput name="endTime" id="endTime" type="hidden" value="">
