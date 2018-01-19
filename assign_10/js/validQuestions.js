@@ -1,32 +1,34 @@
 $(document).ready(function(){
 	$("#questionsForm").submit(function(event){
 		event.preventDefault();
-		 validate('#question');
-		 validate('#optiona');
-		 validate('#optionb');
-		 validate('#optionc');
-		 validate('#optiond');
-		 validate('#answer');
-		 $.ajax ({
-		 	url : "../components/enterQuestions.cfc?method=validateAllFields&"+$("#questionsForm").serialize(),
-			data : {},
-				success: function(result){
-				var obj = $.parseJSON(result);
-				if (obj.SUCCESSFULL != null){						
-						alert (obj.MESSAGE);
-						if(obj.SUCCESSFULL == true){
-							$("#questionsForm").trigger('reset');
-							$(".error-msg").text("");
+		 var question = validate('#question');
+		 var optiona = validate('#optiona');
+		 var optionb = validate('#optionb');
+		 var optionc = validate('#optionc');
+		 var optiond = validate('#optiond');
+		 var answer = validate('#answer');
+		 if(question && optiona && optionb && optionc && optiond && answer) {
+			 $.ajax ({
+			 	url : "../components/enterQuestions.cfc?method=validateAllFields&"+$("#questionsForm").serialize(),
+				data : {},
+					success: function(result){
+					var obj = $.parseJSON(result);
+					if (obj.SUCCESSFULL != null){						
+							alert (obj.MESSAGE);
+							if(obj.SUCCESSFULL == true){
+								$("#questionsForm").trigger('reset');
+								$(".error-msg").text("");
+							}
 						}
-					}
-				if (obj.ERRORID != null){
-					for (keys in obj.ERRORID){
-						var id = '#'+(keys.toLowerCase());
-						$(id).text(obj.ERRORID[keys]);
-					}
-				}		
-			}
-		 });		
+					if (obj.ERRORID != null){
+						for (keys in obj.ERRORID){
+							var id = '#'+(keys.toLowerCase());
+							$(id).text(obj.ERRORID[keys]);
+						}
+					}		
+				}
+			 });
+		 }
 	});
 	$("input,select,textarea").focus(function(){
 		$(this).css("border","");

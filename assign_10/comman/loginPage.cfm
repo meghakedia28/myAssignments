@@ -21,7 +21,7 @@
 	<div class="login">
 		<div class="login-screen">
 			<div class="app-title">
-				<h1>Login</h1>
+				<h1>Quiz Center<br />Login</h1>
 			</div>
 			<cfform class="login-form" name="loginForm" id="loginForm" preservedata="true" >
 				<cfif structKeyExists(URL,'noaccess')>
@@ -37,7 +37,7 @@
 					</cfif>
 					<!---check if the user is logged in--->
 					<cfif structKeyExists(variables,'isUserLoggedIn') AND isUserLoggedIn EQ false>
-						<p class="error" id="error">The Id and the Password did not match. Please try again or contact the administrator at : "megha.kedia28@gmail.com".</p>
+						<p class="error" id="error">The User Id and the Password did not match. Please try again or contact the administrator at : "megha.kedia28@gmail.com".</p>
 					</cfif>
 					<!---redirect to the page accordimg their roles--->
 					<cfif structKeyExists(session,'stLoggedInUser')>
