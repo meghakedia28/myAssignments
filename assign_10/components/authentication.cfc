@@ -6,11 +6,11 @@
 		<cfset var aErrorMessage = ArrayNew(1)>
 		<!---validate user email id--->
 		<cfif ((NOT isValid("Email",arguments.email )) OR arguments.email EQ '')>
-			<cfset arrayAppend( aErrorMessage,'Please enter a valid User Id')>
+			<cfset arrayAppend( aErrorMessage,'Please enter a valid User Id.')>
 		</cfif>
 		<!---validate user password--->
 		<cfif arguments.password EQ ''>
-			<cfset arrayAppend (aErrorMessage,'Please provide the password to access')>
+			<cfset arrayAppend (aErrorMessage,'Please enter the password.')>
 		</cfif>
 		<cfif ArrayisEmpty(aErrorMessage)>
 			<cfquery name="getPasswordSalt">
