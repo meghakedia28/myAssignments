@@ -60,6 +60,9 @@
 							<label class="login-field-icon fui-lock" for="password"></label>
 							<input type="password" class="login-field" id="password" name="password" placeholder="Password" >
 						</div>
+						<div>
+							<a href="forgetPassword.cfm">forgotten password?</a>
+						</div>
 						<button class="btn btn-primary btn-large btn-block" id="submitLogin" name="submitLogin" type= "submit">Login</button>
 					</cfif>
 				</cfform>
