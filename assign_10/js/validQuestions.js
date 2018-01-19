@@ -26,8 +26,7 @@ $(document).ready(function(){
 					}
 				}		
 			}
-		 });
-		
+		 });		
 	});
 	$("input,select,textarea").focus(function(){
 		$(this).css("border","");
