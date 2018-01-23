@@ -114,6 +114,7 @@ function emailCheck(elementId,errorId){
 	if (!(regid.test(id))){
 		$(errorId).text("Please use alphabets (a-z) or (A-Z) between 8 and 30 characters");
 		$(elementId).css("border","2px solid red");
+		return false;
 	}
 	if (atposition < 1 || dotposition < atposition+2 || dotposition+2 >= id.length){
 		$(errorId).text("It should be of the format 'abc@gmail.com'");
