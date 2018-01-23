@@ -85,7 +85,11 @@
 										<td>#slNo#</td>
 										<td>#getFacultyList.firstName# #getFacultyList.lastName#</td>
 									 	<td>#getFacultyList.emailid#</td>
-								 		<td>#getFacultyList.active#</td>
+									 	<cfif #getFacultyList.active# EQ 1 >
+								 			<td>Yes</td>
+								 		<cfelse>
+								 			<td>No</td>
+								 		</cfif>
 								 		<td>#getFacultyList.contactNumber#</td>
 									</tr>
 								</cfoutput>
