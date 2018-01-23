@@ -14,4 +14,18 @@
 				<p>In case of any query you can reply back. We are happy to help.</p>
 			</cfmail>
 	</cffunction>
+	<cffunction name="forgetPassword" access="public" output="false" returntype="void">
+		<cfargument name="emailid" required="true" type="string" >
+		<cfargument name="firstName" required ="true" type="string" >
+		<cfargument name="salt" required="true" type="string">
+			<cfmail type="html" from="megha.kedia28@gmail.com" to="#arguments.emailid#" subject="An email sent" port="587" >
+   				<p>Hello #arguments.firstName#<br>
+   				This email has to send to you, because you have requested a password reset, for the  "QUIZ CENTER".<br>
+				Here is the <a href="https://172.16.9.18/assign_10/comman/enterForgetPassword.cfm?id=#arguments.salt#">link</a> to reset your password,<br>
+				Their is no time limit, you can reset the password anytime you want.
+				After you are done with reset, you can login from <a href="https://172.16.9.18/assign_10/comman/loginPage.cfm">here</a> .</p><br>
+				<p>If you did not make this requested, please ignore the mail.</p><br>
+				<p>In case of any query you can reply back. We are happy to help.</p>
+			</cfmail>
+	</cffunction>
 </cfcomponent>
