@@ -31,28 +31,41 @@
 				});
 			});
 		</script>
+		<style>
+			.lineform {
+			float: left;
+			padding: 10px 30px 10px 30px;
+			}
+			.submitbtn {
+			padding: 40px 0px 0px 0px;
+			}
+			.box{
+			border-style: groove;
+			}
+		</style>
  	<main class="main-content">
 		<div class="container">
 			<div class="row">
 				<cfform action="" name="quizForm" id="quizForm">
-					<div class="col-md-6">
-						<div class="boxed-section request-form">
-							<h2 class="section-title text-center">Quiz information:</h2>
-								<div class="field">
+					<div class="col-md-12">
+					<h2 class="section-title text-center">Quiz information:</h2>
+						<div class="request-form">
+						<div class="box">
+							<div class="lineform">
 									<label for="quizName">Name of the quiz:</label>
-									<div class="control"><cfinput type="text" id="quizName" name="quizName" placeholder="Give a name to the quiz">
+									<div ><cfinput type="text" id="quizName" name="quizName" placeholder="Give a name to the quiz">
 									<div class="error-msg" id="error_quizname"></div></div>
 								</div>
-								<div class="field">
+								<div class="lineform">
 									<label for="startTime">Enter the start Time:</label>
-									<div class="control"><cfinput type="text" id="startTime" name="startTime" placeholder="Enter the start date time">
+									<div ><cfinput type="text" id="startTime" name="startTime" placeholder="Enter the start date time">
 									<div class="error-msg" id="error_starttime"></div></div>
 								</div>
-								<div class="field">
+								<div class="lineform">
 									<label for="endTime">Enter the end Time:</label>
-									<div class="control">
+									<div >
 									<cfselect id="endTime" name="endTime" >
-										<option value="">Select the correct option</option>
+										<option value="">Select the duration of test:</option>
 										<option value="15">15 mins</option>
 										<option value="30">30 mins</option>
 										<option value="45">45 mins</option>
@@ -65,17 +78,18 @@
 									<div class="error-msg" id="error_endtime"></div>
 									</div>
 								</div>
-								<div class="field no-label">
-									<div class="control">
+								<div class="submitbtn lineform">
+									<div >
 										<input type="submit" class="button" value="Submit request">
 									</div>
 								</div>
+								</div>
 							</div> <!-- .boxed-section .request-form -->
 						</div><!--col-md-6-->
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<div class="boxed-section">
 								<cfset questionList = createObject("component",'assign_10/components/getQuestionsService').getQuestions(#session.stLoggedInUser.userId#) >
-								<div class="error-msg" id="error_questions"></div>
+								<div class="error-msg text-center" id="error_questions"></div>
 								<h2 class="section-title text-center">Question Bank:</h2>
 								<div class="container_table">
 									<cfif questionList.recordcount EQ 0>
