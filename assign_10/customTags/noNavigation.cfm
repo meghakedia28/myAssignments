@@ -12,6 +12,7 @@
 		<link href="../fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<!-- Loading main css file -->
 		<link rel="stylesheet" href="../css/style.css">
+		<noscript><div><h1>no scripts in this.</h1></div></noscript>
 	</head>
 	<body>
 		<div id="site-content">
