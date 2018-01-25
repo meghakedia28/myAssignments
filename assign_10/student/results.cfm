@@ -45,9 +45,9 @@
 								<tr>
 									<cfset Slno = Slno + 1 />
 									<td>#Slno#</td>
-								 	<td>#name#</td>
-								 	<td>#startDateTime#</td>
-							 		<td>#score# %</td>
+								 	<td>#marks.name#</td>
+								 	<td>#DateTimeFormat(marks.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</td>
+							 		<td>#marks.score# %</td>
 							 		<cfset rank = object.getRanks(#marks.quizId#, #session.stLoggedInUser.userId#)/>
 									<td>#rank#</td>
 								</tr>
