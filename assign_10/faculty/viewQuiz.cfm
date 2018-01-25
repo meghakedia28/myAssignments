@@ -13,6 +13,7 @@
 		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="../css/modify.css">
 		<div class="page-title">
 			<div class="container">
 				<h2>View quiz Details</h2>
@@ -41,8 +42,8 @@
 								<cfset quizNumber = quizNumber + 1 />
 								<td>#quizNumber#</td>
 							 	<td>#quizList.name#</td>
-							 	<td>#quizList.startDateTime#</td>
-						 		<td>#quizList.endDateTime#</td>
+							 	<td>#DateTimeFormat(quizList.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</td>
+						 		<td>#DateTimeFormat(quizList.endDateTime, "dd MMMMM,yyyy hh:nn tt")#</td>
 								<cfset questionList = quizDetails.getQuestionList(#quizList.quizId#) />
 								<cfset questionNumber = 0>
 						 		<td><button type="button" class="btn btn-success btn-md" id = "questionId_#quizId#" name="questionId"  data-toggle="modal" data-target="###quizId#" >Questions</button>
@@ -63,6 +64,7 @@
 														<th>Option2</th>
 														<th>Option3</th>
 														<th>Option4</th>
+														<th></th>
 													</tr>
 								 					<cfloop query="questionList">
 											 			<tr>
@@ -73,13 +75,16 @@
 												 			<td>#encodeForHtml(questionList.option2)#</td>
 												 			<td>#encodeForHtml(questionList.option3)#</td>
 												 			<td>#encodeForHtml(questionList.option4)#</td>
+												 			<td><input type="button" class="btn-sm delete">
+    									    					</button></td>
 												 		</tr>
 									 				</cfloop>
 									 			</table>
 									 		</div><!--modal-body-->
 									 		<div class="modal-footer">
+										 	  <button type="button" class="btn btn-default" >+Add Questions</button>
 									          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									       </div><!--modal-footer-->
+									        </div><!--modal-footer-->
 										  </div><!--modal-content-->
 								  		</div><!--modal dialog-->
 								  	</div><!--modal fade-->
