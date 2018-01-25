@@ -1,0 +1,12 @@
+.edit{
+	position: relative; 
+	background-image:url('../__MACOSX/images/edit.jpg');
+	width: 15px;
+	height: 24px;
+	}
+.delete{
+	position: relative; 
+	background-image:url('../__MACOSX/images/delete.jpg');
+	width: 15px;
+	height: 24px;
+}
