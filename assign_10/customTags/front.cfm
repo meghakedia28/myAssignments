@@ -16,6 +16,7 @@
 		<script src="js/ie-support/html5.js"></script>
 		<script src="js/ie-support/respond.js"></script>
 		<![endif]-->
+		<noscript><div><h1>no scripts in this.</h1></div></noscript>
 	</head>
 	<body>
 		<div id="site-content">
