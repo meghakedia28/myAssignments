@@ -9,11 +9,14 @@
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:facultyFront>
-  	   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="../css/modify.css">
+  	   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<link rel="stylesheet" href="../css/editDelete.css">
+		<script type="text/javascript" src="../js/editRecordValidation.js"></script>
 		<div class="page-title">
 			<div class="container">
 				<h2>View quiz Details</h2>
@@ -25,28 +28,32 @@
 <cfset quizList = quizDetails.getQuizList(#session.stLoggedInUser.userId#) />
 <main class="main-content">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="boxed-section">
-					<cfset questionList = createObject("component",'assign_10/components/getQuestionsService').getQuestions(#session.stLoggedInUser.userId#) >
-					<div class="error-msg" id="error_questions"></div>
-					<h2 class="section-title text-center">Question Bank:</h2>
-						<cfif questionList.recordcount EQ 0>
-							<h2>No questions has been set.<br />
-							Please <a href="questions.cfm">set questions</a> before setting a quiz.</h2>
-						<cfelse>
-							<table class="table" id="questions" name="questions">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="boxed-section">
+				<cfset questionList = createObject("component",'assign_10/components/getQuestionsService').getQuestions(#session.stLoggedInUser.userId#) >
+				<div class="error-msg" id="error_questions"></div>
+				<h2 class="section-title text-center">Question Bank:</h2>
+					<cfif questionList.recordcount EQ 0>
+						<h2>No questions has been set.<br />
+						Please <a href="questions.cfm">set questions</a> before setting a quiz.</h2>
+					<cfelse>
+						<table class="table" id="questions" name="questions">
+							<thead>
 								<tr>
 									<th>Sl no.</th>
-									<th>questions</th>
-									<th>option1</th>
-									<th>option2</th>
-									<th>option3</th>
-									<th>option4</th>
-									<th>answer</th>
-									<th></th>
+									<th>Questions</th>
+									<th>Option1</th>
+									<th>Option2</th>
+									<th>Option3</th>
+									<th>Option4</th>
+									<th>Answer</th>
+									<th>Edit/Delete</th>
 								</tr>
+							</thead>
+							<tbody>
 								<cfset slNo = 0 />
+								<cfset editService =  createObject("component",'assign_10/components/editDeleteQuestionsService')>
 								<cfoutput query= "questionList">
 									<tr>
 										<cfset slNo = slNo + 1 />
@@ -57,19 +64,102 @@
 										<td>#encodeForHtml(questionList.option3)#</td>
 										<td>#encodeForHtml(questionList.option4)#</td>
 										<td>#encodeForHtml(questionList.correctAnswer)#</td>
-										<td><input type="button" class="btn-sm edit">
-    									    </button>
-										</td>
-										<td><input type="button" class="btn-sm delete">
-    									    </button>
-										</td>
+										<cfset editable = editService.checkEditability(#questionList.questionId#) >
+										<cfif editable>
+											<td><a href id="edit" data-toggle="modal" data-target="##edit_#questionList.questionId#">Edit</a>
+											 /
+											<a href id="delete" data-toggle="modal" data-target="##delete_#questionList.questionId#">Delete</a>
+											<div class="modal fade" id="edit_#questionList.questionId#" role="dialog">
+		 									   <div class="modal-dialog modal-md">
+												<!-- Modal content-->
+											      <div class="modal-content">
+											        <div class="modal-header">
+												    	<h4 class="modal-title">Edit record:</h4>
+											         		<button type="button" class="close" data-dismiss="modal">&times;</button>
+											        </div><!--modal-header-->
+													<div class="modal-body">
+													<!--form inside the modal-->
+												        <cfform name="editForm" id="editForm" action="">
+															<div class="field">
+																<label for="question">Question:</label>
+																<div ><cftextarea id="question" name="question" placeholder="Enter the question" value="#questionList.question#"></cftextarea>
+																<div class="error-msg" id="error_question"></div></div>
+															</div>
+															<div class="field">
+																<label for="optionA">Option A:</label>
+																<div ><cfinput type="text" id="optiona" name="optiona" placeholder="Enter the first option" value="#questionList.option1#">
+																<div class="error-msg" id="error_optiona"></div></div>
+															</div>
+															<div class="field">
+																<label for="optionB">Option B:</label>
+																<div ><cfinput type="text" id="optionb" name="optionb" placeholder="Enter the second option" value="#questionList.option2#">
+																<div class="error-msg" id="error_optionb"></div></div>
+															</div>
+															<div class="field">
+																<label for="optionC">Option C:</label>
+																<div><cfinput type="text" id="optionc" name="optionc" placeholder="Enter the third option" value="#questionList.option3#">
+																<div class="error-msg" id="error_optionc"></div></div>
+															</div>
+															<div class="field">
+																<label for="optionD">Option D:</label>
+																<div><cfinput type="text" id="optiond" name="optiond" placeholder="Enter the fourth option" value="#questionList.option4#">
+																<div class="error-msg" id="error_optiond"></div></div>
+															</div>
+															<div class="field">
+																<label for="correctAnswer">Correct Answer:</label>
+																<div>
+																	<cfselect id="answer" name="answer" check="#questionList.correctAnswer#" >
+																		<option value="">Select the correct option</option>
+																		<option value="option1">option A</option>
+																		<option value="option2">option B</option>
+																		<option value="option3">option C</option>
+																		<option value="option4">option D</option>
+																	</cfselect>
+																	<div class="error-msg" id="error_answer"></div>
+																</div>
+															</div>
+															<cfinput type="hidden" id="questionId" name="questionId" value="#questionList.questionId#">
+														</cfform>
+										 			</div><!--modal-body-->
+											 		<div class="modal-footer">
+												 	  <button type="submit" class="btn btn-default" id="submitEditForm" name="submitEditFrom" data-dismiss="modal">update</button>
+												 	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											        </div><!--modal-footer-->
+												  </div><!--modal-content-->
+										  		</div><!--modal dialog-->
+										  	</div><!--modal fade-->
+											</td>
+											<div class="modal fade" id="delete_#questionList.questionId#" role="dialog">
+		 									   <div class="modal-dialog modal-md">
+												<!-- Modal content-->
+											      <div class="modal-content">
+											        <div class="modal-header">
+												    	<h4 class="modal-title">Delete record:</h4>
+											         		<button type="button" class="close" data-dismiss="modal">&times;</button>
+											        </div><!--modal-header-->
+													<div class="modal-body">
+													<!--form inside the modal-->
+														<h3>Are you sure you want to delete this record?</h3>
+													</div><!--modal-body-->
+											 		<div class="modal-footer">
+												 	  <button type="submit" class="btn btn-default" id="confirmDelete" name="confirmDelete" data-dismiss="modal" value="#questionList.questionId#">Yes</button>
+												 	  <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+											        </div><!--modal-footer-->
+												  </div><!--modal-content-->
+										  		</div><!--modal dialog-->
+										  	</div><!--modal fade-->
+										<cfelse>
+											<td>Edit / Delete</td>
+										</cfif>
+
 									 </tr>
 								</cfoutput>
-							</table>
-						</cfif>
-					</div><!--box section-->
-			</div>
+							</tbody>
+						</table>
+					</cfif>
+				</div><!--box section-->
 		</div>
 	</div>
+</div>
 </main>
 </tags:facultyFront>
