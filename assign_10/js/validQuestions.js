@@ -43,9 +43,13 @@ function validate(elementId){
 		if (value == "" || value == null ){
 			$(elementId).css("border","2px solid red");
 			$(elementId).next('.error-msg').text("You can't leave this empty.");
+			return false;
 		}
-		if (value.length < 3 || value.length > 50) {
+		else if (value.length < 3 || value.length > 50) {
 			$(elementId).css("border","2px solid red");
 			$(elementId).next('.error-msg').text("Please enter characters of length between 3 to 50.");
+			return false;
 		}
+		else
+			return true;
 }
