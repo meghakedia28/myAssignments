@@ -18,13 +18,23 @@
 		</div>
 	</header>
 </div>
-		<script src="../js/quizValidation.js"></script>
-		<link rel="stylesheet" href="../css/table.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
 	  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
+		<script src="../js/quizValidation.js"></script>
+		<link rel="stylesheet" href="../css/table.css">
 		<script>
 			$.noConflict();
 			jQuery(document).ready(function($){
+				$('#questions').DataTable({
+				 "bLengthChange": false,
+				 "searching": false
+					});
 				$('#startTime').datetimepicker({
 					 formatDate:'Y/m/d',
 					minDate:0
@@ -91,21 +101,24 @@
 								<cfset questionList = createObject("component",'assign_10/components/getQuestionsService').getQuestions(#session.stLoggedInUser.userId#) >
 								<div class="error-msg text-center" id="error_questions"></div>
 								<h2 class="section-title text-center">Question Bank:</h2>
-								<div class="container_table">
+								<div class="">
 									<cfif questionList.recordcount EQ 0>
 										<h2>No questions has been set.<br />
 										Please <a href="questions.cfm">set questions</a> before setting a quiz.</h2>
 									<cfelse>
 										<table class="table" id="questions" name="questions">
+											<thead>
 											<tr>
 												<th></th>
-												<th>questions</th>
-												<th>option1</th>
-												<th>option2</th>
-												<th>option3</th>
-												<th>option4</th>
-												<th>answer</th>
+												<th>Questions</th>
+												<th>Option1</th>
+												<th>Option2</th>
+												<th>Option3</th>
+												<th>Option4</th>
+												<th>Answer</th>
 											</tr>
+											</thead>
+											<tbody>
 											<cfoutput query= "questionList">
 												<tr>
 													<td><cfinput type="checkbox" class="question" name="questionId" id ="questionId_#questionList.questionId#" value="#questionList.questionId#"></td>
@@ -117,6 +130,7 @@
 													<td>#encodeForHtml(questionList.correctAnswer)#</td>
 												 </tr>
 											</cfoutput>
+											</tbody>
 										</table>
 									</cfif>
 								</div><!--container_table-->

@@ -9,11 +9,13 @@
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:facultyFront>
-  	   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="../css/modify.css">
+  	   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<link rel="stylesheet" href="../css/editDelete.css">
 		<div class="page-title">
 			<div class="container">
 				<h2>View quiz Details</h2>
@@ -21,6 +23,11 @@
 		</div>
 	</header>
 </div>
+<script>
+	$(document).ready(function() {
+				$('#quiz').DataTable();
+			});
+</script>
 <cfset quizDetails =  createobject("component",'assign_10.components.viewQuizListService') />
 <cfset quizList = quizDetails.getQuizList(#session.stLoggedInUser.userId#) />
 <main class="main-content">
@@ -29,14 +36,17 @@
 			<div class="col-md-12">
 				<div class="boxed-section request-form">
 					<cfset quizNumber = 0>
-					<table class="table" id="quiz_#quizId#" name="quizId">
-						<tr>
-							<th>Sl No.</th>
-							<th>Quiz name</th>
-							<th>Start date time</th>
-							<th>End date time</th>
-							<th>View questions</th>
-						</tr>
+					<table class="table" id="quiz" name="quizId">
+						<thead>
+							<tr>
+								<th>Sl No.</th>
+								<th>Quiz name</th>
+								<th>Start date time</th>
+								<th>End date time</th>
+								<th>View questions</th>
+							</tr>
+						</thead>
+						<tbody>
 						<cfoutput query="quizList">
 							<tr>
 								<cfset quizNumber = quizNumber + 1 />
@@ -91,6 +101,7 @@
 								</td>
 							</tr>
 						</cfoutput>
+						</tbody>
 					</table>
 				</div>
 			</div>
