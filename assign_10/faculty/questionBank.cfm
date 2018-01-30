@@ -55,7 +55,7 @@
 								<cfset slNo = 0 />
 								<cfset editService =  createObject("component",'assign_10/components/editDeleteQuestionsService')>
 								<cfoutput query= "questionList">
-									<tr>
+									<tr id ="#questionList.questionId#">
 										<cfset slNo = slNo + 1 />
 										<td>#slNo#</td>
 										<td>#encodeForHtml(questionList.question)#</td>
@@ -79,36 +79,36 @@
 											        </div><!--modal-header-->
 													<div class="modal-body">
 													<!--form inside the modal-->
-												        <cfform name="editForm" id="editForm" action="">
+												        <cfform name="editForm_#questionList.questionId#" id="editForm_#questionList.questionId#" action="">
 															<div class="field">
 																<label for="question">Question:</label>
-																<div ><cftextarea id="question" name="question" placeholder="Enter the question" value="#questionList.question#"></cftextarea>
+																<div ><cftextarea id="question_#questionList.questionId#" name="question" placeholder="Enter the question" value="#questionList.question#"></cftextarea>
 																<div class="error-msg" id="error_question"></div></div>
 															</div>
 															<div class="field">
 																<label for="optionA">Option A:</label>
-																<div ><cfinput type="text" id="optiona" name="optiona" placeholder="Enter the first option" value="#questionList.option1#">
+																<div ><cfinput type="text" id="optiona_#questionList.questionId#" name="optiona" placeholder="Enter the first option" value="#questionList.option1#">
 																<div class="error-msg" id="error_optiona"></div></div>
 															</div>
 															<div class="field">
 																<label for="optionB">Option B:</label>
-																<div ><cfinput type="text" id="optionb" name="optionb" placeholder="Enter the second option" value="#questionList.option2#">
+																<div ><cfinput type="text" id="optionb_#questionList.questionId#" name="optionb" placeholder="Enter the second option" value="#questionList.option2#">
 																<div class="error-msg" id="error_optionb"></div></div>
 															</div>
 															<div class="field">
 																<label for="optionC">Option C:</label>
-																<div><cfinput type="text" id="optionc" name="optionc" placeholder="Enter the third option" value="#questionList.option3#">
+																<div><cfinput type="text" id="optionc_#questionList.questionId#" name="optionc" placeholder="Enter the third option" value="#questionList.option3#">
 																<div class="error-msg" id="error_optionc"></div></div>
 															</div>
 															<div class="field">
 																<label for="optionD">Option D:</label>
-																<div><cfinput type="text" id="optiond" name="optiond" placeholder="Enter the fourth option" value="#questionList.option4#">
+																<div><cfinput type="text" id="optiond_#questionList.questionId#" name="optiond" placeholder="Enter the fourth option" value="#questionList.option4#">
 																<div class="error-msg" id="error_optiond"></div></div>
 															</div>
 															<div class="field">
 																<label for="correctAnswer">Correct Answer:</label>
 																<div>
-																	<cfselect id="answer" name="answer" check="#questionList.correctAnswer#" >
+																	<cfselect id="answer_#questionList.questionId#" name="answer" check="#questionList.correctAnswer#" >
 																		<option value="">Select the correct option</option>
 																		<option value="option1">option A</option>
 																		<option value="option2">option B</option>
@@ -122,13 +122,12 @@
 														</cfform>
 										 			</div><!--modal-body-->
 											 		<div class="modal-footer">
-												 	  <button type="submit" class="btn btn-default" id="submitEditForm" name="submitEditFrom" data-dismiss="modal">update</button>
+												 	  <button type="submit" class="btn btn-default" id="submitEditForm" name="submitEditFrom" onClick="return updateRow(this)" value="#questionList.questionId#">update</button>
 												 	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 											        </div><!--modal-footer-->
 												  </div><!--modal-content-->
 										  		</div><!--modal dialog-->
 										  	</div><!--modal fade-->
-											</td>
 											<div class="modal fade" id="delete_#questionList.questionId#" role="dialog">
 		 									   <div class="modal-dialog modal-md">
 												<!-- Modal content-->
@@ -142,12 +141,13 @@
 														<h3>Are you sure you want to delete this record?</h3>
 													</div><!--modal-body-->
 											 		<div class="modal-footer">
-												 	  <button type="submit" class="btn btn-default" id="confirmDelete" name="confirmDelete" data-dismiss="modal" value="#questionList.questionId#">Yes</button>
+												 	  <button type="submit" class="btn btn-default" id="confirmDelete" name="confirmDelete" value="#questionList.questionId#" onClick="deleteRow(this)">Yes</button>
 												 	  <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
 											        </div><!--modal-footer-->
 												  </div><!--modal-content-->
 										  		</div><!--modal dialog-->
 										  	</div><!--modal fade-->
+										  	</td>
 										<cfelse>
 											<td>Edit / Delete</td>
 										</cfif>
