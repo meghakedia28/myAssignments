@@ -26,6 +26,7 @@
 					[questionBank].[correctAnswer] = <cfqueryparam value="#URL.answer#" cfsqltype="cf_sql_varchar">
 					WHERE [questionBank].[questionId] = <cfqueryparam value="#URL.questionId#" cfsqltype="cf_sql_bigint">
 				</cfquery>
+				<cfset variables.errorStruct.errorId.insert ('update', 'successfull', true) >
 			<cfreturn variables.errorStruct>
 		<cfelse>
 			<cfreturn variables.errorStruct>
@@ -78,8 +79,8 @@
 		<cfargument name="errorId" required="true" >
 		<cfif arguments.element EQ ''>
 			<cfset insertErrorStruct('#arguments.elementId#', '#arguments.element#', '#arguments.errorId#', "You can't leave this empty.") />
-		<cfelseif element.len() LT 3 OR element.len() GT 50>
-			<cfset insertErrorStruct('#arguments.elementId#', '#arguments.element#', '#arguments.errorId#', "Please enter characters of length between 3 to 50.") />
+		<cfelseif element.len() LT 1 OR element.len() GT 50>
+			<cfset insertErrorStruct('#arguments.elementId#', '#arguments.element#', '#arguments.errorId#', "Please enter characters of length between 1 to 50.") />
 		</cfif>
 	</cffunction>
 </cfcomponent>
