@@ -64,39 +64,6 @@
 						</cfform>
 					</div> <!-- .boxed-section .request-form -->
 				</div><!--col-md-6-->
-				<div class="col-md-6">
-					<div class="boxed-section w3-container w3-responsive">
-						<cfset getFacultyList = createobject("component",'assign_10/components/viewListOfUser').getStudentList()/>
-						<div class="error-msg" id="error_questions"></div>
-						<h2 class="section-title text-center">List of students:</h2>
-						<div class="container_table" id="list">
-							<cfset slNo = 0>
-							<table class="table table-sm" id="listOfStudents" name="listOfStudents">
-								<tr>
-									<th>SL No.</th>
-									<th>Name</th>
-									<th>Email ID</th>
-									<th>Active</th>
-									<th>Contact Number</th>
-								</tr>
-								<cfoutput query= "getFacultyList">
-									<tr>
-										<cfset slNo = slNo + 1 />
-										<td>#slNo#</td>
-										<td>#getFacultyList.firstName# #getFacultyList.lastName#</td>
-									 	<td>#getFacultyList.emailid#</td>
-									 	<cfif #getFacultyList.active# EQ 1 >
-								 			<td>Yes</td>
-								 		<cfelse>
-								 			<td>No</td>
-								 		</cfif>
-								 		<td>#getFacultyList.contactNumber#</td>
-									</tr>
-								</cfoutput>
-							</table>
-						</div><!--contanier_table-->
-					</div><!--boxed-section w3-conatiner w3-responsive-->
-				</div><!--col-md-6-->
 			</div><!--row-->
 		</div><!--container-->
 	</main>
