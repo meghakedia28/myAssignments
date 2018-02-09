@@ -53,6 +53,7 @@
 					<cfloginuser name="#LoginUser.firstName# #LoginUser.LastName#" password="#LoginUser.hashPassword#" roles="#LoginUser.role#" >
 				</cflogin>
 				<cflock scope="session" timeout="30" >
+					<cfset sessionRotate() />
 					<cfset session.stLoggedInUser = {'userFirstName' = #LoginUser.firstName#, 'userLastName' = #LoginUser.LastName#, 'userEmailId' = #LoginUser.emailid#,'userId' = #LoginUser.userId#, 'roleId' = #LoginUser.roleId#, 'userRole' = #LoginUser.role#}>
 				<cfset var.isUserLoggedIn = true />
 				</cflock>
@@ -63,6 +64,7 @@
 	<!---doLogOut method--->
 	<cffunction name="doLogOut" access="public" returntype="void">
 		<cfset structdelete(session,'stLoggedInUser')/>
+		<cfset sessionInvalidate()/>
 		<cflogout />
 	</cffunction>
 </cfcomponent>
