@@ -16,7 +16,19 @@
 		<script src="js/ie-support/html5.js"></script>
 		<script src="js/ie-support/respond.js"></script>
 		<![endif]-->
-		<noscript><div><h1>no scripts in this.</h1></div></noscript>
+		<noscript>
+			<div id="site-content">
+				<header class="site-header">
+					<div class="container">
+						<img src="../images/logo.png" alt="Lincoln high School">
+						<h1 class="site-title">St. Joseph's High School</h1>
+						<div style="position: fixed; top: 0px; left: 0px; z-index: 3000;
+		               	 background-color: #FFFFFF">
+						<p style="margin:150px; border:3px; border-style:solid; border-color:#FF0000; padding:50px;">JavaScript is not enabled.</p>
+    				</div>
+				</header>
+			</div>
+		</noscript>
 	</head>
 	<body>
 		<div id="site-content">
@@ -31,8 +43,18 @@
 							<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
 							<ul class="menu">
 								<li class="menu-item"><a href="home.cfm">Home</a></li>
-								<li class="menu-item"><a href="faculties.cfm">Faculties</a></li>
-								<li class="menu-item"><a href="students.cfm">Students</a></li>
+								<li class="menu-item dropbtn"><a href="#">Faculties</a>
+									<ul class="dropdown-content">
+									   	 <li class= "dropdown"><a href="faculties.cfm">Add faculty</a> </li>
+									     <li class= "dropdown"><a href="listOfFaculties.cfm">Faculty list</a> </li>
+									 </ul>
+								</li>
+								<li class="menu-item dropbtn"><a href="#">Students</a>
+									<ul class="dropdown-content">
+									   	 <li class= "dropdown"><a href="students.cfm">Add Students</a> </li>
+									     <li class= "dropdown"><a href="listOfStudents.cfm">Student list</a> </li>
+									 </ul>
+								</li>
 								<li class="menu-item"><a href="../comman/loginPage.cfm?logout">LogOut</a></li>
 							</ul> <!-- .menu -->
 						</div> <!-- .main-navigation -->
