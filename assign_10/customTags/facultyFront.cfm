@@ -16,6 +16,19 @@
 		<script src="js/ie-support/html5.js"></script>
 		<script src="js/ie-support/respond.js"></script>
 		<![endif]-->
+		<noscript>
+			<div id="site-content">
+				<header class="site-header">
+					<div class="container">
+						<img src="../images/logo.png" alt="Lincoln high School">
+						<h1 class="site-title">St. Joseph's High School</h1>
+						<div style="position: fixed; top: 0px; left: 0px; z-index: 3000;
+		               	 background-color: #FFFFFF">
+						<p style="margin:150px; border:3px; border-style:solid; border-color:#FF0000; padding:50px;">JavaScript is not enabled.</p>
+    				</div>
+				</header>
+			</div>
+		</noscript>
 	</head>
 	<body>
 		<div id="site-content">
@@ -30,7 +43,12 @@
 							<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
 							<ul class="menu">
 								<li class="menu-item"><a href="home.cfm">Home</a></li>
-								<li class="menu-item"><a href="questions.cfm">Question Bank</a></li>
+								<li class="menu-item dropbtn"><a href="#">Questions</a>
+									<ul class="dropdown-content">
+									   	 <li class= "dropdown"><a href="questionBank.cfm">View Questions</a> </li>
+									     <li class= "dropdown"><a href="addQuestions.cfm">Add Questions</a> </li>
+									 </ul>
+								</li>
 								<li class="menu-item"><a href="quiz.cfm">Set a quiz</a></li>
 								<li class="menu-item"><a href="viewQuiz.cfm">View quiz</a></li>
 								<li class="menu-item"><a href="results.cfm">Results</a></li>
@@ -105,12 +123,6 @@
 				<div class="copy">Copyright 2014 Lincoln High School. All rights reserved.</div>
 			</div>
 		</footer>
-		<script src="../js/jquery-1.11.1.min.js"></script>
-		<script src="../js/plugins.js"></script>
-		<script src="../js/app.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	</body>
 </html>
 </cfif>
