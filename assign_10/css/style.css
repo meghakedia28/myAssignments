@@ -7,17 +7,25 @@
 /*=========================================== 
  * Importing CSS Libraries
  *===========================================*/
-
+.dropdown-content {
+   			display: none;
+			position: absolute;
+		    min-width: 160px;
+		    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		    z-index: 1;
+			}
+.dropbtn:hover .dropdown-content {
+    display: block;
+	}
+.dropdown{
+	padding: 16px 16px 16px 0px;
+}
 body {
   color: #8f9b86;
   font-family: "Arvo", "Roboto Slab", "Open Sans", sans-serif;
   font-size: 16px;
   line-height: 2;
   font-weight: 300;
-}
-.container_table{
-	overflow-y:auto;
-	max-height: 310px;
 }
 .user{
 	color: white;
