@@ -14,12 +14,12 @@
 			<div class="app-title">
 				<h1>Quiz Center</h1>
 			</div>
-			<cfform class="login-form" name="forgetPassword_form" id="forgetPassword_form" preservedata="true" >
+			<cfform class="login-form" name="forgetPasswordForm" id="forgetPasswordForm" preservedata="true" >
 					<!---enter userId --->
 					<div class="control-group">
 						<h3>Find your account:</h3>
 						<label class="login-field-icon fui-user" for="email"></label>
-						<h5>Enter the Email Id on which the password reset link will be send:</h5>
+						<h5>Enter the Email Id to search for the account and send the password reset link:</h5>
 						<div class="error" id="error_email" name = "error_email" ></div>
 						<cfinput type="text" class="login-field" id="email" name="email" placeholder="Email Id">
 					</div>
