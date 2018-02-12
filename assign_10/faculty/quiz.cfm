@@ -27,7 +27,6 @@
 	  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
 		<script src="../js/quizValidation.js"></script>
-		<link rel="stylesheet" href="../css/table.css">
 		<script>
 			$.noConflict();
 			jQuery(document).ready(function($){
