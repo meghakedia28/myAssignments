@@ -1,26 +1,27 @@
 $(document).ready(function(){
-	$("#forgetPassword_form").submit(function(event){
+	$("#forgetPasswordForm").submit(function(event){
 		event.preventDefault();
-//		var valid = emailCheck('#email','#error_email');		
-//		if (valid) {
+		var valid = emailCheck('#email','#error_email');		
+		if (valid) {
 			var id = $('#email').val();
 			$.ajax({
-				url : "../components/validateUser.cfc?method=validateEmail",
+				url : "../components/validateUser.cfc?method=validateAndSendMailController",
 				data : {
 					emailId : id
 				},
 				success : function(result) {
 					var obj = $.parseJSON(result);
 					if (obj.STATUS == "success"){
+						alert('A reset link has been send to the associated email address.');
 						return true;
 					}
-						else {
-							$("#error_email").text(obj.MESSAGE);
-							return false;
-						}
+					else {
+						$("#error_email").text(obj.MESSAGE);
+						return false;
+					}
 				}
 			});
-//		}
+		}		
 	});
 	$('#email').focusout(function(){
 		var validate = emailCheck('#email','#error_email');
