@@ -38,6 +38,7 @@
 											<th>Email ID</th>
 											<th>Active</th>
 											<th>Contact Number</th>
+											<th>Modify</th>
 										</tr>
 									</thead>
 									<tfoot>
@@ -46,6 +47,7 @@
 											<th>Email ID</th>
 											<th>Active</th>
 											<th>Contact Number</th>
+											<th>Modify</th>
 										</tr>
 									</tfoot>
 								</table>
