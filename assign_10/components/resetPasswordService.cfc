@@ -44,14 +44,19 @@
 	<cffunction name = "insertPassword" output="false" return type="boolean">
 		<cfargument name="passwords" required="true" type="string">
 		<cfargument name="id" required="true" type="string">
-			<cfset var password = Hash(arguments.passwords & arguments.id, "SHA-512") />
  			<cftry>
 				<cftransaction>
-	 				<cfquery name ="updatePassword">
-	 					UPDATE [user]
-						SET hashPassword = '#local.password#', active = 1
-	 					WHERE [user].[salt] = '#arguments.id#'
-	 				</cfquery>
+					<cfquery name="getUserId">
+						SELECT [user].[userId] FROM [user]
+						WHERE [user].[salt] = <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_varchar">
+					</cfquery>
+					<cfset var code = Hash(GenerateSecretKey("AES"),"SHA-512" )>
+					<cfset var password = Hash(arguments.passwords & local.code, "SHA-512") />
+					<cfquery name="updateSaltPassword">
+						UPDATE [user]
+						SET [user].[salt] = '#code#', hashPassword = '#local.password#'
+						WHERE [user].[userId] = <cfqueryparam value="#getUserId.userId#" cfsqltype="cf_sql_bigint"  >
+					</cfquery>
 				</cftransaction>
 				<cfreturn true>
 			<cfcatch type="any">
