@@ -42,11 +42,11 @@
 							        <div class="modal-body">
 								        <cfset quizList =  createobject("component",'assign_10.components.facultyResultSet').listOfQuiz(#session.stLoggedInUser.UserId#) />
 										<cfset slno = 0>
-										<table class="table" id="quiz" name="quiz">
+										<table class="table" id="quizID" name="quizname">
 											<thead>
 												<tr>
 													<th>SL no</th>
-													<th></th>
+													<th>select all</th>
 													<th>Quiz Name</th>
 												</tr>
 											</thead>
