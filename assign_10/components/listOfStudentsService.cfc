@@ -5,7 +5,7 @@
 	<cfset resultSet["recordsFiltered"] = {} />
 	<cfset resultSet["data"] = {} />
 	<cfset searchdata = "search[value]" />
-	<cfset listColumns = "active,firstName,lastName,emailid,contactNumber" />
+	<cfset listColumns = "userId,active,firstName,lastName,emailid,contactNumber" />
 	<cffunction name="getStudentsList" access="remote" returntype="Struct" returnformat="JSON">
 		<cfquery name="studentList">
 			SELECT  #listColumns# FROM [user]
@@ -59,7 +59,8 @@
 				<cfelse>
 					<cfset dataArray[i][3] = "No" />
 				</cfif>
-				<cfset dataArray[i][4] = encodeForHtml(slist.contactNumber)>
+				<cfset dataArray[i][4] = encodeForHtml(slist.contactNumber) />
+				<cfset dataArray[i][5] = encodeForHtml("<button type="button" class="btn btn-success btn-md" id = "userid_#slist.userId#" name="userId"  data-toggle="modal" data-target="###userId#" >Questions</button>") />
 			<cfset i = i+1 />
  		</cfloop>
 		<cfreturn dataArray>
