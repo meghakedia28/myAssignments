@@ -80,6 +80,14 @@
 			JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]
 			WHERE [user].[userId]= <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_bigint">;
 		</cfquery>
+		<cfquery name="checkPasswordSet">
+			SELECT (case when ( select count([user].[hashPassword])
+			FROM [user] WHERE [user].[hashPassword] IS NOT NULL AND [user].[userId] =
+			 <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_bigint">) > 0
+			then 'true'
+			else 'false'
+			END) AS SetPassword;
+		</cfquery>
 		<cfsavecontent variable="variables.html" >
 			<cfoutput>
 			<form class="form-horizontal" method="post">
@@ -100,23 +108,37 @@
 								</div>
 							</div><!---form-body--->
 							<div class="form-body field">
-								<label class="col-sm-4 control-label" for="name">Name:</label>
+								<label class="col-sm-4 control-label" for="firstName">First name:</label>
 								<div class="col-sm-6">
-									<input id="name" name="name" placeholder="Enter the name" value="#facultyList.firstName# #facultyList.lastName#"></input>
-									<div class="error-msg" id="error_name"></div>
+									<input type="text" id="firstName" name="firstName" placeholder="Enter the first name" value="#facultyList.firstName#"></input>
+									<div class="error-msg" id="error_firstname"></div>
+								</div>
+							</div><!---form-body--->
+							<div class="form-body field">
+								<label class="col-sm-4 control-label" for="lastName">Last name:</label>
+								<div class="col-sm-6">
+									<input type="text" id="lastName" name="lastName" placeholder="Enter the last name" value="#facultyList.lastName#"></input>
+									<div class="error-msg" id="error_lastname"></div>
 								</div>
 							</div><!---form-body--->
 							<div class="form-body field">
 								<label class="col-sm-4 control-label" for="emailId">Email Id:</label>
 								<div class="col-sm-6">
-									<input id="emailId" name="emailId" value="#facultyList.emailid#" readonly></input>
+									<input type="text" id="emailId" name="emailId" value="#facultyList.emailid#" readonly></input>
 									<div class="error-msg" id="error_emailId"></div>
 								</div>
 							</div><!---form-body--->
 							<div class="form-body field">
 								<label class="col-sm-4 control-label" for="active">Active:</label>
 								<div class="col-sm-6">
-									<input id="active" name="active" value="#(facultyList.active)? 'true': 'false'#" readonly ></input>
+									<cfif checkPasswordSet.SetPassword >
+										<select id="active" name="active" >
+											<option value= "1" selected>true</option>
+											<option value= "0">false</option>
+										</select>
+									<cfelse>
+										<input type="text" id="active" name="active" value="#(facultyList.active)? 'true': 'false'#" readonly ></input>
+									</cfif>
 									<div class="error-msg" id="error_active"></div>
 								</div>
 							</div><!---form-body--->
@@ -124,18 +146,18 @@
 								<label class="col-sm-4 control-label" for="contactNumber">Contact Number:</label>
 								<div class="col-sm-6">
 									<input id="contactNumber" name="contactNumber" placeholder="Enter the contact number" value="#facultyList.contactNumber#"></input>
-									<div class="error-msg" id="error_contactNumber"></div>
+									<div class="error-msg" id="error_contactnumber"></div>
 								</div>
 							</div><!---form-body--->
-								<input type="hidden" id="userId" name="userId">
+								<input type="hidden" id="userId" name="userId" value="#arguments.id#">
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-			 	  <button type="submit" class="btn btn-default" id="submitEditForm" name="submitEditFrom" onClick="" value="##">Update</button>
+			 	  <button type="submit" class="btn btn-default" id="submitEditForm" name="submitEditFrom" onClick="updateRow()" value="#arguments.id#">Update</button>
 			 	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		        </div><!--modal-footer-->
-		        </form>
+		       <!--  </form> -->
 			</div>
 			</cfoutput>
 		</cfsavecontent>
