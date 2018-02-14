@@ -1,7 +1,8 @@
+var table;
 $(document).ready(function() {
 	 $.noConflict();
 	var userid = $('#id').val() ;
-		var table = $('#listOfFaculties').DataTable({
+		 table = $('#listOfFaculties').DataTable({
             "processing": true,
        		"serverSide": true,
     		"ajax": {
@@ -35,6 +36,7 @@ $(document).ready(function() {
 							   }
 							]
 				});
+		console.log(table);
 });
 $(document).on('click','#edit', function(e){
 	e.preventDefault();
@@ -54,37 +56,37 @@ function openEditModel(html){
 function validate(ref){
 	$("#submitEditForm").click(function(){
 		event.preventDefault();
-//		var valid = validateAll();
-//		if(valid){
+		var valid = validateAll();
+		if(valid){
 			submitForm();
-//		}
+		}
 	});
-//	$("input").focus(function(){
-//		$(this).css("border","");
-//		$(this).next('.error-msg').text("");
-//	});
-//	$("#firstName, #lastName").focusout(function(){
-//		wordCheck(this,$(this).next('.error-msg'));
-//	});
-//	$("#contactNumber").focusout(function(){
-//		numberCheck('#contactNumber','#error_contactnumber');
-//	});
-//	$("#subject").focusout(function(){
-//		subjectCheck('#subject','#error_subject');
-//	});
+	$("input").focus(function(){
+		$(this).css("border","");
+		$(this).next('.error-msg').text("");
+	});
+	$("#firstName, #lastName").focusout(function(){
+		wordCheck(this,$(this).next('.error-msg'));
+	});
+	$("#contactNumber").focusout(function(){
+		numberCheck('#contactNumber','#error_contactnumber');
+	});
+	$("#subject").focusout(function(){
+		subjectCheck('#subject','#error_subject');
+	});
 }
 function submitForm(){
 	event.preventDefault();
 		$.ajax({
-			url : "../components/addValidation.cfc?method=validateAllFields&"+$("form").serialize(),
+			url : "../components/addValidation.cfc?method=updateUserInformation&"+$("form").serialize(),
 			data : {},
 				success : function(result){
 					var obj = $.parseJSON(result);
 					if (obj.SUCCESSFULL != null){						
-						alert (obj.MESSAGE);
 						if(obj.SUCCESSFULL == true){
 							$(".error-msg").text("");
 							$('.close').click(); 
+							table.ajax.reload();
 						}
 					}
 					if (obj.ERRORID != null){
@@ -155,9 +157,20 @@ function validateAll(){
 	var firstName = wordCheck('#firstName','#error_firstname');
 	var lastName = wordCheck('#lastName','#error_lastname');
 	var phoneNumber = numberCheck('#contactNumber','#error_contactnumber');
-	var sub = subjectCheck('#subject','error_subject');
-	if (firstName && lastName && email && phoneNumber && sub)
-	return true;
+	if ($('#subject').length != 0){
+		var sub = wordCheck('#subject','#error_subject');
+	}
+	if (firstName && lastName && phoneNumber){
+		if ($('#subject').length != 0){
+			if (sub)
+				return true;
+			else
+				return false;
+		}
+		else{
+			return true;
+		}
+	}
 	else
-	return false;
+		return false;
 }
