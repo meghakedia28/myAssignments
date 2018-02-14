@@ -51,4 +51,33 @@
 			</cfcatch>
 		</cftry>
 	</cffunction>
+	<cffunction name="updateUserData" access="public" returntype="boolean">
+		<cfargument name="data" required="true" type="struct" >
+		<cfargument name="id" required="true" type="numeric">
+		<cftry>
+			<cftransaction>
+				<cfquery name="updateuserDetails">
+					UPDATE [user]
+						SET [user].[firstName] = <cfqueryparam value="#data.firstName#" cfsqltype="cf_sql_varchar">,
+						[user].[lastName] = <cfqueryparam value="#data.lastName#" cfsqltype="cf_sql_varchar">,
+						[user].[contactNumber] = <cfqueryparam value="#data.contactNumber#" cfsqltype="cf_sql_varchar">,
+						[subject].[name] = <cfqueryparam value="#data.subject#" cfsqltype="cf_sql_varchar">
+						FROM  [subject] JOIN [userSubject] ON [subject].[subjectId] = [userSubject].[subjectId]
+						JOIN [user] ON [user].[userId] = [userSubject].[userId]
+						WHERE [user].[userId] = <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_bigint">
+				</cfquery>
+				<cfquery name="updateSubject">
+					UPDATE [subject]
+						SET	[subject].[name] = <cfqueryparam value="#data.subject#" cfsqltype="cf_sql_varchar">
+						FROM  [subject] JOIN [userSubject] ON [subject].[subjectId] = [userSubject].[subjectId]
+						JOIN [user] ON [user].[userId] = [userSubject].[userId]
+						WHERE [user].[userId] = <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_bigint">
+				</cfquery>
+			</cftransaction>
+			<cfreturn true>
+			<cfcatch type="any">
+				<cfreturn false>
+			</cfcatch>
+		</cftry>
+	</cffunction>
 </cfcomponent>
