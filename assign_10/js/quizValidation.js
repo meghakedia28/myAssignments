@@ -1,4 +1,18 @@
-$(document).ready(function(){
+$.noConflict();
+jQuery(document).ready(function($){
+	var id = $('#userId').val();
+	var table = $("#questions").DataTable({
+		"ajax": {
+			url : "../components/getQuestionsService.cfc?method=getQuestions",
+			data :{
+				userId : id
+			}
+		}
+	});
+	$('#startTime').datetimepicker({
+		 formatDate:'Y/m/d',
+		minDate:0
+	});
 	$("#quizForm").submit(function(event){	
 	var valid = validate();
 		event.preventDefault();
