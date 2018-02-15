@@ -16,8 +16,8 @@
 		<cfquery name="qFiltered">
 		    SELECT [user].[userId], #listColumns#
 		        FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
-			JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]
-			WHERE [user].[roleId] = 2
+				JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]
+				WHERE [user].[roleId] = 2
 		    <cfif URL[searchdata] NEQ 0>
 		        AND (<cfloop list="#listColumns#" index="thisColumn">
 						<cfif thisColumn neq listFirst(listColumns)> OR
@@ -60,13 +60,12 @@
 				<cfset dataArray[i][2] = encodeForHtml(flist.firstName & ' ' & flist.lastName)>
 				<cfset dataArray[i][3] = encodeForHtml(flist.emailid)>
 				<cfif flist.active EQ 1 >
-					<cfset dataArray[i][4] = "Yes" />
+					<cfset dataArray[i][4] = "true" />
 				<cfelse>
-					<cfset dataArray[i][4] = "No" />
+					<cfset dataArray[i][4] = "false" />
 				</cfif>
 				<cfset dataArray[i][5] = encodeForHtml(flist.contactNumber)>
-				<cfset dataArray[i][6] = "<button type='button' class='btn btn-success btn-md' id = 'edit' name='edit' data-toggle='modal' data-target='##rowEdit' data-id='#flist.userId#'><i class= 'glyphicon glyphicon-pencil'>&nbsp</i>edit</button>
-				<button type='button' class='btn btn-danger btn-md' id = 'edit' name='edit' data-toggle='modal' data-target='##rowDelete'><i class='glyphicon glyphicon-trash'>&nbsp</i>Delete</button>" />
+				<cfset dataArray[i][6] = "<button type='button' class='btn btn-success btn-md' id = 'edit' name='edit' data-toggle='modal' data-target='##rowEdit' data-id='#flist.userId#'><i class= 'glyphicon glyphicon-pencil'>&nbsp</i>edit</button>" />
 			<cfset i = i+1 />
  		</cfloop>
 		<cfreturn dataArray>
@@ -154,7 +153,7 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-			 	  <button type="submit" class="btn btn-default" id="submitEditForm" name="submitEditFrom" onClick="updateRow()" value="#arguments.id#">Update</button>
+			 	  <button type="submit" class="btn btn-default" id="submitEditForm" name="submitEditFrom" onClick="" value="#arguments.id#">Update</button>
 			 	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		        </div><!--modal-footer-->
 		       <!--  </form> -->
