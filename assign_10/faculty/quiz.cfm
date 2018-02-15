@@ -18,46 +18,21 @@
 		</div>
 	</header>
 </div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
-	  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
 		<script src="../js/quizValidation.js"></script>
-		<script>
-			$.noConflict();
-			jQuery(document).ready(function($){
-				$('#questions').DataTable({
-				 "bLengthChange": false,
-				 "searching": false
-					});
-				$('#startTime').datetimepicker({
-					 formatDate:'Y/m/d',
-					minDate:0
-				});
-			});
-		</script>
-		<style>
-			.lineform {
-			float: left;
-			padding: 10px 30px 10px 30px;
-			}
-			.submitbtn {
-			padding: 40px 0px 0px 0px;
-			}
-			.box{
-			border-style: groove;
-			}
-		</style>
  	<main class="main-content">
 		<div class="container">
 			<div class="row">
+			<div class="export" id="buttons"></div>
 				<cfform action="" name="quizForm" id="quizForm">
 					<div class="col-md-12">
 					<h2 class="section-title text-center">Quiz information:</h2>
+						<div class="export" id ="buttons"></div>
 						<div class="request-form">
 						<div class="box">
 							<div class="lineform">
@@ -97,41 +72,38 @@
 						</div><!--col-md-6-->
 						<div class="col-md-12">
 							<div class="boxed-section">
-								<cfset questionList = createObject("component",'assign_10/components/getQuestionsService').getQuestions(#session.stLoggedInUser.userId#) >
+								<cfoutput><input type="hidden" id="userId" name="userId" value="#session.stLoggedInUser.userId#"></input></cfoutput>
+								<!--- <cfset questionList = createObject("component",'assign_10/components/getQuestionsService').getQuestions(#session.stLoggedInUser.userId#) > --->
 								<div class="error-msg text-center" id="error_questions"></div>
 								<h2 class="section-title text-center">Question Bank:</h2>
 								<div class="">
-									<cfif questionList.recordcount EQ 0>
-										<h2>No questions has been set.<br />
-										Please <a href="questions.cfm">set questions</a> before setting a quiz.</h2>
-									<cfelse>
+									<!--- <cfif questionList.recordcount EQ 0> --->
+<!--- 										<h2>No questions has been set.<br /> --->
+<!--- 										Please <a href="questions.cfm">set questions</a> before setting a quiz.</h2> --->
+<!--- 									<cfelse> --->
 										<table class="table" id="questions" name="questions">
 											<thead>
-											<tr>
-												<th></th>
-												<th>Questions</th>
-												<th>Option1</th>
-												<th>Option2</th>
-												<th>Option3</th>
-												<th>Option4</th>
-												<th>Answer</th>
-											</tr>
-											</thead>
-											<tbody>
-											<cfoutput query= "questionList">
 												<tr>
-													<td><cfinput type="checkbox" class="question" name="questionId" id ="questionId_#questionList.questionId#" value="#questionList.questionId#"></td>
-												 	<td>#encodeForHtml(questionList.question)#</td>
-												 	<td>#encodeForHtml(questionList.option1)#</td>
-											 		<td>#encodeForHtml(questionList.option2)#</td>
-													<td>#encodeForHtml(questionList.option3)#</td>
-													<td>#encodeForHtml(questionList.option4)#</td>
-													<td>#encodeForHtml(questionList.correctAnswer)#</td>
-												 </tr>
-											</cfoutput>
-											</tbody>
+													<th>Questions</th>
+													<th>Option1</th>
+													<th>Option2</th>
+													<th>Option3</th>
+													<th>Option4</th>
+													<th>Answer</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th>Questions</th>
+													<th>Option1</th>
+													<th>Option2</th>
+													<th>Option3</th>
+													<th>Option4</th>
+													<th>Answer</th>
+												</tr>
+											</tfoot>
 										</table>
-									</cfif>
+									<!--- </cfif> --->
 								</div><!--container_table-->
 							</div><!--box section-->
 						</div><!--col-md-6-->
