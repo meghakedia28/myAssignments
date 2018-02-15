@@ -8,35 +8,24 @@ $(document).ready(function() {
     		"ajax": {
     			"url" : "../components/listOfFacultiesService.cfc?method=getFacultyList",
     			"data" :{}
-    		},
-    		  "columnDefs": [
-    		              { "DATA": "active",
-    		            	  render: function (DATA) {
-    		            		  if (DATA){
-    		            			  return "Yes"
-    		            		  }
-    		            		  else{
-    		            			  return "No"
-    		            		  }    		            			  
-    		            	  },},
-    		          ],
-    		          dom: 'Bfrtip',
-    		          buttons: [
-								{
-								    extend: 'csvHtml5',
-								    exportOptions: {
-								    columns: [ 0, 1, 2, 3, 4 ]
-								   }
-								},
-							   {
-								    extend: 'pdfHtml5',
-								    exportOptions: {
-								    columns: [ 0, 1, 2, 3, 4 ]
-								  }
-							   }
-							]
-				});
-		console.log(table);
+    		}
+		 });
+    		var buttons = new $.fn.dataTable.Buttons(table, {
+	    		buttons: [
+	    		          {
+						    extend: 'csvHtml5',
+						    exportOptions: {
+						    columns: [ 0, 1, 2, 3]
+						   }
+						},
+						{
+							extend: 'pdfHtml5',
+						    exportOptions: {
+						    columns: [ 0, 1, 2, 3]
+						  }
+					   }
+					]
+	    		}).container().appendTo($('#buttons'));
 });
 $(document).on('click','#edit', function(e){
 	e.preventDefault();
