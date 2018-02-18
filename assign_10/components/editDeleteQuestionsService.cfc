@@ -1,6 +1,6 @@
 <cfcomponent output="false">
 	<cfset variables.errorStruct = {elementId={},errorId={}}>
-	<cffunction access="public" output="false" name="checkEditability" returntype="boolean">
+	<cffunction name="checkEditability" access="public" output="false" returntype="boolean">
 		<cfargument name="questionId" required="true" type="numeric">
 		<cfquery name="availableQuestions">
 			SELECT [questionBank].[questionId] FROM [questionBank] JOIN [quizQuestion]
@@ -14,6 +14,7 @@
 		</cfif>
 	</cffunction>
 	<cffunction name="updateQuestion" output="false" returntype="Struct" access="remote" returnformat="JSON">
+		<cfargument name="questionId" required="true" type="numeric" >
 		<cfset validate = validateAllField()>
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
 			<cfquery name="update">
@@ -24,7 +25,7 @@
 					[questionBank].[option3] = <cfqueryparam value="#URL.optionc#" cfsqltype="cf_sql_varchar">,
 					[questionBank].[option4] = <cfqueryparam value="#URL.optiond#" cfsqltype="cf_sql_varchar">,
 					[questionBank].[correctAnswer] = <cfqueryparam value="#URL.answer#" cfsqltype="cf_sql_varchar">
-					WHERE [questionBank].[questionId] = <cfqueryparam value="#URL.questionId#" cfsqltype="cf_sql_bigint">
+					WHERE [questionBank].[questionId] = <cfqueryparam value="#arguments.questionId#" cfsqltype="cf_sql_bigint">
 				</cfquery>
 				<cfset variables.errorStruct.errorId.insert ('update', 'successfull', true) >
 			<cfreturn variables.errorStruct>
@@ -33,11 +34,11 @@
 		</cfif>
 	</cffunction>
 	<cffunction name="deleteRecord" output="false" returntype="boolean" returnformat="JSON" access="remote">
-		<cfargument name="Id" required="true" type="numeric">
+		<cfargument name="questionId" required="true" type="numeric">
 			<cftry>
 				<cfquery name="deleteRow">
 					DELETE FROM [questionBank]
-		 				 WHERE [questionBank].[questionId] = <cfqueryparam value="#arguments.Id#" cfsqltype="cf_sql_bigint">
+		 				 WHERE [questionBank].[questionId] = <cfqueryparam value="#arguments.questionId#" cfsqltype="cf_sql_bigint">
 		 		</cfquery>
 		 	<cfcatch type="any">
 			 	<cfreturn false>
@@ -82,5 +83,20 @@
 		<cfelseif element.len() LT 1 OR element.len() GT 50>
 			<cfset insertErrorStruct('#arguments.elementId#', '#arguments.element#', '#arguments.errorId#', "Please enter characters of length between 1 to 50.") />
 		</cfif>
+	</cffunction>
+	<cffunction name="deleteQuizQuestion" access="remote" returntype="boolean" returnformat="JSON" output="false">
+		<cfargument name="questionId" required="true" type="numeric">
+		<cfargument name="quizId" required="true" type="numeric">
+		<cftry>
+			<cfquery name="deleteRow">
+				DELETE FROM [quizQuestion]
+					WHERE [quizQuestion].[quizId] = <cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">
+					AND [quizQuestion].[questionId] = <cfqueryparam value="#arguments.questionId#" cfsqltype="cf_sql_bigint">
+			</cfquery>
+		<cfcatch type="any">
+			<cfreturn false>
+		</cfcatch>
+		</cftry>
+		<cfreturn true>
 	</cffunction>
 </cfcomponent>
