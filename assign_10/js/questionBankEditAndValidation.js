@@ -6,7 +6,7 @@ $(document).ready(function(){
 		"ajax": {
 			url : "../components/getQuestionsService.cfc?method=viewQuestionBank",
 			data :{
-				id : userId
+				userId : userId
 			}
 		}
 	});
@@ -33,19 +33,47 @@ $(document).ready(function(){
 	$("input,select,textarea").focusout(function(){
 		validate(this);
 	});
-});
+	$('#rowEdit').on('show.bs.modal', function (event) {
+		  var button = $(event.relatedTarget) 
+		  var questionId = button.data('id') 
+		  var userId = $('#userId').val();
+		 $.ajax({
+			url: "../components/getQuestionsService.cfc?method=getQuestionDetails",
+			data:{
+				questionId: questionId,
+				userId: userId
+			},
+		  success : function(result){
+			  var obj = $.parseJSON(result);
+			  $('#question').val(obj.question);
+			  $('#optiona').val(obj.optiona);
+			  $('#optionb').val(obj.optionb);
+			  $('#optionc').val(obj.optionc);
+			  $('#optiond').val(obj.optiond);
+			  $('#answer').val(obj.answer);
+			  $('#update').val(obj.questionId);
+				 
+		  	}
+		  });
+		});
+	$('#rowDelete').on('show.bs.modal', function (event) {
+		 var button = $(event.relatedTarget) 
+		 var id = button.data('id') 
+		 $('#confirm').val(id);
+		});
+	});
 function deleteRow(data) {
 	event.preventDefault();
 	var QustnId = $(data).val();
 	$.ajax({
 			url : "../components/editDeleteQuestionsService.cfc?method=deleteRecord",
 			data : {
-				Id : QustnId
+				questionId : QustnId
 			},
 			success : function(result) {
 				if (result){
 					$('.close').click(); 
-					$('#questions').load(document.URL + ' #questions');
+					table.ajax.reload();
 					return true;
 				}
 					else {
@@ -57,7 +85,7 @@ function deleteRow(data) {
 }
 function updateRow(data){
 	event.preventDefault();
-	 var questionID = $(data).val();
+	var QustnId = $(data).val();
 	 var question = validate('#question');
 	 var optiona = validate('#optiona');
 	 var optionb = validate('#optionb');
@@ -67,7 +95,9 @@ function updateRow(data){
 	 if(question && optiona && optionb && optionc && optiond && answer) {
 		$.ajax({
 				url : "../components/editDeleteQuestionsService.cfc?method=updateQuestion&" + $("#editForm").serialize(),
-				data : {},
+				data : {
+					questionId : QustnId
+				},
 				success : function(result) {
 					var obj = $.parseJSON(result);
 					if (obj.ERRORID.update = 'successfull'){
