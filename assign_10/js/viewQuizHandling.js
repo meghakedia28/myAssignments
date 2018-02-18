@@ -1,15 +1,19 @@
-var table;
+var quizTable;
 $(document).ready(function() {
 	var userId = $('#userId').val();
-	table = $('#quiz').DataTable({
+	$('#startTime').datetimepicker({
+		 formatDate:'Y/m/d',
+		 minDate:0
+	});
+	quizTable = $('#quiz').DataTable({
          "ajax": {
  			"url" : "../components/viewQuizListService.cfc?method=getQuizList",
  			"data" :{
- 				id : userId
- 			}
+ 				userId : userId
+ 					}
  				}
 		 });
- 		var buttons = new $.fn.dataTable.Buttons(table, {
+ 		var buttons = new $.fn.dataTable.Buttons(quizTable, {
     		buttons: [
     		          {
 					    extend: 'csvHtml5',
@@ -24,5 +28,211 @@ $(document).ready(function() {
 					  }
 				   }
 				]
-    		}).container().appendTo($('#buttons'));
-});
+    		}).container().appendTo($('#buttons'));	
+ 		$("input,select").focus(function(){
+ 			$(this).css("border","");
+ 			$(this).next(".error-msg").text("");
+ 		});
+ 		$("input,select").focusout(function(){
+ 			validate(this);
+ 		});
+ 			$("input,select").focus(function(){
+ 				$(this).css("border","");
+ 				$(this).next(".error-msg").text("");
+ 			});
+ 			$("#quizName").focusout(function(){
+ 				var quiz = $("#quizName").val();
+ 				var validate = wordCheck("#quizName","#error_quizname");
+ 				if (validate){
+ 					$.ajax({
+ 						url : "../components/enterQuiz.cfc?method=checkQuizName",
+ 						data : {
+ 							name : quiz
+ 						},
+ 						success : function(result) {
+ 							var obj = $.parseJSON(result);
+ 							if (obj.STATUS == "success"){
+ 								return true;
+ 							}
+ 								else {
+ 									$("#error_quizname").text(obj.MESSAGE);
+ 									return false;
+ 								}
+ 						}
+ 					});
+ 				}
+ 			});
+ 			
+ 			$("#startTime").focusout(function(){
+ 				var start = $("#startTime").val();
+ 				if ( start == "" || start == null){
+ 					$("#error_starttime").text("You can't leave this empty.");
+ 					$("#startTime").css("border","2px solid red");
+ 					return false;
+ 				}
+ 				else{
+ 					$.ajax({
+ 						url : "../components/enterQuiz.cfc?method=checkStartTime",
+ 							data : {
+ 								startDate : start
+ 							},
+ 							success: function(result) {
+ 								var obj = $.parseJSON(result);
+ 								if (obj.STATUS == "success"){
+ 									return true;
+ 								}
+ 									else {
+ 										$("#error_starttime").text(obj.MESSAGE);
+ 										return false;
+ 									}
+ 							}	
+ 						});	
+ 					}
+ 				});
+ 			$("#endTime").focusout(function(){
+ 				var end = $("#endTime").val();
+ 				if(end == "" || end == null){
+ 					$("#error_endtime").text("You can't leave this empty.");
+ 					$("#endTime").css("border","2px solid red");
+ 					return false;
+ 				}
+ 			});
+ 		$('#rowEdit').on('show.bs.modal', function (event) {
+ 			  $('.error-msg').text("");
+ 			  var button = $(event.relatedTarget) 
+ 			  var quizId = button.data('id') 
+ 			  var userId = $('#userId').val();
+ 			 $.ajax({
+ 				url: "../components/getQuizDetails.cfc?method=quizDetails",
+ 				data:{
+ 					quizId: quizId,
+ 					userId: userId
+ 				},
+ 			  success : function(result){
+ 				  var obj = $.parseJSON(result);
+ 				  $('#quizName').val(obj.quizName);
+ 				  $('#startTime').val(obj.startTime);
+ 				  $('#endTime').val(obj.endTime);
+ 				  $('#update').val(obj.quizId);
+ 			  	}
+ 			  });
+ 			});
+ 		$('#rowDelete').on('show.bs.modal', function (event) {
+ 			 var button = $(event.relatedTarget) 
+ 			 var quizId = button.data('id') 
+ 			 $('#confirm').val(quizId);
+ 			});
+ 		});
+ 	function deleteRow(data) {
+ 		event.preventDefault();
+ 		var quizId = $(data).val();
+ 		var userId = $('#userId').val();
+ 		$.ajax({
+ 				url : "../components/enterQuiz.cfc?method=deleteQuiz",
+ 				data : {
+ 					quizId : quizId,
+ 					userId : userId
+ 				},
+ 				success : function(result) {
+ 					if (result){
+ 						$('.close').click(); 
+ 						quizTable.ajax.reload();
+ 						return true;
+ 					}
+ 						else {
+ 							alert('quiz has not been deleted, please try agin later.');
+ 							return false;
+ 						}
+ 				}
+ 			});
+ 	}
+ 	function updateRow(data){
+ 		event.preventDefault();
+ 		var quizId = $(data).val();
+ 		 var quizName = validate('#quizName','#error_quizname');
+ 		 var startTime = validate('#startTime','error_starttime');
+ 		 var endTime = validate('#endTime','#error_endtime');
+ 		 var userId = $('#userId').val();
+ 		 if(quizName && startTime && endTime) {
+ 			$.ajax({
+ 					url : "../components/enterQuiz.cfc?method=updateQuizQuestion&" + $("#editForm").serialize(),
+ 					data : {
+ 						quizId : quizId,
+ 						userId : userId
+ 					},
+ 					success : function(result) {
+ 						var obj = $.parseJSON(result);
+ 						if (obj.SUCCESSFULL != null && obj.SUCCESSFULL == true){
+ 							$('.close').click(); 
+ 							quizTable.ajax.reload();
+ 							$(".error-msg").text("");
+ 							return true;
+ 						}
+ 						if (obj.ERRORID != null){
+							for (keys in obj.ERRORID){
+								var id = '#'+(keys.toLowerCase());
+								$(id).text(obj.ERRORID[keys]);
+							}
+						}
+ 					}
+ 				});
+ 		 }
+ 		 else{
+ 			return false;
+ 		 }
+ 	}
+ 	function validate(){
+ 		var name = wordCheck("#quizName","#error_quizname");
+ 		var start = checkEmpty("#startTime","#error_starttime");
+ 		var end = checkEmpty("#endTime","#error_endtime");
+// 		var question = checkBoxEmpty("[name='questionId']","#error_questions");
+ 		if (name && start && end )
+ 		return true;
+ 		else
+ 		return false;
+ 			}
+ 	function wordCheck(elementId,errorId){
+ 		var word = $(elementId).val();
+ 		var regword = /^[a-zA-Z0-9 ]{1,30}$/;
+ 		if ( word == "" || word == null){
+ 			$(errorId).text("You can't leave this empty.");
+ 			$(elementId).css("border","2px solid red");
+ 			return false;
+ 		}
+ 		else if (!(regword.test(word))){
+ 			$(errorId).text("Please enter your valid quiz name: use (a-z) OR (A-Z) OR (0-9) \nbetween 1 and 30 characters.");
+ 			$(elementId).css("border","2px solid red");
+ 			return false;
+ 		}
+ 		else
+ 			return true;
+ 	}
+ 	function checkEmpty(elementId,errorId){
+ 		var start = $(elementId).val();
+ 		if(start == "" || start == null){
+ 			$(errorId).text("You can't leave this empty.");
+ 			$(elementId).css("border","2px solid red");
+ 			return false;
+ 		}	
+ 		else
+ 			return true;
+ 	}
+// 	function checkBoxEmpty(elementId,errorId){
+// 		var n = $('[name="questionId"]').length
+// 		var q = $('[name="questionId"]')
+// 		var c = 0
+// 		for (i=0;i<n;i++){
+// 			if(q[i].checked){
+// 				c = c+1;
+// 				break;
+// 			}
+// 		}
+// 		if (c == 0) {
+// 			$(errorId).text("You should select atleast some questions before setting a quiz");
+// 			return false;
+// 		}
+// 		else {
+// 			$(errorId).text("");
+// 			return true;
+// 		}
+// 	}
