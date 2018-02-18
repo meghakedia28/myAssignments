@@ -7,6 +7,42 @@
 /*=========================================== 
  * Importing CSS Libraries
  *===========================================*/
+.dataTables_filter input { width: 80px }
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+    width: 300px;
+}
+.buttonStyle{
+	padding : 10px 10px 10px 10px;
+	float:right;
+}
+.export{
+	padding : 0px 0px 20px 0px;
+	float: right;
+}
+.lineform {
+	float: left;
+	padding: 10px 30px 10px 30px;
+	}
+.submitbtn {
+	padding: 40px 0px 0px 0px;
+	}
+.box{
+	border-style: groove;
+	}
+#questions, #addQuestions {
+  table-layout: fixed;
+  width: 100% !important;
+}
+#questions td, #addQuestions td,
+#questions th, #addQuestions th {
+  width: auto !important;
+  white-space: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .dropdown-content {
    			display: none;
 			position: absolute;
@@ -514,6 +550,7 @@ input[type="submit"].light:hover {
 
 .text-center {
   text-align: center;
+  font-size: medium;
 }
 
 .social-links.circle a {
@@ -587,6 +624,8 @@ form select{
 }
 form textarea{
 	width: 100%;
+	height: 100%;
+	resize:vertical;
 }
 .student-list {
   list-style: none;
