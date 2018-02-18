@@ -73,38 +73,33 @@
 						<div class="col-md-12">
 							<div class="boxed-section">
 								<cfoutput><input type="hidden" id="userId" name="userId" value="#session.stLoggedInUser.userId#"></input></cfoutput>
-								<!--- <cfset questionList = createObject("component",'assign_10/components/getQuestionsService').getQuestions(#session.stLoggedInUser.userId#) > --->
-								<div class="error-msg text-center" id="error_questions"></div>
 								<h2 class="section-title text-center">Question Bank:</h2>
-								<div class="">
-									<!--- <cfif questionList.recordcount EQ 0> --->
-<!--- 										<h2>No questions has been set.<br /> --->
-<!--- 										Please <a href="questions.cfm">set questions</a> before setting a quiz.</h2> --->
-<!--- 									<cfelse> --->
-										<table class="table" id="questions" name="questions">
-											<thead>
-												<tr>
-													<th>Questions</th>
-													<th>Option1</th>
-													<th>Option2</th>
-													<th>Option3</th>
-													<th>Option4</th>
-													<th>Answer</th>
-												</tr>
-											</thead>
-											<tfoot>
-												<tr>
-													<th>Questions</th>
-													<th>Option1</th>
-													<th>Option2</th>
-													<th>Option3</th>
-													<th>Option4</th>
-													<th>Answer</th>
-												</tr>
-											</tfoot>
-										</table>
-									<!--- </cfif> --->
-								</div><!--container_table-->
+								<div class="error-msg text-center" id="error_questions"></div>
+								<div >
+									<table class="table" id="questions" name="questions">
+										<thead>
+											<tr>
+												<th></th>
+												<th>Questions</th>
+												<th>Option1</th>
+												<th>Option2</th>
+												<th>Option3</th>
+												<th>Option4</th>
+												<th>Answer</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th></th>
+												<th>Questions</th>
+												<th>Option1</th>
+												<th>Option2</th>
+												<th>Option3</th>
+												<th>Option4</th>
+												<th>Answer</th>
+											</tr>
+										</tfoot>
+									</table>
 							</div><!--box section-->
 						</div><!--col-md-6-->
 					</cfform>
