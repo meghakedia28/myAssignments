@@ -2,16 +2,17 @@
 	<cfset variables.errorStruct = {elementId={},errorId={}}>
 	<cfset variables.insertionStruct = {successfull={},message={}}>
 	<!---validate all--->
-	<cffunction name="validateAllFields" output="false" access="remote" returntype="struct" returnformat="JSON" >
+	<cffunction name="validateAllFields" output="false" access="public">
+		<cfargument name="quizId" required="false" type="numeric" default="0">
 		<cfif StructKeyExists(URL,'quizName')>
-			<cfset var checkQuizNameStatus = checkQuizName('#URL.quizName#')>
+			<cfset var checkQuizNameStatus = checkQuizName('#URL.quizName#', '#arguments.quizId#')>
 			<cfif local.checkQuizNameStatus.status EQ "error" >
 				<cfset variables.errorStruct.elementId.quizName = #URL.quizName# >
 				<cfset variables.errorStruct.errorId.error_quizname = local.checkQuizNameStatus.message >
 			</cfif>
 		</cfif>
 		<cfif StructKeyExists(URL,'startTime')>
-			<cfset var checkStartTimeStatus = checkStartTime('#URL.startTime#')>
+			<cfset var checkStartTimeStatus = checkStartTime('#URL.startTime#', '#arguments.quizId#')>
 			<cfif local.checkStartTimeStatus.status EQ "error">
 				<cfset variables.errorStruct.elementId.startTime = #URL.startTime# >
 				<cfset variables.errorStruct.errorId.error_starttime = local.checkStartTimeStatus.message >
@@ -20,12 +21,17 @@
 		<cfif StructKeyExists(URL,'endTime')>
 			<cfset checkEndTime('#URL.endTime#')>
 		</cfif>
-		<cfif StructKeyExists(URL,'questionId')>
-			<cfset checkQuestionList('#URL.questionId#')>
-		<cfelse>
-			<cfset variables.errorStruct.elementId.questionId = '' >
-			<cfset variables.errorStruct.errorId.error_questions ='You should select atleast one question to set the quiz'>
+		<cfif arguments.quizId EQ 0>
+			<cfif StructKeyExists(URL,'questionId')>
+				<cfset checkQuestionList('#URL.questionId#')>
+			<cfelse>
+				<cfset variables.errorStruct.elementId.questionId = '' >
+				<cfset variables.errorStruct.errorId.error_questions ='You should select atleast one question to set the quiz'>
+			</cfif>
 		</cfif>
+	</cffunction>
+	<cffunction name="insertQuizDetails" access="remote" returntype="Struct" returnformat="JSON">
+		<cfset validateAllFields() />
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
 			<cfset var insertion = setQuiz("#URL#","#session.stLoggedInUser.userId#")>
 			<cfif (insertion) >
@@ -45,6 +51,7 @@
 	<!---name--->
 	<cffunction name="checkQuizName" access="remote" returnformat="JSON" returntype="struct">
 		<cfargument name="name" required="true" type="string" >
+		<cfargument name="quizId" required="false" type="numeric" default="0">
 		<cfset var stStatus = {status = {} , message = {}} >
 		<cfif arguments.name EQ ''>
 			<cfset var.stStatus.status = "error" />
@@ -58,6 +65,7 @@
 			<cfquery name="quizNameCount" >
 				SELECT [quiz].[quizId] FROM [quiz]
 				WHERE [quiz].[name] = <cfqueryparam value="#arguments.name#" cfsqltype="cf_sql_varchar" >
+				AND [quiz].[quizId] <> <cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">
 			</cfquery>
 			<cfif quizNameCount.RecordCount NEQ 0>
 				<cfset var.stStatus.status = "error" />
@@ -73,6 +81,7 @@
 	<!---starttime--->
 	<cffunction name="checkStartTime" access="remote" returnformat="JSON" returntype="struct">
 		<cfargument name="startDate" required="true" type="any" >
+		<cfargument name="quizId" required="false" type="numeric" default="0">
 		<cfset var stStatus = {status = {} , message = {}} >
 		<cfif arguments.startDate EQ ''>
 			<cfset var.stStatus.status = "error" />
@@ -86,6 +95,7 @@
 			<cfquery name="quizNameCount" >
 				SELECT [quiz].[quizId] FROM [quiz]
 				WHERE ( CONVERT(VARCHAR(8), [quiz].[startDateTime], 1) ) = ( CONVERT(VARCHAR(8), <cfqueryparam value="#arguments.startDate#" cfsqltype="cf_sql_date" >, 1))
+				AND [quiz].[quizId] <> <cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">
 			</cfquery>
 			<cfif quizNameCount.RecordCount NEQ 0>
 				<cfset var.stStatus.status = "error" />
@@ -107,6 +117,7 @@
 	<!---endtime--->
 	<cffunction name ="checkEndTime" output="false" access="public" returntype="void" >
 		<cfargument name="element" required="true" type="string" >
+		<cfargument name="quizId" required="false" type="numeric" default="0">
 		<cfif arguments.element EQ ''>
 			<cfset variables.errorStruct.elementId.endTime = element>
 			<cfset variables.errorStruct.errorId.error_endtime = "You can't leave this empty.">
@@ -123,9 +134,8 @@
 	<cffunction name="setQuiz" access="remote" output="false" returntype="boolean" >
 		<cfargument name="data" required="true" type="struct">
 		<cfargument name="id" required="true" type="numeric" >
-		<cfset questionsList = #data.questionId#>
 		<cftry>
-			<cftransaction>
+ 			<cftransaction>
 				<cfquery name="insertQuiz">
 					INSERT INTO [quiz]
 						VALUES (
@@ -151,7 +161,7 @@
 							SET [endDateTime] = <cfqueryparam value= #addEndDateTime.RESULT# cfsqltype="cf_sql_datetime" >
 							WHERE [quizId] = <cfqueryparam value="#getQuizId.quizId#" cfsqltype="cf_sql_bigint">
 					</cfquery>
-					<cfloop list="#questionsList#" delimiters="," index="ind">
+					<cfloop list="#data.questionId#" delimiters="," index="ind">
 						<cfquery name="insertQuizQuestion">
 							INSERT INTO [quizQuestion]
 								VALUES (
@@ -163,10 +173,89 @@
 					<cfreturn false>
 				</cfif>
 					<cfreturn true>
-			</cftransaction>
-			<cfcatch type="any" >
-				<cfreturn false>
-			</cfcatch>
-		</cftry>
+ 			</cftransaction>
+ 			<cfcatch type="any" >
+ 				<cfreturn false>
+ 			</cfcatch>
+ 		</cftry>
+	</cffunction>
+	<cffunction name="updateQuizQuestion" access="remote" returntype="struct" returnformat="JSON">
+		<cfargument name="quizId" required="true" type="numeric">
+		<cfargument name="userId" required="true" type="numeric">
+		<cfset validateallfields(arguments.quizId)>
+		<cfif StructIsEmpty(variables.errorStruct.errorId)>
+			<cftry>
+				<cftransaction>
+					<cfquery name ="addDateTime">
+						select DATEADD (n, #url.endTime#,'#url.startTime#') 'RESULT'
+					</cfquery>
+					<cfquery name="modifyQuizQuestion">
+						UPDATE [quiz]
+								SET [quiz].[name] = <cfqueryparam value="#URL.quizName#" cfsqltype="cf_sql_varchar">,
+								[quiz].[startDateTime] = <cfqueryparam value="#URL.startTime#" cfsqltype="cf_sql_datetime">,
+								[quiz].[endDateTime] = <cfqueryparam value="#addDateTime.RESULT#" cfsqltype="cf_sql_datetime">
+								WHERE [quiz].[quizId] = <cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">
+								AND [quiz].[userId] = <cfqueryparam value="#arguments.userId#" cfsqltype="cf_sql_bigint">
+					</cfquery>
+					<cfset variables.insertionStruct.successfull = 'true'>
+					<cfset variables.insertionStruct.message = 'Quiz has been successfully updated'>
+					<cfreturn variables.insertionStruct>
+				</cftransaction>
+				<cfcatch type="any">
+					<cfset variables.insertionStruct.successfull = 'false'>
+					<cfset variables.insertionStruct.message = 'Error occured while insertion of data'>
+					<cfreturn variables.insertionStruct>
+				</cfcatch>
+			</cftry>
+		<cfelse>
+			<cfreturn variables.errorStruct>
+		</cfif>
+	</cffunction>
+	<cffunction name="deleteQuiz" access="remote" returntype="boolean" returnformat="JSON" output="false">
+		<cfargument name="quizId" required="true" type="numeric">
+		<cfargument name="userId" required="true" type="numeric">
+			<cftry>
+ 				<cftransaction>
+					<cfquery name="check">
+						SELECT [startDateTime]
+							FROM [quiz] WHERE [quiz].[quizId] = <cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">
+					</cfquery>
+					<cfif check.startDateTime GT now() >
+						<cfquery name="deleteQuizQuestions">
+							DELETE FROM [quizQuestion]
+								WHERE [quizQuestion].[quizId] = <cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">
+						</cfquery>
+						<cfquery name="deleteQuizDetails">
+							DELETE FROM [quiz]
+								WHERE [quiz].[quizId] = <cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">
+								AND [quiz].[userId] = <cfqueryparam value="#arguments.userId#" cfsqltype="cf_sql_bigint">
+						</cfquery>
+					 <cfelse>
+ 						<cfreturn false>
+ 					</cfif>
+ 				</cftransaction>
+ 			<cfcatch type="any">
+ 				<cfreturn false>
+ 			</cfcatch>
+ 			</cftry>
+		<cfreturn true>
+	</cffunction>
+	<cffunction name="updateQuizQuestionTable" access="remote" returntype="boolean" returnformat="JSON">
+		<cfargument name="quizId" required="true" type="numeric">
+		<cfset questionsList = url.questionId>
+			<cftry>
+				<cfloop list="#questionsList#" delimiters="," index="ind">
+					<cfquery name="insertQuizQuestion">
+						INSERT INTO [quizQuestion]
+							VALUES (
+							<cfqueryparam value="#ind#" cfsqltype="cf_sql_numeric" >,
+							<cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">)
+					</cfquery>
+				</cfloop>
+			<cfcatch type="any">
+ 				<cfreturn false>
+ 			</cfcatch>
+ 			</cftry>
+			<cfreturn true>
 	</cffunction>
 </cfcomponent>
