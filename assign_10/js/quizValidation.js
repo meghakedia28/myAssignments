@@ -3,7 +3,7 @@ jQuery(document).ready(function($){
 	var id = $('#userId').val();
 	var table = $("#questions").DataTable({
 		"ajax": {
-			url : "../components/getQuestionsService.cfc?method=getQuestions",
+			url : "../components/getQuestionsService.cfc?method=setQuizQuestion",
 			data :{
 				userId : id
 			}
@@ -18,7 +18,7 @@ jQuery(document).ready(function($){
 		event.preventDefault();
 		if (valid) {
 			$.ajax({
-				url : "../components/enterQuiz.cfc?method=validateAllFields&"+$("#quizForm").serialize(),
+				url : "../components/enterQuiz.cfc?method=insertQuizDetails&"+$("#quizForm").serialize(),
 				data : {},
 					success : function(result){
 						var obj = $.parseJSON(result);
@@ -86,6 +86,7 @@ jQuery(document).ready(function($){
 						}
 							else {
 								$("#error_starttime").text(obj.MESSAGE);
+								$("#startTime").css("border","2px solid red");
 								return false;
 							}
 					}	
