@@ -38,7 +38,7 @@
 									<p class="section-title text-center">
 										<cfset object =  createobject("component",'assign_10.components.getQuizDetails') />
 										<cfset currentTime = "#DateFormat(now(),'yyyy/mm/dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#" />
-										<cfset testDetails = object.quizDetails(currentTime)>
+										<cfset testDetails = object.currentQuizDetails(currentTime)>
 										<cfif testDetails.quizId NEQ '' >
 											<cfset testScore = object.getScore(#session.stLoggedInUser.userId# , #testDetails.quizId#)>
 											<cfif testScore.RecordCount EQ 0>
@@ -51,29 +51,29 @@
 												<cfinput name="nowTime" id="nowTime" type="hidden" value="">
 											</cfif>
 											<cfif (structKeyExists(URL,'submitEnd') AND (testScore.RecordCount NEQ 0))>
-												<h3 class="section-title text-center">Congratulations! You have completed today's challenge.</h3>
-												<h3 class="section-title text-center">You have scored: #testScore.score# </h3>
+												<h1 class="text-center">Congratulations! You have completed today's challenge.</h1>
+												<h1 class="text-center">You have scored: #testScore.score# </h1>
 											</cfif>
 											<cfif ((#currentTime# GTE #testDetails.startDateTime#) AND (#currentTime# LTE #testDetails.endDateTime#)) >
 												<div id="onGoingTest">
 													<cfif (testScore.RecordCount EQ 0) >
-														<h3 class=" text-center"> Hurry up! give the test before it ends.</h3>
+														<h1 class=" text-center"> Hurry up! give the test before it ends.</h1>
 													<cfelseif NOT(structKeyExists(URL,'submitEnd'))>
-														<h3 class=" text-center">You have completed today's challenge.</h3>
+														<h1 class=" text-center">You have completed today's challenge.</h1>
 													</cfif>
-													<h3 class=" text-center"> ON going test, started at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</h3>
-													<h3 class=" text-center"> The test Ends on : #DateTimeFormat(testDetails.endDateTime, "dd MMMMM,yyyy hh:nn tt")#</h3>
+													<h1 class=" text-center"> ON going test, started at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</h1>
+													<h1 class=" text-center"> The test Ends on : #DateTimeFormat(testDetails.endDateTime, "dd MMMMM,yyyy hh:nn tt")#</h1>
 												</div>
 											<cfelse>
 												<div id="upComingTest">
-													<h3 class="section-title text-center"> Next test is at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")# </h3>
+													<h1 class="text-center"> Next test is at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")# </h1>
 												</div>
 											</cfif>
-												<h3 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h3>
-												<h3 class="section-title text-center"> Subject : #testDetails.subjectName#</h3>
-												<h3 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h3>
+												<h1 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h1>
+												<h1 class="section-title text-center"> Subject : #testDetails.subjectName#</h1>
+												<h1 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h1>
 										<cfelse>
-											<h2> No test is yet to come.<br /> Tests will be displayed once the faculties set the upcoming tests.</h2>
+											<h1> No test is yet to come.<br /> Tests will be displayed once the faculties set the upcoming tests.</h1>
 										</cfif>
 									</cfoutput>
 								</p>
