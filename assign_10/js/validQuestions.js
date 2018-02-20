@@ -7,7 +7,15 @@ $(document).ready(function(){
 		 var optionc = validate('#optionc');
 		 var optiond = validate('#optiond');
 		 var answer = validate('#answer');
-		 if(question && optiona && optionb && optionc && optiond && answer) {
+		 var checkOptiona = $('#optiona').val();
+		 var checkOptionb = $('#optionb').val();
+		 var checkOptionc = $('#optionc').val();
+		 var checkOptiond = $('#optiond').val();
+		 var unique = false;
+		 if ( checkOptiona != "" && checkOptionb != "" && checkOptionc != "" && checkOptiond != ""){
+				unique = checkUnique(checkOptiona, checkOptionb, checkOptionc, checkOptiond);
+			}
+		 if(question && optiona && optionb && optionc && optiond && answer && unique) {
 			 $.ajax ({
 			 	url : "../components/enterQuestions.cfc?method=validateAllFields&"+$("#questionsForm").serialize(),
 				data : {},
@@ -39,7 +47,11 @@ $(document).ready(function(){
 	});
 });
 function validate(elementId){
-	var value = $(elementId).val();
+	 var value = $(elementId).val();
+	 var optiona = $('#optiona').val();
+	 var optionb = $('#optionb').val();
+	 var optionc = $('#optionc').val();
+	 var optiond = $('#optiond').val();
 		if (value == "" || value == null ){
 			$(elementId).css("border","2px solid red");
 			$(elementId).next('.error-msg').text("You can't leave this empty.");
@@ -50,6 +62,29 @@ function validate(elementId){
 			$(elementId).next('.error-msg').text("Please enter characters of length between 3 to 50.");
 			return false;
 		}
-		else
+		else 
 			return true;
+}
+function checkUnique(optiona, optionb, optionc, optiond){
+	var error = 0;
+	if (optiona == optionb || optiona == optionc || optiona == optiond){
+		$('#optiona').css("border","2px solid red");
+		$('#optiona').next('.error-msg').text("This option is already selected. Please enter a different option.");
+		error = 1;
+	}
+	if (optionb == optionc || optionb == optiond){
+		$('#optionb').css("border","2px solid red");
+		$('#optionb').next('.error-msg').text("This option is already selected. Please enter a different option.");
+		error = 1;
+	}
+	if  (optionc == optiond){
+		$('#optionc').css("border","2px solid red");
+		$('#optionc').next('.error-msg').text("This option is already selected. Please enter a different option.");
+		error = 1;
+	}
+	if(error == 0)
+		return true;
+	else
+		return false;
+	
 }
