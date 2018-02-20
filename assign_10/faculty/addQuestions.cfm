@@ -21,8 +21,8 @@
 	<script type="text/javascript" src="../js/validQuestions.js"></script>
 		<main class="main-content">
 			<div class="container">
-				<div class="row">
-					<div class="col-md-6">
+				<div class="mid-row">
+					<div class="col-md-8">
 						<div class="boxed-section request-form">
 							<h2 class="section-title text-center">Question Details:</h2>
 							<cfform name="questionsForm" id="questionsForm" action="">
