@@ -13,13 +13,14 @@ $(document).ready(function(){
 	 var buttons = new $.fn.dataTable.Buttons(table, {
  		buttons: [
  		          {
-				    extend: 'csvHtml5',
+				    extend: 'csv',
 				    exportOptions: {
 				    columns: [ 0, 1, 2, 3, 4, 5]
 				   }
 				},
 				{
 					extend: 'pdfHtml5',
+					pageSize: 'A0',
 				    exportOptions: {
 				    columns: [ 0, 1, 2, 3, 4, 5]
 				  }
