@@ -7,12 +7,42 @@
 /*=========================================== 
  * Importing CSS Libraries
  *===========================================*/
+ul {
+  list-style-type: none;
+  padding: 10px 0px 10px 10px;
+}
+.mid-row{
+	margin-right: auto;
+    margin-left: auto;
+    padding-left: 300px;
+}
+.dropdownbtn {
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+.dropdownbtn-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdownbtn-content {background-color: white}
+
+.dropdown:hover .dropdownbtn-content {
+    display: block;
+}
+
+.dropdown:hover .dropdownbtn {
+    background-color: #3e8e41;
+}
 .dataTables_filter input { width: 80px }
 .scrollable-menu {
     height: auto;
     max-height: 200px;
     overflow-x: hidden;
-    width: 300px;
+    width: 200px;
 }
 .buttonStyle{
 	padding : 10px 10px 10px 10px;
@@ -21,6 +51,9 @@
 .export{
 	padding : 0px 0px 20px 0px;
 	float: right;
+}
+.btnsearch{
+	padding : 0px 50px 20px 0px;
 }
 .lineform {
 	float: left;
@@ -159,35 +192,6 @@ a:hover, a:active {
   outline: 0;
 }
 
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
-h2 {
-  font-size: 1.5em;
-  margin: 0.83em 0;
-}
-
-h3 {
-  font-size: 1.17em;
-  margin: 1em 0;
-}
-
-h4 {
-  font-size: 1em;
-  margin: 1.33em 0;
-}
-
-h5 {
-  font-size: 0.83em;
-  margin: 1.67em 0;
-}
-
-h6 {
-  font-size: 0.75em;
-  margin: 2.33em 0;
-}
 
 abbr[title] {
   border-bottom: 1px dotted;
@@ -550,7 +554,6 @@ input[type="submit"].light:hover {
 
 .text-center {
   text-align: center;
-  font-size: medium;
 }
 
 .social-links.circle a {
@@ -2105,7 +2108,6 @@ form textarea{
   display: inline-block;
   margin: 0;
   font-size: 15px;
-  font-size: 0.9375rem;
   font-weight: 300;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -2135,8 +2137,6 @@ form textarea{
   margin: 0 0 0 5px;
 }
 .main-navigation .menu-item a {
-  font-size: 17px;
-  font-size: 1.0625rem;
   color: white;
   text-decoration: none;
   padding: 10px 20px;
@@ -2256,11 +2256,9 @@ form textarea{
   margin-bottom: 0;
   font-family: "Cabin Sketch", "Roboto Slab", georgia, serif;
   font-size: 60px;
-  font-size: 3.75rem;
 }
 .slider .slide-caption p {
   font-size: 18px;
-  font-size: 1.125rem;
   color: white;
   font-weight: 400;
   line-height: 30px;
