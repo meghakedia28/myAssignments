@@ -17,17 +17,7 @@
 		<script src="js/ie-support/respond.js"></script>
 		<![endif]-->
 		<noscript>
-			<div id="site-content">
-				<header class="site-header">
-					<div class="container">
-						<img src="../images/logo.png" alt="Lincoln high School">
-						<h1 class="site-title">St. Joseph's High School</h1>
-						<div style="position: fixed; top: 0px; left: 0px; z-index: 3000;
-		               	 background-color: #FFFFFF">
-						<p style="margin:150px; border:3px; border-style:solid; border-color:#FF0000; padding:50px;">JavaScript is not enabled.</p>
-    				</div>
-				</header>
-			</div>
+		   <META HTTP-EQUIV="Refresh" CONTENT="0;URL=/assign_10/ShowJSdisabled.cfm">
 		</noscript>
 	</head>
 	<body>
@@ -123,6 +113,17 @@
 				<div class="copy">Copyright 2014 Lincoln High School. All rights reserved.</div>
 			</div>
 		</footer>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	</body>
 </html>
 </cfif>
