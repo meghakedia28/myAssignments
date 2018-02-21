@@ -24,7 +24,16 @@
 				<cfset dataArray[i][3] = encodeForHtml(listOfData.option2)>
 				<cfset dataArray[i][4] = encodeForHtml(listOfData.option3)>
 				<cfset dataArray[i][5] = encodeForHtml(listOfData.option4)>
-				<cfset dataArray[i][6] = encodeForHtml(listOfData.correctAnswer)>
+				<cfset answer = encodeForHtml(listOfData.correctAnswer)>
+				<cfif answer EQ 'option1'>
+					<cfset dataArray[i][6] = 'Option A'>
+				<cfelseif answer EQ 'option2'>
+					<cfset dataArray[i][6] = 'Option B'>
+				<cfelseif answer EQ 'option3'>
+					<cfset dataArray[i][6] = 'Option C'>
+				<cfelseif answer EQ 'option4'>
+					<cfset dataArray[i][6] = 'Option D'>
+				</cfif>
 				<cfif createObject("component",'assign_10/components/editDeleteQuestionsService').checkEditability(listOfData.questionId) >
 					<cfset dataArray[i][7] ="<button type='button' class='btn btn-success btn-sm' id = 'edit' name='edit' data-toggle='modal' data-target='##rowEdit' data-id='#listOfData.questionId#'><i class= 'glyphicon glyphicon-pencil'></i>edit</button>"&
 					"<button type='button' class='btn btn-danger btn-sm' id = 'delete' name='delete' data-toggle='modal' data-target='##rowDelete' data-id='#listOfData.questionId#' ><i class= 'glyphicon glyphicon-remove'></i>Delete</button>" />
@@ -67,13 +76,13 @@
 		</cfquery>
 		<cfset var data = {}>
 		<cfloop query="getDetails">
-			<cfset data["question"] = #getDetails.question#>
-			<cfset data["optiona"] = #getDetails.option1#>
-			<cfset data["optionb"] = #getDetails.option2#>
-			<cfset data["optionc"] = #getDetails.option3#>
-			<cfset data["optiond"] = #getDetails.option4#>
-			<cfset data["answer"] = #getDetails.correctAnswer#>
-			<cfset data["questionId"] = #getDetails.questionId#>
+			<cfset data["question"] = getDetails.question>
+			<cfset data["optiona"] = getDetails.option1>
+			<cfset data["optionb"] = getDetails.option2>
+			<cfset data["optionc"] = getDetails.option3>
+			<cfset data["optiond"] = getDetails.option4>
+			<cfset data["answer"] = getDetails.correctAnswer>
+			<cfset data["questionId"] = getDetails.questionId>
 		</cfloop>
 		<cfreturn data>
 	</cffunction>
