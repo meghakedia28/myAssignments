@@ -54,7 +54,7 @@
 					<cfset var password = Hash(arguments.passwords & local.code, "SHA-512") />
 					<cfquery name="updateSaltPassword">
 						UPDATE [user]
-						SET [user].[salt] = '#code#', hashPassword = '#local.password#'
+						SET [user].[salt] = '#code#', hashPassword = '#local.password#', active = 1
 						WHERE [user].[userId] = <cfqueryparam value="#getUserId.userId#" cfsqltype="cf_sql_bigint"  >
 					</cfquery>
 				</cftransaction>
