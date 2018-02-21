@@ -21,7 +21,13 @@
 								<cfif structKeyExists(session, 'stLoggedInUser') >
 									<cfset structdelete(session, 'stLoggedInUser') />
 								</cfif>
-								<h4 class="message">After setting the password you will be redirected to the login portal.</h4>
+								<h4 class="message">
+									<cfif (userSet.active EQ 0)>
+										After setting the password you will be redirected to the login portal.
+									<cfelseif (userSet.active EQ 1)>
+										After resetting the password you will be redirected to the login portal.
+									</cfif>
+								</h4>
 								<cfform action="" method="post" name="resetForm" id="resetForm" class="form-signin">
 								    <h3 class="form-signin-heading">Welcome <cfoutput>#userSet.firstName# #userSet.lastName#</cfoutput> !</h3>
 									  <hr class="colorgraph"><br>
@@ -37,14 +43,14 @@
 								<h2 class="message"> It seems that you have already set the password.<br>
 								You can login from <a href="../comman/loginPage.cfm">HERE</a>.</h2>
 							</cfif>
-						 <cfelse>
-							<h2 class="message">You have requested a wrong Link. Please try again.</h2>
-						 </cfif>
+					 	<cfelse>
+							<h2 class="message">You have requested a wrong Link. Please try again later.</h2>
+					 	</cfif>
 					</div><!--wrapper-->
 				</div><!--container-->
 			<cfcatch type="any">
-				<h2 class="message">You have requested a wrong Link. Please try again.</h2>
-			</cfcatch>
-		</cftry>
+ 				<h2 class="message">You have requested a wrong Link. Please try again later.</h2>
+ 			</cfcatch>
+ 			</cftry>
 	</body>
 </html>
