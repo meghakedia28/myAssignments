@@ -9,7 +9,7 @@
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:facultyFront>
-   	   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
@@ -20,7 +20,8 @@
 		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script type="text/javascript" src="../js/questionBankEditAndValidation.js"></script>
+		<script type="text/javascript" src="../js/questionBankEditDelete.js"></script>
+		<script type="text/javascript" src="../js/validateQuestions.js"></script>
 		<div class="page-title">
 			<div class="container">
 				<h2>View quiz Details</h2>
@@ -40,10 +41,10 @@
 						<thead>
 							<tr>
 								<th>Questions</th>
-								<th>Option1</th>
-								<th>Option2</th>
-								<th>Option3</th>
-								<th>Option4</th>
+								<th>Option A</th>
+								<th>Option B</th>
+								<th>Option C</th>
+								<th>Option D</th>
 								<th>Answer</th>
 								<th>Modify</th>
 							</tr>
@@ -51,10 +52,10 @@
 						<tfoot>
 							<tr>
 								<th>Questions</th>
-								<th>Option1</th>
-								<th>Option2</th>
-								<th>Option3</th>
-								<th>Option4</th>
+								<th>Option A</th>
+								<th>Option B</th>
+								<th>Option C</th>
+								<th>Option D</th>
 								<th>Answer</th>
 								<th>Modify</th>
 							</tr>
@@ -73,7 +74,7 @@
 		    	<h4 class="modal-title">Questions details:</h4>
 	         	<button type="button" class="close" data-dismiss="modal">&times;</button>
 	        </div><!---modal-header--->
-			<div class="modal-body">
+			<div class="modal-body request-form">
 				 <form name="editForm" id="editForm" action="" method="post">
 					<div class="field">
 						<label for="question">Question:</label>
@@ -105,10 +106,10 @@
 						<div>
 							<select class="form-control" id="answer" name="answer" check="" >
 								<option value="">Select the correct option</option>
-								<option value="option1">option A</option>
-								<option value="option2">option B</option>
-								<option value="option3">option C</option>
-								<option value="option4">option D</option>
+								<option value="option1">Option A</option>
+								<option value="option2">Option B</option>
+								<option value="option3">Option C</option>
+								<option value="option4">Option D</option>
 							</select>
 							<div class="error-msg" id="error_answer"></div>
 						</div>
