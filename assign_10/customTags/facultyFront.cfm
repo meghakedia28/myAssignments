@@ -35,8 +35,8 @@
 								<li class="menu-item"><a href="home.cfm">Home</a></li>
 								<li class="menu-item dropbtn"><a href="#">Questions</a>
 									<ul class="dropdown-content">
-									   	 <li class= "dropdown"><a href="questionBank.cfm">View Questions</a> </li>
-									     <li class= "dropdown"><a href="addQuestions.cfm">Add Questions</a> </li>
+										<li class= "dropdown"><a href="addQuestions.cfm">Add Questions</a> </li>
+									   	<li class= "dropdown"><a href="questionBank.cfm">View Questions</a> </li>
 									 </ul>
 								</li>
 								<li class="menu-item"><a href="quiz.cfm">Set a quiz</a></li>
@@ -109,21 +109,9 @@
 						</div>
 					</div><!--colmd3-->
 				</div>
-
 				<div class="copy">Copyright 2014 Lincoln High School. All rights reserved.</div>
 			</div>
 		</footer>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
-		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	</body>
 </html>
 </cfif>
