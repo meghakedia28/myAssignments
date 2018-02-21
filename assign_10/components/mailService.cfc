@@ -9,7 +9,7 @@
 				Here is the <a href="https://172.16.9.18/assign_10/comman/resetPassword.cfm?id=#arguments.salt#">link</a> to set your password,<br>
 				You can change the pasword only once. So, please be careful while you set your password.<br>
 				Their is no time limit, you can set the password anytime you want.
-				After you are done with reset, you can login from <a href="https://172.16.9.18/assign_10/comman/loginPage.cfm">here</a> .</p><br>
+				After you are done with it, you can login from <a href="https://172.16.9.18/assign_10/comman/loginPage.cfm">here</a> .</p><br>
 				<p>If you did not make this requested, please ignore the mail.</p><br>
 				<p>In case of any query you can reply back. We are happy to help.</p>
 			</cfmail>
