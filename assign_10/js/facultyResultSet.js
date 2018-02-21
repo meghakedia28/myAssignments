@@ -42,6 +42,11 @@ $(document).ready(function(){
         	 postData.push($(this).val());
          });
 		var userId = $('#userId').val();
+		if (postData == ""){
+			$.each($("form input[name='quizId']"), function(){            
+	        postData.push($(this).val());
+			});
+		}
 		postData = postData.join(","),
 		resultTable.destroy();
 		resultTable = $('#result').DataTable({
@@ -69,6 +74,5 @@ $(document).ready(function(){
 					   }
 					]
 				}).container().appendTo($('#buttons'));	
-			$('.close').click();
-			}
+		}
 	
