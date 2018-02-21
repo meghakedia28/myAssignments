@@ -1,6 +1,5 @@
 var table;
 $(document).ready(function() {
-	 $.noConflict();
 	var userid = $('#id').val() ;
 		 table = $('#listOfFaculties').DataTable({
             "processing": true,
@@ -86,39 +85,6 @@ function submitForm(){
 					}
 				}
 		}) ;
-}
-function wordCheck(elementId,errorId){
-	var word = $(elementId).val();
-	var regword = /^[a-zA-Z]{1,30}$/;
-	if ( word == "" || word == null){
-		$(errorId).text("You can't leave this empty.");
-		$(elementId).css("border","2px solid red");
-		return false;
-	}
-	else if (!(regword.test(word))){
-		$(errorId).text("Please use only letters(a-z) or (A-Z)\nbetween 1 and 30 characters.");
-		$(elementId).css("border","2px solid red");
-		return false;
-	}
-	else
-		return true;
-}
-function numberCheck(elementId,errorId){
-	var number1 = $(elementId).val();
-	$(elementId).css("backgroundColor","");
-	var regnum = /^[0-9]{10}$/;
-	if (number1 == "" || number1 == null){
-		$(errorId).text("You can't leave this empty.");
-		$(elementId).css("border","2px solid red");
-		return false;
-	}
-	else if(!(regnum.test(number1))){
-		$(errorId).text("Please enter only numbers(0-9) of 10 digits.");
-		$(elementId).css("border","2px solid red");
-		return false;
-	}
-	else
-		return true;
 }
 function subjectCheck(elementId,errorId){
 	var subjectVal = $(elementId).val();
