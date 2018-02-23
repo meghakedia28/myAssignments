@@ -18,9 +18,6 @@
 					<div class="wrapper">
 						<cfif userSet.RecordCount EQ 1>
 							<cfif ((userSet.active EQ 0) OR ((userSet.active EQ 1) AND (userSet.reset EQ url.reset))) >
-								<cfif structKeyExists(session, 'stLoggedInUser') >
-									<cfset structdelete(session, 'stLoggedInUser') />
-								</cfif>
 								<h4 class="message">
 									<cfif (userSet.active EQ 0)>
 										After setting the password you will be redirected to the login portal.
@@ -40,16 +37,15 @@
 									  <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Set" type="Submit">Confirm</button>
 								</cfform>
 							<cfelse>
-								<h2 class="message"> It seems that you have already set the password.<br>
-								You can login from <a href="../comman/loginPage.cfm">HERE</a>.</h2>
+								<h2 class="message"> You have requested a wrong Link.</h2>
 							</cfif>
 					 	<cfelse>
-							<h2 class="message">You have requested a wrong Link. Please try again later.</h2>
+							<h2 class="message">You have requested a wrong Link.</h2>
 					 	</cfif>
 					</div><!--wrapper-->
 				</div><!--container-->
 			<cfcatch type="any">
- 				<h2 class="message">You have requested a wrong Link. Please try again later.</h2>
+ 				<h2 class="message">You have requested a wrong Link.</h2>
  			</cfcatch>
  			</cftry>
 	</body>
