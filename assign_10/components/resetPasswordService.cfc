@@ -1,12 +1,13 @@
-<cfcomponent output="false">
-	<cfset variables.errorStruct = {elementId={}, errorId={}}>
-	<cffunction name="validate" returntype="struct" returnformat="JSON" access="remote">
-		<cfset validPassword(#URL.password#)>
-		<cfset checkPassword(#URL.confirmPassword#, #URL.password#)>
+<cfcomponent output = "false">
+	<cfset variables.errorStruct = {elementId = {}, errorId = {}}>
+	<cffunction name = "validate" returntype = "struct" returnformat = "JSON" access = "remote">
+		<cfset validPassword(URL.password)>
+		<cfset checkPassword(URL.confirmPassword, URL.password)>
 			<cfif StructIsEmpty(variables.errorStruct.errorId) >
-				<cfset insert = insertPassword(#URL.password#, #URL.id#)>
+				<cfset insert = insertPassword(URL.password, URL.id)>
 				<cfif insert>
 					<cfset variables.errorStruct.errorId = ''>
+					<cfset destroyExistingSession() />
 					<cfreturn variables.errorStruct>
 				<cfelse>
 					<cfset variables.errorStruct.errorId.error_insert = "error occured while insertion of data" >
@@ -17,10 +18,10 @@
 			</cfif>
 	</cffunction>
 		<!---password--->
-	<cffunction name="validPassword" output="false" returntype="void" >
-		<cfargument name="password" required="true" type="string">
-			<cfset  variables.errorStruct.elementId.password = #arguments.password# />
-			<cfset var checkPassword = #arguments.password#/>
+	<cffunction name = "validPassword" output = "false" returntype = "void" >
+		<cfargument name = "password" required = "true" type = "string">
+			<cfset  variables.errorStruct.elementId.password = arguments.password />
+			<cfset var checkPassword = arguments.password/>
 			<cfif local.checkPassword EQ ''>
 				<cfset variables.errorStruct.errorId.error_password = "You can't leave this empty." />
 			<cfelseif !(len(local.checkPassword) GTE 8 AND len(local.checkPassword) LTE 30 AND refind('[A-Z]',local.checkPassword) AND refind('[a-z]',local.checkPassword) AND
@@ -29,30 +30,30 @@
 			</cfif>
 	</cffunction>
 	<!---confirm Password--->
-	<cffunction name="checkPassword" output="false" returntype="void" >
-		<cfargument name="confirmPassword" required="true" type="string">
+	<cffunction name = "checkPassword" output = "false" returntype = "void" >
+		<cfargument name = "confirmPassword" required = "true" type = "string">
 		<cfargument name="password" required="true" type="string">
-			<cfset  variables.errorStruct.elementId.confirmPassword = #arguments.confirmPassword# />
-			<cfset var checkconfirmPassword = #arguments.confirmPassword#>
+			<cfset  variables.errorStruct.elementId.confirmPassword = arguments.confirmPassword />
+			<cfset var checkconfirmPassword = arguments.confirmPassword>
 			<cfif local.checkconfirmPassword EQ '' >
 				<cfset variables.errorStruct.errorId.error_confirmpassword = "You can't leave this empty." />
-			<cfelseif (#arguments.password# NEQ local.checkconfirmPassword)>
+			<cfelseif (arguments.password NEQ local.checkconfirmPassword)>
 				<cfset variables.errorStruct.errorId.error_confirmpassword = "Confirm password did not match with the password." />
 			</cfif>
 	</cffunction>
 	<!---update password--->
-	<cffunction name = "insertPassword" output="false" return type="boolean">
-		<cfargument name="passwords" required="true" type="string">
-		<cfargument name="id" required="true" type="string">
+	<cffunction name = "insertPassword" output = "false" returntype = "boolean">
+		<cfargument name = "passwords" required = "true" type = "string">
+		<cfargument name = "id" required = "true" type = "string">
  			<cftry>
 				<cftransaction>
-					<cfquery name="getUserId">
+					<cfquery name = "getUserId">
 						SELECT [user].[userId] FROM [user]
 						WHERE [user].[salt] = <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_varchar">
 					</cfquery>
 					<cfset var code = Hash(GenerateSecretKey("AES"),"SHA-512" )>
 					<cfset var password = Hash(arguments.passwords & local.code, "SHA-512") />
-					<cfquery name="updateSaltPassword">
+					<cfquery name = "updateSaltPassword">
 						UPDATE [user]
 						SET [user].[salt] = '#code#', hashPassword = '#local.password#', active = 1
 						WHERE [user].[userId] = <cfqueryparam value="#getUserId.userId#" cfsqltype="cf_sql_bigint"  >
@@ -63,5 +64,11 @@
  				<cfreturn false>
 			</cfcatch>
 		</cftry>
+	</cffunction>
+	<cffunction name = "destroyExistingSession" output = "false">
+		<cfif structKeyExists(session, 'stLoggedInUser') >
+			<cfset structdelete(session, 'stLoggedInUser') />
+			<cfset sessionInvalidate()/>
+		</cfif>
 	</cffunction>
 </cfcomponent>
