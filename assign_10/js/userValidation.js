@@ -8,13 +8,23 @@ $(document).ready(function(){
 				data : {},
 					success : function(result){
 						var obj = $.parseJSON(result);
-						if (obj.SUCCESSFULL != null){						
-							alert (obj.MESSAGE);
+						if (obj.SUCCESSFULL != null){
+							$.alert({
+                                title: 'Success!',
+                                content: obj.MESSAGE
+                            });
 							if(obj.SUCCESSFULL == true){
-								alert ('A mail has been send to your email id to set the password');
-								$("#form").trigger('reset');
-								$(".error-msg").text("");
-								$("#list").load(document.URL + ' #list');
+								$.confirm({
+	                                title: 'Information',
+	                                content: 'A mail has been send to your email id to set the password',
+	                                buttons: {
+	                                    Ok : function () {
+	                                    	$("#form").trigger('reset');
+	        								$(".error-msg").text("");
+	        								$("#list").load(document.URL + ' #list');	
+	                                    }
+	                                }
+	                            });	
 							}
 						}
 						if (obj.ERRORID != null){

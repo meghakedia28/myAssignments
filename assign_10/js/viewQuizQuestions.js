@@ -66,7 +66,10 @@ function deleteRow(data) {
 						return true;
 					}
 						else {
-							alert('data has not be deleted, please try agin later.');
+							$.alert({
+                                title: 'Alert!',
+                                content: 'data has not be deleted, please try agin later.'
+                            });
 							return false;
 						}
 				}

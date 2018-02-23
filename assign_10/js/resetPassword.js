@@ -10,7 +10,10 @@
 					success : function(result){
 						var obj = $.parseJSON(result);
 						if (obj.ERRORID == "") {
-							alert("The password has been succesfully set!");
+							$.alert({
+                                title: 'Success!',
+                                content: 'The password has been succesfully set!'
+                            });
 							$("#resetForm").trigger('reset');
 							$(".error-msg").text("");
 							window.location.replace("loginPage.cfm");

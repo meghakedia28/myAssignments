@@ -1,5 +1,6 @@
+$.noConflict();
 var quizTable;
-$(document).ready(function() {
+jQuery(document).ready(function($) {
 	var userId = $('#userId').val();
 	$('#startTime').datetimepicker({
 		 formatDate:'Y/m/d',
@@ -140,7 +141,10 @@ $(document).ready(function() {
  						return true;
  					}
  						else {
- 							alert('quiz has not been deleted, please try agin later.');
+ 							$.alert({
+                                title: 'Alert!',
+                                content: 'quiz has not been deleted, please try agin later.'
+                            });
  							return false;
  						}
  				}
@@ -185,7 +189,6 @@ $(document).ready(function() {
  		var name = wordCheck("#quizName","#error_quizname");
  		var start = checkEmpty("#startTime","#error_starttime");
  		var end = checkEmpty("#endTime","#error_endtime");
-// 		var question = checkBoxEmpty("[name='questionId']","#error_questions");
  		if (name && start && end )
  		return true;
  		else
@@ -217,22 +220,3 @@ $(document).ready(function() {
  		else
  			return true;
  	}
-// 	function checkBoxEmpty(elementId,errorId){
-// 		var n = $('[name="questionId"]').length
-// 		var q = $('[name="questionId"]')
-// 		var c = 0
-// 		for (i=0;i<n;i++){
-// 			if(q[i].checked){
-// 				c = c+1;
-// 				break;
-// 			}
-// 		}
-// 		if (c == 0) {
-// 			$(errorId).text("You should select atleast some questions before setting a quiz");
-// 			return false;
-// 		}
-// 		else {
-// 			$(errorId).text("");
-// 			return true;
-// 		}
-// 	}

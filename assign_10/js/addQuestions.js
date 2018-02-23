@@ -22,12 +22,19 @@ $(document).ready(function(){
 					success: function(result){
 					var obj = $.parseJSON(result);
 					if (obj.SUCCESSFULL != null){						
-							alert (obj.MESSAGE);
-							if(obj.SUCCESSFULL == true){
-								$("#questionsForm").trigger('reset');
-								$(".error-msg").text("");
-							}
-						}
+						$.confirm({
+                            title: 'Success!',
+                            content: obj.MESSAGE,
+                            buttons: {
+                                Ok : function () {
+                                	if(obj.SUCCESSFULL == true){
+            							$("#questionsForm").trigger('reset');
+            							$(".error-msg").text("");
+            						}	
+                                }
+                            }
+                        });		
+					}
 					if (obj.ERRORID != null){
 						for (keys in obj.ERRORID){
 							var id = '#'+(keys.toLowerCase());

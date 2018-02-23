@@ -12,8 +12,16 @@ $(document).ready(function(){
 				success : function(result) {
 					var obj = $.parseJSON(result);
 					if (obj.STATUS == "success"){
-						alert('A reset link has been send to the associated email address.');
-						return true;
+						$.alert({
+							title: 'Information',
+                            content: 'A reset link has been send to the associated email address.',
+                            buttons: {
+                                Ok : function () {
+                                	$("#forgetPasswordForm").trigger('reset');
+                                	return true;
+                                }
+                            }
+                        });
 					}
 					else {
 						$("#error_email").text(obj.MESSAGE);
