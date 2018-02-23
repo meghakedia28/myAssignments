@@ -51,40 +51,43 @@
 												<cfinput name="nowTime" id="nowTime" type="hidden" value="">
 											</cfif>
 											<cfif (structKeyExists(URL,'submitEnd') AND (testScore.RecordCount NEQ 0))>
-												<h1 class="text-center">Congratulations! You have completed today's challenge.</h1>
-												<h1 class="text-center">You have scored: #testScore.score# </h1>
+												<h3 class="text-center">Congratulations! You have completed today's challenge.</h3>
+												<h3 class="text-center">You have scored: #testScore.score# </h3>
 											</cfif>
 											<cfif ((#currentTime# GTE #testDetails.startDateTime#) AND (#currentTime# LTE #testDetails.endDateTime#)) >
 												<div id="onGoingTest">
 													<cfif (testScore.RecordCount EQ 0) >
-														<h1 class=" text-center"> Hurry up! give the test before it ends.</h1>
+														<h3 class=" text-center"> Hurry up! give the test before it ends.</h3>
 													<cfelseif NOT(structKeyExists(URL,'submitEnd'))>
-														<h1 class=" text-center">You have completed today's challenge.</h1>
+														<h3 class=" text-center">You have completed today's challenge.</h3>
 													</cfif>
-													<h1 class=" text-center"> ON going test, started at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</h1>
-													<h1 class=" text-center"> The test Ends on : #DateTimeFormat(testDetails.endDateTime, "dd MMMMM,yyyy hh:nn tt")#</h1>
+													<h3 class=" text-center"> ON going test, started at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</h3>
+													<h3 class=" text-center"> The test Ends on : #DateTimeFormat(testDetails.endDateTime, "dd MMMMM,yyyy hh:nn tt")#</h3>
 												</div>
 											<cfelse>
 												<div id="upComingTest">
-													<h1 class="text-center"> Next test is at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")# </h1>
+													<h3 class="text-center"> Next test is at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")# </h3>
 												</div>
 											</cfif>
-												<h1 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h1>
-												<h1 class="section-title text-center"> Subject : #testDetails.subjectName#</h1>
-												<h1 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h1>
+												<h3 class="section-title text-center"> Quiz Name: #testDetails.quizName#</h3>
+												<h3 class="section-title text-center"> Subject : #testDetails.subjectName#</h3>
+												<h3 class="section-title text-center"> Faculty : #testDetails.firstName# #testDetails.lastName#</h3>
 										<cfelse>
-											<h1> No test is yet to come.<br /> Tests will be displayed once the faculties set the upcoming tests.</h1>
+											<h3> No test is yet to come.<br /> Tests will be displayed once the faculties set the upcoming tests.</h3>
 										</cfif>
 									</cfoutput>
 								</p>
+							</cfform>
 								<div class="field no-label">
 									<div class="control  text-center">
- 											<span id="startTestButton">&nbsp;</span>
+ 										<span id="startTestButton">&nbsp;</span>
 									</div>
 									</div>
-								</cfform>
-							</div> <!-- .boxed-section .request-form -->
-						</div>
-		</main>
+
+							</div> <!--- .boxed-section .request-form --->
+						</div><!---col-md-12--->
+					</div><!---row--->
+				</div><!---conatiner--->
+			</main>
 		<script src="../js/testValidate.js"></script>
 </tags:studentFront>
