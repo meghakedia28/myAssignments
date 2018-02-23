@@ -9,6 +9,13 @@
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:facultyFront>
+		<div class="page-title">
+			<div class="container">
+				<h2>View quiz Details</h2>
+			</div>
+		</div>
+	</header>
+</div>
   	   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
@@ -22,14 +29,9 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 		<script type="text/javascript" src="../js/viewQuizHandling.js"></script>
-		<div class="page-title">
-			<div class="container">
-				<h2>View quiz Details</h2>
-			</div>
-		</div>
-	</header>
-</div>
 <main class="main-content">
 	<div class="container">
 		<div class="row">
@@ -70,7 +72,7 @@
 		    	<h4 class="modal-title">Questions details:</h4>
 	         	<button type="button" class="close" data-dismiss="modal">&times;</button>
 	        </div><!---modal-header--->
-			<div class="modal-body">
+			<div class="modal-body request-form">
 				 <form name="editForm" id="editForm" action="" method="post">
 					<div class="field">
 						<label for="quizName">Name of the quiz:</label>
