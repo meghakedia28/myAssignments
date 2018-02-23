@@ -21,15 +21,20 @@
 			<cfset validate('answer', '#URL.answer#', 'error_answer')>
 		</cfif>
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
-			<cfset var insertion = insertQuestions("#URL#","#session.stLoggedInUser.userId#")>
-			<cfif (insertion) >
-				<cfset variables.insertionStruct.successfull = 'true'>
-				<cfset variables.insertionStruct.message = 'Data has been added successfully'>
-				<cfreturn variables.insertionStruct>
+			<cfset unique = checkunique('#URL.optiona#', '#URL.optionb#', '#URL.optionc#', '#URL.optiond#' ) />
+			<cfif unique>
+				<cfset var insertion = insertQuestions("#URL#","#session.stLoggedInUser.userId#")>
+				<cfif (insertion) >
+					<cfset variables.insertionStruct.successfull = 'true'>
+					<cfset variables.insertionStruct.message = 'Data has been added successfully'>
+					<cfreturn variables.insertionStruct>
+				<cfelse>
+					<cfset variables.insertionStruct.successfull = 'false'>
+					<cfset variables.insertionStruct.message = 'Error occured while insertion of data'>
+					<cfreturn variables.insertionStruct>
+				</cfif>
 			<cfelse>
-				<cfset variables.insertionStruct.successfull = 'false'>
-				<cfset variables.insertionStruct.message = 'Error occured while insertion of data'>
-				<cfreturn variables.insertionStruct>
+				<cfreturn variables.errorStruct>
 			</cfif>
 		<cfelse>
 			<cfreturn variables.errorStruct>
@@ -77,5 +82,29 @@
 				<cfreturn false>
 			</cfcatch>
 		</cftry>
+	</cffunction>
+	<cffunction name ="checkUnique" access="public" returntype="boolean">
+		<cfargument name="optiona" required="true" type="string">
+		<cfargument name="optionb" required="true" type="string">
+		<cfargument name="optionc" required="true" type="string">
+		<cfargument name="optiond" required="true" type="string">
+		<cfset var error = 0>
+		<cfif ((arguments.optiond EQ arguments.optionc) || (arguments.optiond EQ arguments.optionb) || (arguments.optiond EQ arguments.optiona))>
+			<cfset insertErrorStruct('optiond', '#arguments.optiond#', 'error_optiond', "This option is already selected. Please enter a different option.") />
+			<cfset local.error = 1>
+		</cfif>
+		<cfif ((arguments.optionc EQ arguments.optionb) || (arguments.optionc EQ arguments.optiona))>
+			<cfset insertErrorStruct('optionc', '#arguments.optionc#', 'error_optionc', "This option is already selected. Please enter a different option.") />
+			<cfset local.error = 1>
+		</cfif>
+		<cfif ((arguments.optionb EQ arguments.optiona))>
+			<cfset insertErrorStruct('optionb', '#arguments.optionb#', 'error_optionb', "This option is already selected. Please enter a different option.") />
+			<cfset local.error = 1>
+		</cfif>
+		<cfif error EQ 0>
+			<cfreturn true>
+		<cfelse>
+			<cfreturn false>
+		</cfif>
 	</cffunction>
 </cfcomponent>
