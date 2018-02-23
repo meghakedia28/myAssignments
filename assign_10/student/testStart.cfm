@@ -1,16 +1,38 @@
 ﻿<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
 <cfif NOT isUserLoggedIn()>
+	<cfdump var = "#4#">
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfif NOT(sessionExists)>
+	<cfdump var = "#5#" abort>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 <cfelseif session.stLoggedInUser.roleId NEQ 3>
+	<cfdump var = "#6#" abort>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:studentFront>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script>
+			$(document).ready(function(){
+				$('#questions').DataTable({
+					"searching": false,
+					"paging": false,
+					"ordering": false,
+      				"info":     false
+				});
+			})
+		</script>
 			<div class="page-title">
 				<div class="container">
 					<h2>Add questions</h2>
@@ -19,8 +41,10 @@
 		</header>
 	</div>
 	<cfif structKeyExists(session,'stQuizStarts') >
+	<cfdump var = "#1#">
 		<cfif !(#session.stQuizStarts.endTime# GT #now()# && #session.stQuizStarts.startTime# LT #now()#)  >
 			<cfset killSession = createobject("component",'assign_10.components.onTestSubmit').destroySession() >
+			<cfdump var = "#3#" abort>
 			<cflocation url = "tests.cfm?noaccess">
 		</cfif>
 		<cfset testScore = createobject("component",'assign_10.components.getQuizDetails').getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
@@ -53,38 +77,44 @@
 										<cfset questions = object.quizQuestions(#session.stQuizStarts.quizId#)>
 										<cfset questionNumber = 0>
 											<table class="table" id="questions" name="questions">
-												<tr>
-													<th>Sl No.</th>
-													<th>questions</th>
-													<th>option1</th>
-													<th>option2</th>
-													<th>option3</th>
-													<th>option4</th>
-												</tr>
-												<cfoutput query="questions">
+												<thead>
 													<tr>
-														<cfset questionNumber = questionNumber + 1 />
-														<td>#questionNumber#</td>
-													 	<td>#encodeForHtml(question)#</td>
-													 	<td><cfinput type="radio" name="#quizQuestionId#" id="option1" value= "option1">#encodeForHtml(option1)#</td>
-												 		<td><cfinput type="radio" name="#quizQuestionId#" id="option2" value= "option2">#encodeForHtml(option2)#</td>
-														<td><cfinput type="radio" name="#quizQuestionId#" id="option3" value= "option3">#encodeForHtml(option3)#</td>
-														<td><cfinput type="radio" name="#quizQuestionId#" id="option4" value= "option4">#encodeForHtml(option4)#</td>
+														<th>Sl No.</th>
+														<th>questions</th>
+														<th>option1</th>
+														<th>option2</th>
+														<th>option3</th>
+														<th>option4</th>
 													</tr>
-												</cfoutput>
+												</thead>
+												<tbody>
+													<cfoutput query="questions">
+														<tr>
+															<cfset questionNumber = questionNumber + 1 />
+															<td>#questionNumber#</td>
+														 	<td>#encodeForHtml(question)#</td>
+														 	<td><cfinput type="radio" name="#quizQuestionId#" id="option1" value= "option1">#encodeForHtml(option1)#</td>
+													 		<td><cfinput type="radio" name="#quizQuestionId#" id="option2" value= "option2">#encodeForHtml(option2)#</td>
+															<td><cfinput type="radio" name="#quizQuestionId#" id="option3" value= "option3">#encodeForHtml(option3)#</td>
+															<td><cfinput type="radio" name="#quizQuestionId#" id="option4" value= "option4">#encodeForHtml(option4)#</td>
+														</tr>
+													</cfoutput>
+												</tbody>
 											</table><br>
 											<div class="field no-label">
 												<div class="control  text-center">
 													<button type="submit" class="button text-center" id="submitTest" name="submitTest" value="">Submit test</button>
 												</div>
 											</div>
-
 									</cfform>
 								</div> <!-- .boxed-section .request-form -->
 							</div>
+						</div>
+						</div>
 					</main>
 				</cfif>
 		<cfelse>
+		<cfdump var = "#session#" abort>
 			<cflocation url = "tests.cfm?noaccess">
 		</cfif>
 		<script src="../js/testStartValidation.js"></script>
