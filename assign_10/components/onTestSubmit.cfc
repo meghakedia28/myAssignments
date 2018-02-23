@@ -1,5 +1,6 @@
 <cfcomponent output="false">
 	<!---insert scoreDetails into db--->
+	<cfset report =''/>
 	<cffunction name="insertScore" access="remote" output="false" returntype="boolean" returnformat="JSON">
 		<cfset var score = getScore(#URL#) />
 			<cftry>
@@ -14,7 +15,8 @@
 							INSERT INTO [scoreDetails]
 								VALUES (
 								<cfqueryparam value = "#session.stQuizStarts.quizId#" cfsqltype="cf_sql_bigint">,
-								<cfqueryparam value= "#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint">,0,
+								<cfqueryparam value= "#session.stLoggedInUser.userId#" cfsqltype="cf_sql_bigint">,
+								<cfqueryparam value="#report#" cfsqltype="cf_sql_varchar">,
 								<cfqueryparam value = "#score#" cfsqltype="cf_sql_decimal" scale="2" > );
 						</cfquery>
 					</cfif>
@@ -30,7 +32,7 @@
 	<cffunction name="getScore" access="public" output="false" returntype="Numeric">
 		<cfargument name="data" required="true" type="struct">
 		<cfset var score = 0 />
- 			<cftransaction>
+		<cftransaction>
 				<cfquery name ="getQuizQuestionId" >
 					SELECT [quizQuestionId], [questionId] FROM [quizQuestion]
 					WHERE [quizId] = <cfqueryparam value = "#session.stQuizStarts.quizId#" cfsqltype="cf_sql_bigint" />
@@ -38,22 +40,42 @@
 				</cfquery>
 				<cfset var totalScore = #getQuizQuestionId.RecordCount#>
 				<cfloop query = "getQuizQuestionId">
+					<cfset report = report & getQuizQuestionId.quizQuestionId & ',' />
+					<cfquery name="correctAnswers">
+						SELECT [correctAnswer] FROM [questionBank]
+						WHERE [questionId] = <cfqueryparam value="#getQuizQuestionId.questionId#" cfsqltype="cf_sql_bigint">
+					</cfquery>
+					<cfset report = report & correctAnswers.correctAnswer & ','>
 					<cfif (NOT (structKeyExists(data,#getQuizQuestionId.quizQuestionId#)))>
 						<cfset var userAnswer = "0" />
 					<cfelse>
 						<cfset userAnswer = StructFind(data,"#getQuizQuestionId.quizQuestionId#") />
-						<cfquery name="correctAnswers">
-							SELECT [correctAnswer] FROM [questionBank]
-							WHERE [questionId] = <cfqueryparam value="#getQuizQuestionId.questionId#" cfsqltype="cf_sql_bigint">
-						</cfquery>
 						<cfset var comparison = compare(#correctAnswers.correctAnswer#, #userAnswer#) />
 							<cfif (#comparison# EQ 0)>
 								<cfset score = score + 1 />
 							</cfif>
 					</cfif>
+					<cfset report = report & userAnswer & ';' >
 				</cfloop>
 			</cftransaction>
 	  			<cfreturn PrecisionEvaluate((score/totalScore)*100.0)>
+	</cffunction>
+	<cffunction name="processReport" access="remote" returntype="Struct" returnformat="JSON">
+		<cfargument name="scoreId" required="true" type="numeric" >
+		<cfset var dataArray=ArrayNew(2)>
+		<cfquery name="getReport">
+			SELECT [scoreDetails].[attemtedDetails] FROM [scoreDetails]
+			WHERE [scoreDetails].[scoreId] = <cfqueryparam value="#arguments.scoreId#" cfsqltype="cf_sql_bigint">
+		</cfquery>
+		<cfset var i = 1>
+		<cfloop list ="#getReport.attemtedDetails#" delimiters = ";" item="i">
+		  <cfset arr = listToArray (#i#, ",",true,true)>
+		    <cfset dataArray[i][1] = arr[1]/>
+		    <cfset dataArray[i][2] = arr[2]/>
+		    <cfset dataArray[i][3] = arr[3]/>
+		    <cfset i = i +1 >
+		</cfloop>
+		<cfreturn resultSet>
 	</cffunction>
 	<!---destroy session.stQuizStarts --->
 	<cffunction name="destroySession" access="public" output="false">
