@@ -7,6 +7,9 @@
 /*=========================================== 
  * Importing CSS Libraries
  *===========================================*/
+.filter{
+	display: inline-block;
+}
 ul {
   list-style-type: none;
   padding: 10px 0px 10px 10px;
