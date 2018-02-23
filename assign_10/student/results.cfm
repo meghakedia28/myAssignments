@@ -9,10 +9,23 @@
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:studentFront>
-  	   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script>
+			$(document).ready(function(){
+				table = $("#result").DataTable({
+				});
+			});
+		</script>
 		<div class="page-title">
 			<div class="container">
 				<h2>Performance report:</h2>
@@ -20,38 +33,40 @@
 		</div>
 	</header>
 </div>
-<cfset quizDetails =  createobject("component",'assign_10.components.viewQuizListService') />
-<cfset quizList = quizDetails.getQuizList(#session.stLoggedInUser.userId#) />
 <main class="main-content">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="boxed-section request-form">
-					<cfset object =  createobject("component",'assign_10.components.viewResultsService') />
-					<cfset marks = object.userResult(#session.stLoggedInUser.userId#)>
+					<cfset resultService =  createobject("component",'assign_10.components.viewResultsService') />
+					<cfset marks = resultService.userResult(#session.stLoggedInUser.userId#)>
 					<cfif marks.recordcount EQ 0 >
 						<h2>You have No records </h2>
 					<cfelse>
 						<cfset Slno = 0>
 						<table class="table" id="result" name="result">
-							<tr>
-								<th>Sl No.</th>
-								<th>Quiz Name</th>
-								<th>Start date time</th>
-								<th>Score percentage</th>
-								<th>Rank</th>
-							</tr>
-							<cfoutput query="marks">
+							<thead>
 								<tr>
-									<cfset Slno = Slno + 1 />
-									<td>#Slno#</td>
-								 	<td>#marks.name#</td>
-								 	<td>#DateTimeFormat(marks.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</td>
-							 		<td>#marks.score# %</td>
-							 		<cfset rank = object.getRanks(#marks.quizId#, #session.stLoggedInUser.userId#)/>
-									<td>#rank#</td>
+									<th>Sl No.</th>
+									<th>Quiz Name</th>
+									<th>Start date time</th>
+									<th>Score percentage</th>
+									<th>Rank</th>
 								</tr>
-							</cfoutput>
+							</thead>
+							<tbody>
+								<cfoutput query="marks">
+									<tr>
+										<cfset Slno = Slno + 1 />
+										<td>#Slno#</td>
+									 	<td>#marks.name#</td>
+									 	<td>#DateTimeFormat(marks.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</td>
+								 		<td>#marks.score# %</td>
+								 		<cfset rank = resultService.getRanks(#marks.quizId#, #session.stLoggedInUser.userId#)/>
+										<td>#rank#</td>
+									</tr>
+								</cfoutput>
+							</tbody>
 						</table><br>
 					</cfif>
 				</div>
