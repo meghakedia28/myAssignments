@@ -22,7 +22,7 @@
 				<cfreturn stStatus>
 			<cfelse>
 				<cfset stStatus.status = "error" />
-					<cfset stStatus.message = "Your search didn't return any result, Please try again with other information" />
+					<cfset stStatus.message = "Your search didn't return any result, Please try again with correct information." />
 					<cfreturn stStatus >
 			</cfif>
 		</cfif>
