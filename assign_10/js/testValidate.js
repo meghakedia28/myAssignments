@@ -14,17 +14,18 @@ $(document).ready(function(){
 		}
 
 		var questionsForm = $('#questionsForm');
-
+		var canStartTest = false;
 		function createButton(time){
-			var element = $('<button type="submit" class="button text-center" id="startTest" name="startTest">Start test</button>');
+			var element = $('<button type="submit" class="button text-center" id="startTest" name="startTest" onClick="formSubmit()" >Start test</button>');
 			$('#startTestButton').append(element);
 			setTimeout(function(){
 				$('#startTest').remove();
 				location.reload();
-					},time);
-		}
+				},time);
+			}
 	})();
-	$("#startTest").click(function(event) {
+});
+function formSubmit(){
 		$.ajax({
 			url : "../components/testValidationService.cfc?method=checkTestTime",
 			data : {},
@@ -35,5 +36,4 @@ $(document).ready(function(){
 						}
 				}
 		});
-	});
-});
+	}
