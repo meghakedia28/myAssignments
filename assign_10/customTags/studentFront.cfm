@@ -17,7 +17,7 @@
 		<script src="js/ie-support/respond.js"></script>
 		<![endif]-->
 		<noscript>
-		   <META HTTP-EQUIV="Refresh" CONTENT="0;URL=/assign_10/ShowJSdisabled.cfm">
+		   <META HTTP-EQUIV="Refresh" CONTENT="0;URL=/assign_10/noScript.cfm">
 		</noscript>
 	</head>
 	<body>
