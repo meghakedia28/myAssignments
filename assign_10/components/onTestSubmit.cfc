@@ -2,7 +2,7 @@
 	<!---insert scoreDetails into db--->
 	<cfset report =''/>
 	<cffunction name="insertScore" access="remote" output="false" returntype="boolean" returnformat="JSON">
-		<cfset var score = getScore(#URL#) />
+		<cfset var score = calculateScore(URL) />
 			<cftry>
 				<cftransaction>
 					<cfquery name ="checkScoreExists">
@@ -29,7 +29,7 @@
  		</cftry>
 	</cffunction>
 	<!---calculate score of each user--->
-	<cffunction name="getScore" access="public" output="false" returntype="Numeric">
+	<cffunction name="calculateScore" access="public" output="false" returntype="Numeric">
 		<cfargument name="data" required="true" type="struct">
 		<cfset var score = 0 />
 		<cftransaction>
@@ -60,23 +60,7 @@
 			</cftransaction>
 	  			<cfreturn PrecisionEvaluate((score/totalScore)*100.0)>
 	</cffunction>
-	<cffunction name="processReport" access="remote" returntype="Struct" returnformat="JSON">
-		<cfargument name="scoreId" required="true" type="numeric" >
-		<cfset var dataArray=ArrayNew(2)>
-		<cfquery name="getReport">
-			SELECT [scoreDetails].[attemtedDetails] FROM [scoreDetails]
-			WHERE [scoreDetails].[scoreId] = <cfqueryparam value="#arguments.scoreId#" cfsqltype="cf_sql_bigint">
-		</cfquery>
-		<cfset var i = 1>
-		<cfloop list ="#getReport.attemtedDetails#" delimiters = ";" item="i">
-		  <cfset arr = listToArray (#i#, ",",true,true)>
-		    <cfset dataArray[i][1] = arr[1]/>
-		    <cfset dataArray[i][2] = arr[2]/>
-		    <cfset dataArray[i][3] = arr[3]/>
-		    <cfset i = i +1 >
-		</cfloop>
-		<cfreturn resultSet>
-	</cffunction>
+
 	<!---destroy session.stQuizStarts --->
 	<cffunction name="destroySession" access="public" output="false">
 		<cfif structKeyExists(session, 'stQuizStarts') >
