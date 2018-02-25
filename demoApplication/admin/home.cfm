@@ -9,11 +9,6 @@
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:adminFront>
-		<script src="../js/jquery-1.11.1.min.js"></script>
-		<script src="../js/plugins.js"></script>
-		<script src="../js/app.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<div class="home-slider">
 			<div class="container">
@@ -47,4 +42,9 @@
 	<!---end of header--->
 	</header>
 </div>
+<script src="../js/jquery-1.11.1.min.js"></script>
+<script src="../js/plugins.js"></script>
+<script src="../js/app.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 </tags:adminFront>
