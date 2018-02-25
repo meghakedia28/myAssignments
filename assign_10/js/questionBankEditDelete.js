@@ -77,7 +77,10 @@ function deleteRow(data) {
 					return true;
 				}
 					else {
-						alert('data has not be deleted, please try agin later.');
+						$.alert({
+						    title: 'Alert!',
+						    content: 'data has not be deleted, please try agin later.',
+						});
 						return false;
 					}
 			}
@@ -100,7 +103,7 @@ function updateRow(data){
 	 if ( checkOptiona != "" && checkOptionb != "" && checkOptionc != "" && checkOptiond != ""){
 			unique = checkUnique(checkOptiona, checkOptionb, checkOptionc, checkOptiond);
 		}
-	 if(question && optiona && optionb && optionc && optiond && answer) {
+	 if(question && optiona && optionb && optionc && optiond && answer && unique) {
 		$.ajax({
 				url : "../components/editDeleteQuestionsService.cfc?method=updateQuestion&" + $("#editForm").serialize(),
 				data : {
