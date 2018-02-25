@@ -7,7 +7,7 @@
 <cfelseif session.stLoggedInUser.roleId NEQ 2>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
-<cfset quiz  = createobject("component",'demoApplication.components/viewQuizListService').fetchQuizlist(#session.stLoggedInUser.UserId#) />
+<cfset quiz  = createObject("component",'demoApplication.components/viewQuizListService').fetchQuizlist(#session.stLoggedInUser.UserId#) />
 <cfset quizList = ValueList(quiz.quizId,",") />
 <cfif NOT (structKeyExists(url,'Id')) || NOT (listFindNoCase(quizList, url.Id))>
 	<cflocation url = "viewQuiz.cfm">
@@ -32,7 +32,7 @@
 				<div class="container">
 					<cfoutput>
 					<h2>View quiz Questions:</h2>
-					<cfset quizDetails = createobject('component','demoApplication/components/getQuizDetails').fetchQuizDetails(URL.Id, session.stLoggedInUser.userId) />
+					<cfset quizDetails = createObject('component','demoApplication/components/getQuizDetails').fetchQuizDetails(URL.Id, session.stLoggedInUser.userId) />
 					<h6 class="user">Quiz Name: #quizDetails.name#</h6>
 					<h6 class="user">Start Time: #quizDetails.startDateTime#</h6>
 					<h6 class="user">End Time: #quizDetails.endDateTime#</h6>

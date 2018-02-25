@@ -7,7 +7,7 @@
 <cfelseif session.stLoggedInUser.roleId NEQ 2>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
-<cfset scoreIds  = createobject("component",'demoApplication.components/facultyResultSet').getScoreIds(#session.stLoggedInUser.UserId#) />
+<cfset scoreIds  = createObject("component",'demoApplication.components/facultyResultSet').getScoreIds(#session.stLoggedInUser.UserId#) />
 <cfset scoreIdsList = ValueList(scoreIds.scoreId,",") />
 <cfif NOT (structKeyExists(url,'Id')) || NOT (listFindNoCase(scoreIdsList, url.Id))>
 	<cflocation url = "results.cfm">
@@ -42,7 +42,7 @@
 						<div class="export" id="buttons"></div>
 						<div class="boxed-section">
 							<cfoutput>
-							<cfset scoreDetails = createobject('component','demoApplication/components/facultyResultSet').getScoreDetails(URL.Id) />
+							<cfset scoreDetails = createObject('component','demoApplication/components/facultyResultSet').getScoreDetails(URL.Id) />
 		 					<h6 >Name: #scoreDetails.firstName# #scoreDetails.lastName#</h6>
 		 					<h6 >Quiz Name: #scoreDetails.name#</h6>
 		 					</cfoutput>

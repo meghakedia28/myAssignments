@@ -123,7 +123,7 @@
 	<cffunction name="validateInsertController" access="remote" returntype="struct" returnformat="JSON">
 		<cfset validateAllFields() />
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
-			<cfset insertion = createobject('component','demoApplication.components.enterDataService').insertData(URL,role)/>
+			<cfset insertion = createObject('component','demoApplication.components.enterDataService').insertData(URL,role)/>
 			<cfif (insertion) >
 				<cfset variables.insertionStruct.successfull = 'true'>
 				<cfset variables.insertionStruct.message = 'Data has been added successfully'>

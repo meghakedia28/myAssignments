@@ -32,7 +32,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="boxed-section request-form">
-								<cfset results =  createobject("component",'demoApplication.components.getStudents').getStudentsDetails() />
+								<cfset results =  createObject("component",'demoApplication.components.getStudents').getStudentsDetails() />
 								<cfset Slno = 0>
 								<table class="display" id="result" name="result">
 									<thead>
@@ -52,9 +52,9 @@
 											<td>#results.firstName# #results.lastName#</td>
 											<td>#results.emailid#</td>
 											<td>#results.contactNumber#</td>
-											<cfset resultSet =  createobject("component",'demoApplication.components.facultyResultSet') />
+											<cfset resultSet =  createObject("component",'demoApplication.components.facultyResultSet') />
 											<cfset marks = resultSet.individualStudentResultSet(#results.userId#, #session.stLoggedInUser.userId#)>
-											<cfset studentExists = createobject("component",'demoApplication.components.getStudents').getSingleStudentDetails(#results.userId#) />
+											<cfset studentExists = createObject("component",'demoApplication.components.getStudents').getSingleStudentDetails(#results.userId#) />
  											<td><button type="button" class="btn btn-success btn-md" id = "result_#userId#" name="result"  data-toggle="modal" data-target="###userId#" >view all tests scores</button>
  												<div class="modal fade" id="#userId#" role="dialog">
  		 									   	<div class="modal-dialog modal-lg">

@@ -1,7 +1,7 @@
 <cfcomponent output="false" >
 	<cffunction name="checkTestTime" output="false" access="remote" returntype="boolean" returnformat="JSON">
 		<cfset var currentTime = (DateFormat(now(),'yyyy-mm-dd') & ' ' & TimeFormat(now(),'HH:nn:ss')) />
-		<cfset var object =  createobject("component",'demoApplication.components.getQuizDetails') />
+		<cfset var object =  createObject("component",'demoApplication.components.getQuizDetails') />
 		<cfset var testDetails = object.currentQuizDetails(currentTime)>
 		<cfset var startTime =  testDetails.startDateTime />
 		<cfset var endTime =  testDetails.endDateTime />

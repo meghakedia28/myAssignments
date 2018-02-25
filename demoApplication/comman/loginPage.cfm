@@ -4,7 +4,7 @@
 </cfif>
 <!---form processing--->
 <cfif structkeyExists(form,'submitLogin')>
-	<cfset authentication = createobject("component",'demoApplication.components.authentication') />
+	<cfset authentication = createObject("component",'demoApplication.components.authentication') />
 	<cfset aErrorMessages =  authentication.userValidation(form.email,form.password)/>
 	<cfif ArrayisEmpty(aErrorMessages)>
 		<cfset isUserLoggedIn =  authentication.doLogin(form.email, form.password)/>

@@ -39,10 +39,10 @@
 	</div>
 	<cfif structKeyExists(session,'stQuizStarts') >
 		<cfif !(#session.stQuizStarts.endTime# GT #now()# && #session.stQuizStarts.startTime# LT #now()#)  >
-			<cfset killSession = createobject("component",'demoApplication.components.onTestSubmit').destroySession() >
+			<cfset killSession = createObject("component",'demoApplication.components.onTestSubmit').destroySession() >
 			<cflocation url = "tests.cfm?noaccess">
 		</cfif>
-		<cfset testScore = createobject("component",'demoApplication.components.getQuizDetails').getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
+		<cfset testScore = createObject("component",'demoApplication.components.getQuizDetails').getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
 		<cfif (#session.stQuizStarts.endTime# LT #now()# || (#testScore.recordCount# NEQ 0))  >
 			<div id="testEndMsg" name="testEndMsg"><h1> Test time has ended, please come back in the next test </h1></div>
 		<cfelse>
@@ -68,7 +68,7 @@
 										<cfinput name="startTime" id="startTime" type="hidden" value="#DateFormat(session.stQuizStarts.startTime,'yyyy/mm/dd') & ' ' & TimeFormat(session.stQuizStarts.startTime,'HH:nn:ss')#">
 										<cfinput name="endTime" id="endTime" type="hidden" value="#DateFormat(session.stQuizStarts.endTime,'yyyy/mm/dd') & ' ' & TimeFormat(session.stQuizStarts.endTime,'HH:nn:ss')#">
 										<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy/mm/dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
-										<cfset object =  createobject("component",'demoApplication.components.getQuizQuestions') />
+										<cfset object =  createObject("component",'demoApplication.components.getQuizQuestions') />
 										<cfset questions = object.quizQuestions(#session.stQuizStarts.quizId#)>
 										<cfset questionNumber = 0>
 											<table class="table" id="questions" name="questions">

@@ -56,7 +56,7 @@
 			<div class="col-md-12">
 				<div class="export" id="buttons"></div>
 				<div class="boxed-section request-form">
-					<cfset resultService =  createobject("component",'demoApplication.components.viewResultsService') />
+					<cfset resultService =  createObject("component",'demoApplication.components.viewResultsService') />
 					<cfset marks = resultService.userResult(#session.stLoggedInUser.userId#)>
 					<cfif marks.recordcount EQ 0 >
 						<h2>You have No records </h2>

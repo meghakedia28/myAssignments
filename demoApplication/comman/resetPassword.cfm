@@ -15,7 +15,7 @@
 	<cfimport taglib = "../customTags/" prefix="tags">
 		<tags:noNavigation>
 		<cftry>
-			<cfset userSet = createobject("component",'demoApplication/components/getUserDetailsService').getUserDetails('#URL.id#')>
+			<cfset userSet = createObject("component",'demoApplication/components/getUserDetailsService').getUserDetails('#URL.id#')>
 				<div class = "container">
 					<div class="wrapper">
 						<cfif userSet.RecordCount EQ 1>

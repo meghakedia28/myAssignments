@@ -36,7 +36,7 @@
 								<cfform name="questionsForm" id="questionsForm" action="testStart.cfm">
 									<cfoutput>
 									<p class="section-title text-center">
-										<cfset object =  createobject("component",'demoApplication.components.getQuizDetails') />
+										<cfset object =  createObject("component",'demoApplication.components.getQuizDetails') />
 										<cfset currentTime = "#DateFormat(now(),'yyyy/mm/dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#" />
 										<cfset testDetails = object.currentQuizDetails(currentTime)>
 										<cfif testDetails.quizId NEQ '' >

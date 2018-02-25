@@ -43,7 +43,7 @@
 					</cfquery>
 				</cfif>
 				<!---create mailService object--->
-				<cfset mailObject = createobject('component','demoApplication/components/mailService').sendMails('#data.email#',"#data.firstName#","#code#")/>
+				<cfset mailObject = createObject('component','demoApplication/components/mailService').sendMails('#data.email#',"#data.firstName#","#code#")/>
 			</cftransaction>
 			<cfreturn true>
 			<cfcatch type="any" >
