@@ -19,12 +19,12 @@
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
 			<cfquery name="update">
 					UPDATE [questionBank]
-					SET [questionBank].[question] = <cfqueryparam value="#URL.question#" cfsqltype="cf_sql_varchar">,
-					[questionBank].[option1] = <cfqueryparam value="#URL.optiona#" cfsqltype="cf_sql_varchar">,
-					[questionBank].[option2] = <cfqueryparam value="#URL.optionb#" cfsqltype="cf_sql_varchar">,
-					[questionBank].[option3] = <cfqueryparam value="#URL.optionc#" cfsqltype="cf_sql_varchar">,
-					[questionBank].[option4] = <cfqueryparam value="#URL.optiond#" cfsqltype="cf_sql_varchar">,
-					[questionBank].[correctAnswer] = <cfqueryparam value="#URL.answer#" cfsqltype="cf_sql_varchar">
+					SET [questionBank].[question] = <cfqueryparam value="#url.question#" cfsqltype="cf_sql_varchar">,
+					[questionBank].[option1] = <cfqueryparam value="#url.optiona#" cfsqltype="cf_sql_varchar">,
+					[questionBank].[option2] = <cfqueryparam value="#url.optionb#" cfsqltype="cf_sql_varchar">,
+					[questionBank].[option3] = <cfqueryparam value="#url.optionc#" cfsqltype="cf_sql_varchar">,
+					[questionBank].[option4] = <cfqueryparam value="#url.optiond#" cfsqltype="cf_sql_varchar">,
+					[questionBank].[correctAnswer] = <cfqueryparam value="#url.answer#" cfsqltype="cf_sql_varchar">
 					WHERE [questionBank].[questionId] = <cfqueryparam value="#arguments.questionId#" cfsqltype="cf_sql_bigint">
 				</cfquery>
 				<cfset variables.errorStruct.errorId.insert ('update', 'successfull', true) >
@@ -47,23 +47,23 @@
 		 		<cfreturn true>
 	</cffunction>
 	<cffunction name="validateAllField" output="false" access="public" returntype="void">
-		<cfif StructKeyExists(URL,'question')>
-			<cfset validate('question', '#URL.question#', 'error_question')>
+		<cfif StructKeyExists(url,'question')>
+			<cfset validate('question', '#url.question#', 'error_question')>
 		</cfif>
-		<cfif StructKeyExists(URL,'optiona')>
-			<cfset validate('optionA', '#URL.optiona#', 'error_optionA' )>
+		<cfif StructKeyExists(url,'optiona')>
+			<cfset validate('optionA', '#url.optiona#', 'error_optionA' )>
 		</cfif>
-		<cfif StructKeyExists(URL,'optionb')>
-			<cfset validate('optionB', '#URL.optionb#', 'error_optionB')>
+		<cfif StructKeyExists(url,'optionb')>
+			<cfset validate('optionB', '#url.optionb#', 'error_optionB')>
 		</cfif>
-		<cfif StructKeyExists(URL,'optionc')>
-			<cfset validate('optionC', '#URL.optionc#', 'error_optionC')>
+		<cfif StructKeyExists(url,'optionc')>
+			<cfset validate('optionC', '#url.optionc#', 'error_optionC')>
 		</cfif>
-		<cfif StructKeyExists(URL,'optiond')>
-			<cfset validate('optionD', '#URL.optiond#', 'error_optionD')>
+		<cfif StructKeyExists(url,'optiond')>
+			<cfset validate('optionD', '#url.optiond#', 'error_optionD')>
 		</cfif>
-		<cfif StructKeyExists(URL,'answer')>
-			<cfset validate('answer', '#URL.answer#', 'error_answer')>
+		<cfif StructKeyExists(url,'answer')>
+			<cfset validate('answer', '#url.answer#', 'error_answer')>
 		</cfif>
 	</cffunction>
 	<cffunction name="insertErrorStruct" output="false" access="public" returntype="void">

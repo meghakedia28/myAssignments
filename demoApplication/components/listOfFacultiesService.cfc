@@ -18,16 +18,16 @@
 		        FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
 				JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]
 				WHERE [user].[roleId] = 2
-		    <cfif URL[searchdata] NEQ 0>
+		    <cfif url[searchdata] NEQ 0>
 		        AND (<cfloop list="#listColumns#" index="thisColumn">
 						<cfif thisColumn neq listFirst(listColumns)> OR
 						</cfif>#thisColumn# LIKE
 							<cfif thisColumn is "active"><!--- special case --->
-								<cfqueryparam cfsqltype="CF_SQL_FLOAT" value="#val(URL[searchdata])#" />
+								<cfqueryparam cfsqltype="CF_SQL_FLOAT" value="#val(url[searchdata])#" />
 							<cfelseif thisColumn is "contactNumber"><!---special case--->
-								<cfqueryparam cfsqltype="CF_SQL_FLOAT" value="#val(URL[searchdata])#" />
+								<cfqueryparam cfsqltype="CF_SQL_FLOAT" value="#val(url[searchdata])#" />
 							<cfelse>
-								<cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="%#trim(URL[searchdata])#%" />
+								<cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="%#trim(url[searchdata])#%" />
 							</cfif>
 					</cfloop>)
 		    </cfif>
@@ -35,15 +35,15 @@
 			<cfloop from="0" to="#listlen(listColumns)#" index="ind">
 				<cfset col = "order[#ind#][column]" />
 				<cfset direc = "order[#ind#][dir]" />
-				<cfif structKeyExists(URL,#col#)>
+				<cfif structKeyExists(url,#col#)>
 					<cfif ind neq 0>,</cfif>
 						#listGetAt(listColumns,ind+1)#
-					<cfif structKeyExists(URL, #direc#)> #url[direc]#</cfif>
+					<cfif structKeyExists(url, #direc#)> #url[direc]#</cfif>
 				</cfif>
 			</cfloop>
 		</cfquery>
 		<!--- Total data set length --->
-		<cfset resultSet.draw = URL.draw />
+		<cfset resultSet.draw = url.draw />
 		<cfset resultSet.recordsTotal = facultyList.recordCount />
 		<cfset resultSet.recordsFiltered = qFiltered.recordCount />
 		<cfset resultSet.data = formatData(qFiltered) />

@@ -4,26 +4,26 @@
 	<!---validate all--->
 	<cffunction name="validateAllFields" output="false" access="public">
 		<cfargument name="quizId" required="false" type="numeric" default="0">
-		<cfif StructKeyExists(URL,'quizName')>
-			<cfset var checkQuizNameStatus = checkQuizName('#URL.quizName#', '#arguments.quizId#')>
+		<cfif StructKeyExists(url,'quizName')>
+			<cfset var checkQuizNameStatus = checkQuizName('#url.quizName#', '#arguments.quizId#')>
 			<cfif local.checkQuizNameStatus.status EQ "error" >
-				<cfset variables.errorStruct.elementId.quizName = #URL.quizName# >
+				<cfset variables.errorStruct.elementId.quizName = #url.quizName# >
 				<cfset variables.errorStruct.errorId.error_quizname = local.checkQuizNameStatus.message >
 			</cfif>
 		</cfif>
-		<cfif StructKeyExists(URL,'startTime')>
-			<cfset var checkStartTimeStatus = checkStartTime('#URL.startTime#', '#arguments.quizId#')>
+		<cfif StructKeyExists(url,'startTime')>
+			<cfset var checkStartTimeStatus = checkStartTime('#url.startTime#', '#arguments.quizId#')>
 			<cfif local.checkStartTimeStatus.status EQ "error">
-				<cfset variables.errorStruct.elementId.startTime = #URL.startTime# >
+				<cfset variables.errorStruct.elementId.startTime = #url.startTime# >
 				<cfset variables.errorStruct.errorId.error_starttime = local.checkStartTimeStatus.message >
 			</cfif>
 		</cfif>
-		<cfif StructKeyExists(URL,'endTime')>
-			<cfset checkEndTime('#URL.endTime#')>
+		<cfif StructKeyExists(url,'endTime')>
+			<cfset checkEndTime('#url.endTime#')>
 		</cfif>
 		<cfif arguments.quizId EQ 0>
-			<cfif StructKeyExists(URL,'questionId')>
-				<cfset checkQuestionList('#URL.questionId#')>
+			<cfif StructKeyExists(url,'questionId')>
+				<cfset checkQuestionList('#url.questionId#')>
 			<cfelse>
 				<cfset variables.errorStruct.elementId.questionId = '' >
 				<cfset variables.errorStruct.errorId.error_questions ='You should select atleast one question to set the quiz'>
@@ -33,7 +33,7 @@
 	<cffunction name="insertQuizDetails" access="remote" returntype="Struct" returnformat="JSON">
 		<cfset validateAllFields() />
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
-			<cfset var insertion = setQuiz("#URL#","#session.stLoggedInUser.userId#")>
+			<cfset var insertion = setQuiz("#url#","#session.stLoggedInUser.userId#")>
 			<cfif (insertion) >
 				<cfset variables.insertionStruct.successfull = 'true'>
 				<cfset variables.insertionStruct.message = 'Quiz has been successfully set'>
@@ -191,8 +191,8 @@
 					</cfquery>
 					<cfquery name="modifyQuizQuestion">
 						UPDATE [quiz]
-								SET [quiz].[name] = <cfqueryparam value="#URL.quizName#" cfsqltype="cf_sql_varchar">,
-								[quiz].[startDateTime] = <cfqueryparam value="#URL.startTime#" cfsqltype="cf_sql_datetime">,
+								SET [quiz].[name] = <cfqueryparam value="#url.quizName#" cfsqltype="cf_sql_varchar">,
+								[quiz].[startDateTime] = <cfqueryparam value="#url.startTime#" cfsqltype="cf_sql_datetime">,
 								[quiz].[endDateTime] = <cfqueryparam value="#addDateTime.RESULT#" cfsqltype="cf_sql_datetime">
 								WHERE [quiz].[quizId] = <cfqueryparam value="#arguments.quizId#" cfsqltype="cf_sql_bigint">
 								AND [quiz].[userId] = <cfqueryparam value="#arguments.userId#" cfsqltype="cf_sql_bigint">

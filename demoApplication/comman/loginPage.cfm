@@ -1,5 +1,5 @@
 ﻿<!---check if logout or not--->
-<cfif structKeyExists(URL,'logOut')>
+<cfif structKeyExists(url,'logOut')>
 	<cfset createObject("component",'demoApplication.components.authentication').doLogOut()/>
 </cfif>
 <!---form processing--->
@@ -24,7 +24,7 @@
 				<h1>Quiz Center<br />Login</h1>
 			</div>
 			<cfform class="login-form" name="loginForm" id="loginForm" preservedata="true" >
-				<cfif structKeyExists(URL,'noaccess')>
+				<cfif structKeyExists(url,'noaccess')>
 					<p class="error" id="error">You need to login first.</p>
 				</cfif>
 				<!---check if any error message--->
@@ -42,13 +42,13 @@
 					<!---redirect to the page accordimg their roles--->
 					<cfif structKeyExists(session,'stLoggedInUser')>
 						<cfif session.stLoggedInUser.roleId EQ 1>
-							<cflocation URL="../admin/home.cfm" />
+							<cflocation url="../admin/home.cfm" />
 						</cfif>
 						<cfif session.stLoggedInUser.roleId EQ 2>
-							<cflocation URL="../faculty/home.cfm" />
+							<cflocation url="../faculty/home.cfm" />
 						</cfif>
 						<cfif session.stLoggedInUser.roleId EQ 3>
-							<cflocation URL="../student/home.cfm" />
+							<cflocation url="../student/home.cfm" />
 						</cfif>
 					<cfelse>
 						<!---enter userId and password--->

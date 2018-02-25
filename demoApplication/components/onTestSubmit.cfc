@@ -2,7 +2,7 @@
 	<!---insert scoreDetails into db--->
 	<cfset report =''/>
 	<cffunction name="insertScore" access="remote" output="false" returntype="boolean" returnformat="JSON">
-		<cfset var score = calculateScore(URL) />
+		<cfset var score = calculateScore(url) />
 			<cftry>
 				<cftransaction>
 					<cfquery name ="checkScoreExists">

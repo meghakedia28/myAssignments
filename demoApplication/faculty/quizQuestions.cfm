@@ -32,7 +32,7 @@
 				<div class="container">
 					<cfoutput>
 					<h2>View quiz Questions:</h2>
-					<cfset quizDetails = createObject('component','demoApplication/components/getQuizDetails').fetchQuizDetails(URL.Id, session.stLoggedInUser.userId) />
+					<cfset quizDetails = createObject('component','demoApplication/components/getQuizDetails').fetchQuizDetails(url.Id, session.stLoggedInUser.userId) />
 					<h6 class="user">Quiz Name: #quizDetails.name#</h6>
 					<h6 class="user">Start Time: #quizDetails.startDateTime#</h6>
 					<h6 class="user">End Time: #quizDetails.endDateTime#</h6>

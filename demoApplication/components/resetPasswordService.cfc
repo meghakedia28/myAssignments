@@ -1,10 +1,10 @@
 <cfcomponent output = "false">
 	<cfset variables.errorStruct = {elementId = {}, errorId = {}}>
 	<cffunction name = "validate" returntype = "struct" returnformat = "JSON" access = "remote">
-		<cfset validPassword(URL.password)>
-		<cfset checkPassword(URL.confirmPassword, URL.password)>
+		<cfset validPassword(url.password)>
+		<cfset checkPassword(url.confirmPassword, url.password)>
 			<cfif StructIsEmpty(variables.errorStruct.errorId) >
-				<cfset insert = insertPassword(URL.password, URL.id)>
+				<cfset insert = insertPassword(url.password, url.id)>
 				<cfif insert>
 					<cfset variables.errorStruct.errorId = ''>
 					<cfset destroyExistingSession() />

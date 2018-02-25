@@ -94,27 +94,27 @@
 	<cffunction name="validateAllFields" access="remote" returnformat="JSON" returntype="struct" >
 		<cfargument name="id" required="false" default="0" type="numeric" >
 		<cfset role = 3>
-		<cfif StructKeyExists(URL,'firstName')>
-			<cfset validateFirstName(URL.firstName)>
+		<cfif StructKeyExists(url,'firstName')>
+			<cfset validateFirstName(url.firstName)>
 		</cfif>
-		<cfif StructKeyExists(URL,'lastName')>
-			<cfset validateLastName(URL.lastName)>
+		<cfif StructKeyExists(url,'lastName')>
+			<cfset validateLastName(url.lastName)>
 		</cfif>
-		<cfif StructKeyExists(URL,'email')>
-			<cfset var checkEmailStatus = validateEmail(URL.email)>
-			<cfset variables.errorStruct.elementId.email = URL.email>
+		<cfif StructKeyExists(url,'email')>
+			<cfset var checkEmailStatus = validateEmail(url.email)>
+			<cfset variables.errorStruct.elementId.email = url.email>
 			<cfif local.checkEmailStatus.status EQ "error">
 				<cfset variables.errorStruct.errorId.error_email = local.checkEmailStatus.message>
 			</cfif>
 		</cfif>
-		<cfif StructKeyExists(URL,'contactNumber')>
-			<cfset validatePhoneNumber(URL.contactNumber)>
+		<cfif StructKeyExists(url,'contactNumber')>
+			<cfset validatePhoneNumber(url.contactNumber)>
 		</cfif>
-		<cfif StructKeyExists(URL,'subject')>
-			<cfset var checkSubjectStatus = validateSubject(URL.subject, arguments.id)>
+		<cfif StructKeyExists(url,'subject')>
+			<cfset var checkSubjectStatus = validateSubject(url.subject, arguments.id)>
 			<cfset role = 2>
 			<cfif local.checkSubjectStatus.status EQ "error">
-				<cfset variables.errorStruct.elementId.subject = URL.subject>
+				<cfset variables.errorStruct.elementId.subject = url.subject>
 				<cfset variables.errorStruct.errorId.error_subject = local.checkSubjectStatus.message>
 			</cfif>
 		</cfif>
@@ -123,7 +123,7 @@
 	<cffunction name="validateInsertController" access="remote" returntype="struct" returnformat="JSON">
 		<cfset validateAllFields() />
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
-			<cfset insertion = createObject('component','demoApplication.components.enterDataService').insertData(URL,role)/>
+			<cfset insertion = createObject('component','demoApplication.components.enterDataService').insertData(url,role)/>
 			<cfif (insertion) >
 				<cfset variables.insertionStruct.successfull = 'true'>
 				<cfset variables.insertionStruct.message = 'Data has been added successfully'>
@@ -140,12 +140,12 @@
 	<cffunction name ="updateUserInformation" access="remote" returntype="Struct" returnformat="JSON">
 		<cfquery name="userExists">
 			SELECT [userId] FROM [user]
-			WHERE [user].[emailid] = <cfqueryparam value="#URL.emailId#" cfsqltype="cf_sql_varchar">
+			WHERE [user].[emailid] = <cfqueryparam value="#url.emailId#" cfsqltype="cf_sql_varchar">
 		</cfquery>
 		<cfif userExists.RecordCount NEQ 0>
 			<cfset validateAllFields(userExists.userId) />
 			<cfif StructIsEmpty(variables.errorStruct.errorId)>
-				<cfset insertion = updateUserData(URL,userExists.userId) />
+				<cfset insertion = updateUserData(url,userExists.userId) />
 				<cfif (insertion) >
 					<cfset variables.insertionStruct.successfull = 'true'>
 					<cfset variables.insertionStruct.message = 'Data has been updated successfully'>

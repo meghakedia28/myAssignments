@@ -42,7 +42,7 @@
 						<div class="export" id="buttons"></div>
 						<div class="boxed-section">
 							<cfoutput>
-							<cfset scoreDetails = createObject('component','demoApplication/components/facultyResultSet').getScoreDetails(URL.Id) />
+							<cfset scoreDetails = createObject('component','demoApplication/components/facultyResultSet').getScoreDetails(url.Id) />
 		 					<h6 >Name: #scoreDetails.firstName# #scoreDetails.lastName#</h6>
 		 					<h6 >Quiz Name: #scoreDetails.name#</h6>
 		 					</cfoutput>

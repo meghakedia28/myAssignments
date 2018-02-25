@@ -7,10 +7,10 @@
 <cfelseif session.stLoggedInUser.roleId NEQ 3>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
-<cfif structKeyExists(URL,'noaccess')>
+<cfif structKeyExists(url,'noaccess')>
 	<p>You have already submitted your test OR the time of test has not yet started.</p>
 </cfif>
-<cfif structKeyExists(URL,'error')>
+<cfif structKeyExists(url,'error')>
 	<p>Something went wrong.</p>
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
@@ -29,7 +29,7 @@
 				<div class="row">
 					<div class="col-md-12">
 							<div class="boxed-section request-form">
-								<cfif structKeyExists(URL, 'endTest')>
+								<cfif structKeyExists(url, 'endTest')>
 									<p>the test has ended</p>
 								</cfif>
 								<h2 class="section-title text-center">Quiz Details:</h2>
@@ -50,7 +50,7 @@
 												<cfinput name="endTime" id="endTime" type="hidden" value="">
 												<cfinput name="nowTime" id="nowTime" type="hidden" value="">
 											</cfif>
-											<cfif (structKeyExists(URL,'submitEnd') AND (testScore.RecordCount NEQ 0))>
+											<cfif (structKeyExists(url,'submitEnd') AND (testScore.RecordCount NEQ 0))>
 												<h3 class="text-center">Congratulations! You have completed today's challenge.</h3>
 												<h3 class="text-center">You have scored: #testScore.score# </h3>
 											</cfif>
@@ -58,7 +58,7 @@
 												<div id="onGoingTest">
 													<cfif (testScore.RecordCount EQ 0) >
 														<h3 class=" text-center"> Hurry up! give the test before it ends.</h3>
-													<cfelseif NOT(structKeyExists(URL,'submitEnd'))>
+													<cfelseif NOT(structKeyExists(url,'submitEnd'))>
 														<h3 class=" text-center">You have completed today's challenge.</h3>
 													</cfif>
 													<h3 class=" text-center"> ON going test, started at : #DateTimeFormat(testDetails.startDateTime, "dd MMMMM,yyyy hh:nn tt")#</h3>

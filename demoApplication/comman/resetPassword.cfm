@@ -15,7 +15,7 @@
 	<cfimport taglib = "../customTags/" prefix="tags">
 		<tags:noNavigation>
 		<cftry>
-			<cfset userSet = createObject("component",'demoApplication/components/getUserDetailsService').getUserDetails('#URL.id#')>
+			<cfset userSet = createObject("component",'demoApplication/components/getUserDetailsService').getUserDetails('#url.id#')>
 				<div class = "container">
 					<div class="wrapper">
 						<cfif userSet.RecordCount EQ 1>
@@ -34,7 +34,7 @@
 									 	 <div class="error-msg" id="error_password"></div>
 									  <cfinput type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Re-type Password" />
 									 	 <div class="error-msg" id="error_confirmpassword"></div>
-									  <cfinput type="hidden" id="id" name="id" value="#URL.id#">
+									  <cfinput type="hidden" id="id" name="id" value="#url.id#">
 									  	<div class="error-msg" id="error_insert"></div>
 									  <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Set" type="Submit">Confirm</button>
 								</cfform>

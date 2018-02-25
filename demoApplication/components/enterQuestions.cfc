@@ -2,28 +2,28 @@
 	<cfset variables.errorStruct = {elementId={},errorId={}}>
 	<cfset variables.insertionStruct = {successfull={},message={}}>
 	<cffunction name="validateAllFields" output="false" access="remote" returntype="struct" returnformat="JSON" >
-		<cfif StructKeyExists(URL,'question')>
-			<cfset validate('question', '#URL.question#', 'error_question')>
+		<cfif StructKeyExists(url,'question')>
+			<cfset validate('question', '#url.question#', 'error_question')>
 		</cfif>
-		<cfif StructKeyExists(URL,'optiona')>
-			<cfset validate('optionA', '#URL.optiona#', 'error_optionA' )>
+		<cfif StructKeyExists(url,'optiona')>
+			<cfset validate('optionA', '#url.optiona#', 'error_optionA' )>
 		</cfif>
-		<cfif StructKeyExists(URL,'optionb')>
-			<cfset validate('optionB', '#URL.optionb#', 'error_optionB')>
+		<cfif StructKeyExists(url,'optionb')>
+			<cfset validate('optionB', '#url.optionb#', 'error_optionB')>
 		</cfif>
-		<cfif StructKeyExists(URL,'optionc')>
-			<cfset validate('optionC', '#URL.optionc#', 'error_optionC')>
+		<cfif StructKeyExists(url,'optionc')>
+			<cfset validate('optionC', '#url.optionc#', 'error_optionC')>
 		</cfif>
-		<cfif StructKeyExists(URL,'optiond')>
-			<cfset validate('optionD', '#URL.optiond#', 'error_optionD')>
+		<cfif StructKeyExists(url,'optiond')>
+			<cfset validate('optionD', '#url.optiond#', 'error_optionD')>
 		</cfif>
-		<cfif StructKeyExists(URL,'answer')>
-			<cfset validate('answer', '#URL.answer#', 'error_answer')>
+		<cfif StructKeyExists(url,'answer')>
+			<cfset validate('answer', '#url.answer#', 'error_answer')>
 		</cfif>
 		<cfif StructIsEmpty(variables.errorStruct.errorId)>
-			<cfset unique = checkunique('#URL.optiona#', '#URL.optionb#', '#URL.optionc#', '#URL.optiond#' ) />
+			<cfset unique = checkunique('#url.optiona#', '#url.optionb#', '#url.optionc#', '#url.optiond#' ) />
 			<cfif unique>
-				<cfset var insertion = insertQuestions("#URL#","#session.stLoggedInUser.userId#")>
+				<cfset var insertion = insertQuestions("#url#","#session.stLoggedInUser.userId#")>
 				<cfif (insertion) >
 					<cfset variables.insertionStruct.successfull = 'true'>
 					<cfset variables.insertionStruct.message = 'Data has been added successfully'>
