@@ -21,9 +21,26 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script>
+			var table;
 			$(document).ready(function(){
 				table = $("#result").DataTable({
 				});
+				var buttons = new $.fn.dataTable.Buttons(table, {
+	    		buttons: [
+	    		          {
+						    extend: 'csvHtml5',
+						    exportOptions: {
+						    columns: [ 0, 1, 2, 3, 4]
+						   }
+						},
+						{
+							extend: 'pdfHtml5',
+						    exportOptions: {
+						    columns: [ 0, 1, 2, 3, 4]
+						  }
+					   }
+					]
+	    		}).container().appendTo($('#buttons'));
 			});
 		</script>
 		<div class="page-title">
@@ -37,6 +54,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
+				<div class="export" id="buttons"></div>
 				<div class="boxed-section request-form">
 					<cfset resultService =  createobject("component",'assign_10.components.viewResultsService') />
 					<cfset marks = resultService.userResult(#session.stLoggedInUser.userId#)>
