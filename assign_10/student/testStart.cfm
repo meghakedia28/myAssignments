@@ -1,13 +1,10 @@
 ﻿<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
 <cfif NOT isUserLoggedIn()>
-	<cfdump var = "#4#">
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfif NOT(sessionExists)>
-	<cfdump var = "#5#" abort>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 <cfelseif session.stLoggedInUser.roleId NEQ 3>
-	<cfdump var = "#6#" abort>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
@@ -41,10 +38,8 @@
 		</header>
 	</div>
 	<cfif structKeyExists(session,'stQuizStarts') >
-	<cfdump var = "#1#">
 		<cfif !(#session.stQuizStarts.endTime# GT #now()# && #session.stQuizStarts.startTime# LT #now()#)  >
 			<cfset killSession = createobject("component",'assign_10.components.onTestSubmit').destroySession() >
-			<cfdump var = "#3#" abort>
 			<cflocation url = "tests.cfm?noaccess">
 		</cfif>
 		<cfset testScore = createobject("component",'assign_10.components.getQuizDetails').getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
@@ -114,7 +109,6 @@
 					</main>
 				</cfif>
 		<cfelse>
-		<cfdump var = "#session#" abort>
 			<cflocation url = "tests.cfm?noaccess">
 		</cfif>
 		<script src="../js/testStartValidation.js"></script>
