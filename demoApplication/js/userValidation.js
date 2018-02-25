@@ -2,6 +2,7 @@ $(document).ready(function(){
 	$("#form").submit(function(event){
 		var valid = validate();
 		event.preventDefault();
+		//if clientSide valiadtion is successfull do ajax call for server side validation
 		if (valid) {
 			$.ajax({
 				url : "../components/addValidation.cfc?method=validateInsertController&"+$("#form").serialize(),
@@ -9,13 +10,9 @@ $(document).ready(function(){
 					success : function(result){
 						var obj = $.parseJSON(result);
 						if (obj.SUCCESSFULL != null){
-							$.alert({
-                                title: 'Success!',
-                                content: obj.MESSAGE
-                            });
 							if(obj.SUCCESSFULL == true){
 								$.confirm({
-	                                title: 'Information',
+	                                title: 'Successful',
 	                                content: 'A mail has been send to your email id to set the password',
 	                                buttons: {
 	                                    Ok : function () {
@@ -25,6 +22,12 @@ $(document).ready(function(){
 	                                    }
 	                                }
 	                            });	
+							}
+							else{
+								$.confirm({
+	                                title: 'Error occured',
+	                                content: 'Some error has occured, please try again later'
+								});
 							}
 						}
 						if (obj.ERRORID != null){
@@ -36,7 +39,7 @@ $(document).ready(function(){
 					}
 			}) ;
 		}
-	});
+	});//end of submit
 	$("input").focus(function(){
 		$(this).css("border","");
 		$(this).next('.error-msg').text("");
@@ -95,6 +98,7 @@ $(document).ready(function(){
 		}	
 	});
 });
+//validate() to validate all the fields in the form
 function validate(){
 	var firstName = wordCheck('#firstName','#error_firstname');
 	var lastName = wordCheck('#lastName','#error_lastname');
