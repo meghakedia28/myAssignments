@@ -28,4 +28,21 @@
         				</cfcatch>
     				</cftry>
 		</cffunction>
+		<!---On error--->
+	<!--- <cffunction name="OnError" returntype="void" access="public" > --->
+<!--- 		<cfargument name="Exception" required=true/> --->
+<!---    		<cfargument name="EventName" type="String" required=true/> --->
+<!--- 			<cflog file="#This.Name#" type="error" --->
+<!--- 				text="Event Name: #Arguments.Eventname#" > --->
+<!--- 			<cflog file="#This.Name#" type="error" --->
+<!--- 				text="Message: #Arguments.Exception#"> --->
+<!--- 		<!--- Display an error message if there is a page context. ---> --->
+<!--- 			<cfif NOT (Arguments.EventName IS "onSessionEnd") --->
+<!--- 					OR (Arguments.EventName IS "onApplicationEnd")> --->
+<!--- 				<cfoutput> --->
+<!--- 					<h2>An unexpected error occurred.</h2> --->
+<!--- 					<p>Please wait for some time and try again:</p> --->
+<!--- 				</cfoutput> --->
+<!--- 			</cfif> --->
+<!--- 	</cffunction> --->
 </cfcomponent>
