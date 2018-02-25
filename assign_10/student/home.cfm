@@ -9,6 +9,9 @@
 </cfif>
 	<cfimport taglib = "../customTags/" prefix="tags">
 			<tags:studentFront>
+			<script src="../js/jquery-1.11.1.min.js"></script>
+		<script src="../js/plugins.js"></script>
+		<script src="../js/app.js"></script>
 				<div class="home-slider">
 					<div class="container">
 						<div class="slider">
