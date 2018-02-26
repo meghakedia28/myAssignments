@@ -13,12 +13,14 @@ $(document).ready(function() {
 	    		buttons: [
 	    		          {
 						    extend: 'csvHtml5',
+						    title: 'List of students',
 						    exportOptions: {
 						    columns: [ 0, 1, 2, 3]
 						   }
 						},
 						{
 							extend: 'pdfHtml5',
+							title: 'List of students',
 						    exportOptions: {
 						    columns: [ 0, 1, 2, 3]
 						  }
@@ -63,7 +65,7 @@ function validate(ref){
 function submitForm(){
 	event.preventDefault();
 		$.ajax({
-			url : "../components/addValidation.cfc?method=updateUserInformation&"+$("form").serialize(),
+			url : "../components/enterDataService.cfc?method=updateUserInformationController&"+$("form").serialize(),
 			data : {},
 				success : function(result){
 					var obj = $.parseJSON(result);

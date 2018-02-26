@@ -22,18 +22,25 @@ $(document).ready(function(){
 					success: function(result){
 					var obj = $.parseJSON(result);
 					if (obj.SUCCESSFULL != null){						
-						$.confirm({
-                            title: 'Success!',
-                            content: obj.MESSAGE,
-                            buttons: {
-                                Ok : function () {
-                                	if(obj.SUCCESSFULL == true){
-            							$("#questionsForm").trigger('reset');
-            							$(".error-msg").text("");
-            						}	
-                                }
-                            }
-                        });		
+						if(obj.SUCCESSFULL){
+							$.confirm({
+	                            title: 'Success!',
+	                            content: obj.MESSAGE,
+	                            buttons: {
+	                                Ok : function () {
+	            							$("#questionsForm").trigger('reset');
+	            							$(".error-msg").text("");
+	            						}	
+	                                }
+	                            
+	                        });	
+						}
+						else{
+							$.confirm({
+	                            title: 'Error!',
+	                            content: obj.MESSAGE
+							});
+						}
 					}
 					if (obj.ERRORID != null){
 						for (keys in obj.ERRORID){

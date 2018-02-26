@@ -14,12 +14,14 @@ $(document).ready(function(){
  		buttons: [
  		          {
 				    extend: 'csv',
+				    title: 'List of questions',
 				    exportOptions: {
 				    columns: [ 0, 1, 2, 3, 4, 5]
 				   }
 				},
 				{
 					extend: 'pdfHtml5',
+					title: 'List of questions',
 					exportOptions: {
 				    columns: [ 0, 1, 2, 3, 4, 5]
 				  }
@@ -116,6 +118,12 @@ function updateRow(data){
 						table.ajax.reload();
 						$(".error-msg").text("");
 						return true;
+					}
+					else if (obj.ERRORID.update = 'fail'){
+						$.confirm({
+                            title: 'Error!',
+                            content: 'Some unexpected error has occured. Please try again later.'
+						});
 					}
 					else{
 						for (keys in obj.ERRORID){

@@ -13,12 +13,14 @@ $(document).ready(function(){
 		buttons: [
 		          {
 				    extend: 'csvHtml5',
+				    title: 'Results',
 				    exportOptions: {
 				    columns: [ 0, 1, 2, 3, 4, 5]
 				   }
 				},
 				{
 					extend: 'pdfHtml5',
+					title: 'Results',
 				    exportOptions: {
 				    columns: [ 0, 1, 2, 3, 4, 5]
 				  }
@@ -74,5 +76,5 @@ $(document).ready(function(){
 					   }
 					]
 				}).container().appendTo($('#buttons'));	
-		}
+			}
 	

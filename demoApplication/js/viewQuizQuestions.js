@@ -6,7 +6,7 @@ $(document).ready(function(){
 		"lengthMenu": [5, 10, 25, 50, 75, 100 ],
 		"pageLength": 5,
 		"ajax": ({
-			"url" : "../components/viewQuizListService.cfc?method=getQuizQuestionList",
+			"url" : "../components/viewQuizListService.cfc?method=formatQuizQuestionList",
 			"data" :{
 				quizId: quizId,
 				userId: userId
@@ -17,12 +17,14 @@ $(document).ready(function(){
 		buttons: [
 		          {
 				    extend: 'csvHtml5',
+				    title: 'List of quiz questions',
 				    exportOptions: {
 				    columns: [ 0, 1, 2, 3, 4, 5]
 				   }
 				},
 				{
 					extend: 'pdfHtml5',
+					title: 'List of quiz questions',
 				    exportOptions: {
 				    columns: [ 0, 1, 2, 3, 4, 5]
 				  }
@@ -38,7 +40,7 @@ $(document).ready(function(){
 			"lengthMenu": [5, 10, 25, 50, 75, 100 ],
 			"pageLength": 5,
 			"ajax": ({
-				"url" : "../components/getQuestionsService.cfc?method=setQuizQuestion",
+				"url" : "../components/getQuestionsService.cfc?method=formatQuizQuestion",
 				"data" :{
 					userId: userId,
 					quizId:quizId
@@ -65,13 +67,17 @@ function deleteRow(data) {
 						addQuestionTable.ajax.reload();
 						return true;
 					}
-						else {
-							$.alert({
-                                title: 'Alert!',
-                                content: 'data has not be deleted, please try agin later.'
-                            });
-							return false;
-						}
+					else {
+						$.alert({
+                            title: 'Alert!',
+                            content: 'data has not be deleted, please try agin later.',
+                            buttons: {
+                                Ok : function () {
+                                	return false;
+            					}	
+                            }
+                        });
+					}
 				}
 			});
 		}
@@ -95,10 +101,13 @@ function add(){
 				addQuestionTable.ajax.reload();
 				return true;
 			}
-				else {
-					alert('questions ahs not been added, please try agin later.');
-					return false;
-				}
+			else {
+				$.alert({
+                    title: 'Alert!',
+                    content: 'An unexpected error has occured, please try agin later.'
+                });
+				return false;
+			}
 		}
 	});
 }

@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
 	});
 	quizTable = $('#quiz').DataTable({
          "ajax": {
- 			"url" : "../components/viewQuizListService.cfc?method=getQuizList",
+ 			"url" : "../components/viewQuizListService.cfc?method=formatQuizList",
  			"data" :{
  				userId : userId
  					}
@@ -18,12 +18,14 @@ jQuery(document).ready(function($) {
     		buttons: [
     		          {
 					    extend: 'csvHtml5',
+					    title: 'List of quiz',
 					    exportOptions: {
 					    columns: [ 0, 1, 2]
 					   }
 					},
 					{
 						extend: 'pdfHtml5',
+						title: 'List of quiz',
 					    exportOptions: {
 					    columns: [ 0, 1, 2]
 					  }
@@ -56,7 +58,7 @@ jQuery(document).ready(function($) {
  								return true;
  							}
  								else {
- 									$("#error_quizname").text(obj.MESSAGE);
+ 									$("#error_quizname").html(obj.MESSAGE);
  									return false;
  								}
  						}
@@ -83,7 +85,7 @@ jQuery(document).ready(function($) {
  									return true;
  								}
  									else {
- 										$("#error_starttime").text(obj.MESSAGE);
+ 										$("#error_starttime").html(obj.MESSAGE);
  										return false;
  									}
  							}	
@@ -140,13 +142,13 @@ jQuery(document).ready(function($) {
  						quizTable.ajax.reload();
  						return true;
  					}
- 						else {
- 							$.alert({
-                                title: 'Alert!',
-                                content: 'quiz has not been deleted, please try agin later.'
-                            });
- 							return false;
- 						}
+					else {
+						$.alert({
+                            title: 'Alert!',
+                            content: 'quiz has not been deleted, please try agin later.'
+                        });
+						return false;
+					}
  				}
  			});
  	}
@@ -159,7 +161,7 @@ jQuery(document).ready(function($) {
  		 var userId = $('#userId').val();
  		 if(quizName && startTime && endTime) {
  			$.ajax({
- 					url : "../components/enterQuiz.cfc?method=updateQuizQuestion&" + $("#editForm").serialize(),
+ 					url : "../components/enterQuiz.cfc?method=updateQuiz&" + $("#editForm").serialize(),
  					data : {
  						quizId : quizId,
  						userId : userId
@@ -203,7 +205,7 @@ jQuery(document).ready(function($) {
  			return false;
  		}
  		else if (!(regword.test(word))){
- 			$(errorId).text("Please enter your valid quiz name: use (a-z) OR (A-Z) OR (0-9) \nbetween 1 and 30 characters.");
+ 			$(errorId).html("<p>Please enter your valid quiz name:<br/> use (a-z) OR (A-Z) OR (0-9) <br/>between 1 and 30 characters.</p>");
  			$(elementId).css("border","2px solid red");
  			return false;
  		}

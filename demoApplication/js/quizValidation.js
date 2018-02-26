@@ -3,7 +3,7 @@ jQuery(document).ready(function($){
 	var id = $('#userId').val();
 	var table = $("#questions").DataTable({
 		"ajax": {
-			url : "../components/getQuestionsService.cfc?method=setQuizQuestion",
+			url : "../components/getQuestionsService.cfc?method=formatQuizQuestion",
 			data :{
 				userId : id
 			}
@@ -18,28 +18,34 @@ jQuery(document).ready(function($){
 		event.preventDefault();
 		if (valid) {
 			$.ajax({
-				url : "../components/enterQuiz.cfc?method=insertQuizDetails&"+$("#quizForm").serialize(),
+				url : "../components/enterQuiz.cfc?method=insertQuizDetailsController&"+$("#quizForm").serialize(),
 				data : {},
 					success : function(result){
 						var obj = $.parseJSON(result);
 						if (obj.SUCCESSFULL != null){						
-							$.confirm({
-                                title: 'Success!',
-                                content: obj.MESSAGE,
-                                buttons: {
-                                    Ok : function () {
-                                    	if(obj.SUCCESSFULL == true){
-            								$("#quizForm").trigger('reset');
-            								$(".error-msg").text("");
-            							}
-                                    }
-                                }
-                            });	
+							if(obj.SUCCESSFULL){
+								$.confirm({
+	                                title: 'Success!',
+	                                content: obj.MESSAGE,
+	                                buttons: {
+	                                    Ok : function () {
+	                                    		$("#quizForm").trigger('reset');
+	            								$(".error-msg").text("");
+	            							}
+	                                    }
+									});	
+							}
+							else {
+								$.confirm({
+		                            title: 'Error!',
+		                            content: obj.MESSAGE
+								});
+							}
 						}
 						if (obj.ERRORID != null){
 							for (keys in obj.ERRORID){
 								var id = '#'+(keys.toLowerCase());
-								$(id).text(obj.ERRORID[keys]);
+								$(id).html(obj.ERRORID[keys]);
 							}
 						}
 					}
@@ -64,10 +70,10 @@ jQuery(document).ready(function($){
 					if (obj.STATUS == "success"){
 						return true;
 					}
-						else {
-							$("#error_quizname").text(obj.MESSAGE);
-							return false;
-						}
+					else {
+						$("#error_quizname").text(obj.MESSAGE);
+						return false;
+					}
 				}
 			});
 		}
@@ -92,7 +98,7 @@ jQuery(document).ready(function($){
 							return true;
 						}
 							else {
-								$("#error_starttime").text(obj.MESSAGE);
+								$("#error_starttime").html(obj.MESSAGE);
 								$("#startTime").css("border","2px solid red");
 								return false;
 							}
@@ -118,7 +124,7 @@ function wordCheck(elementId,errorId){
 		return false;
 	}
 	else if (!(regword.test(word))){
-		$(errorId).text("Please enter your valid quiz name: use (a-z) OR (A-Z) OR (0-9) \nbetween 1 and 30 characters.");
+		$(errorId).html("<p>Please enter a valid quiz name: <br/> use (a-z) OR (A-Z) OR (0-9) <br/>between 1 and 30 characters.</p>");
 		$(elementId).css("border","2px solid red");
 		return false;
 	}
