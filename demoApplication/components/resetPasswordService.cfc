@@ -1,5 +1,13 @@
+<!---
+NAME : resetPasswordService.cfc
+CREATED BY : megha Kedia
+USE: use to perform operations for and after password reset , such as:
+use to valiadte the new password and conform password and the updating it in db after which session is destroyed--->
+
 <cfcomponent output = "false">
 	<cfset variables.errorStruct = {elementId = {}, errorId = {}}>
+	<!---validate : use to call for  validation for the password and confirm pasword field
+		and then call for destroy the session--->
 	<cffunction name = "validate" returntype = "struct" returnformat = "JSON" access = "remote">
 		<cfset validPassword(url.password)>
 		<cfset checkPassword(url.confirmPassword, url.password)>
@@ -17,7 +25,7 @@
 				<cfreturn variables.errorStruct>
 			</cfif>
 	</cffunction>
-		<!---password--->
+	<!---validPassword : validate password--->
 	<cffunction name = "validPassword" output = "false" returntype = "void" >
 		<cfargument name = "password" required = "true" type = "string">
 			<cfset  variables.errorStruct.elementId.password = arguments.password />
@@ -29,7 +37,7 @@
 				<cfset variables.errorStruct.errorId.error_password = "<p>Enter a valid password it should contain:<br>One capital letter,<br>One small letter,<br>One special character,<br>One number,and<br>between 8 to 30 characters.<p>" />
 			</cfif>
 	</cffunction>
-	<!---confirm Password--->
+	<!---checkPassword : validate confirm Password--->
 	<cffunction name = "checkPassword" output = "false" returntype = "void" >
 		<cfargument name = "confirmPassword" required = "true" type = "string">
 		<cfargument name="password" required="true" type="string">
@@ -41,7 +49,7 @@
 				<cfset variables.errorStruct.errorId.error_confirmpassword = "Confirm password did not match with the password." />
 			</cfif>
 	</cffunction>
-	<!---update password--->
+	<!---insertPassword : update the new password--->
 	<cffunction name = "insertPassword" output = "false" returntype = "boolean">
 		<cfargument name = "passwords" required = "true" type = "string">
 		<cfargument name = "id" required = "true" type = "string">
@@ -65,6 +73,7 @@
 			</cfcatch>
 		</cftry>
 	</cffunction>
+	<!---destroyExistingSession : destroy the previous existing sessions--->
 	<cffunction name = "destroyExistingSession" output = "false">
 		<cfif structKeyExists(session, 'stLoggedInUser') >
 			<cfset structdelete(session, 'stLoggedInUser') />

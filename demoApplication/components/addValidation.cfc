@@ -1,9 +1,13 @@
-﻿<cfcomponent output = "true">
-	<!---This is used for validating (and then passing values to enter data in database),
-	 the user information entered while adding new users as well as for modifing the user information--->
+﻿<!---
+NAME : addValidation.cfc
+CREATED BY : megha Kedia
+USE: This is used for validating (and then passing values to enter data in database),
+	 the user information entered while adding new users --->
+
+<cfcomponent output = "true">
 	<cfset variables.errorStruct = {elementId = {},errorId = {}}>
 	<cfset variables.insertionStruct = {successfull = {},message = {}}>
-	<!---validate first name--->
+	<!---validateFirstName : validate first name--->
 	<cffunction name = "validateFirstName" returnType = "void" output = "false" access = "public" >
 		<cfargument name = "name" type = "string" required = "true" >
 		<cfset variables.errorStruct.elementId.firstName = name>
@@ -13,7 +17,7 @@
 			<cfset variables.errorStruct.errorId.error_firstname = "Please use only letters(a-z) or (A-Z)\nbetween 1 and 30 characters.">
 		</cfif>
 	</cffunction>
-	<!---validate last name--->
+	<!---validateLastName : validate last name--->
 	<cffunction name = "validateLastName" returnType = "void" output = "false" access = "public">
 		<cfargument name = "name" type = "string" required = "true" >
 		<cfset variables.errorStruct.elementId.lastName = name>
@@ -23,7 +27,7 @@
 			<cfset variables.errorStruct.errorId.error_lastname = "Please use only letters(a-z) or (A-Z)\nbetween 1 and 30 characters.">
 		</cfif>
 	</cffunction>
-	<!---validate email--->
+	<!---validateEmail : validate email--->
 	<cffunction name = "validateEmail" access = "remote" returnformat = "JSON" returntype = "struct" >
 		<cfargument name = "emailId" type = "string" required = "true" >
 		<cfset var stStatus = {status = {} , message = {}} >
@@ -51,7 +55,7 @@
 			</cfif>
 		</cfif>
 	</cffunction>
-	<!---validate phone Number--->
+	<!---validatePhoneNumber : validate phone Number--->
 	<cffunction name = "validatePhoneNumber" output = "false" returntype = "void" access = "public" >
 		<cfargument name = "phoneNumber" type = "string" required = "true" >
 		<cfset variables.errorStruct.elementId.contactNumber = phoneNumber>
@@ -61,7 +65,7 @@
 			<cfset variables.errorStruct.errorId.error_contactnumber = "Please enter only numbers(0-9) of 10 digits.">
 		</cfif>
 	</cffunction>
-	<!---validate subject name---->
+	<!---validateSubject : validate subject name---->
 	<cffunction name = "validateSubject" access = "remote" returnformat = "JSON" returntype = "struct">
 		<cfargument name = "name" type = "string" required = "true" >
 		<cfargument name = "id" type = "numeric" required = "false" default = "0" >
@@ -77,7 +81,7 @@
 		<cfelse>
 			<cftry>
 				<cfquery name = "subjectCount" >
-					SELECT [subjet].[subjectId] FROM [subject] JOIN [userSubject] ON [subject].[subjectId] = [userSubject].[subjectId]
+					SELECT [subject].[subjectId] FROM [subject] JOIN [userSubject] ON [subject].[subjectId] = [userSubject].[subjectId]
 					WHERE [subject].[name] = <cfqueryparam value = "#arguments.name#" cfsqltype = "cf_sql_varchar" >
 					AND [userSubject].[userId] != <cfqueryparam value = "#arguments.id#" cfsqltype = "cf_sql_bigint" >
 				</cfquery>
@@ -106,7 +110,7 @@
 			</cfif>
 		</cfif>
 	</cffunction>
-	<!---validate all fields--->
+	<!---validateAllFields : validates all fields--->
 	<cffunction name = "validateAllFields" access = "remote" returnformat = "JSON" returntype = "struct" >
 		<cfargument name = "id" required = "false" default = "0" type = "numeric" >
 		<cfset role = 3>
@@ -136,7 +140,7 @@
 		</cfif>
 		<cfreturn variables.errorStruct>
 	</cffunction>
-	<!---controller to validate all and then insert--->
+	<!---validateInsertController : controller to validate all and then insert--->
 	<cffunction name = "validateInsertController" access = "remote" returntype = "struct" returnformat = "JSON">
 		<cftry>
 			<cfset validateAllFields() />
@@ -161,93 +165,5 @@
 			<cfreturn variables.insertionStruct>
 		</cfcatch>
 		</cftry>
-	</cffunction>
-	<!---update user information--->
-	<cffunction name = "updateUserInformation" access = "remote" returntype = "Struct" returnformat = "JSON">
-		<cftry>
-			<cfquery name = "userExists">
-				SELECT [userId] FROM [user]
-				WHERE [user].[emailid] = <cfqueryparam value = "#url.emailId#" cfsqltype = "cf_sql_varchar">
-			</cfquery>
-		<cfcatch type = "database">
-			<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
-			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
-			<cfset variables.insertionStruct.successfull = "false">
-			<cfset variables.insertionStruct.message = "Some unexpected error has occured, Please try again later.">
-			<cfreturn variables.insertionStruct>
-		</cfcatch>
-		<cfcatch type = "any">
-			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
-			<cfset variables.insertionStruct.successfull = "false">
-			<cfset variables.insertionStruct.message = "Some unexpected error has occured, Please try again later.">
-			<cfreturn variables.insertionStruct>
-		</cfcatch>
-		</cftry>
-		<cftry >
-			<cfif userExists.RecordCount NEQ 0>
-				<cfset validateAllFields(userExists.userId) />
-				<cfif StructIsEmpty(variables.errorStruct.errorId)>
-					<cfset insertion = updateUserData(url,userExists.userId) />
-					<cfif (insertion) >
-						<cfset variables.insertionStruct.successfull = "true">
-						<cfset variables.insertionStruct.message = "Data has been updated successfully">
-						<cfreturn variables.insertionStruct>
-					<cfelse>
-						<cfset variables.insertionStruct.successfull = "false">
-						<cfset variables.insertionStruct.message = "Error occured while updation of data.">
-						<cfreturn variables.insertionStruct>
-					</cfif>
-				<cfelse>
-					<cfreturn variables.errorStruct>
-				</cfif>
-			</cfif>
-		<cfcatch type="any">
-			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
-			<cfset variables.insertionStruct.successfull = "false">
-			<cfset variables.insertionStruct.message = "Some unexpected error has occured, Please try again later.">
-			<cfreturn variables.insertionStruct>
-		</cfcatch>
-		</cftry>
-	</cffunction>
-	<!---update user information--->
-	<cffunction name = "updateUserData" access = "public" returntype = "boolean">
-		<cfargument name = "data" required = "true" type = "struct" >
-		<cfargument name = "id" required = "true" type = "numeric">
-			<cftry>
-				<cftransaction>
-					<cfquery name = "updateuserDetails">
-						UPDATE [user]
-							SET [user].[firstName] = <cfqueryparam value = "#data.firstName#" cfsqltype = "cf_sql_varchar">,
-							[user].[lastName] = <cfqueryparam value = "#data.lastName#" cfsqltype = "cf_sql_varchar">,
-							[user].[active] = <cfqueryparam value = "#data.active#" cfsqltype = "cf_sql_integer">,
-							[user].[contactNumber] = <cfqueryparam value = "#data.contactNumber#" cfsqltype = "cf_sql_varchar">
-							FROM [user]
-							<cfif structKeyExists(url,"subject")>
-								JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
-								JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]
-							</cfif>
-							WHERE [user].[userId] = <cfqueryparam value = "#arguments.id#" cfsqltype = "cf_sql_bigint">
-						</cfquery>
-						<cfif structKeyExists (data,"subject")>
-							<cfquery name = "updateSubject">
-								UPDATE [subject]
-									SET [subject].[name] = <cfqueryparam value = "#data.subject#" cfsqltype = "cf_sql_varchar">
-									FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
-									JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]
-									WHERE [user].[userId] = <cfqueryparam value = "#arguments.id#" cfsqltype = "cf_sql_bigint">
-			 				</cfquery>
-		 				</cfif>
-		 			</cftransaction>
-			 	<cfcatch type = "database">
-					<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
-					<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
-					<cfreturn false>
-				</cfcatch>
-				<cfcatch type = "any">
-					<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
-					<cfreturn false>
-				</cfcatch>
-			</cftry>
-		<cfreturn true>
 	</cffunction>
 </cfcomponent>

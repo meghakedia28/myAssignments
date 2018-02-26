@@ -1,4 +1,10 @@
-﻿<cfcomponent output="false">
+﻿<!---
+NAME : getQuizDetails.cfc
+CREATED BY : megha Kedia
+USE: used to get the quiz details for view --->
+
+<cfcomponent output="false">
+	<!---currentQuizDetails : used to get the details for the current quiz--->
 	<cffunction name="currentQuizDetails" access="public" returntype="query" >
 		<cfargument name = "currentTime" type="string" required="true">
 		<cfquery name="testDetails">
@@ -11,6 +17,7 @@
 		</cfquery>
 		<cfreturn testDetails>
 	</cffunction>
+	<!---getScore : used to view score by a perticular student for a perticular quiz after the quiz gets over--->
 	<cffunction name="getScore" access="public" returntype="query">
 		<cfargument name = "userId" required="true" type="numeric" >
 		<cfargument name="quizId" required="true" type="numeric">
@@ -22,6 +29,7 @@
 			</cfquery>
 			<cfreturn testScore>
 	</cffunction>
+	<!---fetchQuizDetails : used to get the quiz details--->
 	<cffunction name = "fetchQuizDetails" access="public" returntype="query">
 		<cfargument name="quizId" required="true" type="numeric" >
 		<cfargument name="userId" required="true" type="numeric">
@@ -32,6 +40,7 @@
 		</cfquery>
 		<cfreturn getDetails>
 	</cffunction>
+	<!---quizDetails : uses the data given by fetchQuizDetails and the formats it to send to datatable fro view--->
 	<cffunction name="quizDetails" access="remote" returntype="Struct" returnformat="JSON">
 		<cfargument name="quizId" required="true" type="numeric" >
 		<cfargument name="userId" required="true" type="numeric">
