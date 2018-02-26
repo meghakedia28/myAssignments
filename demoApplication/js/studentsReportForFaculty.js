@@ -14,12 +14,14 @@ jQuery(document).ready(function($) {
     		buttons: [
     		          {
 					    extend: 'csvHtml5',
+					    title: 'Student report',
 					    exportOptions: {
 					    columns: [ 0, 1, 2]
 					   }
 					},
 					{
 						extend: 'pdfHtml5',
+						title: 'Student report',
 					    exportOptions: {
 					    columns: [ 0, 1, 2]
 					  }
