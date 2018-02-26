@@ -3,7 +3,7 @@ $(document).ready(function(){
 	var userId = $('#userId').val();
 	studentProfileTable = $('#result').DataTable({
         "ajax": {
-			"url" : "../components/getStudents.cfc?method=getStudentsDetails",
+			"url" : "../components/getUserDetailsService.cfc?method=getStudentsDetails",
 			"data" :{}
 				}
 		 });
