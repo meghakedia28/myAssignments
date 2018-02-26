@@ -1,4 +1,4 @@
-﻿<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
+﻿<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT isUserLoggedIn()>
 	<cflocation url = "../comman/loginPage.cfm?noaccess">
 </cfif>
@@ -9,27 +9,8 @@
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:studentFront>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
-		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script>
-			$(document).ready(function(){
-				$('#questions').DataTable({
-					"searching": false,
-					"paging": false,
-					"ordering": false,
-      				"info":     false
-				});
-			})
-		</script>
 			<div class="page-title">
 				<div class="container">
 					<h2>Add questions</h2>
@@ -37,12 +18,12 @@
 			</div>
 		</header>
 	</div>
-	<cfif structKeyExists(session,'stQuizStarts') >
+	<cfif structKeyExists(session,"stQuizStarts") >
 		<cfif !(#session.stQuizStarts.endTime# GT #now()# && #session.stQuizStarts.startTime# LT #now()#)  >
-			<cfset killSession = createObject("component",'demoApplication.components.onTestSubmit').destroySession() >
+			<cfset killSession = createObject("component","demoApplication.components.onTestSubmit").destroySession() >
 			<cflocation url = "tests.cfm?noaccess">
 		</cfif>
-		<cfset testScore = createObject("component",'demoApplication.components.getQuizDetails').getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
+		<cfset testScore = createObject("component","demoApplication.components.getQuizDetails").getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
 		<cfif (#session.stQuizStarts.endTime# LT #now()# || (#testScore.recordCount# NEQ 0))  >
 			<div id="testEndMsg" name="testEndMsg"><h1> Test time has ended, please come back in the next test </h1></div>
 		<cfelse>
@@ -57,9 +38,9 @@
 							Donot navigate while you are giving the test.<br />
 							Please submit before the time ends.</h3>
 							<h3 style="color:#FF0000" align="center">
- 								The test will end in : <span id='timer'></span>
+ 								The test will end in : <span id="timer"></span>
  							</h3>
-					</div>
+					</div><!---col-md-10--->
 					<div class="col-md-12">
 						<div class="boxed-section request-form">
 						<h2 class="section-title text-center">Questions:</h2>
@@ -68,7 +49,7 @@
 										<cfinput name="startTime" id="startTime" type="hidden" value="#DateFormat(session.stQuizStarts.startTime,'yyyy/mm/dd') & ' ' & TimeFormat(session.stQuizStarts.startTime,'HH:nn:ss')#">
 										<cfinput name="endTime" id="endTime" type="hidden" value="#DateFormat(session.stQuizStarts.endTime,'yyyy/mm/dd') & ' ' & TimeFormat(session.stQuizStarts.endTime,'HH:nn:ss')#">
 										<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateFormat(now(),'yyyy/mm/dd') & ' ' & TimeFormat(now(),'HH:nn:ss')#">
-										<cfset object =  createObject("component",'demoApplication.components.getQuizQuestions') />
+										<cfset object =  createObject("component","demoApplication.components.getQuizQuestions") />
 										<cfset questions = object.quizQuestions(#session.stQuizStarts.quizId#)>
 										<cfset questionNumber = 0>
 											<table class="table" id="questions" name="questions">
@@ -102,14 +83,33 @@
 												</div>
 											</div>
 									</cfform>
-								</div> <!-- .boxed-section .request-form -->
-							</div>
-						</div>
-						</div>
-					</main>
-				</cfif>
+								</div> <!---.boxed-section .request-form --->
+							</div><!---col-md-12--->
+						</div><!---row--->
+					</div><!---conatiner--->
+				</main>
+			</cfif>
 		<cfelse>
 			<cflocation url = "tests.cfm?noaccess">
 		</cfif>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#questions').DataTable({
+					"searching": false,
+					"paging": false,
+					"ordering": false,
+      				"info":     false
+				});
+			})
+		</script>
 		<script src="../js/testStartValidation.js"></script>
 </tags:studentFront>
