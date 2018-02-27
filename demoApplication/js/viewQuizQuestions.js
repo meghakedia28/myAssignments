@@ -69,7 +69,7 @@ function deleteRow(data) {
 					}
 					else {
 						$.alert({
-                            title: 'Alert!',
+                            title: 'Error',
                             content: 'data has not be deleted, please try agin later.',
                             buttons: {
                                 Ok : function () {
@@ -104,9 +104,13 @@ function add(){
 			else {
 				$.alert({
                     title: 'Alert!',
-                    content: 'An unexpected error has occured, please try agin later.'
+                    content: 'An unexpected error has occured, please try agin later.',
+                    buttons: {
+                        Ok : function () {
+                        	return false;
+    					}	
+                    }
                 });
-				return false;
 			}
 		}
 	});

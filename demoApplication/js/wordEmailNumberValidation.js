@@ -7,7 +7,7 @@ function wordCheck(elementId,errorId){
 		return false;
 	}
 	else if (!(regword.test(word))){
-		$(errorId).text("Please use only letters(a-z) or (A-Z)\nbetween 1 and 30 characters.");
+		$(errorId).html("<p>Please use only letters(a-z) or (A-Z)<br/>between 1 and 30 characters.</p>");
 		$(elementId).css("border","2px solid red");
 		return false;
 	}
