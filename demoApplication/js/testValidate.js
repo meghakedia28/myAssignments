@@ -26,14 +26,20 @@ $(document).ready(function(){
 	})();
 });
 function formSubmit(){
-		$.ajax({
-			url : "../components/testValidationService.cfc?method=checkTestTime",
-			data : {},
-				success : function(result){
-					var obj = $.parseJSON(result);
-						if(obj == true){
-							$('#questionsForm').submit();
-						}
-				}
-		});
-	}
+	$.ajax({
+		url : "../components/testValidationService.cfc?method=checkTestTime",
+		data : {},
+			success : function(result){
+				var obj = $.parseJSON(result);
+					if(obj){
+						$('#questionsForm').submit();
+					}
+					else{
+						$.alert({
+						    title: 'Error',
+						    content: 'Some unexpected error has occured. Please try again later.'
+						});
+					}
+			}
+	});
+}

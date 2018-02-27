@@ -45,12 +45,14 @@ jQuery(document).ready(function($) {
  			});
  			$("#quizName").focusout(function(){
  				var quiz = $("#quizName").val();
+ 				var quizId = $("#id").val();
  				var validate = wordCheck("#quizName","#error_quizname");
  				if (validate){
  					$.ajax({
  						url : "../components/enterQuiz.cfc?method=checkQuizName",
  						data : {
- 							name : quiz
+ 							name : quiz,
+ 							quizId : quizId
  						},
  						success : function(result) {
  							var obj = $.parseJSON(result);
@@ -68,6 +70,7 @@ jQuery(document).ready(function($) {
  			
  			$("#startTime").focusout(function(){
  				var start = $("#startTime").val();
+ 				var quizId = $("#id").val();
  				if ( start == "" || start == null){
  					$("#error_starttime").text("You can't leave this empty.");
  					$("#startTime").css("border","2px solid red");
@@ -77,7 +80,8 @@ jQuery(document).ready(function($) {
  					$.ajax({
  						url : "../components/enterQuiz.cfc?method=checkStartTime",
  							data : {
- 								startDate : start
+ 								startDate : start,
+ 								quizId : quizId
  							},
  							success: function(result) {
  								var obj = $.parseJSON(result);
@@ -102,6 +106,7 @@ jQuery(document).ready(function($) {
  			});
  		$('#rowEdit').on('show.bs.modal', function (event) {
  			  $('.error-msg').text("");
+ 			  $("input,select").css("border","");
  			  var button = $(event.relatedTarget) 
  			  var quizId = button.data('id') 
  			  var userId = $('#userId').val();
@@ -116,7 +121,8 @@ jQuery(document).ready(function($) {
  				  $('#quizName').val(obj.quizName);
  				  $('#startTime').val(obj.startTime);
  				  $('#endTime').val(obj.endTime);
- 				  $('#update').val(obj.quizId);
+ 				  $('#id').val(obj.quizId);
+				  $('#update').val(obj.quizId);
  			  	}
  			  });
  			});
@@ -144,8 +150,8 @@ jQuery(document).ready(function($) {
  					}
 					else {
 						$.alert({
-                            title: 'Alert!',
-                            content: 'quiz has not been deleted, please try agin later.'
+                            title: 'Error!',
+                            content: 'Quiz has not been deleted, please try again later.'
                         });
 						return false;
 					}
@@ -154,10 +160,10 @@ jQuery(document).ready(function($) {
  	}
  	function updateRow(data){
  		event.preventDefault();
- 		var quizId = $(data).val();
  		 var quizName = validate('#quizName','#error_quizname');
  		 var startTime = validate('#startTime','error_starttime');
  		 var endTime = validate('#endTime','#error_endtime');
+ 		 var quizId = $(data).val();
  		 var userId = $('#userId').val();
  		 if(quizName && startTime && endTime) {
  			$.ajax({
@@ -168,16 +174,23 @@ jQuery(document).ready(function($) {
  					},
  					success : function(result) {
  						var obj = $.parseJSON(result);
- 						if (obj.SUCCESSFULL != null && obj.SUCCESSFULL == true){
+ 						if (obj.SUCCESSFULL != null && obj.SUCCESSFULL){
  							$('.close').click(); 
  							quizTable.ajax.reload();
  							$(".error-msg").text("");
  							return true;
  						}
+ 						else if (obj.SUCCESSFULL != null && obj.SUCCESSFULL == false){
+ 							$.alert({
+ 	                            title: 'Error',
+ 	                            content: 'Quiz has not been updated, please try again later.'
+ 	                        });
+ 							return false;
+ 						}
  						if (obj.ERRORID != null){
 							for (keys in obj.ERRORID){
 								var id = '#'+(keys.toLowerCase());
-								$(id).text(obj.ERRORID[keys]);
+								$(id).html(obj.ERRORID[keys]);
 							}
 						}
  					}
@@ -195,7 +208,7 @@ jQuery(document).ready(function($) {
  		return true;
  		else
  		return false;
- 			}
+ 	}
  	function wordCheck(elementId,errorId){
  		var word = $(elementId).val();
  		var regword = /^[a-zA-Z0-9 ]{1,30}$/;

@@ -25,7 +25,7 @@ $(document).ready(function(){
 							}
 							else{
 								$.confirm({
-	                                title: 'Error occured',
+	                                title: 'Error',
 	                                content: 'Some error has occured, please try again later'
 								});
 							}

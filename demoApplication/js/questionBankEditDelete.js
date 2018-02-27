@@ -78,13 +78,13 @@ function deleteRow(data) {
 					table.ajax.reload();
 					return true;
 				}
-					else {
-						$.alert({
-						    title: 'Alert!',
-						    content: 'data has not be deleted, please try agin later.',
-						});
-						return false;
-					}
+				else {
+					$.alert({
+					    title: 'Alert!',
+					    content: 'data has not be deleted, please try agin later.',
+					});
+					return false;
+				}
 			}
 		});
 }
@@ -121,7 +121,7 @@ function updateRow(data){
 					}
 					else if (obj.ERRORID.update = 'fail'){
 						$.confirm({
-                            title: 'Error!',
+                            title: 'Error',
                             content: 'Some unexpected error has occured. Please try again later.'
 						});
 					}
