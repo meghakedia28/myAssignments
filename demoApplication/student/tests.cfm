@@ -1,11 +1,11 @@
 ﻿<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT isUserLoggedIn()>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfif NOT(sessionExists)>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 <cfelseif session.stLoggedInUser.roleId NEQ 3>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfif structKeyExists(url,"noaccess")>
 	<p>You have already submitted your test OR the time of test has not yet started.</p>
@@ -15,8 +15,6 @@
 </cfif>
 <cfimport taglib = "../customTags/" prefix = "tags">
 	<tags:studentFront>
-		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<div class = "page-title">
 			<div class = "container">
 				<h2>Give Quiz:</h2>
@@ -94,5 +92,7 @@
 			</div><!---row--->
 		</div><!---conatiner--->
 	</main>
-<script src = "../js/testValidate.js"></script>
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src = "../js/testValidate.js"></script>
 </tags:studentFront>

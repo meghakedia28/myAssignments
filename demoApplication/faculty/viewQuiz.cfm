@@ -1,11 +1,11 @@
 <cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT isUserLoggedIn()>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfif NOT(sessionExists)>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 <cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix = "tags">
 	<tags:facultyFront>
@@ -61,6 +61,7 @@
 	         	<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
 	        </div><!---modal-header--->
 			<div class = "modal-body request-form">
+					<input type = "hidden" id = "id" name = "id"></input>
 				 <form name = "editForm" id = "editForm" action = "" method = "post">
 					<div class = "field">
 						<label for = "quizName">Name of the quiz:</label>
@@ -126,4 +127,6 @@
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 	<script type = "text/javascript" src = "../js/viewQuizHandling.js"></script>
+	<!-- <script type = "text/javascript" src = "../js/quizValidation.js"></script> -->
+<!-- 	<script type = "text/javascript" src = "../js/wordEmailNumberValidation.js"></script> -->
 </tags:facultyFront>

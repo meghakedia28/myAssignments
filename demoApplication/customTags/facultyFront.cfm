@@ -8,7 +8,6 @@
 
 		<title>St. Joseph's High School</title>
 		<!-- Loading third party fonts -->
-		<link href="http://fonts.googleapis.com/css?family=Arvo:400,700|" rel="stylesheet" type="text/css">
 		<link href="../fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<!-- Loading main css file -->
 		<link rel="stylesheet" href="../css/style.css">
@@ -43,7 +42,7 @@
 								<li class="menu-item"><a href="viewQuiz.cfm">View quiz</a></li>
 								<li class="menu-item"><a href="results.cfm">Results</a></li>
 								<li class="menu-item"><a href="studentsProfile.cfm">Student's Profile</a></li>
-								<li class="menu-item"><a href="../comman/loginPage.cfm?logout">LogOut</a></li>
+								<li class="menu-item"><a href="../common/loginPage.cfm?logout">LogOut</a></li>
 							</ul> <!-- .menu -->
 						</div> <!-- .main-navigation -->
 						<div class="mobile-navigation"></div>

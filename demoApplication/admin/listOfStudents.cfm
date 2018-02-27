@@ -1,11 +1,11 @@
 <cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
 <cfif NOT isUserLoggedIn()>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfif NOT(sessionExists)>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 <cfelseif session.stLoggedInUser.roleId NEQ 1>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix = "tags">
 	<tags:adminFront>
@@ -51,25 +51,6 @@
 							     <div id = "editModal"></div>
 						  		</div><!--modal dialog-->
 						  	</div><!--modal fade-->
-						  	<!---delete modal--->
-						  	<div class = "modal fade" id = "rowDelete" role = "dialog">
-								   <div class = "modal-dialog modal-md">
-								<!-- Modal content-->
-							      <div class = "modal-content">
-							        <div class = "modal-header">
-								    	<h4 class = "modal-title">Delete record:</h4>
-							         		<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
-							        </div><!--modal-header-->
-									<div class = "modal-body">
-									<!--form inside the modal-->
-									</div><!--modal-body-->
-							 		<div class = "modal-footer">
-								 	  <button type = "submit" class = "btn btn-default" id = "submitEditForm" name = "submitEditFrom" onClick = "" value = "">confirm</button>
-								 	  <button type = "button" class = "btn btn-default" data-dismiss = "modal">Cancel</button>
-							        </div><!---modal-footer--->
-								  </div><!---modal-content--->
-						  		</div><!---modal dialog--->
-						  	</div><!---modal fade--->
 						</table>
 				</div><!---boxed-section--->
 			</div><!---col-md-12--->
@@ -85,6 +66,6 @@
 <script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 <script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type = "text/javascript" src = "../js/listOfStudents.js"></script>
+<script type = "text/javascript" src = "../js/listOfStudent.js"></script>
 <script type = "text/javascript" src = "../js/wordEmailNumberValidation.js"></script>
 </tags:adminFront>

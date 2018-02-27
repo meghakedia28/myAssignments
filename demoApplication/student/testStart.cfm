@@ -1,11 +1,11 @@
 ﻿<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT isUserLoggedIn()>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfif NOT(sessionExists)>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 <cfelseif session.stLoggedInUser.roleId NEQ 3>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix="tags">
 	<tags:studentFront>
@@ -101,15 +101,5 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script>
-			$(document).ready(function(){
-				$('#questions').DataTable({
-					"searching": false,
-					"paging": false,
-					"ordering": false,
-      				"info":     false
-				});
-			})
-		</script>
 		<script src="../js/testStartValidation.js"></script>
 </tags:studentFront>

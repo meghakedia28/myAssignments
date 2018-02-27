@@ -1,11 +1,11 @@
 ﻿<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT isUserLoggedIn()>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfif NOT(sessionExists)>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 <cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfimport taglib = "../customTags/" prefix = "tags">
 	<tags:facultyFront>
@@ -109,4 +109,5 @@
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 	<script src = "../js/quizValidation.js"></script>
+	<script src = "../js/wordEmailNumberValidation.js"></script>
 	</tags:facultyFront>

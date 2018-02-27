@@ -1,11 +1,11 @@
 <cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT isUserLoggedIn()>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfif NOT(sessionExists)>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 <cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cflocation url = "../comman/loginPage.cfm?noaccess">
+	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
 <cfset quiz = createObject("component","demoApplication.components/viewQuizListService").getQuizlist(#session.stLoggedInUser.UserId#) />
 <cfset quizList = ValueList(quiz.quizId,",") />
