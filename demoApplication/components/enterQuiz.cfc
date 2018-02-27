@@ -75,20 +75,35 @@ USE: use for insert questions added by faculty in db after validating it--->
 			<cfset local.stStatus.message = "<p>Please enter your valid quiz name: <br/> use (a-z) OR (A-Z) OR (0-9) <br/>between 1 to 30 characters.</p>" />
 			<cfreturn local.stStatus>
 		<cfelse>
-			<cfquery name = "quizNameCount" >
-				SELECT [quiz].[quizId] FROM [quiz]
-				WHERE [quiz].[name] = <cfqueryparam value = "#arguments.name#" cfsqltype = "cf_sql_varchar" >
-				AND [quiz].[quizId] <> <cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint">
-			</cfquery>
-			<cfif quizNameCount.RecordCount NEQ 0>
-				<cfset local.stStatus.status = "error" />
-				<cfset local.stStatus.message = "This quiz name already exists" />
-				<cfreturn local.stStatus>
-			<cfelse>
-				<cfset local.stStatus.status = "success" />
-				<cfset local.stStatus.message = "This quiz name is new and will be added once you click DONE" />
-				<cfreturn local.stStatus >
-			</cfif>
+			<cftry>
+				<cfquery name = "quizNameCount" >
+					SELECT [quiz].[quizId] FROM [quiz]
+					WHERE [quiz].[name] = <cfqueryparam value = "#arguments.name#" cfsqltype = "cf_sql_varchar" >
+					AND [quiz].[quizId] <> <cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint">
+				</cfquery>
+				<cfif quizNameCount.RecordCount NEQ 0>
+					<cfset local.stStatus.status = "error" />
+					<cfset local.stStatus.message = "This quiz name already exists" />
+					<cfreturn local.stStatus>
+				<cfelse>
+					<cfset local.stStatus.status = "success" />
+					<cfset local.stStatus.message = "This quiz name is new and will be added once you click DONE" />
+					<cfreturn local.stStatus >
+				</cfif>
+			<cfcatch type = "database">
+				<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+				<cfset local.stStatus.status = "fail" />
+					<cfset local.stStatus.message = "Some unexpected error has occured." />
+					<cfreturn local.stStatus>
+			</cfcatch>
+			<cfcatch type = "any">
+				<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cfset local.stStatus.status = "fail" />
+					<cfset local.stStatus.message = "Some unexpected error has occured." />
+					<cfreturn local.stStatus>
+			</cfcatch>
+			</cftry>
 		</cfif>
 	</cffunction>
 	<!---checkStartTime : valiadting the start time of a quiz--->
@@ -105,26 +120,41 @@ USE: use for insert questions added by faculty in db after validating it--->
 			<cfset local.stStatus.message = "<p>Please select a valid date time<br/> of pattern 'YYYY/MM/DD HH:MM'</p>" />
 			<cfreturn local.stStatus>
 		<cfelse>
-			<cfquery name = "quizCount" >
-				SELECT [quiz].[quizId] FROM [quiz]
-				WHERE ( CONVERT(VARCHAR(8), [quiz].[startDateTime], 1) ) = ( CONVERT(VARCHAR(8), <cfqueryparam value = "#arguments.startDate#" cfsqltype = "cf_sql_date" >, 1))
-				AND [quiz].[quizId] <> <cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint">
-			</cfquery>
-			<cfif quizCount.RecordCount NEQ 0>
-				<cfset local.stStatus.status = "error" />
-				<cfset local.stStatus.message = "<p>This date is already selected for a quiz.<br/> Please select another date.</p>" />
-				<cfreturn local.stStatus >
-			<cfelse>
-				<cfif now() GTE #arguments.startDate# >
+			<cftry>
+				<cfquery name = "quizCount" >
+					SELECT [quiz].[quizId] FROM [quiz]
+					WHERE ( CONVERT(VARCHAR(8), [quiz].[startDateTime], 1) ) = ( CONVERT(VARCHAR(8), <cfqueryparam value = "#arguments.startDate#" cfsqltype = "cf_sql_date" >, 1))
+					AND [quiz].[quizId] <> <cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint">
+				</cfquery>
+				<cfif quizCount.RecordCount NEQ 0>
 					<cfset local.stStatus.status = "error" />
-					<cfset local.stStatus.message = "<p>The date selected is old.<br/>please select a future date.</p>" />
+					<cfset local.stStatus.message = "<p>This date is already selected for a quiz.<br/> Please select another date.</p>" />
 					<cfreturn local.stStatus >
 				<cfelse>
-					<cfset local.stStatus.status = "success" />
-					<cfset local.stStatus.message = "This date is new and will be added once you click DONE" />
-					<cfreturn local.stStatus >
+					<cfif now() GTE #arguments.startDate# >
+						<cfset local.stStatus.status = "error" />
+						<cfset local.stStatus.message = "<p>The date selected is old.<br/>please select a future date.</p>" />
+						<cfreturn local.stStatus >
+					<cfelse>
+						<cfset local.stStatus.status = "success" />
+						<cfset local.stStatus.message = "This date is new and will be added once you click DONE" />
+						<cfreturn local.stStatus >
+					</cfif>
 				</cfif>
-			</cfif>
+			<cfcatch type = "database">
+				<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+				<cfset local.stStatus.status = "fail" />
+					<cfset local.stStatus.message = "Some unexpected error has occured. Please try again later." />
+					<cfreturn local.stStatus>
+			</cfcatch>
+			<cfcatch type = "any">
+				<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cfset local.stStatus.status = "fail" />
+				<cfset local.stStatus.message = "Some unexpected error has occured. Please try again later." />
+				<cfreturn local.stStatus>
+			</cfcatch>
+			</cftry>
 		</cfif>
 	</cffunction>
 	<!---checkEndTime : validating the end time of a quiz--->
