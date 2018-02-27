@@ -9,8 +9,9 @@ use to valiadte the new password and conform password and the updating it in db 
 	<!---validate : use to call for  validation for the password and confirm pasword field
 		and then call for destroy the session--->
 	<cffunction name = "validate" returntype = "struct" returnformat = "JSON" access = "remote">
-		<cfset validPassword(url.password)>
-		<cfset checkPassword(url.confirmPassword, url.password)>
+		<cftry>
+			<cfset validPassword(url.password)>
+			<cfset checkPassword(url.confirmPassword, url.password)>
 			<cfif StructIsEmpty(variables.errorStruct.errorId) >
 				<cfset insert = insertPassword(url.password, url.id)>
 				<cfif insert>
@@ -24,6 +25,12 @@ use to valiadte the new password and conform password and the updating it in db 
 			<cfelse>
 				<cfreturn variables.errorStruct>
 			</cfif>
+		<cfcatch type = "any">
+			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cfset variables.errorStruct.errorId.error_insert = "Some unexpected error has occured. Please try agin later." >
+			<cfreturn variables.errorStruct>
+		</cfcatch>
+		</cftry>
 	</cffunction>
 	<!---validPassword : validate password--->
 	<cffunction name = "validPassword" output = "false" returntype = "void" >
@@ -69,9 +76,10 @@ use to valiadte the new password and conform password and the updating it in db 
 				</cftransaction>
 				<cfreturn true>
 			<cfcatch type="any">
- 				<cfreturn false>
+				<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cfreturn false>
 			</cfcatch>
-		</cftry>
+			</cftry>
 	</cffunction>
 	<!---destroyExistingSession : destroy the previous existing sessions--->
 	<cffunction name = "destroyExistingSession" output = "false">
