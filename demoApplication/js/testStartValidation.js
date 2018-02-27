@@ -1,4 +1,10 @@
 $(document).ready(function(){
+	$('#questions').DataTable({
+		"searching": false,
+		"paging": false,
+		"ordering": false,
+		"info": false
+	});
 	var serverTime = new Date($('#nowTime').val()).getTime();
 	var startTime = new Date($('#startTime').val()).getTime();
 	var endTime = new Date($('#endTime').val()).getTime();
@@ -31,7 +37,6 @@ $(document).ready(function(){
         window.onbeforeunload = (on) ? unloadMessage : null;
    }
     function unloadMessage() {
-
         return 'You have started giving the test. If you navigate away from this page the changes made will be lost.';
    }
     $(':input').bind(
@@ -49,8 +54,9 @@ $(document).ready(function(){
 					if (obj == true){
 						location.replace("tests.cfm?submitEnd");
 					}
-					else
+					else{
 						location.replace("tests.cfm?error");
+					}
 				}
 			});
 	 	 }

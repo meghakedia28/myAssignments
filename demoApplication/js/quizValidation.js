@@ -1,4 +1,3 @@
-$.noConflict();
 jQuery(document).ready(function($){
 	var id = $('#userId').val();
 	var table = $("#questions").DataTable({
@@ -70,6 +69,13 @@ jQuery(document).ready(function($){
 					if (obj.STATUS == "success"){
 						return true;
 					}
+					else if (obj.STATUS == "fail"){
+						$.confirm({
+                            title: 'Error!',
+                            content: obj.MESSAGE
+						});
+						return false;
+					}
 					else {
 						$("#error_quizname").text(obj.MESSAGE);
 						return false;
@@ -97,11 +103,18 @@ jQuery(document).ready(function($){
 						if (obj.STATUS == "success"){
 							return true;
 						}
-							else {
-								$("#error_starttime").html(obj.MESSAGE);
-								$("#startTime").css("border","2px solid red");
-								return false;
-							}
+						else if (obj.STATUS == "fail"){
+							$.confirm({
+	                            title: 'Error!',
+	                            content: obj.MESSAGE
+							});
+							return false;
+						}
+						else {
+							$("#error_starttime").html(obj.MESSAGE);
+							$("#startTime").css("border","2px solid red");
+							return false;
+						}
 					}	
 				});	
 			}
@@ -115,22 +128,6 @@ jQuery(document).ready(function($){
 		}
 	});
 });
-function wordCheck(elementId,errorId){
-	var word = $(elementId).val();
-	var regword = /^[a-zA-Z0-9 ]{1,30}$/;
-	if ( word == "" || word == null){
-		$(errorId).text("You can't leave this empty.");
-		$(elementId).css("border","2px solid red");
-		return false;
-	}
-	else if (!(regword.test(word))){
-		$(errorId).html("<p>Please enter a valid quiz name: <br/> use (a-z) OR (A-Z) OR (0-9) <br/>between 1 and 30 characters.</p>");
-		$(elementId).css("border","2px solid red");
-		return false;
-	}
-	else
-		return true;
-}
 function checkEmpty(elementId,errorId){
 	var start = $(elementId).val();
 	if(start == "" || start == null){
@@ -166,7 +163,7 @@ function validate(){
 	var end = checkEmpty("#endTime","#error_endtime");
 	var question = checkBoxEmpty("[name='questionId']","#error_questions");
 	if (name && start && end && question)
-	return true;
+		return true;
 	else
-	return false;
-		}
+		return false;
+}
