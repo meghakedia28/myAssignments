@@ -11,7 +11,7 @@ USE: used to view all the question in the faculty portal depending upon the cond
 		<cfargument name = "userId" required = "true" type = "numeric">
 		<cfargument name = "quizId" required = "false" type = "numeric" default = "0">
 		<cfquery name = "questions">
-			Select questionId,question,option1,option2,option3,option4,correctAnswer
+			SELECT questionId,question,option1,option2,option3,option4,correctAnswer
 			FROM [questionBank]
 			WHERE [questionBank].[userId] = <cfqueryparam value = "#arguments.userId#" cfsqltype = "cf_sql_bigint" />
 			AND [questionBank].[questionId] NOT IN
@@ -68,7 +68,8 @@ USE: used to view all the question in the faculty portal depending upon the cond
 		<cfset result.data = local.dataArray >
 		<cfreturn result>
 	</cffunction>
-	<!---formatQuizQuestion : used to get the "addQuestion" feature in (viewQuizQuestion.cfm in viewQuiz.cfm)
+	<!---formatQuizQuestion : used in quizQuestions.cfm(redirected after clicking view questions
+		in viewQuiz.cfm) and to get the "addQuestion" feature in (viewQuizQuestion.cfm in viewQuiz.cfm)
 		here only the questions which are not set in the quiz will be available to add--->
 	<cffunction name = "formatQuizQuestion" access = "remote" returntype = "Struct"
 				returnformat = "JSON" hint = "format of question list while settinf quiz">
@@ -110,7 +111,7 @@ USE: used to view all the question in the faculty portal depending upon the cond
 		<cfargument name = "userId" required = "true" type = "numeric">
 		<cfset getQuestionList = getQuestions(arguments.userId)>
 		<cfquery dbtype = "query" name = "getDetails">
-			Select * FROM getQuestionList
+			SELECT * FROM getQuestionList
 			WHERE questionId = <cfqueryparam value = "#arguments.questionId#" cfsqltype = "cf_sql_bigint">
 		</cfquery>
 		<cfset var data = {}>
