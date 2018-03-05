@@ -2,7 +2,7 @@
 NAME : authentication.cfc
 CREATED BY : megha Kedia
 USE : validate the user and do-login and do-logout the user , maintaining the session--->
-<cfcomponent output = "false" >
+<cfcomponent>
 	<!---validation : for checking the email id and password are correct or not--->
 	<cffunction name = "userValidation" returnType = "array" access = "public" >
 		<cfargument name = "email" type = "string" required = "true" >
@@ -63,24 +63,31 @@ USE : validate the user and do-login and do-logout the user , maintaining the se
 						<cfif structKeyExists(session, "stLoggedInUser") >
 							<cfset structdelete(session, "stLoggedInUser") />
 						</cfif>
-						<cflogin applicationtoken = "DemoApplication" >
+						<cflogin applicationtoken = "demoApplication" >
 							<cfloginuser name = "#LoginUser.firstName# #LoginUser.LastName#" password = "#LoginUser.hashPassword#" roles = "#LoginUser.role#" >
 						</cflogin>
 						<cflock scope = "session" timeout = "30" >
 							<cfset sessionRotate() />
 							<cfset session.stLoggedInUser = {"userFirstName" = #LoginUser.firstName#, "userLastName" = #LoginUser.LastName#, "userEmailId" = #LoginUser.emailid#,"userId" = #LoginUser.userId#, "roleId" = #LoginUser.roleId#, "userRole" = #LoginUser.role#}>
-						<cfset var.isUserLoggedIn = true />
+						<cfset local.isUserLoggedIn = true />
 						</cflock>
 					</cfif>
 				</cfif>
 			</cftransaction>
+		<cfcatch type = "database">
+			<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+			<cfset local.stStatus.status = "error" />
+			<cfset local.stStatus.message =  "Some unexpected error has occured, Please try again later." />
+			<cfreturn local.stStatus>
+		</cfcatch>
 		<cfcatch type = "any">
 			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
-			<cfset var.isUserLoggedIn = false />
-			<cfreturn isUserLoggedIn>
+			<cfset local.isUserLoggedIn = false />
+			<cfreturn local.isUserLoggedIn>
 		</cfcatch>
 		</cftry>
-		<cfreturn isUserLoggedIn/>
+		<cfreturn local.isUserLoggedIn/>
 	</cffunction>
 	<!---doLogOut : to clear and invalidate the session when the user logs out --->
 	<cffunction name = "doLogOut" access = "public" returntype = "void">

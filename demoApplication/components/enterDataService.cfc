@@ -1,58 +1,66 @@
 ﻿<!---
 NAME : enterDataService.cfc
-CREATED BY : megha Kedia
+CREATED BY : Megha Kedia
 USE: insertion and updation of user information--->
 
-<cfcomponent output = "false" extends="addValidation" >
+<cfcomponent output = "false" extends = "addValidation" >
 	<!---insertData : insert user information in db--->
-	<cffunction name="insertData" access="public" output="false" returnType="boolean" >
-		<cfargument name="data" type="struct" required="true" >
-		<cfargument name="role"	type="numeric" required="true">
+	<cffunction name = "insertData" access = "public" output = "false" returnType = "boolean" >
+		<cfargument name = "data" type = "struct" required = "true" >
+		<cfargument name = "role"	type = "numeric" required = "true">
 		<cftry>
 			<!---insert subject--->
 			<cftransaction>
 				<cfif StructKeyExists(arguments.data,'subject')>
-					<cfquery name="insertSubject" >
+					<cfquery >
 						INSERT INTO [subject]
 						(name) VALUES (
-						<cfqueryparam value="#data.subject#" cfsqltype="cf_sql_varchar" > )
+						<cfqueryparam value = "#data.subject#" cfsqltype = "cf_sql_varchar" > )
 					</cfquery>
-					<cfquery name="getSubjectId">
+					<cfquery name = "getSubjectId">
 						SELECT [subjectId] FROM [subject]
-						WHERE [name] = <cfqueryparam value="#data.subject#" cfsqltype="cf_sql_varchar" >
+						WHERE [name] = <cfqueryparam value = "#data.subject#" cfsqltype = "cf_sql_varchar" >
 					</cfquery>
 				</cfif>
-				<cfquery name="insertion">
+				<cfquery>
 					INSERT INTO [user]
 					(firstName,lastName,emailid,contactNumber,roleId,active) VALUES (
-					<cfqueryparam value="#data.firstName#" cfsqltype="cf_sql_varchar" >,
-					<cfqueryparam value="#data.lastName#" cfsqltype="cf_sql_varchar" >,
-					<cfqueryparam value="#data.email#" cfsqltype="cf_sql_varchar" >,
-					<cfqueryparam value="#data.contactNumber#" cfsqltype="cf_sql_varchar" >,
-					<cfqueryparam value="#role#" cfsqltype="cf_sql_integer" >,
-					0)
+					<cfqueryparam value = "#data.firstName#" cfsqltype = "cf_sql_varchar" >,
+					<cfqueryparam value = "#data.lastName#" cfsqltype = "cf_sql_varchar" >,
+					<cfqueryparam value = "#data.email#" cfsqltype = "cf_sql_varchar" >,
+					<cfqueryparam value = "#data.contactNumber#" cfsqltype = "cf_sql_varchar" >,
+					<cfqueryparam value = "#role#" cfsqltype = "cf_sql_integer" >,
+					<cfqueryparam value = "0" cfsqltype = "cf_sql_integer">)
 				</cfquery>
-				<cfquery name="getUserId">
+				<cfquery name = "getUserId">
 					SELECT [userId] FROM [user]
-					WHERE [emailid] = <cfqueryparam value="#data.email#" cfsqltype="cf_sql_varchar" >
+					WHERE [emailid] = <cfqueryparam value = "#data.email#" cfsqltype = "cf_sql_varchar" >
 				</cfquery>
 				<cfset var code = Hash(GenerateSecretKey("AES"),"SHA-512" )>
-				<cfquery name="insertSalt">
+				<cfquery>
 					UPDATE [user]
-					SET salt = '#code#'
-					WHERE [userId] = #getUserId.userId#
+					SET salt = <cfqueryparam value = "#code#" cfsqltype = "cf_sql_varchar">
+					WHERE [userId] = <cfqueryparam value = "#getUserId.userId#" cfsqltype = "cf_sql_bigint">
 				</cfquery>
 				<cfif StructKeyExists(arguments.data,'subject')>
-					<cfquery name="insertUserSubject">
+					<cfquery>
 						INSERT INTO [userSubject]
-						(userId,subjectId) VALUES (#getUserId.userId#, #getSubjectId.subjectId#)
+						(userId,subjectId) VALUES (
+						<cfqueryparam value = "#getUserId.userId#" cfsqltype = "cf_sql_bigint">,
+						<cfqueryparam value = "#getSubjectId.subjectId#" cfsqltype = "cf_sql_bigint"> )
 					</cfquery>
 				</cfif>
 				<!---create mailService object--->
 				<cfset mailObject = createObject('component','demoApplication/components/mailService').sendMails('#data.email#',"#data.firstName#","#code#")/>
 			</cftransaction>
 			<cfreturn true>
-			<cfcatch type="any" >
+			<cfcatch type = "database">
+				<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+				<cfreturn false>
+			</cfcatch>
+			<cfcatch type = "any" >
+				<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 				<cfreturn false>
 			</cfcatch>
 		</cftry>
@@ -66,14 +74,14 @@ USE: insertion and updation of user information--->
 				WHERE [user].[emailid] = <cfqueryparam value = "#url.emailId#" cfsqltype = "cf_sql_varchar">
 			</cfquery>
 		<cfcatch type = "database">
-			<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
 			<cfset variables.insertionStruct.successfull = "false">
 			<cfset variables.insertionStruct.message = "Some unexpected error has occured, Please try again later.">
 			<cfreturn variables.insertionStruct>
 		</cfcatch>
 		<cfcatch type = "any">
-			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cfset variables.insertionStruct.successfull = "false">
 			<cfset variables.insertionStruct.message = "Some unexpected error has occured, Please try again later.">
 			<cfreturn variables.insertionStruct>
@@ -97,8 +105,8 @@ USE: insertion and updation of user information--->
 					<cfreturn variables.errorStruct>
 				</cfif>
 			</cfif>
-		<cfcatch type="any">
-			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+		<cfcatch type = "any">
+			<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cfset variables.insertionStruct.successfull = "false">
 			<cfset variables.insertionStruct.message = "Some unexpected error has occured, Please try again later.">
 			<cfreturn variables.insertionStruct>
@@ -111,7 +119,7 @@ USE: insertion and updation of user information--->
 		<cfargument name = "id" required = "true" type = "numeric">
 			<cftry>
 				<cftransaction>
-					<cfquery name = "updateuserDetails">
+					<cfquery>
 						UPDATE [user]
 							SET [user].[firstName] = <cfqueryparam value = "#data.firstName#" cfsqltype = "cf_sql_varchar">,
 							[user].[lastName] = <cfqueryparam value = "#data.lastName#" cfsqltype = "cf_sql_varchar">,
@@ -125,7 +133,7 @@ USE: insertion and updation of user information--->
 							WHERE [user].[userId] = <cfqueryparam value = "#arguments.id#" cfsqltype = "cf_sql_bigint">
 						</cfquery>
 						<cfif structKeyExists (data,"subject")>
-							<cfquery name = "updateSubject">
+							<cfquery>
 								UPDATE [subject]
 									SET [subject].[name] = <cfqueryparam value = "#data.subject#" cfsqltype = "cf_sql_varchar">
 									FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
@@ -135,12 +143,12 @@ USE: insertion and updation of user information--->
 		 				</cfif>
 		 			</cftransaction>
 			 	<cfcatch type = "database">
-					<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+					<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 					<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
 					<cfreturn false>
 				</cfcatch>
 				<cfcatch type = "any">
-					<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+					<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 					<cfreturn false>
 				</cfcatch>
 			</cftry>

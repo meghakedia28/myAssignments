@@ -10,7 +10,7 @@ USE: This is used for validating (and then passing values to enter data in datab
 	<!---validateFirstName : validate first name--->
 	<cffunction name = "validateFirstName" returnType = "void" output = "false" access = "public" >
 		<cfargument name = "name" type = "string" required = "true" >
-		<cfset variables.errorStruct.elementId.firstName = name>
+		<cfset variables.errorStruct.elementId.firstName = arguments.name>
 		<cfif arguments.name EQ ''>
 			<cfset variables.errorStruct.errorId.error_firstname = "You can't leave this empty.">
 		<cfelseif (!isValid("regex",name,"^[a-zA-Z]{1,30}"))>
@@ -20,7 +20,7 @@ USE: This is used for validating (and then passing values to enter data in datab
 	<!---validateLastName : validate last name--->
 	<cffunction name = "validateLastName" returnType = "void" output = "false" access = "public">
 		<cfargument name = "name" type = "string" required = "true" >
-		<cfset variables.errorStruct.elementId.lastName = name>
+		<cfset variables.errorStruct.elementId.lastName = arguments.name>
 		<cfif arguments.name EQ ''>
 			<cfset variables.errorStruct.errorId.error_lastname = "You can't leave this empty.">
 		<cfelseif (!isValid("regex",name,"^[a-zA-Z]{1,30}"))>
@@ -40,25 +40,40 @@ USE: This is used for validating (and then passing values to enter data in datab
 			<cfset local.stStatus.message = "Please use only letters(a-z) or (A-Z)\nbetween 1 and 30 characters." />
 			<cfreturn local.stStatus>
 		<cfelse>
-			<cfquery name = "alreadyExists" >
-				SELECT [user].[userId] FROM [user]
-				WHERE [user].[emailid] = <cfqueryparam value = "#arguments.emailId#" cfsqltype = "cf_sql_varchar" >
-			</cfquery>
+			<cftry>
+				<cfquery name = "alreadyExists" >
+					SELECT [user].[userId] FROM [user]
+					WHERE [user].[emailid] = <cfqueryparam value = "#arguments.emailId#" cfsqltype = "cf_sql_varchar" >
+				</cfquery>
+			<cfcatch type = "database">
+				<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+				<cfset local.stStatus.status = "error" />
+				<cfset local.stStatus.message =  "Some unexpected error has occured, Please try again later." />
+				<cfreturn local.stStatus>
+			</cfcatch>
+			<cfcatch type = "any">
+				<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cfset local.stStatus.status = "error" />
+				<cfset local.stStatus.message =  "Some unexpected error has occured, Please try again later." />
+				<cfreturn local.stStatus>
+			</cfcatch>
+			</cftry>
 			<cfif alreadyExists.recordCount NEQ 0>
 				<cfset local.stStatus.status = "error" />
 				<cfset local.stStatus.message =  "User already exists" />
 				<cfreturn local.stStatus>
 			<cfelse>
 				<cfset local.stStatus.status = "success" />
-					<cfset local.stStatus.message = "Welcome new user" />
-					<cfreturn local.stStatus >
+				<cfset local.stStatus.message = "Welcome new user" />
+				<cfreturn local.stStatus >
 			</cfif>
 		</cfif>
 	</cffunction>
 	<!---validatePhoneNumber : validate phone Number--->
 	<cffunction name = "validatePhoneNumber" output = "false" returntype = "void" access = "public" >
 		<cfargument name = "phoneNumber" type = "string" required = "true" >
-		<cfset variables.errorStruct.elementId.contactNumber = phoneNumber>
+		<cfset variables.errorStruct.elementId.contactNumber = arguments.phoneNumber>
 		<cfif (arguments.phoneNumber EQ '')>
 			<cfset variables.errorStruct.errorId.error_contactnumber = "You can't leave this empty.">
 		<cfelseif !((isValid("telephone",phoneNumber)))>
@@ -86,7 +101,7 @@ USE: This is used for validating (and then passing values to enter data in datab
 					AND [userSubject].[userId] != <cfqueryparam value = "#arguments.id#" cfsqltype = "cf_sql_bigint" >
 				</cfquery>
 			<cfcatch type = "database">
-				<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
 				<cfset local.stStatus.status = "error" />
 				<cfset local.stStatus.message =  "Some unexpected error has occured, Please try again later." />

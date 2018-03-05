@@ -36,35 +36,38 @@
 						</cfoutput>
 					</cfif>
 						<!---check if the user is logged in--->
-					<cfif structKeyExists(variables,"isUserLoggedIn") AND isUserLoggedIn EQ false>
-						<p class = "error" id = "error">The User Id and the Password did not match. Please try again or contact the administrator at : "megha.kedia28@gmail.com".</p>
+					<cfif structKeyExists(variables,"isUserLoggedIn") >
+						<cfif isUserLoggedIn EQ false>
+							<p class = "error" id = "error">The User Id and the Password did not match. Please try again or contact the administrator at : "megha.kedia28@gmail.com".</p>
+						<cfelse>
+							<!---redirect to the page according to their roles--->
+							<cfif structKeyExists(session,"stLoggedInUser")>
+								<cfif session.stLoggedInUser.roleId EQ 1>
+									<cflocation url = "../admin/home.cfm" />
+								</cfif>
+								<cfif session.stLoggedInUser.roleId EQ 2>
+									<cflocation url = "../faculty/home.cfm" />
+								</cfif>
+								<cfif session.stLoggedInUser.roleId EQ 3>
+									<cflocation url = "../student/home.cfm" />
+								</cfif>
+							</cfif>
+						</cfif>
+					<cfelse>
+						<!---enter userId and password--->
+						<div class = "control-group">
+							<label class = "login-field-icon fui-user" for = "email"></label>
+							<cfinput type = "text" class = "login-field" id = "email" name = "email" placeholder = "User Id">
+						</div>
+						<div class = "control-group">
+							<label class = "login-field-icon fui-lock" for = "password"></label>
+							<input type = "password" class = "login-field" id = "password" name = "password" placeholder = "Password" >
+						</div>
+						<div>
+							<a href = "forgetPassword.cfm">forgotten password?</a>
+						</div>
+						<button class = "btn btn-primary btn-large btn-block" id = "submitLogin" name = "submitLogin" type = "submit">Login</button>
 					</cfif>
-					<!---redirect to the page accordimg their roles--->
-					<cfif structKeyExists(session,"stLoggedInUser")>
-					<cfif session.stLoggedInUser.roleId EQ 1>
-						<cflocation url = "../admin/home.cfm" />
-					</cfif>
-					<cfif session.stLoggedInUser.roleId EQ 2>
-						<cflocation url = "../faculty/home.cfm" />
-					</cfif>
-					<cfif session.stLoggedInUser.roleId EQ 3>
-						<cflocation url = "../student/home.cfm" />
-					</cfif>
-				<cfelse>
-					<!---enter userId and password--->
-					<div class = "control-group">
-						<label class = "login-field-icon fui-user" for = "email"></label>
-						<cfinput type = "text" class = "login-field" id = "email" name = "email" placeholder = "User Id">
-					</div>
-					<div class = "control-group">
-						<label class = "login-field-icon fui-lock" for = "password"></label>
-						<input type = "password" class = "login-field" id = "password" name = "password" placeholder = "Password" >
-					</div>
-					<div>
-						<a href = "forgetPassword.cfm">forgotten password?</a>
-					</div>
-					<button class = "btn btn-primary btn-large btn-block" id = "submitLogin" name = "submitLogin" type = "submit">Login</button>
-				</cfif>
 				</cfform>
 			</div>
 		</div>
