@@ -36,22 +36,20 @@
 						</cfoutput>
 					</cfif>
 						<!---check if the user is logged in--->
-					<cfif structKeyExists(variables,"isUserLoggedIn") >
-						<cfif isUserLoggedIn EQ false>
-							<p class = "error" id = "error">The User Id and the Password did not match. Please try again or contact the administrator at : "megha.kedia28@gmail.com".</p>
-						<cfelse>
-							<!---redirect to the page according to their roles--->
-							<cfif structKeyExists(session,"stLoggedInUser")>
-								<cfif session.stLoggedInUser.roleId EQ 1>
-									<cflocation url = "../admin/home.cfm" />
-								</cfif>
-								<cfif session.stLoggedInUser.roleId EQ 2>
-									<cflocation url = "../faculty/home.cfm" />
-								</cfif>
-								<cfif session.stLoggedInUser.roleId EQ 3>
-									<cflocation url = "../student/home.cfm" />
-								</cfif>
-							</cfif>
+					<cfif structKeyExists(variables,"isUserLoggedIn") AND isUserLoggedIn EQ false>
+						<p class = "error" id = "error">The User Id and the Password did not match.
+							 Please try again or contact the administrator at : "megha.kedia28@gmail.com".</p>
+					</cfif>
+					<!---redirect to the page according to their roles--->
+					<cfif structKeyExists(session,"stLoggedInUser")>
+						<cfif session.stLoggedInUser.roleId EQ 1>
+							<cflocation url = "../admin/home.cfm" />
+						</cfif>
+						<cfif session.stLoggedInUser.roleId EQ 2>
+							<cflocation url = "../faculty/home.cfm" />
+						</cfif>
+						<cfif session.stLoggedInUser.roleId EQ 3>
+							<cflocation url = "../student/home.cfm" />
 						</cfif>
 					<cfelse>
 						<!---enter userId and password--->
