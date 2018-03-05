@@ -5,7 +5,7 @@ USE: used for processing the result set that is viewed by faculty, as a whole re
  for perticular student result set, for viewing the report of a student for a perticular quiz --->
 
 <cfcomponent output = "false">
-	<!---fetchResultSet : use to fetch result set of students for a perticular faculty--->
+	<!---fetchResultSet : use to fetch result set for a faculty--->
 	<cffunction name = "fetchResultSet" access = "public" returntype = "query">
 		<cfargument name = "userId" required = "true" type = "numeric">
 		<cfquery name = "resultSet">
@@ -20,8 +20,8 @@ USE: used for processing the result set that is viewed by faculty, as a whole re
 		</cfquery>
 		<cfreturn resultSet>
 	</cffunction>
-	<!---getResultSet : fetches the result set and then formats the data for datatable--->
-	<cffunction name = "getResultSet" access = "remote" returntype = "Struct" returnformat = "JSON">
+	<!---formatResultSet : fetches the result set and then formats the data for datatable--->
+	<cffunction name = "formatResultSet" access = "remote" returntype = "Struct" returnformat = "JSON">
 		<cfargument name = "userId" required = "true" type = "numeric">
 		<cfset var dataArray = ArrayNew(2)>
 		<cfset var result["data"] = {}>
@@ -62,8 +62,8 @@ USE: used for processing the result set that is viewed by faculty, as a whole re
 		</cfquery>
 		<cfreturn getquizList>
 	</cffunction>
-	<!---getListOfQuiz : fetches the list of quiz set by a perticular faculty and processes it to datatable format--->
-	<cffunction name = "getListOfQuiz" access = "remote" returntype = "Struct" returnformat = "JSON">
+	<!---formatListOfQuiz : fetches the list of quiz set by a perticular faculty and processes it to datatable format--->
+	<cffunction name = "formatListOfQuiz" access = "remote" returntype = "Struct" returnformat = "JSON">
 		<cfargument name = "userId" required = "true" type = "numeric">
 		<cfset var dataArray = ArrayNew(2)>
 		<cfset var result["data"] = {}>
@@ -89,16 +89,17 @@ USE: used for processing the result set that is viewed by faculty, as a whole re
 		<cfquery dbtype = "query" name = "getQuizList">
  			SELECT * FROM data
  			WHERE data.quizId IN
-			('0'<cfloop array = "#local.quizIds#" index = "id">
-				,'#id#'
-			</cfloop>)
+			(<cfqueryparam value = "0" cfsqltype = "cf_sql_bigint">
+				<cfloop array = "#local.quizIds#" index = "id">
+					,<cfqueryparam value = "#id#" cfsqltype = "cf_sql_bigint">
+				</cfloop>)
 		</cfquery>
 		<cfloop query = "#getQuizList#">
 			<cfset local.dataArray[i][1] = encodeForHTML(getQuizList.name) />
  			<cfset local.dataArray[i][2] = DateFormat(getQuizList.startDateTime,'yyyy/mm/dd') & ' ' & TimeFormat(getQuizList.startDateTime,'HH:nn:ss') />
  			<cfset local.dataArray[i][3] = DateFormat(getQuizList.endDateTime,'yyyy/mm/dd') & ' ' & TimeFormat(getQuizList.endDateTime,'HH:nn:ss') />
  			<cfset local.dataArray[i][4] = encodeForHTML(getQuizList.firstName) &' '& encodeForHTML(getQuizList.lastName) />
- 			<cfset local.dataArray[i][5] = "<a href = ''>#getQuizList.score# %</a>" />
+ 			<cfset local.dataArray[i][5] = "<a href = 'studentsReport.cfm?Id=#getQuizList.scoreId#'>#getQuizList.score# %</a>" />
  			<cfset local.dataArray[i][6] = encodeForHTML(getQuizList.RANK) />
 			<cfset local.i = local.i + 1 />
 		</cfloop>
