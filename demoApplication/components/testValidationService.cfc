@@ -34,8 +34,14 @@ USE: use to validate or authenticate before starting the test--->
 				</cfif>
 			 </cftransaction>
  			<cfreturn true>
+		<cfcatch type = "database">
+		  	<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+			<cfreturn false>
+	  	</cfcatch>
  		<cfcatch type = "any">
- 			<cfreturn false>
+			<cflog file = "errors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cfreturn false>
  		</cfcatch>
  		</cftry>
 	</cffunction>
