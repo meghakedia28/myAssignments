@@ -1,8 +1,7 @@
-var table;
-var buttons;
+var questionTable;
 $(document).ready(function(){
 	var userId = $('#userId').val();
-	table = $("#questions").DataTable({
+	questionTable = $("#questions").DataTable({
 		"ajax": {
 			url : "../components/getQuestionsService.cfc?method=viewQuestionBank",
 			data :{
@@ -10,24 +9,24 @@ $(document).ready(function(){
 			}
 		}
 	});
-	 var buttons = new $.fn.dataTable.Buttons(table, {
- 		buttons: [
- 		          {
-				    extend: 'csv',
-				    title: 'List of questions',
-				    exportOptions: {
-				    columns: [ 0, 1, 2, 3, 4, 5]
-				   }
-				},
-				{
-					extend: 'pdfHtml5',
-					title: 'List of questions',
-					exportOptions: {
-				    columns: [ 0, 1, 2, 3, 4, 5]
-				  }
+	var buttons = new $.fn.dataTable.Buttons(questionTable, {
+	buttons: [
+	          {
+			    extend: 'csv',
+			    title: 'List of questions',
+			    exportOptions: {
+			    columns: [ 0, 1, 2, 3, 4, 5]
+			   }
+			},
+			{
+				extend: 'pdfHtml5',
+				title: 'List of questions',
+				exportOptions: {
+			    columns: [ 0, 1, 2, 3, 4, 5]
+			  }
 			}
-				]
- 		}).container().appendTo($('#buttons'));
+		]
+	}).container().appendTo($('#buttons'));
 	$("input,select,textarea").focus(function(){
 		$(this).css("border","");
 		$(this).next('.error-msg').text("");
@@ -36,8 +35,7 @@ $(document).ready(function(){
 		validate(this);
 	});
 	$('#rowEdit').on('show.bs.modal', function (event) {
-		  var button = $(event.relatedTarget) 
-		  var questionId = button.data('id') 
+		  var questionId = $(event.relatedTarget).data('id');
 		  var userId = $('#userId').val();
 		 $.ajax({
 			url: "../components/getQuestionsService.cfc?method=getQuestionDetails",
@@ -59,23 +57,22 @@ $(document).ready(function(){
 		  });
 		});
 	$('#rowDelete').on('show.bs.modal', function (event) {
-		 var button = $(event.relatedTarget) 
-		 var id = button.data('id') 
+		 var id = $(event.relatedTarget).data('id');
 		 $('#confirm').val(id);
-		});
 	});
+});
 function deleteRow(data) {
 	event.preventDefault();
-	var QustnId = $(data).val();
+	var qustnId = $(data).val();
 	$.ajax({
 			url : "../components/editDeleteQuestionsService.cfc?method=deleteRecord",
 			data : {
-				questionId : QustnId
+				questionId : qustnId
 			},
 			success : function(result) {
 				if (result){
 					$('.close').click(); 
-					table.ajax.reload();
+					questionTable.ajax.reload();
 					return true;
 				}
 				else {
@@ -86,11 +83,11 @@ function deleteRow(data) {
 					return false;
 				}
 			}
-		});
+	});
 }
 function updateRow(data){
-	event.preventDefault();
-	var QustnId = $(data).val();
+	 event.preventDefault();
+	 var questionId = $(data).val();
 	 var question = validate('#question');
 	 var optiona = validate('#optiona');
 	 var optionb = validate('#optionb');
@@ -109,13 +106,13 @@ function updateRow(data){
 		$.ajax({
 				url : "../components/editDeleteQuestionsService.cfc?method=updateQuestion&" + $("#editForm").serialize(),
 				data : {
-					questionId : QustnId
+					questionId : questionId
 				},
 				success : function(result) {
 					var obj = $.parseJSON(result);
 					if (obj.ERRORID.update = 'successfull'){
 						$('.close').click(); 
-						table.ajax.reload();
+						questionTable.ajax.reload();
 						$(".error-msg").text("");
 						return true;
 					}
