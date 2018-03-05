@@ -10,7 +10,7 @@ USE: used to perform certain operations after submitting the test by students, s
 	<cffunction name = "insertScore" access = "remote" output = "false" returntype = "boolean" returnformat = "JSON">
 		<cfset var score = calculateScore(url) />
 		<cfif score EQ -1>
-			</cfreturn false>
+			<cfreturn false>
 		<cfelse>
 			<cftry>
 				<cftransaction>
@@ -20,7 +20,7 @@ USE: used to perform certain operations after submitting the test by students, s
 							AND [scoreDetails].[userId] = <cfqueryparam value = "#session.stLoggedInUser.userId#" cfsqltype = "cf_sql_bigint">
 					</cfquery>
 					<cfif checkScoreExists.recordCount EQ 0>
-						<cfquery name = "insertScore">
+						<cfquery>
 							INSERT INTO [scoreDetails]
 								VALUES (
 								<cfqueryparam value = "#session.stQuizStarts.quizId#" cfsqltype = "cf_sql_bigint">,
@@ -32,6 +32,11 @@ USE: used to perform certain operations after submitting the test by students, s
 					<cfset destroySession() />
 				</cftransaction>
 				<cfreturn true>
+			<cfcatch type = "database">
+			  	<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+				<cfreturn false>
+		  	</cfcatch>
  			<cfcatch type = "any">
 				<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
  				<cfreturn false>
@@ -40,7 +45,7 @@ USE: used to perform certain operations after submitting the test by students, s
 		</cfif>
 	</cffunction>
 	<!---calculate score of each user--->
-	<cffunction name = "calculateScore" access = "public" output = "false" returntype = "Numeric">
+	<cffunction name = "calculateScore" access = "public" output = "false" returntype = "numeric">
 		<cfargument name = "data" required = "true" type = "struct">
 		<cfset var score = 0 />
 		<cftry>
@@ -72,7 +77,7 @@ USE: used to perform certain operations after submitting the test by students, s
 			</cftransaction>
 	  			<cfreturn PrecisionEvaluate((score/totalScore)*100.0)>
 	  	<cfcatch type = "database">
-		  	<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+		  	<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
 			<cfreturn -1>
 	  	</cfcatch>

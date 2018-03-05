@@ -26,8 +26,8 @@ USE: checks editability of a question being edited or not then validates the que
 		<cftry>
 			<cfset validate = validateAllField()>
 			<cfif StructIsEmpty(variables.errorStruct.errorId)>
-				<cfquery name = "update">
-						UPDATE [questionBank]
+				<cfquery>
+					UPDATE [questionBank]
 						SET [questionBank].[question] = <cfqueryparam value = "#url.question#" cfsqltype = "cf_sql_varchar">,
 						[questionBank].[option1] = <cfqueryparam value = "#url.optiona#" cfsqltype = "cf_sql_varchar">,
 						[questionBank].[option2] = <cfqueryparam value = "#url.optionb#" cfsqltype = "cf_sql_varchar">,
@@ -35,14 +35,20 @@ USE: checks editability of a question being edited or not then validates the que
 						[questionBank].[option4] = <cfqueryparam value = "#url.optiond#" cfsqltype = "cf_sql_varchar">,
 						[questionBank].[correctAnswer] = <cfqueryparam value = "#url.answer#" cfsqltype = "cf_sql_varchar">
 						WHERE [questionBank].[questionId] = <cfqueryparam value = "#arguments.questionId#" cfsqltype = "cf_sql_bigint">
-					</cfquery>
-					<cfset variables.errorStruct.errorId.insert ("update", "successfull", true) >
+				</cfquery>
+				<cfset variables.errorStruct.errorId.insert ("update", "successfull", true) >
 				<cfreturn variables.errorStruct>
 			<cfelse>
 				<cfreturn variables.errorStruct>
 			</cfif>
+		<cfcatch type = "database">
+			<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+			<cfset variables.errorStruct.errorId.insert ("update", "fail", true) >
+			<cfreturn variables.errorStruct>
+		</cfcatch>
 		<cfcatch type = "any">
-			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cfset variables.errorStruct.errorId.insert ("update", "fail", true) >
 			<cfreturn variables.errorStruct>
 		</cfcatch>
@@ -52,12 +58,18 @@ USE: checks editability of a question being edited or not then validates the que
 	<cffunction name = "deleteRecord" output = "false" returntype = "boolean" returnformat = "JSON" access = "remote">
 		<cfargument name = "questionId" required = "true" type = "numeric">
 			<cftry>
-				<cfquery name = "deleteRow">
+				<cfquery>
 					DELETE FROM [questionBank]
 		 				 WHERE [questionBank].[questionId] = <cfqueryparam value = "#arguments.questionId#" cfsqltype = "cf_sql_bigint">
 		 		</cfquery>
+		 	<cfcatch type = "database">
+				<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+				<cfreturn false>
+			</cfcatch>
 		 	<cfcatch type = "any">
-			 	<cfreturn false>
+			 	<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cfreturn false>
 		 	</cfcatch>
 		 	</cftry>
 		 		<cfreturn true>
@@ -108,12 +120,18 @@ USE: checks editability of a question being edited or not then validates the que
 		<cfargument name = "questionId" required = "true" type = "numeric">
 		<cfargument name = "quizId" required = "true" type = "numeric">
 		<cftry>
-			<cfquery name = "deleteRow">
+			<cfquery>
 				DELETE FROM [quizQuestion]
 					WHERE [quizQuestion].[quizId] = <cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint">
 					AND [quizQuestion].[questionId] = <cfqueryparam value = "#arguments.questionId#" cfsqltype = "cf_sql_bigint">
 			</cfquery>
+		<cfcatch type = "database">
+			<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+			<cfreturn false>
+		</cfcatch>
 		<cfcatch type = "any">
+			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cfreturn false>
 		</cfcatch>
 		</cftry>

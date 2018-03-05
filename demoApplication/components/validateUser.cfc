@@ -25,14 +25,14 @@ emailid entered to reset password in forgetPassword.cfm--->
 				AND [user].[active] = 1
 			</cfquery>
 		<cfcatch type = "database">
-			<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
 			<cfset local.stStatus.status = "error" />
 			<cfset local.stStatus.message =  "Some unexpected error has occured, Please try again later." />
 			<cfreturn local.stStatus>
 		</cfcatch>
 		<cfcatch type = "any">
-			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cfset local.stStatus.status = "error" />
 			<cfset local.stStatus.message =  "Some unexpected error has occured, Please try again later." />
 			<cfreturn local.stStatus>
@@ -57,7 +57,7 @@ emailid entered to reset password in forgetPassword.cfm--->
 				<cfset var validate = validateEmail(arguments.emailId) />
 				<cfif local.validate.status EQ "success">
 					<cftry>
-						<cfquery name = "updateReset">
+						<cfquery>
 							UPDATE [user] SET [user].[reset] = [user].[reset] + 1
 							WHERE [user].[emailid] = <cfqueryparam value = "#arguments.emailId#" cfsqltype = "cf_sql_varchar">
 						</cfquery>
@@ -70,14 +70,14 @@ emailid entered to reset password in forgetPassword.cfm--->
 							arguments.emailId, getsaltReset.firstName, getsaltReset.salt, getsaltReset.reset) />
 						<cfreturn local.validate >
 					<cfcatch type = "database">
-						<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+						<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 						<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
 						<cfset local.validate.status = "error" />
 						<cfset local.validate.message =  "Some unexpected error has occured, Please try again later." />
 						<cfreturn local.validate>
 					</cfcatch>
 					<cfcatch type = "any">
-						<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+						<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 						<cfset local.validate.status = "error" />
 						<cfset local.validate.message =  "Some unexpected error has occured, Please try again later." />
 						<cfreturn local.validate>

@@ -68,13 +68,20 @@ use to valiadte the new password and conform password and the updating it in db 
 					</cfquery>
 					<cfset var code = Hash(GenerateSecretKey("AES"),"SHA-512" )>
 					<cfset var password = Hash(arguments.passwords & local.code, "SHA-512") />
-					<cfquery name = "updateSaltPassword">
+					<cfquery>
 						UPDATE [user]
-						SET [user].[salt] = '#code#', hashPassword = '#local.password#', active = 1
+						SET [user].[salt] = <cfqueryparam value = '#code#' cfsqltype = "cf_sql_varchar" >,
+						[user].[hashPassword] = <cfqueryparam value = '#local.password#' cfsqltype = "cf_sql_varchar" >,
+						[user].[active] = <cfqueryparam value = "1" cfsqltype = "cf_sql_integer" >
 						WHERE [user].[userId] = <cfqueryparam value="#getUserId.userId#" cfsqltype="cf_sql_bigint"  >
 					</cfquery>
 				</cftransaction>
 				<cfreturn true>
+			<cfcatch type = "database">
+			  	<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+				<cfreturn false>
+		  	</cfcatch>
 			<cfcatch type="any">
 				<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 				<cfreturn false>

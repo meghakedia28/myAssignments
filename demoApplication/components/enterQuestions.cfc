@@ -70,8 +70,8 @@ USE: use for insert questions added by faculty in db after validating it--->
 		<cfargument name = "errorId" required = "true" >
 		<cfif arguments.element EQ ''>
 			<cfset insertErrorStruct(arguments.elementId, arguments.element, arguments.errorId, "You can't leave this empty.") />
-		<cfelseif element.len() LT 3 OR element.len() GT 50>
-			<cfset insertErrorStruct(arguments.elementId, arguments.element, arguments.errorId, "Please enter characters of length between 3 to 50.") />
+		<cfelseif element.len() LT 1 OR element.len() GT 50>
+			<cfset insertErrorStruct(arguments.elementId, arguments.element, arguments.errorId, "Please enter characters of length between 1 to 50.") />
 		</cfif>
 	</cffunction>
 	<!---insertQuestions : use to insert question into db after validations are over--->
@@ -80,7 +80,7 @@ USE: use for insert questions added by faculty in db after validating it--->
 		<cfargument name = "id" required = "true" type = "numeric" >
 		<cftry>
 			<cftransaction>
-				<cfquery name = "questions">
+				<cfquery>
 					INSERT INTO [questionBank]
 					VALUES (
 					<cfqueryparam value = "#data.question#" cfsqltype = "cf_sql_varchar" >,
@@ -93,7 +93,13 @@ USE: use for insert questions added by faculty in db after validating it--->
 				</cfquery>
 				<cfreturn true>
 			</cftransaction>
-			<cfcatch type = "any" >
+			<cfcatch type = "database">
+				<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+				<cfreturn false>
+			</cfcatch>
+			<cfcatch type = "any">
+				<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 				<cfreturn false>
 			</cfcatch>
 		</cftry>

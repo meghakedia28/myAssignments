@@ -91,14 +91,14 @@ USE: use for insert questions added by faculty in db after validating it--->
 					<cfreturn local.stStatus >
 				</cfif>
 			<cfcatch type = "database">
-				<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
 				<cfset local.stStatus.status = "fail" />
 					<cfset local.stStatus.message = "Some unexpected error has occured." />
 					<cfreturn local.stStatus>
 			</cfcatch>
 			<cfcatch type = "any">
-				<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 				<cfset local.stStatus.status = "fail" />
 					<cfset local.stStatus.message = "Some unexpected error has occured." />
 					<cfreturn local.stStatus>
@@ -142,14 +142,14 @@ USE: use for insert questions added by faculty in db after validating it--->
 					</cfif>
 				</cfif>
 			<cfcatch type = "database">
-				<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
 				<cfset local.stStatus.status = "fail" />
 					<cfset local.stStatus.message = "Some unexpected error has occured. Please try again later." />
 					<cfreturn local.stStatus>
 			</cfcatch>
 			<cfcatch type = "any">
-				<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 				<cfset local.stStatus.status = "fail" />
 				<cfset local.stStatus.message = "Some unexpected error has occured. Please try again later." />
 				<cfreturn local.stStatus>
@@ -180,7 +180,7 @@ USE: use for insert questions added by faculty in db after validating it--->
 		<cfargument name = "id" required = "true" type = "numeric" >
 		<cftry>
  			<cftransaction>
-				<cfquery name = "insertQuiz">
+				<cfquery>
 					INSERT INTO [quiz]
 						VALUES (
 						<cfqueryparam value = "#data.quizName#" cfsqltype = "cf_sql_varchar" >,
@@ -198,15 +198,15 @@ USE: use for insert questions added by faculty in db after validating it--->
 							WHERE [name] = <cfqueryparam value = "#data.quizName#" cfsqltype = "cf_sql_varchar" >
 					</cfquery>
 					<cfquery name = "addEndDateTime" >
-						select DATEADD (n, #data.endTime#,'#getEndDateTime.endDateTime#') 'RESULT'
+						SELECT DATEADD (n, #data.endTime#,'#getEndDateTime.endDateTime#') 'RESULT'
 					</cfquery>
-					<cfquery name = "updateEndDateTime">
+					<cfquery>
 						UPDATE [quiz]
 							SET [endDateTime] = <cfqueryparam value = #addEndDateTime.RESULT# cfsqltype = "cf_sql_datetime" >
 							WHERE [quizId] = <cfqueryparam value = "#getQuizId.quizId#" cfsqltype = "cf_sql_bigint">
 					</cfquery>
 					<cfloop list = "#data.questionId#" delimiters = "," index = "ind">
-						<cfquery name = "insertQuizQuestion">
+						<cfquery>
 							INSERT INTO [quizQuestion]
 								VALUES (
 								<cfqueryparam value = "#ind#" cfsqltype = "cf_sql_numeric" >,
@@ -218,9 +218,15 @@ USE: use for insert questions added by faculty in db after validating it--->
 				</cfif>
 					<cfreturn true>
  			</cftransaction>
- 			<cfcatch type = "any" >
- 				<cfreturn false>
- 			</cfcatch>
+ 			<cfcatch type = "database">
+				<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+				<cfreturn false>
+			</cfcatch>
+			<cfcatch type = "any">
+				<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+				<cfreturn false>
+			</cfcatch>
  		</cftry>
 	</cffunction>
 	<!---updateQuiz : used to update the quiz details that is edited by the faculty--->
@@ -232,9 +238,9 @@ USE: use for insert questions added by faculty in db after validating it--->
 			<cftry>
 				<cftransaction>
 					<cfquery name = "addDateTime">
-						select DATEADD (n, #url.endTime#,'#url.startTime#') 'RESULT'
+						SELECT DATEADD (n, #url.endTime#,'#url.startTime#') 'RESULT'
 					</cfquery>
-					<cfquery name = "modifyQuizQuestion">
+					<cfquery>
 						UPDATE [quiz]
 							SET [quiz].[name] = <cfqueryparam value = "#url.quizName#" cfsqltype = "cf_sql_varchar">,
 							[quiz].[startDateTime] = <cfqueryparam value = "#url.startTime#" cfsqltype = "cf_sql_datetime">,
@@ -246,6 +252,12 @@ USE: use for insert questions added by faculty in db after validating it--->
 					<cfset variables.insertionStruct.message = "Quiz has been successfully updated">
 					<cfreturn variables.insertionStruct>
 				</cftransaction>
+				<cfcatch type = "database">
+					<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+					<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+					<cfset variables.insertionStruct.successfull = "false">
+					<cfset variables.insertionStruct.message = "Error occured while insertion of data">
+				</cfcatch>
 				<cfcatch type = "any">
 					<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 					<cfset variables.insertionStruct.successfull = "false">
@@ -268,11 +280,11 @@ USE: use for insert questions added by faculty in db after validating it--->
 							FROM [quiz] WHERE [quiz].[quizId] = <cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint">
 					</cfquery>
 					<cfif check.startDateTime GT now() >
-						<cfquery name = "deleteQuizQuestions">
+						<cfquery>
 							DELETE FROM [quizQuestion]
 								WHERE [quizQuestion].[quizId] = <cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint">
 						</cfquery>
-						<cfquery name = "deleteQuizDetails">
+						<cfquery>
 							DELETE FROM [quiz]
 								WHERE [quiz].[quizId] = <cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint">
 								AND [quiz].[userId] = <cfqueryparam value = "#arguments.userId#" cfsqltype = "cf_sql_bigint">
@@ -281,9 +293,15 @@ USE: use for insert questions added by faculty in db after validating it--->
  						<cfreturn false>
  					</cfif>
  				</cftransaction>
- 			<cfcatch type = "any">
- 				<cfreturn false>
- 			</cfcatch>
+ 				<cfcatch type = "database">
+					<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+					<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+					<cfreturn false>
+				</cfcatch>
+				<cfcatch type = "any">
+					<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+					<cfreturn false>
+				</cfcatch>
  			</cftry>
 		<cfreturn true>
 	</cffunction>
@@ -294,16 +312,22 @@ USE: use for insert questions added by faculty in db after validating it--->
 		<cfset questionsList = url.questionId>
 			<cftry>
 				<cfloop list = "#questionsList#" delimiters = "," index = "ind">
-					<cfquery name = "insertQuizQuestion">
+					<cfquery>
 						INSERT INTO [quizQuestion]
 							VALUES (
 							<cfqueryparam value = "#ind#" cfsqltype = "cf_sql_numeric" >,
 							<cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint">)
 					</cfquery>
 				</cfloop>
-			<cfcatch type = "any">
- 				<cfreturn false>
- 			</cfcatch>
+				<cfcatch type = "database">
+					<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+					<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
+					<cfreturn false>
+				</cfcatch>
+				<cfcatch type = "any">
+					<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+					<cfreturn false>
+				</cfcatch>
  			</cftry>
 			<cfreturn true>
 	</cffunction>
