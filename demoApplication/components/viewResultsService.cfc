@@ -19,8 +19,8 @@ USE: used to get the results for a perticular student and their ranks --->
 		<cfreturn getResults>
 	</cffunction>
 	<!---getRanks : used to get the rank of a student for all the test--->
-	<cffunction name = "getRanks" output = "false" access = "public" returntype = "Numeric">
-		<cfargument name = "quizID" required = "true" type = "numeric">
+	<cffunction name = "getRanks" output = "false" access = "public" returntype = "numeric">
+		<cfargument name = "quizId" required = "true" type = "numeric">
 		<cfargument name = "Id" required = "true" type = "numeric">
 		<cftry>
 			<cfquery name = "fetchRanks">
@@ -30,15 +30,15 @@ USE: used to get the results for a perticular student and their ranks --->
 			</cfquery>
 			<cfquery dbtype = "query" name = "getSingleRank" >
 				SELECT RANK FROM fetchRanks WHERE userId = <cfqueryparam value = "#arguments.Id#" cfsqltype = "cf_sql_bigint" />
-				AND quizId = <cfqueryparam value = "#arguments.quizID#" cfsqltype = "cf_sql_bigint" >
+				AND quizId = <cfqueryparam value = "#arguments.quizId#" cfsqltype = "cf_sql_bigint" >
 			</cfquery>
 		<cfcatch type = "database">
-			<cflog file="dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
 			<cfreturn 0>
 		</cfcatch>
 		<cfcatch type = "any">
-			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
+			<cflog file = "error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cfreturn 0>
 		</cfcatch>
 		</cftry>

@@ -5,7 +5,7 @@ USE: used to get the list of quiz and quiz questions--->
 
 <cfcomponent output = "false">
 	<!---getQuizlist : used to get the list of all quiz set by a faculty--->
-	<cffunction name = "getQuizlist" output = "false" access = "remote" returntype = "Query">
+	<cffunction name = "getQuizlist" output = "false" access = "remote" returntype = "query">
 		<cfargument name = "userId" required = "true" type = "numeric">
 		<cfquery name = "quizList">
 			SELECT * FROM [quiz] WHERE [quiz].[userId] = <cfqueryparam
