@@ -68,8 +68,7 @@ and then formate it to get displayed to the user in datatable using server side 
 		<cfset lengthvalue = "length" />
 		<cfset dataArray = ArrayNew(2)>
 		<cfset i = 1>
-		<cfif NOT(structKeyExists(url,'my'))>
-			<cfloop query = #arguments.flist# startRow = "#val(URL[startvalue])+1#" endRow = "#val(URL[startvalue]) + URL[lengthvalue]#" >
+		<cfloop query = #arguments.flist# startRow = "#val(URL[startvalue])+1#" endRow = "#val(URL[startvalue]) + URL[lengthvalue]#" >
 					<cfset dataArray[i][1] = encodeForHtml(flist.name)>
 					<cfset dataArray[i][2] = encodeForHtml(flist.firstName & " " & flist.lastName)>
 					<cfset dataArray[i][3] = encodeForHtml(flist.emailid)>
@@ -82,21 +81,6 @@ and then formate it to get displayed to the user in datatable using server side 
 					<cfset dataArray[i][6] = "<button type = 'button' class = 'btn btn-success btn-md' id = 'edit' name = 'edit' data-toggle = 'modal' data-target = '##rowEdit' data-id = '#flist.userId#'><i class = 'glyphicon glyphicon-pencil'>&nbsp</i>edit</button>" />
 				<cfset i = i+1 />
 	 		</cfloop>
-	 	<cfelse>
-	 		<cfloop query = #arguments.flist# >
-					<cfset dataArray[i][1] = encodeForHtml(flist.name)>
-					<cfset dataArray[i][2] = encodeForHtml(flist.firstName & " " & flist.lastName)>
-					<cfset dataArray[i][3] = encodeForHtml(flist.emailid)>
-					<cfif flist.active EQ 1 >
-						<cfset dataArray[i][4] = "true" />
-					<cfelse>
-						<cfset dataArray[i][4] = "false" />
-					</cfif>
-					<cfset dataArray[i][5] = encodeForHtml(flist.contactNumber)>
-					<cfset dataArray[i][6] = "<button type = 'button' class = 'btn btn-success btn-md' id = 'edit' name = 'edit' data-toggle = 'modal' data-target = '##rowEdit' data-id = '#flist.userId#'><i class = 'glyphicon glyphicon-pencil'>&nbsp</i>edit</button>" />
-				<cfset i = i+1 />
-	 		</cfloop>
-	 	</cfif>
 		<cfreturn dataArray>
 	</cffunction>
 	<!---populateData : is used to populated the data in modal--->
