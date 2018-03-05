@@ -2,8 +2,9 @@ var resultTable,filter, filtereData;
 $(document).ready(function(){
 	var userId = $('#userId').val();
 	resultTable = $('#result').DataTable({
+		"order": [],
         "ajax": {
-			"url" : "../components/facultyResultSet.cfc?method=getResultSet",
+			"url" : "../components/facultyResultSet.cfc?method=formatResultSet",
 			"data" :{
 				userId : userId
 					}
@@ -31,7 +32,7 @@ $(document).ready(function(){
 		"lengthChange": false,
 		"paging": false,
 		"ajax": {
-			"url" : "../components/facultyResultSet.cfc?method=getListOfQuiz",
+			"url" : "../components/facultyResultSet.cfc?method=formatListOfQuiz",
 			"data" :{
 				userId : userId
 					}
@@ -52,6 +53,7 @@ $(document).ready(function(){
 		postData = postData.join(","),
 		resultTable.destroy();
 		resultTable = $('#result').DataTable({
+			"order": [],
 			"ajax": {
 				"url" : "../components/facultyResultSet.cfc?method=filterOnQuiz",
 				"data" : {
@@ -77,4 +79,3 @@ $(document).ready(function(){
 					]
 				}).container().appendTo($('#buttons'));	
 			}
-	

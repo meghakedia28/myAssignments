@@ -7,7 +7,7 @@
 <cfelseif session.stLoggedInUser.roleId NEQ 2>
 	<cflocation url = "../common/loginPage.cfm?noaccess">
 </cfif>
-<cfset quiz = createObject("component","demoApplication.components/viewQuizListService").getQuizlist(#session.stLoggedInUser.UserId#) />
+<cfset stuents = createObject("component","demoApplication.components/facultyResultSet").individualStudentResultSet(url.Id, session.stLoggedInUser.UserId) />
 <cfset quizList = ValueList(quiz.quizId,",") />
 <cfif NOT (structKeyExists(url,"Id")) || NOT (listFindNoCase(quizList, url.Id))>
 	<cflocation url = "viewQuiz.cfm">
@@ -142,6 +142,6 @@
 		<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 		<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-  	   	<script type = "text/javascript" src = "../js/viewQuizQuestions.js"></script>
+  	   	<script type = "text/javascript" src = "../js/viewStudentsProfile.js"></script>
 	</tags:facultyFront>
 </cfif>

@@ -41,7 +41,7 @@
 								<td>#results.emailid#</td>
 								<td>#results.contactNumber#</td>
 								<cfset resultSet = createObject("component","demoApplication.components.facultyResultSet") />
-								<cfset marks = resultSet.individualStudentResultSet(#results.userId#, #session.stLoggedInUser.userId#)>
+								<cfset marks = resultSet.individualStudentResultSet(results.userId, session.stLoggedInUser.userId)>
 								<cfset studentExists = createObject("component","demoApplication.components.getUserDetailsService").getUserDetailsById(#results.userId#) />
 									<td><button type = "button" class = "btn btn-success btn-md" id = "result_#userId#"
 										name = "result"  data-toggle = "modal" data-target = "###userId#" >view all tests scores</button>

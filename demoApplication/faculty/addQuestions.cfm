@@ -76,7 +76,7 @@
 				</div><!---row--->
 			</div><!---container--->
 		</main>
-		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 	<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
@@ -88,4 +88,4 @@
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 	<script type = "text/javascript" src = "../js/addQuestions.js"></script>
 	<script type = "text/javascript" src = "../js/validateQuestions.js"></script>
-	</tags:facultyFront>
+</tags:facultyFront>

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$("#questionsForm").submit(function(event){
-		event.preventDefault();
+		 event.preventDefault();
 		 var checkQuestion = validate('#question');
 		 var checkOptiona = validate('#optiona');
 		 var checkOptionb = validate('#optionb');
