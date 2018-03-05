@@ -84,7 +84,7 @@
 					</cfform>
 						<div class = "field no-label">
 							<div class = "control  text-center">
-									<span id = "startTestButton">&nbsp;</span>
+								<span id = "startTestButton">&nbsp;</span>
 							</div>
 						</div>
 					</div> <!--- .boxed-section .request-form --->
