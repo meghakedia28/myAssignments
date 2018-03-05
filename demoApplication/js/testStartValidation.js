@@ -9,8 +9,7 @@ $(document).ready(function(){
 	var startTime = new Date($('#startTime').val()).getTime();
 	var endTime = new Date($('#endTime').val()).getTime();
 	var timer  = (endTime - serverTime)/1000 ;
-	var t;
-    timedCount();
+	timedCount();
     function timedCount()
 	{
     	var hours = parseInt( timer / 3600 ) % 24;
@@ -26,13 +25,12 @@ $(document).ready(function(){
 			
 		}
         timer = timer - 1;
-        t = setTimeout(function()
+        setTimeout(function()
 		{
 		 timedCount()
 		},
 		1000);
     } 
-
     function setConfirmUnload(on) {
         window.onbeforeunload = (on) ? unloadMessage : null;
    }
@@ -40,9 +38,9 @@ $(document).ready(function(){
         return 'You have started giving the test. If you navigate away from this page the changes made will be lost.';
    }
     $(':input').bind(
-            'change', function() { setConfirmUnload(true); });
-    
-	$("#startTest").submit(function(event) {
+            'change', function() { setConfirmUnload(true); 
+    });
+    $("#startTest").submit(function(event) {
 		event.preventDefault();
 	 	setConfirmUnload(false);
 	 	 if(timer == 0 || confirm("Do you really want to submit the test?")){ 
@@ -51,7 +49,7 @@ $(document).ready(function(){
 				data : {},
 				success : function(result) {
 					var obj = $.parseJSON(result);
-					if (obj == true){
+					if (obj){
 						location.replace("tests.cfm?submitEnd");
 					}
 					else{

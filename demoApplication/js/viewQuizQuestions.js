@@ -1,36 +1,36 @@
-var questionTable, addQuestionTable, quizId;
+var questionTable, addQuestionTable;
+var quizId = location.search.split('Id=')[1];
 $(document).ready(function(){
-	quizId = location.search.split('Id=')[1];
 	var userId = $('#userId').val();
 	questionTable = $('#questions').DataTable({
 		"lengthMenu": [5, 10, 25, 50, 75, 100 ],
 		"pageLength": 5,
 		"ajax": ({
-			"url" : "../components/viewQuizListService.cfc?method=formatQuizQuestionList",
-			"data" :{
+			"url": "../components/viewQuizListService.cfc?method=formatQuizQuestionList",
+			"data":{
 				quizId: quizId,
 				userId: userId
 			}
 		})
 	});
 	var buttons = new $.fn.dataTable.Buttons(questionTable, {
-		buttons: [
-		          {
-				    extend: 'csvHtml5',
-				    title: 'List of quiz questions',
-				    exportOptions: {
-				    columns: [ 0, 1, 2, 3, 4, 5]
-				   }
-				},
-				{
-					extend: 'pdfHtml5',
-					title: 'List of quiz questions',
-				    exportOptions: {
-				    columns: [ 0, 1, 2, 3, 4, 5]
-				  }
+	buttons: [
+	          {
+			    extend: 'csvHtml5',
+			    title: 'List of quiz questions',
+			    exportOptions: {
+			    columns: [ 0, 1, 2, 3, 4, 5]
 			   }
-			]
-		}).container().appendTo($('#buttons'));
+			},
+			{
+				extend: 'pdfHtml5',
+				title: 'List of quiz questions',
+			    exportOptions: {
+			    columns: [ 0, 1, 2, 3, 4, 5]
+			  }
+		   }
+		]
+	}).container().appendTo($('#buttons'));
 		$('#rowDelete').on('show.bs.modal', function (event) {
 			 var button = $(event.relatedTarget) 
 			 var id = button.data('id') 
@@ -42,22 +42,21 @@ $(document).ready(function(){
 			"ajax": ({
 				"url" : "../components/getQuestionsService.cfc?method=formatQuizQuestion",
 				"data" :{
-					userId: userId,
-					quizId:quizId
+					userId : userId,
+					quizId : quizId
 				}
 			})
 		});
 	});
 function deleteRow(data) {
 	event.preventDefault();
-	var QustnId = $(data).val();
-	var quizId = location.search.split('Id=')[1];
+	var questionId = $(data).val();
 	if  (questionTable.rows().count() > 1){
 		$('#error_questions').text("");
 		$.ajax({
 				url : "../components/editDeleteQuestionsService.cfc?method=deleteQuizQuestion",
 				data : {
-					questionId : QustnId,
+					questionId : questionId,
 					quizId : quizId
 				},
 				success : function(result) {
