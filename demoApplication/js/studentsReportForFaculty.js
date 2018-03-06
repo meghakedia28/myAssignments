@@ -2,7 +2,8 @@ $.noConflict();
 jQuery(document).ready(function($) {
 	var scoreId = location.search.split('Id=')[1];
 	var reportTable = $('#studentsReportTable').DataTable({
-	     "ajax": {
+		"order": [], 
+		"ajax": {
 			"url" : "../components/facultyResultSet.cfc?method=generateReport",
 			"data" :{
 				scoreId : scoreId

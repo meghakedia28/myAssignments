@@ -2,7 +2,12 @@ var listOfFacultyTable;
 $(document).ready(function() {
 	var userid = $('#id').val() ;
 	 listOfFacultyTable = $('#listOfFaculties').DataTable({
-        "ajax": {
+		 "columnDefs": [ {
+		      "targets"  : [5],
+		      "orderable": false
+		    }],
+		 "order": [],
+		 "ajax": {
 			"url" : "../components/getUserDetailsService.cfc?method=getFacultyList",
 			"data" :{}
     		}
@@ -43,24 +48,24 @@ function openEditModel(html){
 function validate(ref){
 	$("#submitEditForm").click(function(){
 		event.preventDefault();
-		//var valid = validateAll();
-		if(true){
+		var valid = validateAll();
+		if(valid){
 			submitForm();
 		}
 	});
-//	$("input").focus(function(){
-//		$(this).css("border","");
-//		$(this).next('.error-msg').text("");
-//	});
-//	$("#firstName, #lastName").focusout(function(){
-//		wordCheck(this,$(this).next('.error-msg'));
-//	});
-//	$("#contactNumber").focusout(function(){
-//		numberCheck('#contactNumber','#error_contactnumber');
-//	});
-//	$("#subject").focusout(function(){
-//		subjectCheck('#subject','#error_subject');
-//	});
+	$("input").focus(function(){
+		$(this).css("border","");
+		$(this).next('.error-msg').text("");
+	});
+	$("#firstName, #lastName").focusout(function(){
+		wordCheck(this,$(this).next('.error-msg'));
+	});
+	$("#contactNumber").focusout(function(){
+		numberCheck('#contactNumber','#error_contactnumber');
+	});
+	$("#subject").focusout(function(){
+		subjectCheck('#subject','#error_subject');
+	});
 }
 function submitForm(){
 	event.preventDefault();

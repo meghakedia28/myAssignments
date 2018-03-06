@@ -5,6 +5,11 @@ $(document).ready(function(){
 	questionTable = $('#questions').DataTable({
 		"lengthMenu": [5, 10, 25, 50, 75, 100 ],
 		"pageLength": 5,
+		"columnDefs": [ {
+		      "targets"  : [6],
+		      "orderable": false
+		    }],
+		"order": [],
 		"ajax": ({
 			"url": "../components/viewQuizListService.cfc?method=formatQuizQuestionList",
 			"data":{
@@ -39,6 +44,11 @@ $(document).ready(function(){
 		addQuestionTable = $('#addQuestions').DataTable({
 			"lengthMenu": [5, 10, 25, 50, 75, 100 ],
 			"pageLength": 5,
+			"columnDefs": [ {
+			      "targets"  : [0],
+			      "orderable": false
+			    }],
+			"order": [],
 			"ajax": ({
 				"url" : "../components/getQuestionsService.cfc?method=formatQuizQuestion",
 				"data" :{

@@ -98,7 +98,12 @@
 <script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#allResult').DataTable({});
+		$('#allResult').DataTable({
+			"columnDefs": [ {
+		      "targets"  : [3],
+		      "orderable": false
+		    }]
+		});
 		$('#result').DataTable();
 	});
 </script>

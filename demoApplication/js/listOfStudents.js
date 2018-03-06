@@ -1,32 +1,32 @@
-var table;
+var listOfStudentsTable;
 $(document).ready(function() {
 	var userid = $('#id').val() ;
-		 table = $('#listOfStudents').DataTable({
-            "processing": true,
-       		"serverSide": true,
-    		"ajax": {
-    			"url" : "../components/listOfStudentsService.cfc?method=getStudentsList",
-    			"data" :{}
-    		}
-		});
-		 var buttons = new $.fn.dataTable.Buttons(table, {
-	    		buttons: [
-	    		          {
-						    extend: 'csvHtml5',
-						    title: 'List of students',
-						    exportOptions: {
-						    columns: [ 0, 1, 2, 3]
-						   }
-						},
-						{
-							extend: 'pdfHtml5',
-							title: 'List of students',
-						    exportOptions: {
-						    columns: [ 0, 1, 2, 3]
-						  }
-					   }
-					]
-	    		}).container().appendTo($('#buttons'));
+	listOfStudentsTable = $('#listOfStudents').DataTable({
+        "processing": true,
+   		"serverSide": true,
+		"ajax": {
+			"url" : "../components/listOfStudentsService.cfc?method=getStudentsList",
+			"data" :{}
+		}
+	});
+	var buttons = new $.fn.dataTable.Buttons(listOfStudentsTable, {
+	buttons: [
+	          {
+			    extend: 'csvHtml5',
+			    title: 'List of students',
+			    exportOptions: {
+			    columns: [ 0, 1, 2, 3]
+			   }
+			},
+			{
+				extend: 'pdfHtml5',
+				title: 'List of students',
+			    exportOptions: {
+			    columns: [ 0, 1, 2, 3]
+			  }
+		   }
+		]
+	}).container().appendTo($('#buttons'));
 });
 $(document).on('click','#edit', function(e){
 	e.preventDefault();
@@ -70,10 +70,10 @@ function submitForm(){
 				success : function(result){
 					var obj = $.parseJSON(result);
 					if (obj.SUCCESSFULL != null){						
-						if(obj.SUCCESSFULL == true){
+						if(obj.SUCCESSFULL){
 							$(".error-msg").text("");
 							$('.close').click(); 
-							table.ajax.reload();
+							listOfStudentsTable.ajax.reload();
 						}
 					}
 					if (obj.ERRORID != null){

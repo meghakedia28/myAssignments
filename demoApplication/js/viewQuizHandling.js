@@ -7,7 +7,12 @@ jQuery(document).ready(function($) {
 		 minDate:0
 	});
 	quizTable = $('#quiz').DataTable({
-         "ajax": {
+		"columnDefs": [ {
+		      "targets"  : [4],
+		      "orderable": false
+		    }],
+		"order": [], 
+		"ajax": {
  			"url" : "../components/viewQuizListService.cfc?method=formatQuizList",
  			"data" :{
  				userId : userId
@@ -107,8 +112,7 @@ jQuery(document).ready(function($) {
  		$('#rowEdit').on('show.bs.modal', function (event) {
  			  $('.error-msg').text("");
  			  $("input,select").css("border","");
- 			  var button = $(event.relatedTarget) 
- 			  var quizId = button.data('id') 
+ 			  var quizId = $(event.relatedTarget).data('id');
  			  var userId = $('#userId').val();
  			 $.ajax({
  				url: "../components/getQuizDetails.cfc?method=quizDetails",
@@ -145,8 +149,17 @@ jQuery(document).ready(function($) {
  				success : function(result) {
  					if (result){
  						$('.close').click(); 
- 						quizTable.ajax.reload();
- 						return true;
+ 						jQuery.confirm({
+		                        title: 'Success',
+		                        content: 'The quiz has been deleted.',
+		                        buttons: {
+		                            Ok : function () {
+		                            	$(".error-msg").text("");
+		        						quizTable.ajax.reload();
+		        						return true;
+		                            }
+		                        }
+							});
  					}
 					else {
 						$.alert({
@@ -176,12 +189,20 @@ jQuery(document).ready(function($) {
  						var obj = $.parseJSON(result);
  						if (obj.SUCCESSFULL != null && obj.SUCCESSFULL){
  							$('.close').click(); 
- 							quizTable.ajax.reload();
- 							$(".error-msg").text("");
- 							return true;
+ 							jQuery.confirm({
+ 		                        title: 'Success',
+ 		                        content: 'The quiz has been updated.',
+ 		                        buttons: {
+ 		                            Ok : function () {
+ 		                            	$(".error-msg").text("");
+ 		        						quizTable.ajax.reload();
+ 		        						return true;
+ 		                            }
+ 		                        }
+ 							});
  						}
  						else if (obj.SUCCESSFULL != null && obj.SUCCESSFULL == false){
- 							$.alert({
+ 							jQuery.alert({
  	                            title: 'Error',
  	                            content: 'Quiz has not been updated, please try again later.'
  	                        });

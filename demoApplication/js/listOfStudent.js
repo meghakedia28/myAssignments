@@ -2,7 +2,12 @@ var listOfStudentTable;
 $(document).ready(function() {
 	var userid = $('#id').val() ;
 	 listOfStudentTable = $('#listOfStudents').DataTable({
-		"ajax": {
+		 "columnDefs": [ {
+		      "targets"  : [4],
+		      "orderable": false
+		    }],
+		 "order": [],
+		 "ajax": {
 			"url" : "../components/getUserDetailsService.cfc?method=getStudentsList",
 			"data" :{}
     		}

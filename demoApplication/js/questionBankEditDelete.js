@@ -2,6 +2,11 @@ var questionTable;
 $(document).ready(function(){
 	var userId = $('#userId').val();
 	questionTable = $("#questions").DataTable({
+		"columnDefs": [ {
+		      "targets"  : [6],
+		      "orderable": false
+		    }],
+		 "order": [0, "desc"],
 		"ajax": {
 			url : "../components/getQuestionsService.cfc?method=viewQuestionBank",
 			data :{
@@ -72,13 +77,22 @@ function deleteRow(data) {
 			success : function(result) {
 				if (result){
 					$('.close').click(); 
-					questionTable.ajax.reload();
-					return true;
+					$.confirm({
+                        title: 'Success',
+                        content: 'The question has been deleted.',
+                        buttons: {
+                            Ok : function () {
+                            	$(".error-msg").text("");
+        						questionTable.ajax.reload();
+        						return true;
+                            }
+                        }
+					});
 				}
 				else {
 					$.alert({
 					    title: 'Alert!',
-					    content: 'data has not be deleted, please try agin later.',
+					    content: 'Data has not be deleted, please try agin later.',
 					});
 					return false;
 				}
@@ -112,9 +126,17 @@ function updateRow(data){
 					var obj = $.parseJSON(result);
 					if (obj.ERRORID.update = 'successfull'){
 						$('.close').click(); 
-						questionTable.ajax.reload();
-						$(".error-msg").text("");
-						return true;
+						$.confirm({
+                            title: 'Success',
+                            content: 'The question has been updated successfully.',
+                            buttons: {
+                                Ok : function () {
+                                	$(".error-msg").text("");
+            						questionTable.ajax.reload();
+            						return true;
+                                }
+                            }
+						});
 					}
 					else if (obj.ERRORID.update = 'fail'){
 						$.confirm({

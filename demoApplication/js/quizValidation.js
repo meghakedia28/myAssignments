@@ -1,6 +1,11 @@
 jQuery(document).ready(function($){
 	var id = $('#userId').val();
 	var table = $("#questions").DataTable({
+		"columnDefs": [ {
+		      "targets"  : [0],
+		      "orderable": false
+		    }],
+		"order": [],
 		"ajax": {
 			url : "../components/getQuestionsService.cfc?method=formatQuizQuestion",
 			data :{
