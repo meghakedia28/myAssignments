@@ -77,9 +77,8 @@ USE : validate the user and do-login and do-logout the user , maintaining the se
 		<cfcatch type = "database">
 			<cflog file = "dbErrors" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
 			<cflog file = "dbErrors" application = "yes" type = "error" text = "#cfcatch.queryError#" >
-			<cfset local.stStatus.status = "error" />
-			<cfset local.stStatus.message =  "Some unexpected error has occured, Please try again later." />
-			<cfreturn local.stStatus>
+			<cfset local.isUserLoggedIn = false />
+			<cfreturn local.isUserLoggedIn>
 		</cfcatch>
 		<cfcatch type = "any">
 			<cflog file="error" text = "#cfcatch.message# #cfcatch.detail# #cfcatch.ExtendedInfo#" type = "Error" application = "yes">
