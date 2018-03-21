@@ -1,13 +1,13 @@
 ﻿<cfcomponent output="false" extends="coldbox.system.EventHandler">
 
 	<!--- Default Action --->
-	<cffunction name="index" returntype="void" output="false" hint="My main event">
+	<cffunction name="loginPage" returntype="void" output="false" hint="My main event">
 		<cfargument name="event">
 		<cfargument name="rc">
 		<cfargument name="prc">
 
 		<cfset prc.welcomeMessage = "Welcome to ColdBox!">
-		<cfset event.setView("main/index")>
+		<cfset event.setView("common/loginPage")>
 	</cffunction>
 
 	<!--- Do Something Action --->
@@ -16,7 +16,7 @@
 		<cfargument name="rc">
 		<cfargument name="prc">
 
-		<cfset relocate( "main.index" )>
+		<cfset relocate( "common.loginPage" )>
 	</cffunction>
 
 <!------------------------------------------- GLOBAL IMPLICIT EVENTS ONLY ------------------------------------------>

@@ -3,7 +3,7 @@
 */
 component extends="coldbox.system.EventHandler"{
 
-	property name = "authen" inject = "id:authen";
+	property name = "authentication" inject = "id:authentication";
 	// OPTIONAL HANDLER PROPERTIES
 	this.prehandler_only 	= "";
 	this.prehandler_except 	= "";
@@ -37,12 +37,12 @@ component extends="coldbox.system.EventHandler"{
 	*/
 	function loginPage( event, rc, prc ){
 		if (structKeyExists(url,"logOut")){
-			authen.doLogout();
+			authentication.doLogout();
 		}
 		if (structkeyExists(form,"submitLogin")){
-			prc.aErrorMessages = authen.userValidation(rc.email,rc.password);
+			prc.aErrorMessages = authentication.userValidation(rc.email,rc.password);
 			if (ArrayisEmpty(prc.aErrorMessages)){
-				prc.isUserLoggedIn = authen.doLogin(rc.email, rc.password);
+				prc.isUserLoggedIn = authentication.doLogin(rc.email, rc.password);
 			}
 		}
 		event.setView( view = "common/loginPage", layout = "funcky" );

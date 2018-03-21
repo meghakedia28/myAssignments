@@ -35,28 +35,28 @@ component extends="coldbox.system.EventHandler"{
 	* home
 	*/
 	function home( event, rc, prc ){
-		event.setView( "student/home" );
+		event.setView(view = "student/home", layout = "studentFront" );
 	}
 
 	/**
 	* tests
 	*/
 	function tests( event, rc, prc ){
-		event.setView( "student/tests" );
+		event.setView( view = "student/tests", layout = "studentFront" );
 	}
 
 	/**
 	* testStart
 	*/
 	function testStart( event, rc, prc ){
-		event.setView( "student/testStart" );
+		event.setView( view = "student/testStart", layout = "studentFront" );
 	}
 
 	/**
 	* results
 	*/
 	function results( event, rc, prc ){
-		event.setView( "student/results" );
+		event.setView( view = "student/results", layout = "studentFront" );
 	}
 
 
