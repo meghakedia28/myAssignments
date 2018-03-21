@@ -5,7 +5,9 @@
 <head>
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
   	<title>Login Form</title>
-	<link rel = "stylesheet" href = "../includes/css/logInStyle.css">
+	<cfoutput>
+	<link rel = "stylesheet" href = "#base#/includes/css/logInStyle.css">
+	</cfoutput>
 </head>
 	<body>
 		<div class = "login">
@@ -58,7 +60,9 @@
 							<input type = "password" class = "login-field" id = "password" name = "password" placeholder = "Password" >
 						</div>
 						<div>
-							<a href = "forgetPassword.cfm">forgotten password?</a>
+							<cfoutput>
+								<a href = "#event.buildLink( 'common.forgetPassword' )#">forgotten password?</a>
+							</cfoutput>
 						</div>
 						<button class = "btn btn-primary btn-large btn-block" id = "submitLogin" name = "submitLogin" type = "submit">Login</button>
 					</cfif>
