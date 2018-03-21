@@ -51,7 +51,15 @@ Description :
 		};
 
 		// Map Bindings below
-		map("authen").to("models.common.authentication");
+		map("authentication").to("models.common.authentication");
+		map("questionsService").to("models.faculty.enterQuestions");
+		map("viewQuestions").to("models.faculty.getQuestionsService");
+		map("modifyQuestionService").to("models.faculty.modifyQuestionService");
+		map("quizService").to("models.faculty.setQuizService");
+		map("resultService").to ("models.faculty.resultService");
+		map("userDetailsService").to("models.common.userDetailsService");
+		map("userValidationService").to("models.admin.addUserValidationService");
+		map("enterDataService").to("models.admin.enterDataService");
 	}
 </cfscript>
 </cfcomponent>
