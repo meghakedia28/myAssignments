@@ -4,12 +4,14 @@
 		<meta charset = "UTF-8">
 		<meta http-equiv = "X-UA-Compatible" content = "IE = edge">
 		<meta name = "viewport" content = "width = device-width, initial-scale = 1.0,maximum-scale = 1">
-
+		<cfset base = "https://172.16.9.18/demoApp">
 		<title>St. Joseph's High School</title>
 		<!-- Loading third party fonts -->
-		<link href = "/fonts/font-awesome.min.css" rel = "stylesheet" type = "text/css">
+		<cfoutput>
+		<link href = "#base#/includes/fonts/font-awesome.min.css" rel = "stylesheet" type = "text/css">
 		<!-- Loading main css file -->
-		<link rel = "stylesheet" href = "../css/style.css">
+		<link rel = "stylesheet" href = "#base#/includes/css/style.css">
+		</cfoutput>
  		<!--[if lt IE 9]>
 		<script src = "js/ie-support/html5.js"></script>
 		<script src = "js/ie-support/respond.js"></script>
@@ -24,26 +26,30 @@
 				<div class = "primary-header">
 					<div class = "container">
 						<a href = "home.cfm" id = "branding">
-							<img src = "/images/logo.png" alt = "Lincoln high School">
+							<cfoutput>
+							<img src = "#base#/includes/images/logo.png" alt = "Lincoln high School">
+							</cfoutput>
 							<h1 class = "site-title">St. Joseph's High School</h1>
 						</a> <!-- #branding -->
 						<div class = "main-navigation">
 							<button type = "button" class = "menu-toggle"><i class = "fa fa-bars"></i></button>
 							<ul class = "menu">
-								<li class = "menu-item"><a href = "home.cfm">Home</a></li>
-								<li class = "menu-item dropbtn"><a href = "#">Faculties</a>
+							<cfoutput>
+								<li class = "menu-item"><a href = "#event.buildLink( 'faculty.home' )#">Home</a></li>
+								<li class = "menu-item dropbtn"><a href = "##">Faculties</a>
 									<ul class = "dropdown-content">
-									   	 <li class = "dropdown"><a href = "addFaculties.cfm">Add faculty</a> </li>
-									     <li class = "dropdown"><a href = "listOfFaculties.cfm">Faculty list</a> </li>
+									   	 <li class = "dropdown"><a href = "#event.buildLink( 'admin.addFaculties' )#">Add faculty</a> </li>
+									     <li class = "dropdown"><a href = "#event.buildLink( 'admin.viewFaculties' )#">Faculty list</a> </li>
 									 </ul>
 								</li>
-								<li class = "menu-item dropbtn"><a href = "#">Students</a>
+								<li class = "menu-item dropbtn"><a href = "##">Students</a>
 									<ul class = "dropdown-content">
-									   	 <li class = "dropdown"><a href = "addStudents.cfm">Add Students</a> </li>
-									     <li class = "dropdown"><a href = "listOfStudents.cfm">Student list</a> </li>
+									   	 <li class = "dropdown"><a href = "#event.buildLink( 'admin.addStudents' )#">Add Students</a> </li>
+									     <li class = "dropdown"><a href = "#event.buildLink( 'admin.viewStudents' )#">Student list</a> </li>
 									 </ul>
 								</li>
-								<li class = "menu-item"><a href = "../common/loginPage.cfm?logout">LogOut</a></li>
+								<li class = "menu-item"><a href = "#event.buildLink( 'common.loginPage?logout' )#">LogOut</a></li>
+							</cfoutput>
 							</ul> <!-- .menu -->
 						</div> <!-- .main-navigation -->
 						<div class = "mobile-navigation"></div>
@@ -86,12 +92,12 @@
 							<h3 class = "widget-title">Featured students</h3>
 							<ul class = "student-list">
 								<li><a href = "#">
-										<img src = "../dummy/student-sm-1.jpg" alt = "" class = "avatar">
+										<img src = "#base#/includes/images/student-sm-1.jpg" alt = "" class = "avatar">
 										<span class = "fn">Sarah Branson</span>
 										<span class = "average">Average: 4,9</span>
 									</a></li>
 								<li><a href = "#">
-										<img src = "../dummy/student-sm-2.jpg" alt = "" class = "avatar">
+										<img src = "#base#/includes/images/student-sm-1.jpg" alt = "" class = "avatar">
 										<span class = "fn">Dorothy Smith</span>
 										<span class = "average">Average: 4,9</span>
 									</a></li>
