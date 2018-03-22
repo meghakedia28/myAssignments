@@ -28,7 +28,8 @@ component singleton = "true" accessors = "true"{
 		var result = local.queryService.execute(sql = "SELECT questionId,question,option1,option2,option3,option4,
 			correctAnswer FROM [questionBank]
 			WHERE [questionBank].[userId] = :userId AND [questionBank].[questionId] NOT IN
-			(SELECT [questionId] FROM [quizQuestion] WHERE [quizQuestion].[quizId] = :quizId)");
+			(SELECT [questionId] FROM [quizQuestion] WHERE [quizQuestion].[quizId] = :quizId)
+			ORDER BY [questionBank].[questionId] DESC ");
 		questions = local.result.getResult();
 		/** this subquery is written by keeping the folowing condition in mind:
 		while viewing quiz(for upcoming quies) the questions can be added or deleted,
