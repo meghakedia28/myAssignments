@@ -31,9 +31,13 @@ component extends="coldbox.system.EventHandler"{
 	}
 	*/
 
-	/**
-	* home
-	*/
+/*----------------------------------------------------------------------------------------------------------
+		FileName    : students.cfc
+		Created By  : Megha Kedia
+		DateCreated : 20-March-2018
+		Description : added events for students portal.
+
+------------------------------------------------------------------------------------------------------------*/
 	function home( event, rc, prc ){
 		event.setView(view = "student/home", layout = "studentFront" );
 	}

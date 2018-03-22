@@ -1,6 +1,10 @@
-/**
-* I am a new handler
-*/
+/*----------------------------------------------------------------------------------------------------------
+		FileName    : admin.cfc
+		Created By  : Megha Kedia
+		DateCreated : 20-March-2018
+		Description : added events based on admin portal.
+
+------------------------------------------------------------------------------------------------------------*/
 component extends="coldbox.system.EventHandler"{
 
 	property name = "userValidationService" inject = "id:userValidationService";
@@ -34,73 +38,138 @@ component extends="coldbox.system.EventHandler"{
 	}
 	*/
 
-	/**
-	* home
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: home
+	    			Description: set the view for admin home.
+	    			Arguments: event, rc, prc
+	    			Return Type:
+------------------------------------------------------------------------------------*/
 	function home( event, rc, prc ){
 		event.setView(view = "admin/home", layout = "adminFront" );
 	}
 
-	/**
-	* addFaculties
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: addFaculties
+	    			Description: set the view for addFaculties.
+	    			Arguments: event, rc, prc
+	    			Return Type: none
+------------------------------------------------------------------------------------*/
 	function addFaculties( event, rc, prc ){
 		event.setView(view = "admin/addFaculties", layout = "adminFront" );
 	}
 
-	/**
-	* viewFaculties
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: viewFaculties
+	    			Description: set the view for viewFaculties.
+	    			Arguments: event, rc, prc
+	    			Return Type: none
+------------------------------------------------------------------------------------*/
 	function viewFaculties( event, rc, prc ){
 		event.setView(view = "admin/viewFaculties", layout = "adminFront" );
 	}
 
-	/**
-	* addStudents
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: addStudents
+	    			Description: set view for addStudents.
+	    			Arguments: event, rc, prc
+	    			Return Type: none
+------------------------------------------------------------------------------------*/
 	function addStudents( event, rc, prc ){
 		event.setView(view = "admin/addStudents", layout = "adminFront" );
 	}
 
-	/**
-	* viewStudents
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: viewStudents
+	    			Description: set the view for viewStudents.
+	    			Arguments: event, rc, prc
+	    			Return Type: none
+------------------------------------------------------------------------------------*/
 	function viewStudents( event, rc, prc ){
 		event.setView(view = "admin/viewStudents", layout = "adminFront" );
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function validateAddUser (event,rc,prc){
 		var status = userValidationService.validateInsertController(rc);
 		event.renderData(format = "json", data = serializeJSON(status));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: checkEmail
+	    			Description: call models to validate user email address.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
+
 	function checkEmail (event,rc,prc){
 		var status = userValidationService.validateEmail(rc.emailId);
 		event.renderData(format = "json", data = serializeJSON(status));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: checkSubject
+	    			Description: validate subject name.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function checkSubject (event,rc,prc){
 		var status = userValidationService.validateSubject(rc.name);
 		event.renderData(format = "json", data = serializeJSON(status));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: getFaculty
+	    			Description: get the list of all faculty.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function getFaculty(event,rc,prc){
 		var data = userDetailsService.getFacultyList();
 		event.renderData(format = "json", data = serializeJSON(data));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: getStudent
+	    			Description: to get list of all students.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function getStudent(event,rc,prc){
 		var data = userDetailsService.getStudentList();
 		event.renderData(format = "json", data = serializeJSON(data));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: populateStudentModel
+	    			Description: populate data in the student portal.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function populateStudentModel(event,rc,prc){
 		var data = userDetailsService.getStudentDetails(rc.userId);
 		event.renderData(format = "json", data = serializeJSON(data));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: populatefacultyModel
+	    			Description: populate data in the faculty portal.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
+
 	function populatefacultyModel(event,rc,prc){
 		var data = userDetailsService.getFacultyDetails(rc.userId);
 		event.renderData(format = "json", data = serializeJSON(data));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: updateRow
+	    			Description: update the edited data of the user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function updateRow(event,rc,prc){
 		var data = userValidationService.updateUserInformationController(rc);

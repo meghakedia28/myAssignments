@@ -1,6 +1,10 @@
-/**
-* I am a new handler
-*/
+/*----------------------------------------------------------------------------------------------------------
+		FileName    : common.cfc
+		Created By  : Megha Kedia
+		DateCreated : 20-March-2018
+		Description : added events that are common to all the portals.
+
+------------------------------------------------------------------------------------------------------------*/
 component extends="coldbox.system.EventHandler"{
 
 	property name = "authentication" inject = "id:authentication";
@@ -32,9 +36,12 @@ component extends="coldbox.system.EventHandler"{
 	}
 	*/
 
-	/**
-	* loginPage
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: loginPage
+	    			Description: set the view for the loginPage.
+	    			Arguments: event, rc, prc
+	    			Return Type: none
+------------------------------------------------------------------------------------*/
 	function loginPage( event, rc, prc ){
 		if (structKeyExists(url,"logOut")){
 			authentication.doLogout();
@@ -48,16 +55,22 @@ component extends="coldbox.system.EventHandler"{
 		event.setView( view = "common/loginPage", layout = "funcky" );
 	}
 
-	/**
-	* forgetPassword
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: forgetPassword
+	    			Description: set the view for forgetPassword.
+	    			Arguments: event, rc, prc
+	    			Return Type: none
+------------------------------------------------------------------------------------*/
 	function forgetPassword( event, rc, prc ){
 		event.setView( view = "common/forgetPassword", layout = "funcky" );
 	}
 
-	/**
-	* resetPassword
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: resetPassword
+	    			Description: set the view for reset password.
+	    			Arguments: event, rc, prc
+	    			Return Type: none
+------------------------------------------------------------------------------------*/
 	function resetPassword( event, rc, prc ){
 		event.setView( view = "common/resetPassword", layout = "noNavigation" );
 	}

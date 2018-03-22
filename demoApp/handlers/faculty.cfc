@@ -1,6 +1,10 @@
-/**
-* I am a new handler
-*/
+/*----------------------------------------------------------------------------------------------------------
+		FileName    : faculty.cfc
+		Created By  : Megha Kedia
+		DateCreated : 20-March-2018
+		Description : added events for faculty portal.
+
+------------------------------------------------------------------------------------------------------------*/
 component extends="coldbox.system.EventHandler"{
 
 	property name = "questionsService" inject = "id:questionsService";
@@ -37,30 +41,42 @@ component extends="coldbox.system.EventHandler"{
 	}
 	*/
 
-	/**
-	* home
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function home( event, rc, prc ){
 		event.setView( view = "faculty/home", layout = "facultyFront" );
 	}
 
-	/**
-	* addQuestions
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function addQuestions( event, rc, prc ){
 		event.setView( view = "faculty/addQuestions", layout = "facultyFront" );
 	}
 
-	/**
-	* questionBank
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function questionBank( event, rc, prc ){
 		event.setView( view = "faculty/questionBank", layout = "facultyFront" );
 	}
 
-	/**
-	 *
-	 **/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function quizQuestions( event,rc, prc){
 		var getListQuery = quizService.getquizList(#session.stLoggedInUser.UserId#);
 		var getList = #valueList(getListQuery.quizId,",")#;
@@ -73,28 +89,40 @@ component extends="coldbox.system.EventHandler"{
 		}
 	}
 
-	/**
-	* results
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function results( event, rc, prc ){
 		event.setView( view = "faculty/results", layout = "facultyFront" );
 	}
-	/**
-	* setQuiz
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function setQuiz( event, rc, prc ){
 		var getResult =
 		event.setView( view = "faculty/setQuiz", layout = "facultyFront" );
 	}
-	/**
-	* studentsProfile
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function studentsProfile( event, rc, prc ){
 		event.setView( view = "faculty/studentsProfile", layout = "facultyFront" );
 	}
-	/**
-	* studentsReport
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function studentsReport( event, rc, prc ){
 		var getIds = resultService.fetchScoreIds(#session.stLoggedInUser.UserId#);
 		var scoreIdsList = valueList(getIds.scoreId,",");
@@ -106,21 +134,30 @@ component extends="coldbox.system.EventHandler"{
 			event.setView( view = "faculty/studentsReport", layout = "facultyFront" );
 		}
 	}
-	/**
-	* studentsResult
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function studentsResult( event, rc, prc ){
 		event.setView( view = "faculty/studentsResult", layout = "facultyFront" );
 	}
-	/**
-	* viewQuiz
-	*/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function viewQuiz( event, rc, prc ){
 		event.setView( view = "faculty/viewQuiz", layout = "facultyFront" );
 	}
-	/**
-	 * enterQuestions
-	 **/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function enterQuestions(event, rc, prc){
 		if (event.isAjax()){
 			var row = questionsService.validateAllFields(rc);
@@ -130,6 +167,12 @@ component extends="coldbox.system.EventHandler"{
 			event.norender();
 		}
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function viewQuizList(event,rc,prc){
 		var quizList = quizService.getQuizList(rc.userId);
@@ -165,9 +208,12 @@ component extends="coldbox.system.EventHandler"{
 		event.renderData(format = "json", data = serializeJSON(local.result));
 	}
 
-	/**
-	 * viewQuestionBank
-	 **/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	 function viewQuestionBank(event,rc,prc){
 	 	var data = viewQuestions.getAllQuestions(rc);
 	 	var dataArray = arrayNew(2);
@@ -214,9 +260,12 @@ component extends="coldbox.system.EventHandler"{
  		event.renderData(format = "json", data = serializeJSON(result));
  	 }//end of viewQuestionBank
 
- 	 /**
- 	 * viewQuestions
- 	 **/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
  	 function populateQuestionInModal(event, rc, prc){
  	 	var getDetails = viewQuestions.getSingleQuestion(rc.questionId);
@@ -233,20 +282,32 @@ component extends="coldbox.system.EventHandler"{
 	  	event.renderData(format="json", data = serializeJSON(local.data));
 	 } //end of populateQuestionInModal
 
-	 /**
- 	 *deleteRow
-	 **/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
  	 function deleteRow(event,rc,prc){
  		var status = modifyQuestionService.deleteRecord(rc.questionId);
  		return status;
  	 }//end of deleteRow
- 	 /**
-  	 *editRow
-	  **/
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 	function editRow(event,rc,prc){
 		 var status = modifyQuestionService.modifyRecord(rc);
 		event.renderData(format = "json", data = serializeJSON(status));
 	 }
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	 function setQuizQuestions(event,rc,prc){
 	 	var listOfData = viewQuestions.getAllQuestions(rc);
@@ -281,14 +342,34 @@ component extends="coldbox.system.EventHandler"{
 	  	local.result["data"] = local.dataArray;
 	  	event.renderData(format = "json", data = serializeJSON(result));
 	   }
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
+
 	 function checkTestTime(event,rc,prc){
 	    var data = quizService.checkStartTime(rc);
 	 	event.renderData(format = "json", data = serializeJSON(data));
 	 }
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
+
 	 function checkTestName(event,rc,prc){
 	 	var data = quizService.checkQuizName(rc);
 	 	event.renderData(format = "json", data = serializeJSON(data));
 	 }
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function validateInsertController (event,rc,prc){
 		var insertionStruct = {successfull = {}, message = {}};
@@ -319,6 +400,12 @@ component extends="coldbox.system.EventHandler"{
 			event.renderData(format = "json", data = serializeJSON(local.insertionStruct));
 		}//end of catch
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function populateModel (event,rc,prc){
 		var data = {};
@@ -331,11 +418,23 @@ component extends="coldbox.system.EventHandler"{
 		}
 		event.renderData(format = "json", data = serializeJSON(local.data));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function removeQuiz (event,rc,prc){
 		var status = quizService.deleteQuiz(rc.quizId);
 		event.renderData(format = "json", data = serializeJSON(local.status));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function updateRow(event,rc,prc){
 		var insertionStruct = {successfull = {}, message = {}};
@@ -366,6 +465,12 @@ component extends="coldbox.system.EventHandler"{
 			event.renderData(format = "json", data = serializeJSON(local.insertionStruct));
 		}//end of catch
 	}//end of updateRow
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function getQuizQuestionList(event,rc,prc){
 		var dataArray = ArrayNew(2);
@@ -408,16 +513,34 @@ component extends="coldbox.system.EventHandler"{
 		local.result.data = local.dataArray;
 		event.renderData(format = "json", data = serializeJSON(local.result));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: validateAddUser
+	    			Description: call models to validate and insert user information.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function removeQuizQuestion(event,rc,prc){
 		var status = quizService.deleteQuizQuestion(rc.questionId, rc.quizId);
 		event.renderData(format = "json", data = serializeJSON(status));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: updateQuizQuestion
+	    			Description: update the edited quiz questions.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function updateQuizQuestion(event,rc,prc){
 		var status = quizService.addQuizQuestions(rc);
 		event.renderData(format = "json", data = serializeJSON(status));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: viewResults
+	    			Description: view the results of students.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function viewResults( event, rc, prc ){
 		var resultSet = resultService.fetchFacultyResultSet(rc);
@@ -439,6 +562,12 @@ component extends="coldbox.system.EventHandler"{
 		result.data = dataArray;
 		event.renderData(format = "json", data = serializeJSON(local.result));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: applyQuizFilter
+	    			Description: view the filter list.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function applyQuizFilter(event,rc,prc){
 		var getList = quizService.getQuizList(rc.userId);
@@ -454,16 +583,34 @@ component extends="coldbox.system.EventHandler"{
 		result.data = dataArray;
 		event.renderData(format = "json", data = serializeJSON(local.result));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: viewReport
+	    			Description: view the student's general report.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function viewReport (event,rc,prc){
 		var report = resultService.generateReport(rc.scoreId);
 		event.renderData(format = "json", data = serializeJSON(local.report));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: viewStudents
+	    			Description: get the view of students details
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function viewStudents (event,rc,prc){
 		var results = userDetails.getStudentsDetails();
 		event.renderData(format = "json", data = serializeJSON(local.results));
 	}
+/*----------------------------------------------------------------------------------
+	    			Function Name: individualResultSet
+	    			Description: get the individual result set of a student.
+	    			Arguments: event, rc, prc
+	    			Return Type: struct
+------------------------------------------------------------------------------------*/
 
 	function individualResultSet(event,rc,prc){
 		var score = resultService.getStudentResultSet(rc);
