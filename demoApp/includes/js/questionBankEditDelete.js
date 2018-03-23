@@ -37,13 +37,17 @@ $(document).ready(function(){
 			}
 		]
 	}).container().appendTo($('#buttons'));
-	$(".inputField").focus(function(){
+	$(".form-control").focus(function(){
 		$(this).css("border","");
 		$(this).next('.error-msg').text("");
 	});
-	$(".inputField").focusout(function(){
-		validate(this);
+	$(".form-control").focus(function(){
+		$(this).css("border","");
+		$(this).next('.error-msg').text("");
 	});
+//	$(".form-control").focusout(function(){
+//		validate(this);
+//	});
 	$('#rowEdit').on('show.bs.modal', function (event) {
 		  var questionId = $(event.relatedTarget).data('id');
 		  url = "../?event=faculty.populateQuestionInModal";
@@ -107,20 +111,20 @@ function deleteRow(data) {
 function updateRow(data){
 	 event.preventDefault();
 	 var questionId = $(data).val();
-	 var question = validate('#question');
-	 var optiona = validate('#optiona');
-	 var optionb = validate('#optionb');
-	 var optionc = validate('#optionc');
-	 var optiond = validate('#optiond');
-	 var answer = validate('#answer');
-	 var checkOptiona = $('#optiona').val();
-	 var checkOptionb = $('#optionb').val();
-	 var checkOptionc = $('#optionc').val();
-	 var checkOptiond = $('#optiond').val();
-	 var unique = false;
-	 if ( checkOptiona != "" && checkOptionb != "" && checkOptionc != "" && checkOptiond != ""){
-			unique = checkUnique(checkOptiona, checkOptionb, checkOptionc, checkOptiond);
-		}
+//	 var question = validate('#question');
+//	 var optiona = validate('#optiona');
+//	 var optionb = validate('#optionb');
+//	 var optionc = validate('#optionc');
+//	 var optiond = validate('#optiond');
+//	 var answer = validate('#answer');
+//	 var checkOptiona = $('#optiona').val();
+//	 var checkOptionb = $('#optionb').val();
+//	 var checkOptionc = $('#optionc').val();
+//	 var checkOptiond = $('#optiond').val();
+//	 var unique = false;
+//	 if ( checkOptiona != "" && checkOptionb != "" && checkOptionc != "" && checkOptiond != ""){
+//			unique = checkUnique(checkOptiona, checkOptionb, checkOptionc, checkOptiond);
+//		}
 	 if(true) {
 		 $.ajax({
 				url : "../?event=faculty.editRow&" + $("#editForm").serialize(),
