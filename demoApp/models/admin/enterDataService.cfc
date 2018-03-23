@@ -114,7 +114,7 @@ component singleton = "true" accessors="true"{
 							FROM [user]";
 			if (structKeyExists(arguments.data,"subject")){
 				local.sql &= " JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
-				JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
+									JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
 			}
 			local.sql &= " WHERE [user].[userId] = :id";
 			local.queryService.setSQL(sql);
@@ -125,11 +125,13 @@ component singleton = "true" accessors="true"{
 				 cfsqltype = "cf_sql_varchar");
 				local.queryService.addParam (name = "id", value = "#arguments.id#",
 				 cfsqltype = "cf_sql_bigint");
-				local.queryService.setSQL("	UPDATE [subject]
-									SET [subject].[name] = :subject
-									FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
-									JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]
-									WHERE [user].[userId] = :id");
+				local.queryService.setSQL("UPDATE [subject]
+												SET [subject].[name] = :subject
+												FROM [user] JOIN [userSubject]
+												ON [user].[userId] = [userSubject].[userId]
+												JOIN [subject]
+												ON [userSubject].[subjectId] = [subject].[subjectId]
+												WHERE [user].[userId] = :id");
 				local.queryService.execute().getResult();
 		 	}
 		}
