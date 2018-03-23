@@ -2,7 +2,7 @@ $.noConflict();
 var quizTable;
 jQuery(document).ready(function($) {
 	var userId = $('#userId').val();
-	$('#startTime').datetimepicker({
+	$('#startDateTime').datetimepicker({
 		 formatDate:'Y/m/d',
 		 minDate:0
 	});
@@ -73,19 +73,19 @@ jQuery(document).ready(function($) {
  				}
  			});
  			
- 			$("#startTime").focusout(function(){
- 				var start = $("#startTime").val();
+ 			$("#startDateTime").focusout(function(){
+ 				var start = $("#startDateTime").val();
  				var quizId = $("#id").val();
  				if ( start == "" || start == null){
- 					$("#error_starttime").text("You can't leave this empty.");
- 					$("#startTime").css("border","2px solid red");
+ 					$("#error_startDateTime").text("You can't leave this empty.");
+ 					$("#startDateTime").css("border","2px solid red");
  					return false;
  				}
  				else{
  					$.ajax({
  						url : "../?event=faculty.checkTestTime",
  							data : {
- 								startTime : start,
+ 								startDateTime : start,
  								quizId : quizId
  							},
  							success: function(result) {
@@ -94,18 +94,18 @@ jQuery(document).ready(function($) {
  									return true;
  								}
  									else {
- 										$("#error_starttime").html(obj.MESSAGE);
+ 										$("#error_startDateTime").html(obj.MESSAGE);
  										return false;
  									}
  							}	
  						});	
  					}
  				});
- 			$("#endTime").focusout(function(){
- 				var end = $("#endTime").val();
+ 			$("#endDateTime").focusout(function(){
+ 				var end = $("#endDateTime").val();
  				if(end == "" || end == null){
- 					$("#error_endtime").text("You can't leave this empty.");
- 					$("#endTime").css("border","2px solid red");
+ 					$("#error_endDateTime").text("You can't leave this empty.");
+ 					$("#endDateTime").css("border","2px solid red");
  					return false;
  				}
  			});
@@ -122,8 +122,8 @@ jQuery(document).ready(function($) {
  			  success : function(result){
  				  var obj = $.parseJSON(result);
  				  $('#quizName').val(obj.quizName);
- 				  $('#startTime').val(obj.startTime);
- 				  $('#endTime').val(obj.endTime);
+ 				  $('#startDateTime').val(obj.startDateTime);
+ 				  $('#endDateTime').val(obj.endDateTime);
  				  $('#id').val(obj.quizId);
 				  $('#update').val(obj.quizId);
  			  	}
@@ -172,11 +172,11 @@ jQuery(document).ready(function($) {
  	function updateRow(data){
  		event.preventDefault();
  		 var quizName = validate('#quizName','#error_quizname');
- 		 var startTime = validate('#startTime','error_starttime');
- 		 var endTime = validate('#endTime','#error_endtime');
+ 		 var startDateTime = validate('#startDateTime','error_startDateTime');
+ 		 var endDateTime = validate('#endDateTime','#error_endDateTime');
  		 var quizId = $(data).val();
  		 var userId = $('#userId').val();
- 		 if(quizName && startTime && endTime) {
+ 		 if(quizName && startDateTime && endDateTime) {
  			$.ajax({
  					url : "../?event=faculty.updateRow&" + $("#editForm").serialize(),
  					data : {
@@ -220,8 +220,8 @@ jQuery(document).ready(function($) {
  	}
  	function validate(){
  		var name = wordCheck("#quizName","#error_quizname");
- 		var start = checkEmpty("#startTime","#error_starttime");
- 		var end = checkEmpty("#endTime","#error_endtime");
+ 		var start = checkEmpty("#startDateTime","#error_startDateTime");
+ 		var end = checkEmpty("#endDateTime","#error_endDateTime");
  		if (name && start && end )
  		return true;
  		else

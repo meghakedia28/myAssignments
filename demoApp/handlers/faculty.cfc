@@ -350,7 +350,7 @@ component extends="coldbox.system.EventHandler"{
 ------------------------------------------------------------------------------------*/
 
 	 function checkTestTime(event,rc,prc){
-	    var data = quizService.checkStartTime(rc);
+	    var data = quizService.checkStartDateTime(rc);
 	 	event.renderData(format = "json", data = serializeJSON(data));
 	 }
 /*----------------------------------------------------------------------------------
@@ -412,8 +412,8 @@ component extends="coldbox.system.EventHandler"{
 		var getDetails = quizService.getQuizDetails(arguments.rc.quizId);
 		for (row in getDetails){
 			data["quizName"] = row.name;
-			data["startTime"] = DateTimeFormat(row.startDateTime, "yyyy/mm/dd HH:nn");
-			data["endTime"] = DateDiff('n',row.startDateTime, row.endDateTime);
+			data["startDateTime"] = DateTimeFormat(row.startDateTime, "yyyy/mm/dd HH:nn");
+			data["endDateTime"] = DateDiff('n',row.startDateTime, row.endDateTime);
 			data["quizId"] = row.quizId;
 		}
 		event.renderData(format = "json", data = serializeJSON(local.data));

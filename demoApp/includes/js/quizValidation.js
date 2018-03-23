@@ -13,9 +13,9 @@ jQuery(document).ready(function($){
 			}
 		}
 	});
-	$('#startTime').datetimepicker({
-		 formatDate:'Y/m/d',
-		minDate:0
+	$('#startDateTime').datetimepicker({
+		 formatDate:'YYYY/MM/DD HH:mm',
+		minDateTime: moment()
 	});
 	$("#quizForm").submit(function(event){	
 	var valid = validate();
@@ -90,11 +90,11 @@ jQuery(document).ready(function($){
 		}
 	});
 	
-	$("#startTime").focusout(function(){
-		var start = $("#startTime").val();
+	$("#startDateTime").focusout(function(){
+		var start = $("#startDateTime").val();
 		if (start == "" || start == null){
-			$("#error_starttime").text("You can't leave this empty.");
-			$("#startTime").css("border","2px solid red");
+			$("#error_startdatetime").text("You can't leave this empty.");
+			$("#startDateTime").css("border","2px solid red");
 			return false;
 		}
 		else{
@@ -116,19 +116,19 @@ jQuery(document).ready(function($){
 							return false;
 						}
 						else {
-							$("#error_starttime").html(obj.MESSAGE);
-							$("#startTime").css("border","2px solid red");
+							$("#error_startdatetime").html(obj.MESSAGE);
+							$("#startDateTime").css("border","2px solid red");
 							return false;
 						}
 					}	
 				});	
 			}
 		});
-	$("#endTime").focusout(function(){
+	$("#endDateTime").focusout(function(){
 		var end = $("#endTime").val();
 		if(end == "" || end == null){
-			$("#error_endtime").text("You can't leave this empty.");
-			$("#endTime").css("border","2px solid red");
+			$("#error_enddatetime").text("You can't leave this empty.");
+			$("#endDateTime").css("border","2px solid red");
 			return false;
 		}
 	});
@@ -164,8 +164,8 @@ function checkBoxEmpty(elementId,errorId){
 }
 function validate(){
 	var name = wordCheck("#quizName","#error_quizname");
-	var start = checkEmpty("#startTime","#error_starttime");
-	var end = checkEmpty("#endTime","#error_endtime");
+	var start = checkEmpty("#startDateTime","#error_startDateTime");
+	var end = checkEmpty("#endDateTime","#error_endDatetime");
 	var question = checkBoxEmpty("[name='questionId']","#error_questions");
 	if (name && start && end && question)
 		return true;
