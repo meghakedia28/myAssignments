@@ -121,25 +121,14 @@ component extends="coldbox.system.EventHandler"{
 		event.renderData(format = "json", data = serializeJSON(status));
 	}
 /*----------------------------------------------------------------------------------
-	    			Function Name: getFaculty
+	    			Function Name: getUser
 	    			Description: get the list of all faculty.
 	    			Arguments: event, rc, prc
 	    			Return Type: struct
 ------------------------------------------------------------------------------------*/
 
-	function getFaculty(event,rc,prc){
-		var data = userDetailsService.getFacultyList();
-		event.renderData(format = "json", data = serializeJSON(data));
-	}
-/*----------------------------------------------------------------------------------
-	    			Function Name: getStudent
-	    			Description: to get list of all students.
-	    			Arguments: event, rc, prc
-	    			Return Type: struct
-------------------------------------------------------------------------------------*/
-
-	function getStudent(event,rc,prc){
-		var data = userDetailsService.getStudentList();
+	function getUser(event,rc,prc){
+		var data = userDetailsService.getUserList(rc);
 		event.renderData(format = "json", data = serializeJSON(data));
 	}
 /*----------------------------------------------------------------------------------
@@ -149,21 +138,11 @@ component extends="coldbox.system.EventHandler"{
 	    			Return Type: struct
 ------------------------------------------------------------------------------------*/
 
-	function populateStudentModel(event,rc,prc){
-		var data = userDetailsService.getStudentDetails(rc.userId);
+	remote function populateModel(event,rc,prc){
+		var data = userDetailsService.getUserDetails(rc);
 		event.renderData(format = "json", data = serializeJSON(data));
 	}
-/*----------------------------------------------------------------------------------
-	    			Function Name: populatefacultyModel
-	    			Description: populate data in the faculty portal.
-	    			Arguments: event, rc, prc
-	    			Return Type: struct
-------------------------------------------------------------------------------------*/
 
-	function populatefacultyModel(event,rc,prc){
-		var data = userDetailsService.getFacultyDetails(rc.userId);
-		event.renderData(format = "json", data = serializeJSON(data));
-	}
 /*----------------------------------------------------------------------------------
 	    			Function Name: updateRow
 	    			Description: update the edited data of the user information.

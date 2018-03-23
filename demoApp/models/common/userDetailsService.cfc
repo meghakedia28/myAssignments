@@ -1,6 +1,11 @@
-/**
-* I am a new Model Object
-*/
+/*----------------------------------------------------------------------------------------------------------
+							FileName    : userDetailsService.cfc
+							Created By  : Megha Kedia
+							DateCreated : 18-March-2018
+							Description : the file gives services with respect to users.
+
+------------------------------------------------------------------------------------------------------------*/
+
 component singleton accessors="true"{
 
 	// Properties
@@ -14,9 +19,14 @@ component singleton accessors="true"{
 		return this;
 	}
 
-	/**
-	* fetchStudentsDetails
-	*/
+/*----------------------------------------------------------------------------------------------------------
+Function Name: validateInsertController()
+Description: first validates all fields then calls for insertion,
+			if successfully validated.
+Arguments: struct data
+Return Type: struct
+------------------------------------------------------------------------------------------------------------*/
+
 	function fetchStudentsDetails(){
 		var queryService = new query();
 		local.queryService.addParam (name = "student", value = "student",
@@ -32,6 +42,13 @@ component singleton accessors="true"{
 		studentsDetails = local.queryService.execute().getResult();
 		return studentsDetails;
 	}
+/*----------------------------------------------------------------------------------------------------------
+Function Name: validateInsertController()
+Description: first validates all fields then calls for insertion,
+			if successfully validated.
+Arguments: struct data
+Return Type: struct
+------------------------------------------------------------------------------------------------------------*/
 
 	function getStudentsDetails(){
 		var studentsList = fetchStudentsDetails();
@@ -50,31 +67,64 @@ component singleton accessors="true"{
 		local.result.data = dataArray;
 		return result;
 	}
+/*----------------------------------------------------------------------------------------------------------
+Function Name: fetchUserList()
+Description: executes query to fetch the user List.
+Arguments: numeric role
+Return Type: struct
+------------------------------------------------------------------------------------------------------------*/
 
-	function getFacultyList(){
-		var queryService = new query();
-		local.queryService.setName("fetchListOfFaculties");
-		local.queryService.setSQL("SELECT [user].[userId], [user].[active], [user].[firstName],
-					[user].[lastName], [user].[emailid], [user].[contactNumber], [subject].[name]
-			        FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
-					JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]
-					WHERE [user].[roleId] = 2");
-		fetchListOfFaculties = local.queryService.execute().getResult();
+	function fetchUserList(required numeric role){
+		var userListService = new query();
+		local.userListService.setName("userList");
+		local.userListService.addParam(name = "roleId", value = "#arguments.role#",
+			cfsqltype = "cf_sql_bigint");
+		if (arguments.role == 2 || arguments.role == 3){
+			var sql = "SELECT [user].[userId], [user].[active], [user].[firstName],
+					[user].[lastName], [user].[emailid], [user].[contactNumber], [user].[roleId]";
+			if (arguments.role == 2){
+				sql &= ", [subject].[name] FROM [user] JOIN [userSubject]
+							ON [user].[userId] = [userSubject].[userId]
+							JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
+			}
+			else if (arguments.role == 3){
+				sql &= " FROM [user]";
+			}
+			sql &= " WHERE [user].[roleId] = :roleId";
+		}
+		local.userListService.setSQL(local.sql);
+		userList = local.userListService.execute().getResult();
+		return userList;
+	}
+/*----------------------------------------------------------------------------------------------------------
+Function Name: getUserList()
+Description: fetches the user List and formates the result to display in datatable.
+Arguments: struct data
+Return Type: struct
+------------------------------------------------------------------------------------------------------------*/
+
+	function getUserList(data){
+		if (structKeyExists (arguments.data,'role')){
+			getList = fetchUserList(arguments.data.role);
+		}
 		var result["data"] = {};
 		var dataArray = ArrayNew(2);
 		var i = 1;
-			for (row in fetchListOfFaculties){
-				local.dataArray[i][1] = encodeForHtml(row.name);
-				local.dataArray[i][2] = encodeForHtml(row.firstName & " " & row.lastName);
-				local.dataArray[i][3] = encodeForHtml(row.emailid);
+			for (row in getList){
+				var j = 1;
+				if (row.roleId == 2){
+					local.dataArray[i][j++] = encodeForHtml(row.name);
+				}
+				local.dataArray[i][j++] = encodeForHtml(row.firstName & " " & row.lastName);
+				local.dataArray[i][j++] = encodeForHtml(row.emailid);
 				if (row.active == 1){
-					local.dataArray[i][4] = "true";
+					local.dataArray[i][j++] = "true";
 				}
 				else{
-					local.dataArray[i][4] = "false";
+					local.dataArray[i][j++] = "false";
 				}
-				local.dataArray[i][5] = encodeForHtml(fetchListOfFaculties.contactNumber);
-				local.dataArray[i][6] = "<button type = 'button' class = 'btn btn-success btn-md'
+				local.dataArray[i][j++] = encodeForHtml(row.contactNumber);
+				local.dataArray[i][j++] = "<button type = 'button' class = 'btn btn-success btn-md'
 					id = 'edit' name = 'edit' data-toggle = 'modal' data-target = '##rowEdit'
 					data-id = '#row.userId#'><i class = 'glyphicon glyphicon-pencil'>&nbsp</i>
 					edit</button>";
@@ -83,86 +133,66 @@ component singleton accessors="true"{
 		local.result.data = dataArray;
 		return local.result;
 	}
+/*----------------------------------------------------------------------------------------------------------
+Function Name: fetchUserDetails()
+Description: fetches the user details based on userid and role.
+Arguments: numeric userId,
+			numeric role
+Return Type: struct
+------------------------------------------------------------------------------------------------------------*/
 
-	function getStudentList(){
-		var queryService = new query();
-		local.queryService.setName("fetchListOfStudents");
-		local.queryService.setSQL("SELECT [user].[userId], [user].[active], [user].[firstName],
-			[user].[lastName],
-			[user].[emailid], [user].[contactNumber] FROM [user]
-			WHERE [user].[roleId] = 3");
-		fetchListOfStudents = local.queryService.execute().getResult();
-		var result["data"] = {};
-		var dataArray = ArrayNew(2);
-		var i = 1;
-		for (row in fetchListOfStudents){
-			local.dataArray[i][1] = encodeForHtml(row.firstName &
-			 ' ' & row.lastName);
-			local.dataArray[i][2] = encodeForHtml(row.emailid);
-			if (row.active == 1){
-				local.dataArray[i][3] = "Yes";
-			}
-			else{
-				local.dataArray[i][3] = "No";
-			}
-			local.dataArray[i][4] = encodeForHtml(row.contactNumber);
-			local.dataArray[i][5] = "<button type = 'button' class = 'btn btn-success btn-md'
-					id = 'edit' name = 'edit' data-toggle = 'modal' data-target = '##rowEdit'
-					data-id = '#row.userId#'><i class = 'glyphicon glyphicon-pencil'>&nbsp</i>edit</button>" ;
-			local.i = local.i+1;
-		}
-		local.result.data = dataArray;
-		return local.result;
-	}
-
-	function fetchStudentDetails(required numereic userId){
-		var queryService = new query();
-		local.queryService.addParam(name = "userId", value = "#arguments.userId#", cfsqltype = "cf_sql_bigint");
-		local.queryService.setName("studentList");
-		local.queryService.setSQL("SELECT user].[userId], [user].[active], [user].[firstName],
-			[user].[lastName],
-			[user].[emailid], [user].[contactNumber] FROM [user]
-			WHERE [user].[userId] = :userId");
-		studentList = local.queryService.execute().getResult();
-		return studentList;
-	}
-	function getStudentDetails(required numeric userId){
-		var userList = fetchStudentDetails(arguments.userId);
-		var data = {};
-		for(row in userList){
-			local.data["firstName"] = row.firstName;
-	 		local.data["lastName"] = row.lastName;
- 			local.data["emailId"] = row.emailId;
- 			local.data["active"] = row.active;
-  			local.data["contactNumber"] = row.contactNumber;
-		}
-		return local.data;
-	}
-
-	function fetchFacultyDetails(required numereic userId){
-		var queryService = new query();
-		local.queryService.addParam(name = "userId", value = "#arguments.userId#", cfsqltype = "cf_sql_bigint");
-		local.queryService.setName("facultyList");
-		local.queryService.setSQL("SELECT [user].[userId], [user].[active], [user].[firstName],
-					[user].[lastName], [user].[emailid], [user].[contactNumber], [subject].[name]
+	function fetchUserDetails(required numeric userId, required numeric role){
+		var userDetailsService = new query();
+		local.userDetailsService.addParam(name = "userId", value = "#arguments.userId#",
+			cfsqltype = "cf_sql_bigint");
+		local.userDetailsService.setName("userDetails");
+		if (arguments.role == 2 || arguments.role == 3){
+			var sql = "SELECT [user].[userId], [user].[active], [user].[firstName],
+					[user].[lastName], [user].[emailid], [user].[contactNumber], [user].[roleId]";
+			if (arguments.role == 2){
+				sql &= ", [subject].[name]
 			        FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
-					JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]
-					WHERE [user].[userId] = :userId");
-		facultyList = local.queryService.execute().getResult();
-		return facultyList;
-	}
-
-	function getFacultyDetails(required numeric userId){
-		var userList = fetchFacultyDetails(arguments.userId);
-		var data = {};
-		for(row in userList){
-			local.data["subject"] = row.name;
-			local.data["firstName"] = row.firstName;
-	 		local.data["lastName"] = row.lastName;
- 			local.data["emailId"] = row.emailId;
- 			local.data["active"] = row.active;
-  			local.data["contactNumber"] = row.contactNumber;
+					JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
+			}
+			else if (arguments.role == 3){
+				sql &= " FROM [user]";
+			}
+			sql &= " WHERE [user].[userId] = :userId";
 		}
-		return local.data;
+		local.userDetailsService.setSQL(sql);
+		userDetails = local.userDetailsService.execute().getResult();
+
+
+		return userDetails;
+	}
+/*----------------------------------------------------------------------------------------------------------
+Function Name: getUserDetails()
+Description: fetches the details for a perticular user and formats it to return a proper structure.
+Arguments: struct data
+Return Type: struct
+------------------------------------------------------------------------------------------------------------*/
+
+	function getUserDetails(required struct data){
+		if (structKeyExists(arguments.data,'userId')){
+			var getUserRoleService = new query();
+			local.getUserRoleService.addParam(name = "userId", value = "#arguments.data.userId#",
+				cfsqltype = "cf_sql_bigint");
+			local.getUserRoleService.setName("getUserRole");
+			local.getUserRoleService.setSQL("SELECT [user].[roleId] FROM [user] WHERE [user].[userId] = :userId");
+			getUserRole = local.getUserRoleService.execute().getResult();
+			var userInformation = fetchUserDetails(arguments.data.userId, getUserRole.roleId);
+		}
+		var result = {};
+		for(row in local.userInformation){
+			if (row.roleId == 2){
+				local.result["subject"] = row.name;
+			}
+			local.result["firstName"] = row.firstName;
+	 		local.result["lastName"] = row.lastName;
+ 			local.result["emailId"] = row.emailId;
+ 			local.result["active"] = row.active;
+  			local.result["contactNumber"] = row.contactNumber;
+		}
+		return local.result;
 	}
 }
