@@ -1,44 +1,19 @@
+/*-------------------------------------------------------------------------------------------------------------
+		FileName    : userValidation.js
+		Created By  : Megha Kedia
+		DateCreated : 18-March-2018
+		Description : does validation for the user details(faculties and students).
+
+--------------------------------------------------------------------------------------------------------------*/
+
 $(document).ready(function(){
-	$("#form").submit(function(event){
+	$("#addUserForm").submit(function(event){
 		var valid = validate();
 		event.preventDefault();
 		//if clientSide validation is successfull do ajax call for server side validation
 		if (valid) {
-			$.ajax({
-				url : "../?event=admin.validateAddUser",
-				type: "post",
-				data : $(form).serializeArray(),
-					success : function(result){
-						var obj = $.parseJSON(result);
-						if (obj.SUCCESSFULL != null){
-							if(obj.SUCCESSFULL){
-								$.confirm({
-	                                title: 'Successful',
-	                                content: 'A mail has been send to your email id to set the password',
-	                                buttons: {
-	                                    Ok : function () {
-	                                    	$("#form").trigger('reset');
-	        								$(".error-msg").text("");
-	        								$("#list").load(document.URL + ' #list');	
-	                                    }
-	                                }
-	                            });	
-							}
-							else{
-								$.confirm({
-	                                title: 'Error',
-	                                content: 'Some error has occured, please try again later'
-								});
-							}
-						}
-						if (obj.ERRORID != null){
-							for (keys in obj.ERRORID){
-								var id = '#'+(keys.toLowerCase());
-								$(id).text(obj.ERRORID[keys]);
-							}
-						}
-					}
-			}) ;
+			var url = "../?event=admin.validateAddUser";
+			gobalAjaxHandler(url, $("#addUserForm").serializeArray(), insertStatus);
 		}
 	}); //end of submit
 	$(".inputField").focus(function(){
@@ -66,7 +41,7 @@ $(document).ready(function(){
  						return true;
  					}
  						else {
- 							$("#error_email").text(obj.MESSAGE);
+ 							$("#error_email").html(obj.MESSAGE);
  							return false;
  						}
  				}
@@ -88,10 +63,10 @@ $(document).ready(function(){
  				success: function(result) {
  					var obj = $.parseJSON(result);
  					if (obj.STATUS == "success"){
- 						return true;
- 					}
+						return true;
+					}
  						else {
- 							$("#error_subject").text(obj.MESSAGE);
+ 							$("#error_subject").html(obj.MESSAGE);
  							return false;
  						}
  				}
@@ -99,8 +74,52 @@ $(document).ready(function(){
  		}	
  	});
 });
- //validate() to validate all the fields in the form
- function validate(){
+
+/*--------------------------------------------------------------------------------------------
+Function Name: onAjaxSuccess()
+Description: function which is call when ajax call for submition of user details is a success.
+Arguments: result
+Return Type: none
+----------------------------------------------------------------------------------------------*/
+
+function insertStatus(result){
+	var obj = $.parseJSON(result);
+	if (obj.SUCCESSFULL != null){
+		if(obj.SUCCESSFULL){
+			$.confirm({
+                title: 'Successful',
+                content: 'A mail has been send to your email id to set the password',
+                buttons: {
+                    Ok : function () {
+                    	$("#addUserForm").trigger('reset');
+                    	$(".inputField").css("border","");
+						$(".error-msg").text("");	
+                    }
+                }
+            });	
+		}
+		else{
+			$.confirm({
+                title: 'Error',
+                content: 'Some error has occured, please try again later'
+			});
+		}
+	}
+	if (obj.ERRORID != null){
+		for (keys in obj.ERRORID){
+			var id = '#'+(keys.toLowerCase());
+			$(id).html(obj.ERRORID[keys]);
+		}
+	}
+}
+/*--------------------------------------------------------------------------------------------
+Function Name: validate()
+Description: to validate all the fields in the form, return true when all
+ 			the data in fields successfully validates.
+Arguments: None
+Return Type: boolean
+----------------------------------------------------------------------------------------------*/
+function validate(){
  	var firstName = wordCheck('#firstName','#error_firstname');
  	var lastName = wordCheck('#lastName','#error_lastname');
  	var email = emailCheck('#email','#error_email');
