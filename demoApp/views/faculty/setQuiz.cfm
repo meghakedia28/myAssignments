@@ -35,14 +35,14 @@
 								<div class = "error-msg" id = "error_quizname"></div></div>
 							</div>
 							<div class = "lineform">
-								<label for = "startTime">Enter the start Time:</label>
-								<div ><cfinput class="inputField" type = "text" id = "startTime" name = "startTime" placeholder = "Enter the start date time">
-								<div class = "error-msg" id = "error_starttime"></div></div>
+								<label for = "startDateTime">Enter the start Time:</label>
+								<div ><cfinput class="inputField" type = "text" id = "startDateTime" name = "startDateTime" placeholder = "Enter the start date time">
+								<div class = "error-msg" id = "error_startdatetime"></div></div>
 							</div>
 							<div class = "lineform">
 								<label for = "endTime">Enter the end Time:</label>
 								<div >
-								<cfselect class="inputField" id = "endTime" name = "endTime" >
+								<cfselect class="inputField" id = "endDateTime" name = "endDateTime" >
 									<option value = "">Select the duration of test:</option>
 									<option value = "15">15 mins</option>
 									<option value = "30">30 mins</option>
@@ -53,7 +53,7 @@
 									<option value = "105">1hr 45 mins</option>
 									<option value = "120">2hrs</option>
 								</cfselect>
-								<div class = "error-msg" id = "error_endtime"></div>
+								<div class = "error-msg" id = "error_enddatetime"></div>
 								</div>
 							</div>
 							<div class = "submitbtn lineform">
@@ -105,8 +105,8 @@
 	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 	<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 	<script src = "../../includes/js/quizValidation.js"></script>
 	<script src = "../../includes/js/wordEmailNumberValidation.js"></script>
-	</tags:facultyFront>

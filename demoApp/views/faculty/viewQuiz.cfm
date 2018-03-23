@@ -68,9 +68,9 @@
 						<div class = "error-msg" id = "error_quizname"></div>
 					</div><!---field--->
 					<div class = "field">
-						<label for = "startTime">Enter the start time:</label>
-						<input class = "form-control" type = "text" id = "startTime" name = "startTime" placeholder = "Enter the start date time" value = "">
-						<div class = "error-msg" id = "error_starttime"></div>
+						<label for = "startDateTime">Enter the start time:</label>
+						<input class = "form-control" type = "text" id = "startDateTime" name = "startDateTime" placeholder = "Enter the start date time" value = "">
+						<div class = "error-msg" id = "error_startdatetime"></div>
 					</div><!---field--->
 					<div class = "field">
 						<label for = "endTime">Enter the end time:</label>
@@ -85,7 +85,7 @@
 							<option value = "105">1hr 45 mins</option>
 							<option value = "120">2hrs</option>
 						</select>
-						<div class = "error-msg" id = "error_endtime"></div>
+						<div class = "error-msg" id = "error_enddatetime"></div>
 					</div><!---field--->
 				</form>
 	 		</div><!---modal-body--->

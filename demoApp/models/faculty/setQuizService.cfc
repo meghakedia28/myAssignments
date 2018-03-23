@@ -11,19 +11,19 @@ component singleton = "true" accessors = "true"{
 	}
 
 	/**
-	* checkStartTime
+	* checkstartDateTime
 	*/
-	function checkStartTime(required struct data){
+	function checkstartDateTime(required struct data){
 		var stStatus = {status = {} , message = {}};
 		if (NOT(structKeyExists(arguments.data,"quizId"))){
 			arguments.data.quizId = 0;
 		}
-		if (arguments.data.startTime == ''){
+		if (arguments.data.startDateTime == ''){
 			local.stStatus.status = "error";
 			local.stStatus.message = "You can't leave this empty.";
 			return local.stStatus;
 		}
-		else if (NOT(isValid("regex",arguments.data.startTime,"^\d{4}\/\d{2}\/\d{2} \d{2}:\d{0,2}$" ))) {
+		else if (NOT(isValid("regex",arguments.data.startDateTime,"^\d{4}\/\d{2}\/\d{2} \d{2}:\d{0,2}$" ))) {
 			local.stStatus.status = "error";
 			local.stStatus.message = "<p>Please select a valid date time<br/>of pattern 'YYYY/MM/DD HH:MM'.</p>";
  	  		return local.stStatus;
@@ -35,7 +35,7 @@ component singleton = "true" accessors = "true"{
 	 	   	 	local.queryService.addParam(name = "id",
 	 			value = "#arguments.data.quizId#",cfsqltype = "cf_sql_bigint");
 	   		 	local.queryService.addParam(name = "startDate",
-	   			value = "#arguments.data.startTime#",cfsqltype = "cf_sql_date");
+	   			value = "#arguments.data.startDateTime#",cfsqltype = "cf_sql_date");
 	  	   		var result = local.queryService.execute(sql = "SELECT [quiz].[quizId] FROM [quiz]
 					WHERE ( CONVERT(VARCHAR(8), [quiz].[startDateTime], 1) ) =
 		 			( CONVERT(VARCHAR(8), :startDate , 1))
@@ -48,7 +48,7 @@ component singleton = "true" accessors = "true"{
 	   		 		return local.stStatus;
 	 	 	 	}//end of if
 	   		 	else {
-	   		  		if (now() GTE #arguments.data.startTime#){
+	   		  		if (now() GTE #arguments.data.startDateTime#){
 	  	   		 		local.stStatus.status = "error";
 		   		 		local.stStatus.message = "<p>The date selected is old.<br/>
 	 	   		 		please select a future date.</p>";
@@ -77,9 +77,9 @@ component singleton = "true" accessors = "true"{
 				return local.stStatus;
 			}//end of catch
 		}//end of else
-	}//end of checkStartTime
+	}//end of checkstartDateTime
 
-	function checkEndTime (required string element){
+	function checkendDateTime (required string element){
 		var stStatus = {status = {} , message = {}};
 		if (arguments.element == ''){
 			local.stStatus.status = "error";
@@ -147,39 +147,39 @@ component singleton = "true" accessors = "true"{
 
 	function validateAllFields (required struct data){
 		var errorStruct = {elementId = {},errorId = {}};
-		if (NOT(structKeyExists(data,"quizId"))){
+		if (NOT(structKeyExists(arguments.data,"quizId"))){
 			arguments.data.quizId = 0;
 		}
-		if (structKeyExists(data,"quizName")){
-			var checkQuizNameStatus = checkQuizName(data);
+		if (structKeyExists(arguments.data,"quizName")){
+			var checkQuizNameStatus = checkQuizName(arguments.data);
 			if ((structKeyExists(checkQuizNameStatus, "status")) AND
 				(local.checkQuizNameStatus.status == "error")){
-				local.errorStruct.elementId.quizName = #data.quizName#;
+				local.errorStruct.elementId.quizName = arguments.data.quizName;
 				local.errorStruct.errorId.error_quizname = local.checkQuizNameStatus.message;
 			}//end of if
 		}//end of if
-		if (structKeyExists(data,"startTime")){
-			var checkStartTimeStatus = checkStartTime(data);
-			if ((structKeyExists(checkStartTimeStatus,"status")) AND
-				(local.checkStartTimeStatus.status == "error")) {
+		if (structKeyExists(arguments.data,"startDateTime")){
+			var checkstartDateTimeStatus = checkstartDateTime(arguments.data);
+			if ((structKeyExists(checkstartDateTimeStatus,"status")) AND
+				(local.checkstartDateTimeStatus.status == "error")) {
 
-				local.errorStruct.elementId.startTime = #data.startTime#;
-				local.errorStruct.errorId.error_starttime = local.checkStartTimeStatus.message;
+				local.errorStruct.elementId.startDateTime = data.startDateTime;
+				local.errorStruct.errorId.error_startDateTime = local.checkstartDateTimeStatus.message;
 			}//end of if
 		}//end of if
-		if (structKeyExists(data,"endTime")){
-			var checkEndTimeStatus = checkEndTime(data.endTime);
-			if ((structKeyExists(checkEndTimeStatus,"status")) AND
-				(local.checkEndTimeStatus.status == "error")) {
+		if (structKeyExists(arguments.data,"endDateTime")){
+			var checkendDateTimeStatus = checkendDateTime(arguments.data.endDateTime);
+			if ((structKeyExists(checkendDateTimeStatus,"status")) AND
+				(local.checkendDateTimeStatus.status == "error")) {
 
-				local.errorStruct.elementId.endTime = #data.endTime#;
-				local.errorStruct.errorId.error_endtime = local.checkEndTimeStatus.message;
+				local.errorStruct.elementId.endDateTime = arguments.data.endDateTime;
+				local.errorStruct.errorId.error_endDateTime = local.checkendDateTimeStatus.message;
 			}
 
 		}//end of if
 		if (data.quizId == 0){
-			if (structKeyExists(data,"questionId")){
-				var checkQuestionListStatus = checkQuestionList(data.questionId);
+			if (structKeyExists(arguments.data,"questionId")){
+				var checkQuestionListStatus = checkQuestionList(arguments.data.questionId);
 				if (local.checkQuestionListStatus.status == "error"){
 					local.errorStruct.elementId.questionId = "";
 					local.errorStruct.errorId.error_questions = local.checkQuestionListStatus.message;
@@ -212,20 +212,20 @@ component singleton = "true" accessors = "true"{
 		try {
  			transaction {
  				var queryService  = new query();
-				local.queryService.addParam(name = "quizName",value = "#data.quizName#",cfsqltype = "cf_sql_varchar");
-				local.queryService.addParam(name = "startTime",value = "#data.startTime#",cfsqltype = "cf_sql_datetime");
+				local.queryService.addParam(name = "quizName",value = "#arguments.data.quizName#",cfsqltype = "cf_sql_varchar");
+				local.queryService.addParam(name = "startDateTime",value = "#arguments.data.startDateTime#",cfsqltype = "cf_sql_datetime");
 				local.queryService.addParam(name = "id",value = "#arguments.id#",cfsqltype = "cf_sql_bigint");
-				local.queryService.setSQL("INSERT INTO [quiz] VALUES ( :quizName, :startTime, :startTime, :id)");
+				local.queryService.setSQL("INSERT INTO [quiz] VALUES ( :quizName, :startDateTime, :startDateTime, :id)");
 				local.queryService.execute().getResult();
 
 				var secondQueryService = new query();
-				local.secondQueryService.addParam(name = "quizName",value = "#data.quizName#",cfsqltype = "cf_sql_varchar");
+				local.secondQueryService.addParam(name = "quizName",value = "#arguments.data.quizName#",cfsqltype = "cf_sql_varchar");
 				local.secondQueryService.setName("getQuizId");
 				local.secondQueryService.setSQL("SELECT [quiz].[quizId] FROM [quiz]	WHERE [name] = :quizName");
 				getQuizId = local.secondQueryService.execute().getResult();
 				if (getQuizId.recordCount == 1){
 					var thirdQueryService = new query();
-					local.thirdQueryService.addParam(name = "quizName",value = "#data.quizName#",
+					local.thirdQueryService.addParam(name = "quizName",value = "#arguments.data.quizName#",
 						cfsqltype = "cf_sql_varchar");
 					local.thirdQueryService.setName("getEndDateTime");
 					local.thirdQueryService.setSQL("SELECT [endDateTime] FROM [QUIZ]
@@ -235,7 +235,7 @@ component singleton = "true" accessors = "true"{
 					var fourthQueryService = new query();
 					local.fourthQueryService.setName("addEndDateTime");
 					local.fourthQueryService.setSQL("SELECT DATEADD
-							(n, #data.endTime#,'#getEndDateTime.endDateTime#') 'RESULT'");
+							(n, #arguments.data.endDateTime#,'#getEndDateTime.endDateTime#') 'RESULT'");
 					addEndDateTime = local.fourthQueryService.execute().getResult();
 
 					var fifthQueryService = new query();
@@ -346,24 +346,24 @@ component singleton = "true" accessors = "true"{
 			transaction{
 				var queryDate = new Query();
 				local.queryDate.setName("addDateTime");
-				local.queryDate.addParam(name = "startTime",
-					value = "#arguments.data.startTime#", cfsqltype = "cf_sql_varchar");
-				local.queryDate.addParam(name = "endTime",
-					value = "#arguments.data.endTime#", cfsqltype = "cf_sql_varchar");
-				local.queryDate.setSQL("SELECT DATEADD (n, #url.endTime#,'#url.startTime#') 'RESULT'");
+				local.queryDate.addParam(name = "startDateTime",
+					value = "#arguments.data.startDateTime#", cfsqltype = "cf_sql_varchar");
+				local.queryDate.addParam(name = "endDateTime",
+					value = "#arguments.data.endDateTime#", cfsqltype = "cf_sql_varchar");
+				local.queryDate.setSQL("SELECT DATEADD (n, #arguments.data.endDateTime#,'#arguments.data.startDateTime#') 'RESULT'");
 				addDateTime = local.queryDate.execute().getResult();
 
 				var queryService = new query();
 				local.queryService.addParam(name = "quizName",
 					value = "#arguments.data.quizName#", cfsqltype = "cf_sql_varchar");
-				local.queryService.addParam(name = "startTime",
-					value = "#arguments.data.startTime#", cfsqltype = "cf_sql_varchar");
+				local.queryService.addParam(name = "startDateTime",
+					value = "#arguments.data.startDateTime#", cfsqltype = "cf_sql_varchar");
 				local.queryService.addParam(name = "result",
 					value = "#addDateTime.RESULT#", cfsqltype = "cf_sql_varchar");
 				local.queryService.addParam(name = "quizId",
 					value = "#arguments.data.quizId#", cfsqltype = "cf_sql_varchar");
 				local.queryService.setSQL("UPDATE [quiz]
-						SET [quiz].[name] = :quizName, [quiz].[startDateTime] = :startTime,
+						SET [quiz].[name] = :quizName, [quiz].[startDateTime] = :startDateTime,
 						[quiz].[endDateTime] = :result WHERE [quiz].[quizId] = :quizId");
 				local.queryService.execute().getResult();
 
@@ -424,24 +424,18 @@ component singleton = "true" accessors = "true"{
 		}
 
 	function addQuizQuestions (required struct data){
-			/*try{*/
-				var idList = listToArray (data.questionId);
+			try{
+				var idList = listToArray (arguments.data.questionId);
 				for (ind in idList){
-					writeDump (#ind#);
 					var queryService = new query();
-					writeDump('1');
 					local.queryService.addParam(name = "questionId", value = "#ind#",
 						cfsqltype = "cf_sql_bigint");
-						writeDump ('2');
 					local.queryService.addParam(name = "quizId", value = "#arguments.data.quizId#",
 						cfsqltype = "cf_sql_bigint" );
-						writeDump('3');
 					local.queryService.setSQL("INSERT INTO [quizQuestion] VALUES ( :questionId, :quizId)");
-					writeDump('4');
 					local.queryService.execute().getResult();
-					writeDump('5');
 				}//end of for
-			/*}
+			}
 			catch (database db){
 				writeLog (file = "dbErrors", text = "#db.message# #db.detail# #db.ExtendedInfo#",
 				 	type = "Error");
@@ -452,7 +446,7 @@ component singleton = "true" accessors = "true"{
 				writeLog (file = "error", text = "#e.message# #e.detail# #e.ExtendedInfo#",
 					type = "Error");
 				return false;
-			}*/
+			}
 		return true;
 	}
 }
