@@ -7,9 +7,9 @@
 
 		<title>St.Joseph's High School</title>
 		<!-- Loading third party fonts -->
-		<link href = "../../includes/fonts/font-awesome.min.css" rel = "stylesheet" type = "text/css">
+		<link href = "../../freeTemplateFiles/fonts/font-awesome.min.css" rel = "stylesheet" type = "text/css">
 		<!-- Loading main css file -->
-		<link rel = "stylesheet" href = "../../includes/css/style.css">
+		<link rel = "stylesheet" href = "../../freeTemplateFile/css/style.css">
 		<!--[if lt IE 9]>
 		<script src = "js/ie-support/html5.js"></script>
 		<script src = "js/ie-support/respond.js"></script>
@@ -24,7 +24,7 @@
 				<div class = "primary-header">
 					<div class = "container">
 						<a href = "home.cfm" id = "branding">
-							<img src = "../../includes/images/logo.png" alt = "Lincoln high School">
+							<img src = "../../freeTemplateFiles/images/logo.png" alt = "Lincoln high School">
 							<h1 class = "site-title">St. Joseph's High School</h1>
 						</a> <!-- #branding -->
 
@@ -78,12 +78,12 @@
 							<h3 class = "widget-title">Featured students</h3>
 							<ul class = "student-list">
 								<li><a href = "#">
-										<img src = "../../includes/images/student-sm-1.jpg" alt = "" class = "avatar">
+										<img src = "../../freeTemplateFiles/images/student-sm-1.jpg" alt = "" class = "avatar">
 										<span class = "fn">Sarah Branson</span>
 										<span class = "average">Average: 4,9</span>
 									</a></li>
 								<li><a href = "#">
-										<img src = "../../includes/images/student-sm-1.jpg" alt = "" class = "avatar">
+										<img src = "../../freeTemplateFiles/images/student-sm-1.jpg" alt = "" class = "avatar">
 										<span class = "fn">Dorothy Smith</span>
 										<span class = "average">Average: 4,9</span>
 									</a></li>

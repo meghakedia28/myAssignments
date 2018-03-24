@@ -4,13 +4,13 @@
 		<meta charset = "UTF-8">
 		<meta http-equiv = "X-UA-Compatible" content = "IE = edge">
 		<meta name = "viewport" content = "width = device-width, initial-scale = 1.0,maximum-scale = 1">
-		<cfset base = "https://172.16.9.18/demoApp">
+		<cfset base = "https://localhost/demoApp">
 		<title>St. Joseph's High School</title>
 		<!-- Loading third party fonts -->
 		<cfoutput>
-		<link href = "#base#/includes/fonts/font-awesome.min.css" rel = "stylesheet" type = "text/css">
+		<link href = "#base#/freeTemplateFiles/fonts/font-awesome.min.css" rel = "stylesheet" type = "text/css">
 		<!-- Loading main css file -->
-		<link rel = "stylesheet" href = "#base#/includes/css/style.css">
+		<link rel = "stylesheet" href = "#base#/freeTemplateFile/css/style.css">
 		</cfoutput>
  		<!--[if lt IE 9]>
 		<script src = "js/ie-support/html5.js"></script>
@@ -27,7 +27,7 @@
 					<div class = "container">
 						<a href = "home.cfm" id = "branding">
 							<cfoutput>
-							<img src = "#base#/includes/images/logo.png" alt = "Lincoln high School">
+							<img src = "#base#/freeTemplateFiles/images/logo.png" alt = "Lincoln high School">
 							</cfoutput>
 							<h1 class = "site-title">St. Joseph's High School</h1>
 						</a> <!-- #branding -->
@@ -92,12 +92,12 @@
 							<h3 class = "widget-title">Featured students</h3>
 							<ul class = "student-list">
 								<li><a href = "#">
-										<img src = "#base#/includes/images/student-sm-1.jpg" alt = "" class = "avatar">
+										<img src = "#base#/freeTemplateFiles/images/student-sm-1.jpg" alt = "" class = "avatar">
 										<span class = "fn">Sarah Branson</span>
 										<span class = "average">Average: 4,9</span>
 									</a></li>
 								<li><a href = "#">
-										<img src = "#base#/includes/images/student-sm-1.jpg" alt = "" class = "avatar">
+										<img src = "#base#/freeTemplateFiles/images/student-sm-1.jpg" alt = "" class = "avatar">
 										<span class = "fn">Dorothy Smith</span>
 										<span class = "average">Average: 4,9</span>
 									</a></li>

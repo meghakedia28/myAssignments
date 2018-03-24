@@ -7,16 +7,16 @@
 
 		<title>St. Joseph's High School</title>
 		<!-- Loading third party fonts -->
-		<link href = "/fonts/font-awesome.min.css" rel = "stylesheet" type = "text/css">
+		<link href = "../../freeTemplateFiles/fonts/font-awesome.min.css" rel = "stylesheet" type = "text/css">
 		<!-- Loading main css file -->
-		<link rel = "stylesheet" href = "../../includes/css/style.css">
+		<link rel = "stylesheet" href = "../../freeTemplateFile/css/style.css">
 	</head>
 	<body>
 		<div id = "site-content">
 			<header class = "site-header">
 				<div class = "container">
 					<a href = "home.cfm" id = "branding">
-						<img src = "/images/logo.png" alt = "Lincoln high School">
+						<img src = "../../freeTemplateFiles/images/logo.png" alt = "Lincoln high School">
 						<h1 class = "site-title">St. Joseph's High School</h1>
 					</a> <!-- #branding -->
 				</div>
