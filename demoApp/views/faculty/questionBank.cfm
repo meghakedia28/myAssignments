@@ -1,3 +1,11 @@
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : questionBank.cfm
+		Created By  : Megha Kedia
+		DateCreated : 18-March-2018
+		Description : displays the list of all questions and facility to edit and delete them.
+
+-------------------------------------------------------------------------------------------------------------->
+
 <cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT(sessionExists)>
 	<cfscript>
@@ -8,9 +16,12 @@
 		setNextEvent(event = "common.loginPage?noaccess");
 	</cfscript>
 </cfif>
-		<link rel = "stylesheet" type = "text/css" href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
-		<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+		<link rel = "stylesheet" type = "text/css"
+			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<link rel = "stylesheet"
+			href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel = "stylesheet"
+			href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<div class = "page-title">
 			<div class = "container">
 				<h2>View quiz Details</h2>
@@ -23,7 +34,8 @@
 		<div class = "row">
 			<div class = "col-md-12">
 				<div class = "boxed-section">
-				<cfoutput><input type = "hidden" id = "userId" name = "userId" value = "#session.stLoggedInUser.userId#"></cfoutput>
+				<cfoutput><input type = "hidden" id = "userId" name = "userId"
+								value = "#session.stLoggedInUser.userId#"></cfoutput>
 				<h2 class = "section-title text-center">Question Bank:</h2>
 					<div class = "export" id = "buttons"></div><!---export buttons--->
 					<table class = "table" id = "questions" name = "questions" >
@@ -68,27 +80,32 @@
 				 <form name = "editForm" id = "editForm" action = "" method = "post">
 					<div class = "field">
 						<label for = "question">Question:</label>
-						<textarea class = "form-control" id = "question" name = "question" placeholder = "Enter the question" value = ""></textarea>
+						<textarea class = "form-control" id = "question" name = "question"
+							placeholder = "Enter the question" value = ""></textarea>
 						<div class = "error-msg" id = "error_question"></div>
 					</div><!---field--->
 					<div class = "field">
 						<label for = "optionA">Option A:</label>
-						<input class = "form-control" type = "text" id = "optiona" name = "optiona" placeholder = "Enter the first option" value = "">
+						<input class = "form-control" type = "text" id = "optiona" name = "optiona"
+							placeholder = "Enter the first option" value = "">
 						<div class = "error-msg" id = "error_optiona"></div>
 					</div><!---field--->
 					<div class = "field">
 						<label for = "optionB">Option B:</label>
-						<input class = "form-control" type = "text" id = "optionb" name = "optionb" placeholder = "Enter the second option" value = "">
+						<input class = "form-control" type = "text" id = "optionb" name = "optionb"
+							placeholder = "Enter the second option" value = "">
 						<div class = "error-msg" id = "error_optionb"></div>
 					</div><!---field--->
 					<div class = "field">
 						<label for = "optionC">Option C:</label>
-						<input class = "form-control" type = "text" id = "optionc" name = "optionc" placeholder = "Enter the third option" value = "">
+						<input class = "form-control" type = "text" id = "optionc" name = "optionc"
+							placeholder = "Enter the third option" value = "">
 						<div class = "error-msg" id = "error_optionc"></div>
 					</div><!---field--->
 					<div class = "field">
 						<label for = "optionD">Option D:</label>
-						<input class = "form-control" type = "text" id = "optiond" name = "optiond" placeholder = "Enter the fourth option" value = "">
+						<input class = "form-control" type = "text" id = "optiond" name = "optiond"
+							placeholder = "Enter the fourth option" value = "">
 						<div class = "error-msg" id = "error_optiond"></div>
 					</div><!---field--->
 					<div class = "field">
@@ -104,10 +121,12 @@
 							<div class = "error-msg" id = "error_answer"></div>
 						</div>
 					</div><!---field--->
+					<input type = "hidden" id = "questionId" name = "questionId" value = "">
 				</form>
 	 		</div><!---modal-body--->
 	 		<div class = "modal-footer">
-		 	  <button type = "button" id = "update" name = "update" class = "btn btn-success" onclick = "return updateRow(this)">Update</button>
+		 	  <button type = "button" id = "update" name = "update" class = "btn btn-success"
+		 	  	onclick = "return updateRow(this)">Update</button>
 	          <button type = "button" class = "btn btn-default" data-dismiss = "modal" >Close</button>
 	        </div><!---modal-footer--->
 		  </div><!---modal-content--->
@@ -126,21 +145,36 @@
 					<h3>Are you sure you want to delete this row?</h3>
 				</div><!---modal-body--->
 	 			<div class = "modal-footer">
-	 	  			<button type = "button" id = "confirm" name = "confirm" class = "btn btn-danger" onclick = "return deleteRow(this)">Confirm</button>
+	 	  			<button type = "button" id = "confirm" name = "confirm"
+	 	  				class = "btn btn-danger" onclick = "return deleteRow(this)">Confirm</button>
 	          		<button type = "button" class = "btn btn-default" data-dismiss = "modal" >Close</button>
 	        	</div><!---modal-footer--->
 		  	</div><!---modal-content--->
   		</div><!---modal dialog--->
   	</div><!---modal fade--->
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-	<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-	<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-	<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	<script type = "text/javascript" src = "../../includes/js/questionBankEditDelete.js"></script>
-	<script type = "text/javascript" src = "../../includes/js/validateQuestions.js"></script>
+	<script type = "text/javascript"
+			src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type = "text/javascript"
+			src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<script type = "text/javascript"
+			src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script type = "text/javascript"
+			src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+	<script type = "text/javascript"
+			src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+	<script type = "text/javascript"
+			src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+	<script type = "text/javascript"
+			src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+	<script type = "text/javascript"
+			src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+	<script type = "text/javascript"
+			src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type = "text/javascript"
+			src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+	<script type = "text/javascript"
+			src = "../../includes/js/questionBankEditDelete.js"></script>
+	<script type = "text/javascript"
+			src = "../../includes/js/common.js"></script>
+	<script type = "text/javascript"
+			src = "../../includes/js/validateQuestions.js"></script>

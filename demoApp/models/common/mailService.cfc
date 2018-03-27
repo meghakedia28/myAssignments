@@ -1,44 +1,40 @@
-/**
-* I am a new Model Object
-*/
-<cfcomponent singleton = "true" accessors = "true">
+/*----------------------------------------------------------------------------------------------------------
+							FileName    : mailService.cfc
+							Created By  : Megha Kedia
+							DateCreated : 25-March-2018
+							Description : sets mail service for whole application.
+
+------------------------------------------------------------------------------------------------------------*/
+
+component singleton = "true" accessors = "true"{
 
 	// Properties
 
 
-	/**
-	 * Constructor
-	 */
+/*----------------------------------------------------------------------------------------------------------
+Function Name  : sendMails()
+Description    : sets amil service for all users.
+Arguments      : string mailTo,
+ 				string mailFrom,
+ 				string subject,
+ 				string mailBody
+Return Type    : none
+------------------------------------------------------------------------------------------------------------*/
 
-	<cffunction name = "sendMails" access = "public" output = "false" returntype = "void">
-		<cfargument name = "emailid" required = "true" type = "string" >
-		<cfargument name = "firstName" required = "true" type = "string" >
-		<cfargument name = "salt" required = "true" type = "string">
-			<cfmail type = "html" from = "megha.kedia28@gmail.com" to = "#arguments.emailid#" subject = "An email sent" port = "587" >
-   				<p>Hello #arguments.firstName#<br>
-   				This email has to send to you, because the admin of the "QUIZ CENTER" has tried to add you.<br>
-				Here is the <a href = "https://172.16.9.18/demoApplication/common/resetPassword.cfm?id=#arguments.salt#">link</a> to set your password,<br>
-				You can change the pasword only once. So, please be careful while you set your password.<br>
-				Their is no time limit, you can set the password anytime you want.
-				After you are done with it, you can login from <a href = "https://172.16.9.18/demoApplication/common/loginPage.cfm">here</a> .</p><br>
-				<p>If you did not make this requested, please ignore the mail.</p><br>
-				<p>In case of any query you can reply back. We are happy to help.</p>
-			</cfmail>
-	</cffunction>
-	<!---forgetPassword : used to send mails when the user clicks forget password--->
-	<cffunction name = "forgetPassword" access = "public" output = "false" returntype = "void">
-		<cfargument name = "emailid" required = "true" type = "string" >
-		<cfargument name = "firstName" required = "true" type = "string" >
-		<cfargument name = "salt" required = "true" type = "string">
-		<cfargument name = "reset" required = "true" type = "numeric">
-			<cfmail type = "html" from = "megha.kedia28@gmail.com" to = "#arguments.emailid#" subject = "An email sent" port = "587" >
-   				<p>Hello #arguments.firstName#<br>
-   				This email has to send to you, because you have requested a password reset, for the  "QUIZ CENTER".<br>
-				Here is the <a href = "https://172.16.9.18/demoApplication/common/resetPassword.cfm?id=#arguments.salt#&reset=#arguments.reset#">link</a> to reset your password,<br>
-				Their is no time limit, you can reset the password anytime you want.
-				After you are done with reset, you can login from <a href = "https://172.16.9.18/demoApplication/common/loginPage.cfm">here</a> .</p><br>
-				<p>If you did not make this requested, please ignore the mail.</p><br>
-				<p>In case of any query you can reply back. We are happy to help.</p>
-			</cfmail>
-	</cffunction>
-</cfcomponent>
+	function sendMails(required string mailTo, required string mailFrom,
+		required string subject, required string mailBody){
+			try{
+				mailerService = new mail();
+				mailerService.setTo(arguments.mailto);
+				mailerService.setFrom(arguments.mailFrom);
+				mailerService.setSubject(arguments.subject);
+				mailerService.setType("html");
+				mailerService.send(body = mailBody);
+			}
+			catch(any e){
+				application.errorLogService.(e);
+				return false;
+			}
+			return true;
+	}
+}

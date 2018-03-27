@@ -1,3 +1,12 @@
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : studentsProfile.cfm
+		Created By  : Megha Kedia
+		DateCreated : 18-March-2018
+		Description : displays all the students information along with view scores(
+						of the quiz set by the faculty(user) for each students.
+
+-------------------------------------------------------------------------------------------------------------->
+
 <cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT(sessionExists)>
 	<cfscript>
@@ -8,9 +17,12 @@
 		setNextEvent(event = "common.loginPage?noaccess");
 	</cfscript>
 </cfif>
-		<link rel = "stylesheet" type = "text/css" href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
-		<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+		<link rel = "stylesheet" type = "text/css"
+			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<link rel = "stylesheet"
+			href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel = "stylesheet"
+			href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<div class = "page-title">
 			<div class = "container">
 				<h2>View Students Profile</h2>
@@ -84,14 +96,20 @@
 		</div><!--modal-content-->
 	</div><!--modal dialog-->
 </div><!--modal fade-->
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-	<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-	<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-	<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	<script type = "text/javascript" src = "../../includes/js/studentsProfile.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script type = "text/javascript"
+	src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type = "text/javascript"
+	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+<script type = "text/javascript" src = "../../includes/js/studentsProfile.js"></script>

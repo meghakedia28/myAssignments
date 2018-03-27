@@ -1,6 +1,11 @@
-/**
-* I am a new Model Object
-*/
+/*----------------------------------------------------------------------------------------------------------
+						FileName    : modifyQuestionService.cfc
+						Created By  : Megha Kedia
+						DateCreated : 13-March-2018
+						Description : upadtes the changes made to the questions.
+
+------------------------------------------------------------------------------------------------------------*/
+
 component accessors = "true" extends = "enterQuestions" {
 	// Properties
 
@@ -12,17 +17,23 @@ component accessors = "true" extends = "enterQuestions" {
 		return this;
 	}
 
-	/**
-	* checkEditability
-	*/
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : checkEditability
+Description    : check if the question is editable or not:
+				A question is editable only when it is never used to set a quiz.
+Arguments      : numeric questionId.
+Return Type    : boolean.
+------------------------------------------------------------------------------------------------------------*/
+
 	function checkEditability(required numeric questionId){
 		var queryService  = new query();
 		local.queryService.setName("editableQuestions");
 		local.queryService.addParam(name = "id",value = "#arguments.questionId#",cfsqltype = "cf_sql_bigint");
 		var result = local.queryService.execute(sql = "SELECT [questionBank].[questionId]
-			FROM [questionBank] JOIN [quizQuestion]
-			ON [questionBank].[questionId] = [quizQuestion].[questionId]
-			WHERE [quizQuestion].[questionId] = :id");
+															FROM [questionBank] JOIN [quizQuestion]
+															ON [questionBank].[questionId] =
+															[quizQuestion].[questionId]
+															WHERE [quizQuestion].[questionId] = :id");
 		editableQuestions = local.result.getResult();
 		if (editableQuestions.recordCount EQ 0){
 			return true;
@@ -31,90 +42,99 @@ component accessors = "true" extends = "enterQuestions" {
 			return false;
 		}//end of else
 	}//end of checkEditability
-	/**
-	* deleteRecord
-	*/
+
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : deleteRecord
+Description    : removes a question from database.
+Arguments      : numeric questionId.
+Return Type    : boolean.
+------------------------------------------------------------------------------------------------------------*/
+
 	function deleteRecord(required numeric questionId){
 		try{
 			var queryService  = new query();
-			local.queryService.addParam(name = "id",value = "#arguments.questionId#",cfsqltype = "cf_sql_bigint");
+			local.queryService.addParam(name = "id",value = "#arguments.questionId#",
+				cfsqltype = "cf_sql_bigint");
 			var result = local.queryService.execute(sql = "DELETE FROM [questionBank]
-		 				 WHERE [questionBank].[questionId] = :id");
+		 														 WHERE [questionBank].[questionId] = :id");
 		 	}//end of try
 	 	catch (database db){
-	 		WriteLog (file = "error", text = "#db.message# #db.detail# #db.ExtendedInfo#", type = "error");
-			WriteLog (file = "dbErrors", text = "#db.queryError#", type = "error");
+	 		application.errorLogService.(db,1);
 			return false;
 	 	}//end of db catch
 	 	catch (any e){
-		 	WriteLog (file = "error", text = "#db.message# #db.detail# #db.ExtendedInfo#", type = "error");
+		 	application.errorLogService.(e);
 			return false;
 	 	}//end of catch
 	 	return true;
 	}//end of deleteRecord
-	/**
-	 * modifyRecord()
-	 **/
+
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : modifyRecord
+Description    : updates the modification done in a question.
+Arguments      : struct data.
+Return Type    : boolean.
+------------------------------------------------------------------------------------------------------------*/
+
 	function modifyRecord(required struct data){
-		//try{
+		try{
 			transaction{
 				validateAll(arguments.data);
 				if (structIsEmpty(variables.errorStruct.errorId)){
 					var unique = checkunique(data.optiona, data.optionb, data.optionc, data.optiond );
 					if (local.unique){
-						var queryService  = new query();
-						local.queryService.setName("result");
-						local.queryService.addParam(name = "question",value = "#data.question#",
+						var updateQuestionsService  = new query();
+						local.updateQuestionsService.setName("result");
+						local.updateQuestionsService.addParam(name = "question",value = "#data.question#",
 						cfsqltype = "cf_sql_varchar");
-						local.queryService.addParam(name = "optiona",value = "#data.optiona#",
+						local.updateQuestionsService.addParam(name = "optiona",value = "#data.optiona#",
 						cfsqltype = "cf_sql_varchar");
-						local.queryService.addParam(name = "optionb",value = "#data.optionb#",
+						local.updateQuestionsService.addParam(name = "optionb",value = "#data.optionb#",
 						cfsqltype = "cf_sql_varchar");
-						local.queryService.addParam(name = "optionc",value = "#data.optionc#",
+						local.updateQuestionsService.addParam(name = "optionc",value = "#data.optionc#",
 						cfsqltype = "cf_sql_varchar");
-						local.queryService.addParam(name = "optiond",value = "#data.optiond#",
+						local.updateQuestionsService.addParam(name = "optiond",value = "#data.optiond#",
 						cfsqltype = "cf_sql_varchar");
-						local.queryService.addParam(name = "answer",value = "#data.answer#",
+						local.updateQuestionsService.addParam(name = "answer",value = "#data.answer#",
 						cfsqltype = "cf_sql_varchar");
-						local.queryService.addParam(name = "id",value = "#data.questionId#",
+						local.updateQuestionsService.addParam(name = "id",value = "#data.questionId#",
 						cfsqltype = "cf_sql_bigint");
 						var sql = "UPDATE [questionBank]
-								SET [questionBank].[question] = :question,
-								[questionBank].[option1] = :optiona, [questionBank].[option2] = :optionb,
-								[questionBank].[option3] = :optionc, [questionBank].[option4] = :optiond,
-								[questionBank].[correctAnswer] = :answer WHERE [questionBank].[questionId] = :id";
-						local.queryService.setSQL(local.sql);
-						local.queryService.execute().getResult();
+										SET [questionBank].[question] = :question,
+										[questionBank].[option1] = :optiona,
+										[questionBank].[option2] = :optionb,
+										[questionBank].[option3] = :optionc,
+										[questionBank].[option4] = :optiond,
+										[questionBank].[correctAnswer] = :answer
+										WHERE [questionBank].[questionId] = :id";
+						local.updateQuestionsService.setSQL(local.sql);
+						local.updateQuestionsService.execute().getResult();
 						variables.errorStruct.errorId.insert ("update", "successfull", true);
-						return variables.errorStruct;
-					}
-					else{
-						return variables.errorStruct;
 					}
 				}//end of if
-				else{
-					return variables.errorStruct;
-				}//end of else
+			return variables.errorStruct;
 			}//end of transaction
-		/*}//end of try
+		}//end of try
 		catch (database db){
-			WriteLog (file = "dbErrors", text = "#db.message# #db.detail# #db.ExtendedInfo#",
-					 type = "Error");
-			WriteLog (file = "dbErrors", type = "error", text = "#db.queryError#");
+			application.errorLogService.(db,1);
 			variables.errorStruct.errorId.insert ("update", "fail", true);
 			return variables.errorStruct;
 		}//end of db catch
 		catch (any e){
-			WriteLog (file = "dbErrors", text = "#e.message# #e.detail# #e.ExtendedInfo#",
-					 type = "Error");
+			application.errorLogService.(e);
 			variables.errorStruct.errorId.insert ("update", "fail", true);
 			return variables.errorStruct;
-		}//end of any catch*/
+		}//end of any catch
 	}//end of modifyRecord
-	/**
-	 * validateAll
-	 **/
-	 function validateAll(data){
+
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : validateAll
+Description    : validates all the fields.
+Arguments      : struct data.
+Return Type    : none.
+------------------------------------------------------------------------------------------------------------*/
+
+	 function validateAll(required struct data){
 	 	if (structKeyExists(arguments.data,"question")){
 			validate("question", arguments.data.question, "error_question");
 		}

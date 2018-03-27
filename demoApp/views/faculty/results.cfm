@@ -1,3 +1,11 @@
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : results.cfm
+		Created By  : Megha Kedia
+		DateCreated : 18-March-2018
+		Description : displays the result of students for all the quiz set by a faculty(user).
+
+-------------------------------------------------------------------------------------------------------------->
+
 <cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
 <cfif NOT(sessionExists)>
 	<cfscript>

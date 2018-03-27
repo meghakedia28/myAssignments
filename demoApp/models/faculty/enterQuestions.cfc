@@ -1,6 +1,11 @@
-/**
-* I am a new Model Object
-*/
+/*----------------------------------------------------------------------------------------------------------
+						FileName    : enterQuestions.cfc
+						Created By  : Megha Kedia
+						DateCreated : 13-March-2018
+						Description : This file does all the validation before a question is added.
+
+------------------------------------------------------------------------------------------------------------*/
+
 component accessors = "true"{
 
 	// Properties
@@ -15,137 +20,165 @@ component accessors = "true"{
 		return this;
 	}
 
-	/**
-	* validateAllFields
-	*/
-	function validateAllFields(formData){
-		if (structKeyExists(formData,"question")){
-			validate("question", formData.question, "error_question");
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : validateAllFields
+Description    : validates all fields and then passed the data to insert data into data base,
+Arguments      : struct formData.
+Return Type    : struct
+------------------------------------------------------------------------------------------------------------*/
+
+	function validateAllFields(required struct formData){
+		if (structKeyExists(arguments.formData,"question")){
+			validate("question", arguments.formData.question, "error_question");
 		}
-		if (structKeyExists(formData,"optiona")){
-			validate("optionA", formData.optiona, "error_optionA" );
+		if (structKeyExists(arguments.formData,"optiona")){
+			validate("optionA", arguments.formData.optiona, "error_optionA" );
 		}
-		if (structKeyExists(formData,"optionb")){
-			validate("optionB", formData.optionb, "error_optionB");
+		if (structKeyExists(arguments.formData,"optionb")){
+			validate("optionB", arguments.formData.optionb, "error_optionB");
 		}
-		if (structKeyExists(formData,"optionc")){
-			validate("optionC", formData.optionc, "error_optionC");
+		if (structKeyExists(arguments.formData,"optionc")){
+			validate("optionC", arguments.formData.optionc, "error_optionC");
 		}
-		if (structKeyExists(formData,"optiond")){
-			validate("optionD", formData.optiond, "error_optionD");
+		if (structKeyExists(arguments.formData,"optiond")){
+			validate("optionD", arguments.formData.optiond, "error_optionD");
 		}
-		if (structKeyExists(formData,"answer")){
-			validate("answer", formData.answer, "error_answer");
+		if (structKeyExists(arguments.formData,"answer")){
+			validate("answer", arguments.formData.answer, "error_answer");
 		}
 		try{
-
 			if (structIsEmpty(variables.errorStruct.errorId)){
-				var unique = checkunique(formData.optiona, formData.optionb, formData.optionc, formData.optiond );
+				var unique = checkunique(arguments.formData.optiona, arguments.formData.optionb,
+								arguments.formData.optionc, arguments.formData.optiond );
 				if (local.unique){
-					var insertion = insertQuestions(formData,session.stLoggedInUser.userId);
+					var insertion = insertQuestions(arguments.formData,session.stLoggedInUser.userId);
 					if (insertion){
 						variables.insertionStruct.successfull = "true";
 						variables.insertionStruct.message = "Data has been added successfully";
-						return variables.insertionStruct;
 					}//end of if
 					else{
 						variables.insertionStruct.successfull = "false";
 						variables.insertionStruct.message = "Error occured while insertion of data1";
-						return variables.insertionStruct;
 					}//end of else
+				return variables.insertionStruct;
 				}//end of if
-				else{
-					return variables.errorStruct;
-				}//end of else
 			}//end of if
-			else{
-				return variables.errorStruct;
-			}//end of else
+		return variables.errorStruct;
 		}//end of try
 		catch (any e){
-			WriteLog( type = "error", file="error", text = "#e.message# #e.detail# #e.ExtendedInfo#");
+			application.errorLogService.(e);
 			variables.insertionStruct.successfull = "false";
 			variables.insertionStruct.message = "Error occured while insertion of data2";
 			return variables.insertionStruct;
 		}//end of catch
 	}
 
-	/**
-	* insertErrorStruct
-	*/
-	function insertErrorStruct(elementId, element, errorId, error){
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : insertErrorStruct
+Description    : inserts error into struct,
+Arguments      : string elementId,
+				string element,
+				string errorId,
+				string errorMsg.
+Return Type    : none.
+------------------------------------------------------------------------------------------------------------*/
+
+	function insertErrorStruct(required string elementId, required string element,
+		required string errorId, required string errorMsg){
 		variables.errorStruct.elementId.insert (arguments.elementId, arguments.element, true);
-		variables.errorStruct.errorId.insert (arguments.errorId, arguments.error, true);
+		variables.errorStruct.errorId.insert (arguments.errorId, arguments.errorMsg, true);
 	}
 
-	/**
-	* validate
-	*/
-	function validate(elementId, element, errorId){
-		if (arguments.element EQ ''){
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : validate
+Description    : inserts error into struct,
+Arguments      : struct formData.
+Return Type    : none
+------------------------------------------------------------------------------------------------------------*/
+
+	function validate(required string elementId, required string element,
+		required string errorId){
+		if (arguments.element == ''){
 			insertErrorStruct(arguments.elementId, arguments.element,
 				arguments.errorId, "You can't leave this empty.");
 		}//end of if
-		else if (element.len() LT 1 OR element.len() GT 50){
+		else if (element.len() < 1 OR element.len() > 255){
 			insertErrorStruct(arguments.elementId, arguments.element,
-				arguments.errorId, "Please enter characters of length between 1 to 50.");
+				arguments.errorId, "Please enter characters of length between 1 to 255.");
 		}//end of elseif
 	}
 
-	/**
-	* insertQuestions
-	*/
-	function insertQuestions(data, id){
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : insertQuestions.
+Description    : inserts questions into db.
+Arguments      : struct data,
+				numeric id
+Return Type    : boolean
+------------------------------------------------------------------------------------------------------------*/
+
+	function insertQuestions(required struct data, required numeric id){
 		try{
-			transaction{
-				var queryService  = new query();
-				local.queryService.addParam(name = "question",value = "#data.question#",cfsqltype = "cf_sql_varchar");
-				local.queryService.addParam(name = "optiona",value = "#data.optiona#",cfsqltype = "cf_sql_varchar");
-				local.queryService.addParam(name = "optionb",value = "#data.optionb#",cfsqltype = "cf_sql_varchar");
-				local.queryService.addParam(name = "optionc",value = "#data.optionc#",cfsqltype = "cf_sql_varchar");
-				local.queryService.addParam(name = "optiond",value = "#data.optiond#",cfsqltype = "cf_sql_varchar");
-				local.queryService.addParam(name = "answer",value = "#data.answer#",cfsqltype = "cf_sql_varchar");
-				local.queryService.addParam(name = "id",value = "#id#",cfsqltype = "cf_sql_bigint");
-				var sql = "INSERT INTO [questionBank] VALUES (
-					:question, :optiona, :optionb, :optionc, :optiond, :answer, :id)";
-				local.queryService.setSQL(local.sql);
-				var result = local.queryService.execute().getResult();
-				return true;
-			}//end of transaction
+			var insertQueryService  = new query();
+			local.insertQueryService.addParam(name = "question", value = "#arguments.data.question#",
+				cfsqltype = "cf_sql_varchar");
+			local.insertQueryService.addParam(name = "optiona", value = "#arguments.data.optiona#",
+				cfsqltype = "cf_sql_varchar");
+			local.insertQueryService.addParam(name = "optionb", value = "#arguments.data.optionb#",
+				cfsqltype = "cf_sql_varchar");
+			local.insertQueryService.addParam(name = "optionc", value = "#arguments.data.optionc#",
+				cfsqltype = "cf_sql_varchar");
+			local.insertQueryService.addParam(name = "optiond", value = "#arguments.data.optiond#",
+				cfsqltype = "cf_sql_varchar");
+			local.insertQueryService.addParam(name = "answer", value = "#arguments.data.answer#",
+				cfsqltype = "cf_sql_varchar");
+			local.insertQueryService.addParam(name = "id", value = "#arguments.id#",
+				cfsqltype = "cf_sql_bigint");
+			var sql = "INSERT INTO [questionBank] VALUES (
+							:question, :optiona, :optionb, :optionc, :optiond, :answer, :id)";
+			local.insertQueryService.setSQL(local.sql);
+			local.insertQueryService.execute().getResult();
+			return true;
 		}//end of try
 		catch(database db){
-			WriteLog(type = "error", file = "dbErrors", text = "#db.message# #db.detail# #db.ExtendedInfo#");
-			WriteLog(type = "error", file = "dbErrors", text = "#db.queryError#");
+			application.errorLogService.(db,1);
 			return false;
 		}//end of catch
 		catch(any e){
-			WriteLog( type = "error", file="error", text = "#e.message# #e.detail# #e.ExtendedInfo#");
+			application.errorLogService.(e);
 			return false;
 		}//end of catch
 	}///end of insertQuestions
 
-	/**
-	* checkUnique
-	*/
-	function checkUnique(optiona, optionb, optionc, optiond){
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : checkUnique.
+Description    : validates if all the option values are unique or not.
+Arguments      : string optiona,
+				string optionb,
+				string optionc,
+				string optiond.
+Return Type    : boolean
+------------------------------------------------------------------------------------------------------------*/
+
+	function checkUnique(required string optiona, required string optionb,
+		required string optionc, required string optiond){
 		var error = 0;
-		if ((arguments.optiond EQ arguments.optionc) OR (arguments.optiond EQ arguments.optionb) OR
-			 (arguments.optiond EQ arguments.optiona)){
+		if ((arguments.optiond == arguments.optionc) || (arguments.optiond == arguments.optionb) ||
+			 (arguments.optiond == arguments.optiona)){
 			insertErrorStruct("optiond", arguments.optiond,
 				 "error_optiond", "This option is already selected. Please enter a different option.");
 			local.error = 1;
 		}
-		if ((arguments.optionc EQ arguments.optionb) OR (arguments.optionc EQ arguments.optiona)){
+		if ((arguments.optionc == arguments.optionb) || (arguments.optionc == arguments.optiona)){
 			insertErrorStruct("optionc", arguments.optionc,
 				 "error_optionc", "This option is already selected. Please enter a different option.");
 			local.error = 1;
 		}
-		if ((arguments.optionb EQ arguments.optiona)){
+		if ((arguments.optionb == arguments.optiona)){
 			insertErrorStruct("optionb", arguments.optionb,
 				 "error_optionb", "This option is already selected. Please enter a different option.");
 			local.error = 1;
 		}
-		if (error EQ 0){
+		if (error == 0){
 			return true;
 		}
 		else{

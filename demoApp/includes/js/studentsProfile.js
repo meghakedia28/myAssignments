@@ -1,3 +1,12 @@
+/*-------------------------------------------------------------------------------------------------------------
+						FileName    : studentsProfile.js
+						Created By  : Megha Kedia
+						DateCreated : 126-March-2018
+						Description : displays all the studennts 
+										details with the associated scores for all tests.
+
+-------------------------------------------------------------------------------------------------------------*/
+
 $(document).ready(function() {
 var resultTable;
 	var allResultTable = $('#allResult').DataTable({

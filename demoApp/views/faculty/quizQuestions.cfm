@@ -1,3 +1,11 @@
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : quizQuestions.cfm
+		Created By  : Megha Kedia
+		DateCreated : 18-March-2018
+		Description : displays all the questions associated with a quiz.
+
+-------------------------------------------------------------------------------------------------------------->
+
 <cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT(sessionExists)>
 	<cfscript>
@@ -8,9 +16,12 @@
 		setNextEvent(event = "common.loginPage?noaccess");
 	</cfscript>
 </cfif>
-		<link rel = "stylesheet" type = "text/css" href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
-		<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+		<link rel = "stylesheet" type = "text/css"
+			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<link rel = "stylesheet"
+			href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel = "stylesheet"
+			href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 			<div class = "page-title">
 				<div class = "container">
 					<cfoutput>
@@ -28,8 +39,10 @@
 				<div class = "row">
 					<div class = "col-md-12">
 						<div class = "export" id = "buttons"></div>
+						<div><a href = "../faculty/viewQuiz">Go back to View Quiz</a></div>
 						<div class = "boxed-section">
-							<cfoutput><h2 class = "section-title text-center">#prc.quizDetails.name# questions:</h2>
+							<cfoutput>
+								<h2 class = "section-title text-center">#prc.quizDetails.name# questions:</h2>
 							<input type = "hidden" id = "userId" value = "#session.stLoggedInUser.userId#">
 								<cfif (#prc.quizDetails.startDateTime# GT now())>
 								<div><button type = "button" class = "btn btn-success btn-md"
@@ -38,7 +51,8 @@
 																	</i>Add Questions</button></div>
 								</cfif>
 							</cfoutput>
-							<div class = "error-msg text-center" id = "error_questions" name = "error_questions"></div>
+							<div class = "error-msg text-center" id = "error_questions"
+								name = "error_questions"></div>
 							<table class = "table table-sm" id = "questions" name = "questions" >
 								<thead>
 									<tr>
@@ -81,8 +95,10 @@
 						<h3>Are you sure you want to delete this row?</h3>
 					</div><!---modal-body--->
 		 			<div class = "modal-footer">
-		 	  			<button type = "button" id = "confirm" name = "confirm" class = "btn btn-danger" onclick = "return deleteRow(this)">Confirm</button>
-		          		<button type = "button" class = "btn btn-default" data-dismiss = "modal" >Close</button>
+		 	  			<button type = "button" id = "confirm" name = "confirm" class = "btn btn-danger"
+		 	  				onclick = "return deleteRow(this)">Confirm</button>
+		          		<button type = "button" class = "btn btn-default"
+		          			data-dismiss = "modal" >Close</button>
 		        	</div><!---modal-footer--->
 			  	</div><!---modal-content--->
 	  		</div><!---modal dialog--->
@@ -122,23 +138,32 @@
 									</tr>
 								</tfoot>
 							</table><!---end of tables--->
+							<input type = "hidden" id = "quizId" name = "quizId" value = "">
 						</form>
 					</div><!---modal-body--->
 			 		<div class = "modal-footer">
-				 	  <button type = "button" id = "add" name = "add" class = "btn btn-success" onclick = "return add(this)">ADD</button>
+				 	  <button type = "button" id = "addQuizQuestions" name = "addQuizQuestions"
+				 	  	class = "btn btn-success" onclick = "return addQuizQuestions(this)">ADD</button>
 			          <button type = "button" class = "btn btn-default" data-dismiss = "modal" >Close</button>
 			        </div><!---modal-footer--->
 				</div><!---modal-content--->
 		  	</div><!---modal dialog--->
 		</div><!---modal fade--->
-		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-		<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-		<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-		<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-		<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-		<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-		<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-		<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-  	   	<script type = "text/javascript" src = "../../includes/js/viewQuizQuestions.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script type = "text/javascript"
+src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type = "text/javascript"
+	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+	   	<script type = "text/javascript" src = "../../includes/js/viewQuizQuestions.js"></script>
+<script type = "text/javascript" src = "../../includes/js/common.js"></script>

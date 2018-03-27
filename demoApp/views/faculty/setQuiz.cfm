@@ -1,3 +1,11 @@
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : setQuiz.cfm
+		Created By  : Megha Kedia
+		DateCreated : 18-March-2018
+		Description : form to set quiz details and select questions from a list for the test.
+
+-------------------------------------------------------------------------------------------------------------->
+
 <cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT(sessionExists)>
 	<cfscript>
@@ -101,12 +109,21 @@
 			</div><!---row--->
 		</div><!---container--->
 	</main>
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-	<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	<script src = "../../includes/js/quizValidation.js"></script>
-	<script src = "../../includes/js/wordEmailNumberValidation.js"></script>
+	<script type = "text/javascript"
+			src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type = "text/javascript"
+			src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type = "text/javascript"
+			src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<script type = "text/javascript"
+			src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script type = "text/javascript"
+			src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+	<script type = "text/javascript" src =
+		"https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js">
+	</script>
+	<script type = "text/javascript"
+			src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+	<script type = "text/javascript" src = "../../includes/js/setQuiz.js"></script>
+	<script type = "text/javascript" src = "../../includes/js/validateQuiz.js"></script>
+	<script type = "text/javascript" src = "../../includes/js/common.js"></script>

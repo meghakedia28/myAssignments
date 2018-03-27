@@ -1,3 +1,11 @@
+/*-------------------------------------------------------------------------------------------------------------
+						FileName    : facultyResultSet.js
+						Created By  : Megha Kedia
+						DateCreated : 21-March-2018
+						Description : view all the students results.
+
+-------------------------------------------------------------------------------------------------------------*/
+
 var resultTable,filter, filtereData;
 $(document).ready(function(){
 	var userId = $('#userId').val();
@@ -39,6 +47,14 @@ $(document).ready(function(){
 				}
 		 });
 	});
+
+/*--------------------------------------------------------------------------------------------
+Function Name  : addFilter()
+Description    : this the ajax call to set the filter by quiz .
+Arguments      : data
+Return Type    : none
+----------------------------------------------------------------------------------------------*/
+
 	function addFilter(data){
 		 var postData = [];
          $.each($("form input[name='quizId']:checked"), function(){            

@@ -1,3 +1,11 @@
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : home.cfm
+		Created By  : Megha Kedia
+		DateCreated : 18-March-2018
+		Description : home page for faculty portal.
+
+-------------------------------------------------------------------------------------------------------------->
+
 <cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT(sessionExists)>
 	<cfdump var = "hvfd" abort>

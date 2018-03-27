@@ -1,3 +1,11 @@
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : viewStudents.cfm
+		Created By  : Megha Kedia
+		DateCreated : 18-March-2018
+		Description : has datatable to show faculties information, with an edit functionality.
+
+-------------------------------------------------------------------------------------------------------------->
+
 <cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
 <cfif NOT(sessionExists)>
 	<cfscript>
@@ -95,19 +103,32 @@
 		 	  <button type = "button" id = "update" name = "update" class = "btn btn-success"
 		 	  onclick = "return updateRow()" >Update</button>
 	          <button type = "button" class = "btn btn-default" data-dismiss = "modal" >Close</button>
+	          <input type = "hidden" value = "3" id = "role" name = "role" disabled>
 	        </div><!---modal-footer--->
 		  </div><!---modal-content--->
   		</div><!---modal dialog--->
   	</div><!---modal fade--->
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-<script type = "text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-<script type = "text/javascript" src = "../../includes/js/listOfStudent.js"></script>
-<script type = "text/javascript" src = "../../includes/js/wordEmailNumberValidation.js"></script>
+<script type = "text/javascript"
+	src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type = "text/javascript"
+	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script type = "text/javascript"
+	src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type = "text/javascript"
+	src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+<script type = "text/javascript"
+	src = "../../includes/js/listOfStudent.js"></script>
+<script type = "text/javascript"
+	src = "../../includes/js/common.js"></script>
+<script type = "text/javascript"
+	src = "../../includes/js/wordEmailNumberValidation.js"></script>

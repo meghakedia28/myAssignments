@@ -1,3 +1,12 @@
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : viewQuiz.cfm
+		Created By  : Megha Kedia
+		DateCreated : 18-March-2018
+		Description : displayes all the list of quiz, with factionality to edit
+					quiz information(only for the upcoming quiz).
+
+-------------------------------------------------------------------------------------------------------------->
+
 <cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
 <cfif NOT(sessionExists)>
 	<cfscript>
@@ -8,16 +17,21 @@
 		setNextEvent(event = "common.loginPage?noaccess");
 	</cfscript>
 </cfif>
-	<div class = "page-title">
+		<div class = "page-title">
 			<div class = "container">
 				<h2>View quiz Details</h2>
 			</div>
 		</div>
 	</header>
 </div>
-<link rel = "stylesheet" type = "text/css" href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
-<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
+<link rel = "stylesheet" type = "text/css"
+	href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+<link rel = "stylesheet"
+	href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel = "stylesheet"
+	href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.css">
+<link rel = "stylesheet"
+	href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 <main class = "main-content">
 	<div class = "container">
 		<div class = "row">
@@ -25,7 +39,8 @@
 				<h2 class = "section-title text-center">View Quiz:</h2>
 				<div class = "export" id = "buttons"></div>
 				<div class = "boxed-section">
-					<cfoutput><input type = "hidden" id = "userId" name = "userId" value = "#session.stLoggedinUser.userId#"></cfoutput>
+					<cfoutput><input type = "hidden" id = "userId" name = "userId"
+						value = "#session.stLoggedinUser.userId#"></cfoutput>
 					<table class = "table" id = "quiz" name = "quiz">
 						<thead>
 							<tr>
@@ -60,21 +75,23 @@
 	         	<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
 	        </div><!---modal-header--->
 			<div class = "modal-body request-form">
-					<input type = "hidden" id = "id" name = "id"></input>
-				 <form name = "editForm" id = "editForm" action = "" method = "post">
+				<form name = "editForm" id = "editForm" action = "" method = "post">
 					<div class = "field">
 						<label for = "quizName">Name of the quiz:</label>
-						<input type = "text" class = "form-control" id = "quizName" name = "quizName" placeholder = "Enter the quiz name" value = "">
+						<input type = "text" class = "form-control" id = "quizName" name = "quizName"
+							placeholder = "Enter the quiz name" value = "">
 						<div class = "error-msg" id = "error_quizname"></div>
 					</div><!---field--->
 					<div class = "field">
 						<label for = "startDateTime">Enter the start time:</label>
-						<input class = "form-control" type = "text" id = "startDateTime" name = "startDateTime" placeholder = "Enter the start date time" value = "">
+						<input class = "form-control" type = "text" id = "startDateTime"
+							name = "startDateTime" placeholder = "Enter the start date time" value = "">
 						<div class = "error-msg" id = "error_startdatetime"></div>
 					</div><!---field--->
 					<div class = "field">
 						<label for = "endTime">Enter the end time:</label>
-						<select class = "form-control" id = "endTime" name = "endTime" placeholder = "Enter the end date time" value = "">
+						<select class = "form-control" id = "endDateTime" name = "endDateTime"
+							placeholder = "Enter the end date time" value = "">
 							<option value = "">Select the duration of test:</option>
 							<option value = "15">15 mins</option>
 							<option value = "30">30 mins</option>
@@ -87,10 +104,12 @@
 						</select>
 						<div class = "error-msg" id = "error_enddatetime"></div>
 					</div><!---field--->
+					<input type = "hidden" name = "quizId" id = "quizId" value = "">
 				</form>
 	 		</div><!---modal-body--->
 	 		<div class = "modal-footer">
-		 	  <button type = "button" id = "update" name = "update" class = "btn btn-success" onclick = "return updateRow(this)">Update</button>
+		 	  <button type = "button" id = "update" name = "update" class = "btn btn-success"
+		 	  	onclick = "return updateRow(this)">Update</button>
 	          <button type = "button" class = "btn btn-default" data-dismiss = "modal" >Close</button>
 	        </div><!---modal-footer--->
 		  </div><!---modal-content--->
@@ -108,25 +127,33 @@
 					<h3>Are you sure you want to delete this row?</h3>
 				</div><!---modal-body--->
 	 			<div class = "modal-footer">
-	 	  			<button type = "button" id = "confirm" name = "confirm" class = "btn btn-danger" onclick = "return deleteRow(this)">Confirm</button>
+	 	  			<button type = "button" id = "confirm" name = "confirm" class = "btn btn-danger"
+	 	  				onclick = "return deleteRow(this)">Confirm</button>
 	          		<button type = "button" class = "btn btn-default" data-dismiss = "modal" >Close</button>
 	        	</div><!---modal-footer--->
 		  	</div><!---modal-content--->
   		</div><!---modal dialog--->
   	</div><!---modal fade--->
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-	<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-	<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-	<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type = "text/javascript" src = "../../includes/js/viewQuizHandling.js"></script>
-	<!-- <script type = "text/javascript" src = "../js/quizValidation.js"></script> -->
-<!-- 	<script type = "text/javascript" src = "../js/wordEmailNumberValidation.js"></script> -->
-</tags:facultyFront>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type = "text/javascript"
+		src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script type = "text/javascript"
+		src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script type = "text/javascript"
+		src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script type = "text/javascript"
+		src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type = "text/javascript"
+		src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script type = "text/javascript"
+	src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+<script
+src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type = "text/javascript" src = "../../includes/js/listOfQuiz.js"></script>
+<script type = "text/javascript" src = "../../includes/js/validateQuiz.js"></script>
+<script type = "text/javascript" src = "../../includes/js/common.js"></script>
