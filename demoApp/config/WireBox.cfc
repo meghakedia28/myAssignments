@@ -52,8 +52,8 @@ Description :
 
 		// Map Bindings below
 		map("authentication").to("models.common.authentication");
-		map("questionsService").to("models.faculty.enterQuestions");
-		map("viewQuestions").to("models.faculty.getQuestionsService");
+		map("enterQuestionsService").to("models.faculty.enterQuestions");
+		map("getQuestionsService").to("models.faculty.getQuestionsService");
 		map("modifyQuestionService").to("models.faculty.modifyQuestionService");
 		map("quizService").to("models.faculty.setQuizService");
 		map("resultService").to ("models.faculty.resultService");
