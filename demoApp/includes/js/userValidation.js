@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------------------------------------------
-		FileName    : userValidation.js
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : does validation for the user details(faculties and students).
+							FileName    : userValidation.js
+							Created By  : Megha Kedia
+							DateCreated : 18-March-2018
+							Description : does validation for the user details(faculties and students).
 
 --------------------------------------------------------------------------------------------------------------*/
 
@@ -29,23 +29,10 @@ $(document).ready(function(){
  	$('#email').focusout(function(){
  		var id = $('#email').val();
  		var validate = emailCheck('#email','#error_email');
+ 		var data = {emailId: id};
+ 		var url = "../?event=admin.checkEmail";
  		if (validate){
- 			$.ajax({
- 				url : "../?event=admin.checkEmail",
- 				data : {
- 					emailId : id
- 				},
- 				success : function(result) {
- 					var obj = $.parseJSON(result);
- 					if (obj.STATUS == "success"){
- 						return true;
- 					}
- 						else {
- 							$("#error_email").html(obj.MESSAGE);
- 							return false;
- 						}
- 				}
- 			});
+ 			gobalAjaxHandler(url,data,successStatus);
  		}
  	});
  	$('#contactNumber').focusout(function(){
@@ -54,32 +41,37 @@ $(document).ready(function(){
  	$('#subject').focusout(function(){
  		var subjectVal = $('#subject').val();
  		var validate = wordCheck('#subject','#error_subject');
+ 		var url = "../?event=admin.checkSubject";
+ 		var data = {name : subjectVal};
  		if (validate){
- 			$.ajax({
- 				url : "../?event=admin.checkSubject",
- 				data : {
- 					name : subjectVal
- 				},
- 				success: function(result) {
- 					var obj = $.parseJSON(result);
- 					if (obj.STATUS == "success"){
-						return true;
-					}
- 						else {
- 							$("#error_subject").html(obj.MESSAGE);
- 							return false;
- 						}
- 				}
- 			});
+ 			gobalAjaxHandler(url,data,successStatus);
  		}	
  	});
 });
 
 /*--------------------------------------------------------------------------------------------
-Function Name: onAjaxSuccess()
-Description: function which is call when ajax call for submition of user details is a success.
-Arguments: result
-Return Type: none
+Function Name  : successStatus()
+Description    : success function which is call when ajax call for fields are successfull.
+Arguments      : result
+Return Type    : none
+----------------------------------------------------------------------------------------------*/
+
+function successStatus(result){
+	var obj = $.parseJSON(result);
+		if (obj.STATUS == "success"){
+			return true;
+		}
+		else {
+			$("#error_email").html(obj.MESSAGE);
+			return false;
+		}
+}
+
+/*--------------------------------------------------------------------------------------------
+Function Name  : insertStatus()
+Description    : function which is call when ajax call for submition of user details is a success.
+Arguments      : result
+Return Type    : none
 ----------------------------------------------------------------------------------------------*/
 
 function insertStatus(result){
@@ -112,13 +104,15 @@ function insertStatus(result){
 		}
 	}
 }
+
 /*--------------------------------------------------------------------------------------------
-Function Name: validate()
-Description: to validate all the fields in the form, return true when all
- 			the data in fields successfully validates.
-Arguments: None
-Return Type: boolean
+Function Name  : validate()
+Description    : to validate all the fields in the form, return true when all
+ 				the data in fields successfully validates.
+Arguments      : None
+Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
+
 function validate(){
  	var firstName = wordCheck('#firstName','#error_firstname');
  	var lastName = wordCheck('#lastName','#error_lastname');
