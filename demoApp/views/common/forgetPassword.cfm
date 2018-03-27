@@ -33,5 +33,6 @@
 	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 	<script src = "../../includes/js/forgetPassword.js"></script>
+	<script type = "text/javascript" src = "../../includes/js/common.js"></script>
 	<script src = "../../includes/js/wordEmailNumberValidation.js"></script>
 </html>

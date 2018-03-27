@@ -91,5 +91,5 @@
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script type = "text/javascript" src = "../../includes/js/userValidation.js"></script>
-<script type = "text/javascript" src = "../../includes/js/gobalAjaxCallHandler.js"></script>
+<script type = "text/javascript" src = "../../includes/js/common.js"></script>
 <script type = "text/javascript" src = "../../includes/js/wordEmailNumberValidation.js"></script>

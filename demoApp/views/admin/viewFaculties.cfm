@@ -142,6 +142,6 @@
 <script type = "text/javascript"
 	src = "../../includes/js/listOfFaculty.js"></script>
 <script type = "text/javascript"
-	src = "../../includes/js/gobalAjaxCallHandler.js"></script>
+	src = "../../includes/js/common.js"></script>
 <script type = "text/javascript"
 	src = "../../includes/js/wordEmailNumberValidation.js"></script>
