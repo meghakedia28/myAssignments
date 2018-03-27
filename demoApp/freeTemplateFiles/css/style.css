@@ -106,8 +106,7 @@ body {
   color: white;
   font-weight: 300;
 }
-.er
-ror-msg{
+.error-msg{
 	margin-left: 10%;
 	color: red;
 	font-size: 80%;
@@ -484,7 +483,8 @@ table {
   display: inline-block;
   margin-bottom: 20px;
 }
-.button.primary, input.primary[type="submit"]{
+.button.primary, 
+.primary[type="submit"]{
   background: #f7eacc;
   background: -webkit-linear-gradient(270deg, #f7eacc, #c2ae81);
   background: linear-gradient(180deg, #f7eacc, #c2ae81);
@@ -528,6 +528,7 @@ input[type="submit"]{
   background: linear-gradient(180deg, #6c7f60, #495740);
   color: white;
   text-decoration: 0 1px 1px rgba(0, 0, 0, 0.4);
+  padding-bottom: 5px;
 }
 input[type="submit"]:hover {
   background: -webkit-linear-gradient(90deg, #6c7f60, #495740);
