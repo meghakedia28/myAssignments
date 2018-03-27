@@ -6,7 +6,7 @@
 
 ------------------------------------------------------------------------------------------------------------*/
 
-component singleton accessors="true"{
+component singleton = "true" accessors = "true"{
 
 	// Properties
 
@@ -20,58 +20,10 @@ component singleton accessors="true"{
 	}
 
 /*----------------------------------------------------------------------------------------------------------
-Function Name: validateInsertController()
-Description: first validates all fields then calls for insertion,
-			if successfully validated.
-Arguments: struct data
-Return Type: struct
-------------------------------------------------------------------------------------------------------------*/
-
-	function fetchStudentsDetails(){
-		var queryService = new query();
-		local.queryService.addParam (name = "student", value = "student",
-			cfsqltype = "cf_sql_varchar");
-		local.queryService.addParam (name = "active", value = "1",
-			cfsqltype = "cf_sql_integer");
-		local.queryService.setName("studentsDetails");
-		local.queryService.setSQL ("SELECT [user].[userId], [user].[firstName],
-					[user].[lastName], [user].[emailid], [user].[contactNumber]
-					FROM [user] JOIN [role] ON [user].[roleId] = [role].[roleId]
-					WHERE [role].[name] = :student AND
-					[user].[active] = :active");
-		studentsDetails = local.queryService.execute().getResult();
-		return studentsDetails;
-	}
-/*----------------------------------------------------------------------------------------------------------
-Function Name: validateInsertController()
-Description: first validates all fields then calls for insertion,
-			if successfully validated.
-Arguments: struct data
-Return Type: struct
-------------------------------------------------------------------------------------------------------------*/
-
-	function getStudentsDetails(){
-		var studentsList = fetchStudentsDetails();
-		var dataArray = ArrayNew(2);
-		var result["data"] = {};
-		var i = 1;
-		for (row in local.studentsList){
-			dataArray[i][1] = encodeForHTML(row.firstName) & " " & encodeForHTML(row.lastName);
-			dataArray[i][2] = encodeForHTML(row.emailId);
-			dataArray[i][3] = encodeForHTML(row.contactNumber);
-			dataArray[i][4] = "<button type = 'button' class = 'btn btn-success btn-md' id = 'result'
-			name = 'result'  data-toggle = 'modal' data-target = '##viewScore'
-			data-id = '#row.userId#' >view all tests scores</button>";
-			local.i = local.i + 1;
-		}
-		local.result.data = dataArray;
-		return result;
-	}
-/*----------------------------------------------------------------------------------------------------------
-Function Name: fetchUserList()
-Description: executes query to fetch the user List.
-Arguments: numeric role
-Return Type: struct
+Function Name  : fetchUserList()
+Description    : executes query to fetch the user List.
+Arguments      : numeric role
+Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function fetchUserList(required numeric role){
@@ -81,11 +33,11 @@ Return Type: struct
 			cfsqltype = "cf_sql_bigint");
 		if (arguments.role == 2 || arguments.role == 3){
 			var sql = "SELECT [user].[userId], [user].[active], [user].[firstName],
-					[user].[lastName], [user].[emailid], [user].[contactNumber], [user].[roleId]";
+							[user].[lastName], [user].[emailid], [user].[contactNumber], [user].[roleId]";
 			if (arguments.role == 2){
 				sql &= ", [subject].[name] FROM [user] JOIN [userSubject]
-							ON [user].[userId] = [userSubject].[userId]
-							JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
+								ON [user].[userId] = [userSubject].[userId]
+								JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
 			}
 			else if (arguments.role == 3){
 				sql &= " FROM [user]";
@@ -97,13 +49,13 @@ Return Type: struct
 		return userList;
 	}
 /*----------------------------------------------------------------------------------------------------------
-Function Name: getUserList()
-Description: fetches the user List and formates the result to display in datatable.
-Arguments: struct data
-Return Type: struct
+Function Name  : getUserList()
+Description    : fetches the user List and formates the result to display in datatable.
+Arguments      : struct data
+Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
-	function getUserList(data){
+	function getUserList(required struct data){
 		if (structKeyExists (arguments.data,'role')){
 			getList = fetchUserList(arguments.data.role);
 		}
@@ -133,12 +85,13 @@ Return Type: struct
 		local.result.data = dataArray;
 		return local.result;
 	}
+
 /*----------------------------------------------------------------------------------------------------------
-Function Name: fetchUserDetails()
-Description: fetches the user details based on userid and role.
-Arguments: numeric userId,
-			numeric role
-Return Type: struct
+Function Name  : fetchUserDetails()
+Description    : fetches the user details based on userid and role.
+Arguments      : numeric userId,
+				numeric role
+Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function fetchUserDetails(required numeric userId, required numeric role){
@@ -148,11 +101,11 @@ Return Type: struct
 		local.userDetailsService.setName("userDetails");
 		if (arguments.role == 2 || arguments.role == 3){
 			var sql = "SELECT [user].[userId], [user].[active], [user].[firstName],
-					[user].[lastName], [user].[emailid], [user].[contactNumber], [user].[roleId]";
+							[user].[lastName], [user].[emailid], [user].[contactNumber], [user].[roleId]";
 			if (arguments.role == 2){
 				sql &= ", [subject].[name]
-			        FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
-					JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
+			       			 FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
+							JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
 			}
 			else if (arguments.role == 3){
 				sql &= " FROM [user]";
@@ -161,15 +114,13 @@ Return Type: struct
 		}
 		local.userDetailsService.setSQL(sql);
 		userDetails = local.userDetailsService.execute().getResult();
-
-
 		return userDetails;
 	}
 /*----------------------------------------------------------------------------------------------------------
-Function Name: getUserDetails()
-Description: fetches the details for a perticular user and formats it to return a proper structure.
-Arguments: struct data
-Return Type: struct
+Function Name  : getUserDetails()
+Description    : fetches the details for a perticular user and formats it to return a proper structure.
+Arguments      : struct data
+Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function getUserDetails(required struct data){
@@ -178,7 +129,8 @@ Return Type: struct
 			local.getUserRoleService.addParam(name = "userId", value = "#arguments.data.userId#",
 				cfsqltype = "cf_sql_bigint");
 			local.getUserRoleService.setName("getUserRole");
-			local.getUserRoleService.setSQL("SELECT [user].[roleId] FROM [user] WHERE [user].[userId] = :userId");
+			local.getUserRoleService.setSQL("SELECT [user].[roleId]
+												FROM [user] WHERE [user].[userId] = :userId");
 			getUserRole = local.getUserRoleService.execute().getResult();
 			var userInformation = fetchUserDetails(arguments.data.userId, getUserRole.roleId);
 		}
@@ -194,5 +146,30 @@ Return Type: struct
   			local.result["contactNumber"] = row.contactNumber;
 		}
 		return local.result;
+	}
+
+/*----------------------------------------------------------------------------------------------------------
+Function Name  : getStudentsDetails()
+Description    : fetches the list of students for viewing scores.
+Arguments      : none
+Return Type    : struct
+------------------------------------------------------------------------------------------------------------*/
+
+	function getStudentsDetails(){
+		var studentsList = fetchUserList(3);
+		var dataArray = ArrayNew(2);
+		var result["data"] = {};
+		var i = 1;
+		for (row in local.studentsList){
+			dataArray[i][1] = encodeForHTML(row.firstName) & " " & encodeForHTML(row.lastName);
+			dataArray[i][2] = encodeForHTML(row.emailId);
+			dataArray[i][3] = encodeForHTML(row.contactNumber);
+			dataArray[i][4] = "<button type = 'button' class = 'btn btn-success btn-md' id = 'result'
+			name = 'result'  data-toggle = 'modal' data-target = '##viewScore'
+			data-id = '#row.userId#' >view all tests scores</button>";
+			local.i = local.i + 1;
+		}
+		local.result.data = dataArray;
+		return result;
 	}
 }
