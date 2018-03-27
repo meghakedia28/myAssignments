@@ -39,6 +39,8 @@ component{
 	public boolean function onApplicationStart(){
 		application.cbBootstrap = new coldbox.system.Bootstrap( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );
 		application.cbBootstrap.loadColdbox();
+		application.mailFrom = "megha.kedia28@gmail.com";
+		application.errorLogService = logError;
 		return true;
 	}
 
@@ -66,5 +68,15 @@ component{
 	public boolean function onMissingTemplate( template ){
 		return application.cbBootstrap.onMissingTemplate( argumentCollection=arguments );
 	}
-
+	public function logError(required any errors, numeric dbError = 0){
+		if (arguments.dbError == 1){
+			dbFileObj = fileOpen("D:\Assignments\myAssignments\logs\dbError.txt","append");
+			fileWrite(dbFileObj, "#errors.message# #errors.detail# #errors.ExtendedInfo#");
+			fileWrite(dbFileObj, "#errors.queryError#");
+			fileClose( dbFileObj );
+		}
+		fileObj = fileOpen("D:\Assignments\myAssignments\logs\error.txt","append");
+		fileWrite(fileObj, "#errors.message# #errors.detail# #errors.ExtendedInfo#");
+		fileClose( fileObj );
+	}
 }
