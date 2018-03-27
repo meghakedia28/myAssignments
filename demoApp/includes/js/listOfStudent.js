@@ -1,5 +1,5 @@
 /*-------------------------------------------------------------------------------------------------------------
-						FileName    : listOfstudent.js
+						FileName    : listOfStudent.js
 						Created By  : Megha Kedia
 						DateCreated : 18-March-2018
 						Description : display the datatable for the list of faculties, 
@@ -56,16 +56,17 @@ $(document).ready(function() {
 		$(".form-control").css("border","");
 		$(".form-control").next('.error-msg').text("");
 		var userId = $(event.relatedTarget).data('id');
+		var data = {userId: userId};
 		url = "../?event=admin.populateModel";
-		gobalAjaxHandler(url,userId,populateData);
+		gobalAjaxHandler(url,data,populateData);
 	});
 });
 
 /*--------------------------------------------------------------------------------------------
-Function Name: populateData()
-Description: function is called after successfull ajax call to populate data.
-Arguments: result
-Return Type: none
+Function Name  : populateData()
+Description    : function is called after successfull ajax call to populate data.
+Arguments      : result
+Return Type    : none
 ----------------------------------------------------------------------------------------------*/
 
 function populateData(result){
@@ -84,10 +85,10 @@ function populateData(result){
 }
 
 /*--------------------------------------------------------------------------------------------
-Function Name: updateRow()
-Description: function used to update the user details.
-Arguments: none
-Return Type: boolean
+Function Name  : updateRow()
+Description    : function used to update the user details.
+Arguments      : none
+Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
 
 function updateRow(){
@@ -100,10 +101,10 @@ function updateRow(){
 }
 
 /*--------------------------------------------------------------------------------------------
-Function Name: updateStatus()
-Description: function called on success of ajax call.
-Arguments: result
-Return Type: boolean
+Function Name  : updateStatus()
+Description    : function called on success of ajax call.
+Arguments      : result
+Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
 
 function updateStatus(result){
@@ -139,10 +140,10 @@ function updateStatus(result){
 }
 	
 /*--------------------------------------------------------------------------------------------
-Function Name: validateAll()
-Description: function to validate all the fields
-Arguments: none
-Return Type: boolean
+Function Name  : validateAll()
+Description    : function to validate all the fields
+Arguments      : none
+Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
 
 function validateAll(){

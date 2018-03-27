@@ -7,11 +7,11 @@
 -------------------------------------------------------------------------------------------------------------*/
 
 /*--------------------------------------------------------------------------------------------
-Function Name: wordCheck()
-Description: function validate a word.
-Arguments: elementId,
-			errorId
-Return Type: boolean
+Function Name  : wordCheck()
+Description    : function validate a word.
+Arguments      : elementId,
+				errorId
+Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
 
 function wordCheck(elementId,errorId){
@@ -32,13 +32,12 @@ function wordCheck(elementId,errorId){
 }
 
 /*--------------------------------------------------------------------------------------------
-Function Name: emailCheck()
-Description: function validate email address
-Arguments: elementId,
-			errorId
-Return Type: boolean
+Function Name  : emailCheck()
+Description    : function validate email address
+Arguments      : elementId,
+				errorId
+Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
-
 
 function emailCheck(elementId,errorId){
 	var id = $(elementId).val();
@@ -64,11 +63,11 @@ function emailCheck(elementId,errorId){
 }
 
 /*--------------------------------------------------------------------------------------------
-Function Name: numberCheck()
-Description: function validate phone number.
-Arguments: elementId,
-			errorId
-Return Type: boolean
+Function Name  : numberCheck()
+Description    : function validate phone number.
+Arguments      : elementId,
+				errorId
+Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
 
 function numberCheck(elementId,errorId){
@@ -85,18 +84,4 @@ function numberCheck(elementId,errorId){
 	}
 	else
 		return true;
-}
-
-/*--------------------------------------------------------------------------------------------
-Function Name: showErrorMessage()
-Description: function is used to show the error message.
-Arguments: elementId,
-			errorId,
-			errorMessage
-Return Type: none
-----------------------------------------------------------------------------------------------*/
-
-function showErrorMessage(elementId, errorId, errorMessage){
-	$(errorId).html(errorMessage);
-	$(elementId).css("border","2px solid red");
 }

@@ -5,6 +5,7 @@
 							Description : This file does all the validation before a new user is added
 
 ------------------------------------------------------------------------------------------------------------*/
+
 component singleton = "true" accessors="true" extends = "enterDataService"{
 
 	// Properties
@@ -20,14 +21,14 @@ component singleton = "true" accessors="true" extends = "enterDataService"{
 
 variables.errorStruct = {elementId = {},errorId = {}};
 variables.insertionStruct = {successfull = {},message = {}};
-role = 3;
+variables.role = 3;
 
 /*----------------------------------------------------------------------------------------------------------
-Function Name: validateInsertController()
-Description: first validates all fields then calls for insertion,
-			if successfully validated.
-Arguments: struct data
-Return Type: struct
+Function Name  : validateInsertController()
+Description    : first validates all fields then calls for insertion,
+				if successfully validated.
+Arguments      : struct data
+Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function validateInsertController(required struct data){
@@ -51,7 +52,7 @@ Return Type: struct
 			}
 		}
 		catch (any e){
-			writeLog (file="error", text = "#e.message# #e.detail# #e.ExtendedInfo#", type = "Error");
+			application.errorLogService.(e);
 			variables.insertionStruct.successfull = "false";
 			variables.insertionStruct.message = "Some unexpected error has occured, Please try again later.";
 			return variables.insertionStruct;
@@ -59,11 +60,11 @@ Return Type: struct
 	}
 
 /*------------------------------------------------------------------------------------------------------------
-Function Name: validateAllFields()
-Description: calls validation for all the fields,
-Arguments: struct data,
-			numeric id.
-Return Type: none
+Function Name  : validateAllFields()
+Description    : calls validation for all the fields,
+Arguments      : struct data,
+				numeric id.
+Return Type    : none
 -----------------------------------------------------------------------------------------------------------*/
 
 function validateAllFields(required struct data, numeric id = 0){
@@ -96,12 +97,12 @@ function validateAllFields(required struct data, numeric id = 0){
 }
 
 /*------------------------------------------------------------------------------------------------------------
-Function Name: validateName()
-Description: validate first name and last name
-Arguments: string name,
-			string elementId,
-			string errorId
-Return Type: none
+Function Name  : validateName()
+Description    : validate first name and last name
+Arguments      : string name,
+				string elementId,
+				string errorId
+Return Type    : none
 ------------------------------------------------------------------------------------------------------------*/
 	function validateName(required string name, required string elementId, required string errorId){
 		variables.errorStruct.elementId.insert (arguments.elementId, arguments.name, true);
@@ -118,10 +119,10 @@ Return Type: none
 	}
 
 /*------------------------------------------------------------------------------------------------------------
-Function Name: validateEmail
-Description: validates the email address,
-Arguments: string emailId
-Return Type: struct
+Function Name  : validateEmail
+Description    : validates the email address,
+Arguments      : string emailId
+Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function validateEmail(required string emailId){
@@ -130,52 +131,50 @@ Return Type: struct
 			local.stStatus.status = "error";
 			local.stStatus.message = "You can't leave this empty." ;
 		}
-		else if (NOT(isValid("eMail", emailId))){
+		else if (!(isValid("eMail", emailId))){
 			local.stStatus.status = "error";
 			local.stStatus.message = "<p>Please enter a valid email address,<br/>
-				of format abc@xyz.pqr between 8 and 30 characters</p>" ;
-  		}
- 		else{
- 			try{
-  				var alreadyExistsService = new query();
-	 			local.alreadyExistsService.setName("alreadyExists");
- 				local.alreadyExistsService.addParam(name = "emailId", value = "#arguments.emailId#",
-  				cfsqltype = "cf_sql_varchar");
-	 			local.alreadyExistsService.setSQL("SELECT [user].[userId] FROM [user]
-	 													WHERE [user].[emailid] = :emailId");
-	 			alreadyExists = local.alreadyExistsService.execute().getResult();
-	 		}//end of try
-	 		catch (database db){
-	 			writeLog (file = "dbErrors", text = "#db.message# #db.detail# #db.ExtendedInfo#",
-	 			type = "Error");
-	 			writeLog (file = "dbErrors", type = "error", text = "#db.queryError#");
-	  			local.stStatus.status = "error" ;
-		 		local.stStatus.message =  "Some unexpected error has occured, Please try again later." ;
-		 		return local.stStatus;
-		 	}
-		 	catch (any e){
-		 		writeLog (file="error", text = "#e.message# #e.detail# #e.ExtendedInfo#", type = "Error");
-		 		local.stStatus.status = "error" ;
-		 		local.stStatus.message =  "Some unexpected error has occured, Please try again later." ;
-		 		return local.stStatus;
-		 	}
-		 	if (alreadyExists.recordCount != 0){
-		 		local.stStatus.status = "error" ;
-		 		local.stStatus.message =  "User already exists" ;
-		 	}
-		 	else{
-		  		local.stStatus.status = "success" ;
-			 	local.stStatus.message = "Welcome new user" ;
-			} //end of else
-		}//end of else
-		return local.stStatus;
-	}//end of function
+			 of format abc@xyz.pqr between 8 and 30 characters.</p>";
+   		}
+  		else {
+  			try {
+   				var alreadyExistsService = new query();
+	  			local.alreadyExistsService.setName("alreadyExists");
+ 	 			local.alreadyExistsService.addParam(name = "emailId", value = "#arguments.emailId#",
+  	 			cfsqltype = "cf_sql_varchar");
+	  			local.alreadyExistsService.setSQL("SELECT [user].[userId] FROM [user]
+	  													WHERE [user].[emailid] = :emailId");
+	  			alreadyExists = local.alreadyExistsService.execute().getResult();
+	  		}//end of try
+	  		catch (database db){
+	  			application.errorLogService.logError(e,1);
+	   			local.stStatus.status = "error" ;
+ 		 		local.stStatus.message =  "Some unexpected error has occured, Please try again later." ;
+ 		 		return local.stStatus;
+ 		 	}
+ 		 	catch (any e){
+ 		 		application.errorLogService.(e);
+ 		 		local.stStatus.status = "error" ;
+ 		 		local.stStatus.message =  "Some unexpected error has occured, Please try again later." ;
+ 		 		return local.stStatus;
+ 		 	}
+ 		 	if (alreadyExists.recordCount != 0){
+ 		 		local.stStatus.status = "error" ;
+ 		 		local.stStatus.message =  "User already exists" ;
+	 	 	}
+ 		 	else{
+  	 	  		local.stStatus.status = "success" ;
+	 		 	local.stStatus.message = "Welcome new user" ;
+	 		} //end of else
+	 	}//end of else
+	 	return local.stStatus;
+	} //end of function
 
 /*------------------------------------------------------------------------------------------------------------
-Function Name: validatePhoneNumber
-Description: validates the users phone number,
-Arguments: string phoneNumber
-Return Type: none
+Function Name  : validatePhoneNumber
+Description    : validates the users phone number,
+Arguments      : string phoneNumber
+Return Type    : none
 ------------------------------------------------------------------------------------------------------------*/
 
 	function validatePhoneNumber(required string phoneNumber){
@@ -188,16 +187,16 @@ Return Type: none
 		}
 		else if (NOT(isValid("telephone",arguments.phoneNumber))){
 			variables.errorStruct.errorId.error_contactnumber =
-			 "Please enter a valid phone numbers(0-9) of 10 digits.";
+			 	"Please enter a valid phone numbers(0-9) of 10 digits.";
 		}
 	}
 
 /*------------------------------------------------------------------------------------------------------------
-Function Name: validateSubject
-Description: validates the subject,
-Arguments: string name,
-			numeric id.
-Return Type: struct
+Function Name  : validateSubject
+Description    : validates the subject,
+Arguments      : string name,
+				numeric id.
+Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function validateSubject(required string name, numeric id = 0){
@@ -206,10 +205,10 @@ Return Type: struct
 			local.stStatus.status = "error" ;
 			local.stStatus.message = "You can't leave this empty." ;
 		}
-		else if (NOT(isValid("regex",arguments.name,"^[a-zA-Z ]{1,30}"))){
+		else if (!(isValid("regex",arguments.name,"^[a-zA-Z ]{1,30}"))){
 			local.stStatus.status = "error" ;
 			local.stStatus.message = "<p>Please use only letters(a-z) or (A-Z)<br/>
-			between 1 and 30 characters." ;
+											between 1 and 30 characters." ;
   		}
    		else {
    			try {
@@ -219,23 +218,21 @@ Return Type: struct
    	 			cfsqltype = "cf_sql_bigint");
  	 			local.subjectCountService.addParam(name = "name", value = "#arguments.name#",
  	  			cfsqltype = "cf_sql_varchar");
-  	  			local.subjectCountService.setSQL("SELECT [subject].[subjectId]
-	   										 			FROM [subject] JOIN [userSubject]
-	  													ON [subject].[subjectId] = [userSubject].[subjectId]
-	  													WHERE [subject].[name] = :name
-	  													AND [userSubject].[userId] != :quizId");
+  	  			local.subjectCountService.setSQL("	SELECT	[subject].[subjectId]
+	   										 		  FROM	[subject] JOIN [userSubject]
+	  												    ON	[subject].[subjectId] = [userSubject].[subjectId]
+	  												 WHERE	[subject].[name] = :name
+	  												   AND	[userSubject].[userId] != :quizId");
 	  	 		subjectCount = local.subjectCountService.execute().getResult();
 	  	 	}
 	  	 	catch (database db){
-	  	 		writeLog (file = "dbErrors", text = "#db.message# #db.detail# #db.ExtendedInfo#",
-	    			type = "Error" );
-	  	 		writeLog (file = "dbErrors", type = "error", text = "#db.queryError#");
+	  	 		application.errorLogService.(db,1);
 		   		local.stStatus.status = "error" ;
 		 		local.stStatus.message =  "Some unexpected error has occured, Please try again later." ;
 		 	 	return local.stStatus;
 		 	}
 		 	catch (any e){
- 				writeLog (file="error", text = "#e.message# #e.detail# #e.ExtendedInfo#", type = "Error");
+ 				application.errorLogService.logError(e,1);
  				local.stStatus.status = "error" ;
  				local.stStatus.message =  "Some unexpected error has occured, Please try again later." ;
  				return local.stStatus;
@@ -252,11 +249,11 @@ Return Type: struct
 		return local.stStatus;
 	}
 /*------------------------------------------------------------------------------------------------------------
-Function Name: validateSubject
-Description: validates the subject,
-Arguments: string name,
-			numeric id.
-Return Type: struct
+Function Name  : updateUserInformationController
+Description    : first valiadtes and then insert the data,
+Arguments      : string name,
+				numeric id.
+Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function updateUserInformationController (required struct data){
@@ -278,11 +275,10 @@ Return Type: struct
 		 		return variables.errorStruct;
 		 	}
 	 	}
-			catch (any e){
-				writeLog (file = "error", text = "#e.message# #e.detail# #e.ExtendedInfo#",
-				 type = "Error");
-				variables.insertionStruct.successfull = "false";
-				variables.insertionStruct.message = "Some unexpected error has occured, Please try again later.";
+		catch (any e){
+			application.errorLogService.(e);
+			variables.insertionStruct.successfull = "false";
+			variables.insertionStruct.message = "Some unexpected error has occured, Please try again later.";
 			return variables.insertionStruct;
 		}
 	}
