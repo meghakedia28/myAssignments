@@ -6,7 +6,7 @@
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
   	<title>Login Form</title>
 	<cfoutput>
-	<link rel = "stylesheet" href = "#base#/freeTemplateFile/css/logInStyle.css">
+	<link rel = "stylesheet" href = "#base#/freeTemplateFiles/css/logInStyle.css">
 	</cfoutput>
 </head>
 	<body>
@@ -30,7 +30,7 @@
 						<!---check if the user is logged in--->
 					<cfif structKeyExists(prc,"isUserLoggedIn") AND prc.isUserLoggedIn EQ false>
 						<p class = "error" id = "error">The User Id and the Password did not match.
-							 Please try again or contact the administrator at : "megha.kedia28@gmail.com".</p>
+							 Please try again or click forget password to reset your password".</p>
 					</cfif>
 					<!---redirect to the page according to their roles--->
 					<cfif structKeyExists(session,"stLoggedInUser")>
