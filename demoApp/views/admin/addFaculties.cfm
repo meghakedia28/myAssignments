@@ -6,16 +6,6 @@
 
 -------------------------------------------------------------------------------------------------------------->
 
-<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 1>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
 	<link rel = "stylesheet" href =
 			"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel = "stylesheet" href =
@@ -32,7 +22,7 @@
 		<div class = "mid-row">
 			<div class = "col-md-8">
 				<div class = "boxed-section request-form">
-					<h2 class = "section-title text-center">Faculty's information:</h2>
+					<h2 class = "section-title text-center">Faculty's Information</h2>
 					<cfform name = "addUserForm" id = "addUserForm" action = ""><!---form to add faculties--->
 						<div class = "field">
 							<label for = "firstName">First Name:</label>

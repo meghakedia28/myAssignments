@@ -6,17 +6,6 @@
 
 -------------------------------------------------------------------------------------------------------------->
 
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfdump var = "hvfd" abort>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 1>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
 	<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<div class = "home-slider">
 			<div class = "container">

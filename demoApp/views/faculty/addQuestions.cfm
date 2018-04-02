@@ -5,17 +5,6 @@
 		Description : has a form to add questions.
 
 -------------------------------------------------------------------------------------------------------------->
-
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
 		<div class = "page-title">
 			<div class = "container">
 				<h2>Add questions:</h2>

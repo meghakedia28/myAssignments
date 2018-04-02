@@ -5,17 +5,6 @@
 		Description : has datatable to show faculties information, with an edit functionality.
 
 -------------------------------------------------------------------------------------------------------------->
-
-<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 1>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
 <link rel = "stylesheet" type = "text/css" href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
 <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
@@ -32,7 +21,7 @@
 			<div class = "col-md-12">
 				<div class = "boxed-section">
 					<h2 class = "section-title text-center">List of students:</h2>
-					<div class = "export" id = "buttons"></div>
+					<div class = "export" id = "exportButtons"></div>
 					<table class = "table" id = "listOfStudents" name = "listOfStudents">
 						<thead>
 							<tr>
