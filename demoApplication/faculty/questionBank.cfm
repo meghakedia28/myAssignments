@@ -14,7 +14,7 @@
 		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<div class = "page-title">
 			<div class = "container">
-				<h2>View quiz Details</h2>
+				<h2>View Questions:</h2>
 			</div>
 		</div>
 	</header>
