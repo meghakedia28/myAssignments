@@ -6,17 +6,6 @@
 						of the quiz set by the faculty(user) for each students.
 
 -------------------------------------------------------------------------------------------------------------->
-
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
 		<link rel = "stylesheet" type = "text/css"
 			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
 		<link rel = "stylesheet"
@@ -36,7 +25,7 @@
 			<div class = "col-md-12">
 				<div class = "boxed-section request-form">
 					<h2 class = "section-title text-center">Students profile:</h2>
-					<div class = "export" id = "buttons"></div><!---export buttons--->
+					<div class = "export" id = "exportButtons"></div><!---export buttons--->
 					<table class = "display" id = "allResult" name = "allResult">
 						<thead>
 							<tr>

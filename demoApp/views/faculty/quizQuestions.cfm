@@ -5,17 +5,6 @@
 		Description : displays all the questions associated with a quiz.
 
 -------------------------------------------------------------------------------------------------------------->
-
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
 		<link rel = "stylesheet" type = "text/css"
 			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
 		<link rel = "stylesheet"
@@ -29,6 +18,9 @@
 					<h6 class = "user">Quiz Name: #prc.quizDetails.name#</h6>
 					<h6 class = "user">Start Time: #prc.quizDetails.startDateTime#</h6>
 					<h6 class = "user">End Time: #prc.quizDetails.endDateTime#</h6>
+					<cfset quizName = "Quiz Name:	" & #prc.quizDetails.name#/>
+					<cfset startTime = "Start Time:   " & #prc.quizDetails.startDateTime#/>
+					<cfset endTime = "End Time:   " & #prc.quizDetails.endDateTime#/>
 					</cfoutput>
 				</div><!---container--->
 			</div><!---page-title--->
@@ -38,9 +30,9 @@
 			<div class = "container">
 				<div class = "row">
 					<div class = "col-md-12">
-						<div class = "export" id = "buttons"></div>
 						<div><a href = "../faculty/viewQuiz">Go back to View Quiz</a></div>
 						<div class = "boxed-section">
+							<div class = "export" id = "exportButtons"></div>
 							<cfoutput>
 								<h2 class = "section-title text-center">#prc.quizDetails.name# questions:</h2>
 							<input type = "hidden" id = "userId" value = "#session.stLoggedInUser.userId#">
@@ -165,5 +157,12 @@ src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	   	<script type = "text/javascript" src = "../../includes/js/viewQuizQuestions.js"></script>
+<script type="text/javascript" language="JavaScript">
+<cfoutput>
+var #toScript(quizName, "quizName")#;
+var #toScript(startTime, "startTime")#;
+var #toScript(endTime, "endTime")#;
+</cfoutput>
+</script>
+<script type = "text/javascript" src = "../../includes/js/viewQuizQuestions.js"></script>
 <script type = "text/javascript" src = "../../includes/js/common.js"></script>

@@ -6,17 +6,6 @@
 					quiz information(only for the upcoming quiz).
 
 -------------------------------------------------------------------------------------------------------------->
-
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
 		<div class = "page-title">
 			<div class = "container">
 				<h2>View quiz Details</h2>
@@ -36,11 +25,11 @@
 	<div class = "container">
 		<div class = "row">
 			<div class = "col-md-12">
-				<h2 class = "section-title text-center">View Quiz:</h2>
-				<div class = "export" id = "buttons"></div>
 				<div class = "boxed-section">
 					<cfoutput><input type = "hidden" id = "userId" name = "userId"
 						value = "#session.stLoggedinUser.userId#"></cfoutput>
+					<h2 class = "section-title text-center">View Quiz:</h2>
+					<div class = "export" id = "exportButtons"></div>
 					<table class = "table" id = "quiz" name = "quiz">
 						<thead>
 							<tr>
@@ -149,9 +138,8 @@
 		src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script type = "text/javascript"
 	src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-<script
-src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js">
-</script>
+<script type = "text/javascript" src = "../../includes/js/plugins/jquery.datetimepicker.js">
+	</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type = "text/javascript" src = "../../includes/js/listOfQuiz.js"></script>

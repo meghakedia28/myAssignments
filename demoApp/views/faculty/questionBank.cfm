@@ -5,17 +5,6 @@
 		Description : displays the list of all questions and facility to edit and delete them.
 
 -------------------------------------------------------------------------------------------------------------->
-
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
 		<link rel = "stylesheet" type = "text/css"
 			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
 		<link rel = "stylesheet"
@@ -34,10 +23,10 @@
 		<div class = "row">
 			<div class = "col-md-12">
 				<div class = "boxed-section">
-				<cfoutput><input type = "hidden" id = "userId" name = "userId"
+					<cfoutput><input type = "hidden" id = "userId" name = "userId"
 								value = "#session.stLoggedInUser.userId#"></cfoutput>
-				<h2 class = "section-title text-center">Question Bank:</h2>
-					<div class = "export" id = "buttons"></div><!---export buttons--->
+					<h2 class = "section-title text-center">Question Bank:</h2>
+					<div class = "export" id = "exportButtons"></div><!---export buttons--->
 					<table class = "table" id = "questions" name = "questions" >
 						<thead>
 							<tr>

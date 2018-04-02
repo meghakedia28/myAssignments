@@ -5,17 +5,6 @@
 		Description : has datatable to show faculties information, with an edit functionality.
 
 -------------------------------------------------------------------------------------------------------------->
-
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
 		<link rel = "stylesheet" type = "text/css"
 			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
 		<link rel = "stylesheet"
@@ -33,12 +22,16 @@
 		<div class = "container">
 			<div class = "row">
 				<div class = "col-md-12">
-					<div class = "export" id = "buttons"></div>
+					<div><a href = "../faculty/results">Go back to View Results</a></div>
 					<div class = "boxed-section">
 						<h2 class = "section-title text-center">Students report:</h2>
+						<div class = "export" id = "exportButtons"></div>
 						<cfoutput>
 						<h6 >Name: #prc.scoreDetails.firstName# #prc.scoreDetails.lastName#</h6>
 	 					<h6 >Quiz Name: #prc.scoreDetails.name#</h6>
+	 					<cfset studentName = "Student name:	" & #prc.scoreDetails.firstName# &
+	 											" " & #prc.scoreDetails.lastName#>
+	 					<cfset quizName = "Quiz name: " & #prc.scoreDetails.name#>
 	 					</cfoutput>
 						<table class = "table table-sm" id = "studentsReportTable" name = "studentsReportTable">
 							<thead>
@@ -76,6 +69,12 @@
 	<script type = "text/javascript"
 			src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script
+	<script type = "text/javascript"
 			src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+	<script type="text/javascript" language="JavaScript">
+		<cfoutput>
+		var #toScript(studentName, "studentName")#;
+		var #toScript(quizName, "quizName")#;
+		</cfoutput>
+	</script>
  	<script type = "text/javascript" src = "../../includes/js/studentsReportForFaculty.js"></script>
