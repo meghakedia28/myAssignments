@@ -7,9 +7,6 @@
 /*=========================================== 
  * Importing CSS Libraries
  *===========================================*/
-.dropdown-menu{
-z-index:1051;
-}
 .filter{
 	display: inline-block;
 }
