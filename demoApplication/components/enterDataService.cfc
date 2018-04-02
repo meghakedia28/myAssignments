@@ -15,21 +15,21 @@ USE: insertion and updation of user information--->
 					<cfquery >
 						INSERT INTO [subject]
 						(name) VALUES (
-						<cfqueryparam value = "#trim(data.subject)#" cfsqltype = "cf_sql_varchar" > )
+						<cfqueryparam value = "#data.subject#" cfsqltype = "cf_sql_varchar" > )
 					</cfquery>
 					<cfquery name = "getSubjectId">
 						SELECT [subjectId] FROM [subject]
-						WHERE [name] = <cfqueryparam value = "#trim(data.subject)#" cfsqltype = "cf_sql_varchar" >
+						WHERE [name] = <cfqueryparam value = "#data.subject#" cfsqltype = "cf_sql_varchar" >
 					</cfquery>
 				</cfif>
 				<cfquery>
 					INSERT INTO [user]
 					(firstName,lastName,emailid,contactNumber,roleId,active) VALUES (
-					<cfqueryparam value = "#trim(data.firstName)#" cfsqltype = "cf_sql_varchar" >,
-					<cfqueryparam value = "#trim(data.lastName)#" cfsqltype = "cf_sql_varchar" >,
-					<cfqueryparam value = "#trim(data.email)#" cfsqltype = "cf_sql_varchar" >,
-					<cfqueryparam value = "#trim(data.contactNumber)#" cfsqltype = "cf_sql_varchar" >,
-					<cfqueryparam value = "#trim(role)#" cfsqltype = "cf_sql_integer" >,
+					<cfqueryparam value = "#data.firstName#" cfsqltype = "cf_sql_varchar" >,
+					<cfqueryparam value = "#data.lastName#" cfsqltype = "cf_sql_varchar" >,
+					<cfqueryparam value = "#data.email#" cfsqltype = "cf_sql_varchar" >,
+					<cfqueryparam value = "#data.contactNumber#" cfsqltype = "cf_sql_varchar" >,
+					<cfqueryparam value = "#role#" cfsqltype = "cf_sql_integer" >,
 					<cfqueryparam value = "0" cfsqltype = "cf_sql_integer">)
 				</cfquery>
 				<cfquery name = "getUserId">
