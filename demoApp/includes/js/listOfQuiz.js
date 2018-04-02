@@ -1,21 +1,29 @@
 /*----------------------------------------------------------------------------------------------------------
-						FileName    : viewQuiz.cfc
-						Created By  : Megha Kedia
-						DateCreated : 15-March-2018
-						Description : does validation related to setting a quiz.
+FileName    : listOfQuiz.js
+Created By  : Megha Kedia
+DateCreated : 15-March-2018
+Description : does ajax call to display quiz list in datatable.
 
 ------------------------------------------------------------------------------------------------------------*/
 
 $.noConflict();
 var quizTable;
 jQuery(document).ready(function($) {
+	var loaderUrl = location.protocol + '//' + location.host + '/demoApp/includes/images/ajax-loader.gif'; 
 	var userId = $('#userId').val();
+	var newDate = new Date();
 	$('#startDateTime').datetimepicker({
-		formatDate: 'Y/m/d',
-		minDate: 0,
-		minTime: moment().add(1, 'h')
+		formatDate : 'Y/m/d',
+		formateTime :'hh:ii',
+		minDateTime: new Date(newDate.getTime())
 	});
 	quizTable = $('#quiz').DataTable({
+		"language": {
+			"sLoadingRecords": "<img src = '" + loaderUrl + "'> Loading.."
+		},
+		"search": {
+		    "smart": false
+		},
 		"columnDefs": [ {
 		      "targets"  : [4,3],
 		      "orderable": false,
@@ -46,7 +54,7 @@ jQuery(document).ready(function($) {
 					  }
 				   }
 				]
-    		}).container().appendTo($('#buttons'));	
+    		}).container().appendTo($('#exportButtons'));	
  		$(".form-control").focus(function(){
  			$(this).css("border","");
  			$(this).next(".error-msg").text("");

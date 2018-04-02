@@ -1,15 +1,24 @@
 /*-------------------------------------------------------------------------------------------------------------
-						FileName    : facultyResultSet.js
-						Created By  : Megha Kedia
-						DateCreated : 21-March-2018
-						Description : view all the students results.
+FileName    : facultyResultSet.js
+Created By  : Megha Kedia
+DateCreated : 21-March-2018
+Description : view all the students results.
 
 -------------------------------------------------------------------------------------------------------------*/
 
+$.noConflict();
 var resultTable,filter, filtereData;
+var userId = $('#userId').val();
+var loaderUrl = location.protocol + '//' + location.host + '/demoApp/includes/images/ajax-loader.gif';
 $(document).ready(function(){
-	var userId = $('#userId').val();
+	$('.selectpicker').selectpicker();
 	resultTable = $('#result').DataTable({
+		"language": {
+			"sLoadingRecords": "<img src = '" + loaderUrl + "'> Loading.."
+		},
+		"search": {
+		    "smart": false
+		},
 		"order": [],
         "ajax": {
 			"url" : "../?event=faculty.viewResults",
@@ -35,17 +44,7 @@ $(document).ready(function(){
 				  }
 			   }
 			]
-		}).container().appendTo($('#buttons'));	
-	filter = $('#filterList').DataTable({
-		"lengthChange": false,
-		"paging": false,
-		"ajax": {
-			"url" : "../?event=faculty.applyQuizFilter",
-			"data" :{
-				userId : userId
-					}
-				}
-		 });
+		}).container().appendTo($('#exportButtons'));	
 	});
 
 /*--------------------------------------------------------------------------------------------
@@ -56,42 +55,45 @@ Return Type    : none
 ----------------------------------------------------------------------------------------------*/
 
 	function addFilter(data){
-		 var postData = [];
-         $.each($("form input[name='quizId']:checked"), function(){            
-        	 postData.push($(this).val());
-         });
-		var userId = $('#userId').val();
-		if (postData == ""){
-			$.each($("form input[name='quizId']"), function(){            
-	        postData.push($(this).val());
-			});
-		}
-		postData = postData.join(","),
+		var postData = $('#filter').val();
+		postData = postData + "";
 		resultTable.destroy();
+		if (postData == '' || postData == "null"){
+			data = {userId : userId};
+		}
+		else{
+			data = {listOfQuizId: postData, userId : userId};
+		}
 		resultTable = $('#result').DataTable({
+			"language": {
+				"sLoadingRecords": "<img src = '" + loaderUrl + "'> Loading.."
+			},
+			"search": {
+			    "smart": false
+			},
 			"order": [],
 			"ajax": {
 				"url" : "../?event=faculty.viewResults",
-				"data" : {
-					listOfQuizId : postData,
-					userId : userId
-					}       
-				}
-			});
-			var buttons = new $.fn.dataTable.Buttons(resultTable, {
-				buttons: [
-				          {
-						    extend: 'csvHtml5',
-						    exportOptions: {
-						    columns: [ 0, 1, 2, 3, 4, 5]
-						   }
-						},
-						{
-							extend: 'pdfHtml5',
-						    exportOptions: {
-						    columns: [ 0, 1, 2, 3, 4, 5]
-						  }
-					   }
-					]
-				}).container().appendTo($('#buttons'));	
+				"data" : data
 			}
+		});
+		var buttons = new $.fn.dataTable.Buttons(resultTable, {
+			buttons: [
+			          {
+					    extend: 'csvHtml5',
+					    title: 'Results',
+					    exportOptions: {
+					    columns: [ 0, 1, 2, 3, 4, 5]
+					   }
+					},
+					{
+						extend: 'pdfHtml5',
+						title: 'Results',
+					    exportOptions: {
+					    columns: [ 0, 1, 2, 3, 4, 5]
+					  }
+				   }
+				]
+			}).container().appendTo($('#buttons'));	
+	}
+			

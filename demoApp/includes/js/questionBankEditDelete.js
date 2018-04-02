@@ -1,16 +1,23 @@
 /*----------------------------------------------------------------------------------------------------------
-						FileName    : questionBankEditDelete.cfc
-						Created By  : Megha Kedia
-						DateCreated : 13-March-2018
-						Description : get services related to questions.
+FileName    : questionBankEditDelete.cfc
+Created By  : Megha Kedia
+DateCreated : 13-March-2018
+Description : get services related to questions.
 
 ------------------------------------------------------------------------------------------------------------*/
 
 var questionTable;
 $(document).ready(function(){
+	var loaderUrl = location.protocol + '//' + location.host + '/demoApp/includes/images/ajax-loader.gif'; 
 	url = "../?event=faculty.viewQuestionBank";
 	var userId = $('#userId').val();
 	questionTable = $("#questions").DataTable({
+		"language": {
+			"sLoadingRecords": "<img src = '" + loaderUrl + "'> Loading.."
+		},
+		"search": {
+		    "smart": false
+		},
 		"columnDefs": [ {
 		      "targets"  : [6],
 		      "orderable": false,
@@ -42,13 +49,13 @@ $(document).ready(function(){
 			  }
 			}
 		]
-	}).container().appendTo($('#buttons'));
+	}).container().appendTo($('#exportButtons'));
 	$(".form-control").focus(function(){
 		$(this).css("border","");
 		$(this).next('.error-msg').text("");
 	});
 	$(".form-control").focusout(function(){
-		validate(this);
+		validate(this, $(this).next('.error-msg'));
 	});
 	$('#rowEdit').on('show.bs.modal', function (event) {
 		  var questionId = $(event.relatedTarget).data('id');
@@ -116,16 +123,16 @@ function deleteStatus(result){
 					questionTable.ajax.reload();
 					return true;
 	            }
-	        }//end of button
-		});//end of confirm model
-	}//end of if
+	        }
+		});
+	}
 	else {
 		$.alert({
 		    title: 'Alert!',
 		    content: 'Data has not be deleted, please try agin later.',
 		});
 		return false;
-	}//end of else
+	}
 }
 
 /*--------------------------------------------------------------------------------------
@@ -137,16 +144,18 @@ Return Type	   : boolean
 
 function updateRow(data){
 	 event.preventDefault();
-	 var checkQuestion = validate('#question', '#error_question');
-	 var checkOptiona = validate('#optiona', '#error_optiona');
-	 var checkOptionb = validate('#optionb', '#error_optionb');
-	 var checkOptionc = validate('#optionc', '#error_optionc');
-	 var checkOptiond = validate('#optiond', '#error_optiond');
-	 var checkAnswer = validate('#answer', '#error_answer');
-	 var optiona = $('#optiona').val();
-	 var optionb = $('#optionb').val();
-	 var optionc = $('#optionc').val();
-	 var optiond = $('#optiond').val();
+	 $(".error-msg").text("");
+	 $(".form-control").css("border","");
+	 var checkQuestion = validate("#question", "#error_question");
+	 var checkOptiona = validate("#optiona", "#error_optiona");
+	 var checkOptionb = validate("#optionb", "#error_optionb");
+	 var checkOptionc = validate("#optionc", "#error_optionc");
+	 var checkOptiond = validate("#optiond", "#error_optiond");
+	 var checkAnswer = validate("#answer", "#error_answer");
+	 var optiona = ($("#optiona").val()).trim();
+	 var optionb = ($("#optionb").val()).trim();
+	 var optionc = ($("#optionc").val()).trim();
+	 var optiond = ($("#optiond").val()).trim();
 	 var unique = false;
 	 if ( optiona != "" && optionb != "" && optionc != "" && optiond != ""){
 			unique = checkUnique(optiona, optionb, optionc, optiond);
@@ -169,11 +178,11 @@ Return Type	   : none
 
 function updateStatus (result){
 	var obj = $.parseJSON(result);
-	if (obj.ERRORID.update == 'successfull'){
-		$('.close').click(); 
+	if (obj.ERRORID.update == "successfull"){
+		$(".close").click(); 
 		$.confirm({
-            title: 'Success',
-            content: 'The question has been updated successfully.',
+            title: "Success",
+            content: "The question has been updated successfully.",
             buttons: {
                 Ok : function () {
                 	$(".error-msg").text("");
@@ -183,15 +192,15 @@ function updateStatus (result){
             }
 		});
 	}
-	else if (obj.ERRORID.update == 'fail'){
+	else if (obj.ERRORID.update == "fail"){
 		$.confirm({
-            title: 'Error',
-            content: 'Some unexpected error has occured. Please try again later.'
+            title: "Error",
+            content: "Some unexpected error has occured. Please try again later."
 		});
 	}
 	else{
 		for (keys in obj.ERRORID){
-			var id = '#'+(keys.toLowerCase());
+			var id = "#"+(keys.toLowerCase());
 			$(id).text(obj.ERRORID[keys]);
 		}
 	}

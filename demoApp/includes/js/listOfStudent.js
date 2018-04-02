@@ -1,29 +1,35 @@
 /*-------------------------------------------------------------------------------------------------------------
-						FileName    : listOfStudent.js
-						Created By  : Megha Kedia
-						DateCreated : 18-March-2018
-						Description : display the datatable for the list of faculties, 
-										and has functionality to edit the row data.
+FileName    : listOfStudent.js
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : display the datatable for the list of faculties, 
+			  and has functionality to edit the row data.
 
 -------------------------------------------------------------------------------------------------------------*/
-
+var loaderUrl = location.protocol + '//' + location.host + '/demoApp/includes/images/ajax-loader.gif';
 var listOfStudentTable;
 $(document).ready(function() {
 	var userid = $('#id').val() ;
 	 listOfStudentTable = $('#listOfStudents').DataTable({
-		 "columnDefs": [ {
+		 "language": {
+				"sLoadingRecords": "<img src = '" + loaderUrl + "'> Loading.."
+		 },
+		 "search": {
+			    "smart": false
+		},
+		"columnDefs": [ {
 		      "targets"  : [4],
 		      "orderable": false,
 		      "searchable": false,
-		    }],
+		 }],
 		 "order": [],
 		 "ajax": {
 			"url" : "../?event=admin.getUser",
 			"data" :{
 				role : '3'
-			}
-    		}
-		});
+		}
+		}
+	});
 	var buttons = new $.fn.dataTable.Buttons(listOfStudentTable, {
 	buttons: [
 	          {
@@ -41,7 +47,7 @@ $(document).ready(function() {
 			  }
 		   }
 		]
-	}).container().appendTo($('#buttons'));
+	}).container().appendTo($('#exportButtons'));
 	$(".form-control").focus(function(){
 		$(this).css("border","");
 		$(this).next('.error-msg').text("");
@@ -57,7 +63,7 @@ $(document).ready(function() {
 		$(".form-control").next('.error-msg').text("");
 		var userId = $(event.relatedTarget).data('id');
 		var data = {userId: userId};
-		url = "../?event=admin.populateModel";
+		var url = "../?event=admin.populateModel";
 		gobalAjaxHandler(url,data,populateData);
 	});
 });
@@ -74,7 +80,7 @@ function populateData(result){
 	$('#firstName').val(obj.firstName);
 	$('#lastName').val(obj.lastName);
 	$('#email').val(obj.emailId);
-	$('#userId').val(userId);
+	$('#userId').val(obj.userId);
 	if (obj.active == 1){
 		$('#active').val("true");
 	}
@@ -94,7 +100,7 @@ Return Type    : boolean
 function updateRow(){
 	event.preventDefault();
 	var valid = validateAll();
-	url : "../?event=admin.updateRow";
+	var url = "../?event=admin.updateRow";
 	if (valid){
 		gobalAjaxHandler(url,$("form").serializeArray(),updateStatus);
 	}
@@ -108,6 +114,7 @@ Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
 
 function updateStatus(result){
+	console.log(result);
 	var obj = $.parseJSON(result);
 	if (obj.SUCCESSFULL != null){						
 		if(obj.SUCCESSFULL){
