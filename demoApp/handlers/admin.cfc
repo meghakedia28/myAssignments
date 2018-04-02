@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------------------------------------
-		FileName    : admin.cfc
-		Created By  : Megha Kedia
-		DateCreated : 20-March-2018
-		Description : added events based on admin portal.
+FileName    : admin.cfc
+Created By  : Megha Kedia
+DateCreated : 20-March-2018
+Description : added events based on admin portal.
 
 ------------------------------------------------------------------------------------------------------------*/
 component extends="coldbox.system.EventHandler"{
@@ -37,6 +37,22 @@ component extends="coldbox.system.EventHandler"{
 	function onInvalidHTTPMethod( event, rc, prc, faultAction, eventArguments ){
 	}
 	*/
+/*----------------------------------------------------------------------------------
+Function Name : preHandler
+Description   : checks authentication.
+Arguments     : event,action,eventArguments,rc,prc
+Return Type   : none
+------------------------------------------------------------------------------------*/
+
+function preHandler(event,action,eventArguments,rc,prc){
+	local.sessionExists = structKeyExists(session,'stLoggedInUser');
+	if (!(local.sessionExists)){
+		setNextEvent(event = "common.loginPage?noaccess");
+	}
+	else if (session.stLoggedInUser.roleId != 1){
+		setNextEvent(event = "common.loginPage?noaccess");
+	}
+}
 
 /*----------------------------------------------------------------------------------
 Function Name : home
@@ -44,8 +60,9 @@ Description   : set the view for admin home.
 Arguments     : event, rc, prc
 Return Type   : none
 ------------------------------------------------------------------------------------*/
+
 	function home( event, rc, prc ){
-		event.setView(view = "admin/home", layout = "adminFront" );
+		event.setView(view = "admin/home", layout = "commonLayout" );
 	}
 
 /*----------------------------------------------------------------------------------
@@ -55,7 +72,7 @@ Arguments      : event, rc, prc
 Return Type    : none
 ------------------------------------------------------------------------------------*/
 	function addFaculties( event, rc, prc ){
-		event.setView(view = "admin/addFaculties", layout = "adminFront" );
+		event.setView(view = "admin/addFaculties", layout = "commonLayout" );
 	}
 
 /*----------------------------------------------------------------------------------
@@ -65,7 +82,7 @@ Arguments      : event, rc, prc
 Return Type    : none
 ------------------------------------------------------------------------------------*/
 	function viewFaculties( event, rc, prc ){
-		event.setView(view = "admin/viewFaculties", layout = "adminFront" );
+		event.setView(view = "admin/viewFaculties", layout = "commonLayout" );
 	}
 
 /*----------------------------------------------------------------------------------
@@ -75,7 +92,7 @@ Arguments      : event, rc, prc
 Return Type    : none
 ------------------------------------------------------------------------------------*/
 	function addStudents( event, rc, prc ){
-		event.setView(view = "admin/addStudents", layout = "adminFront" );
+		event.setView(view = "admin/addStudents", layout = "commonLayout" );
 	}
 
 /*----------------------------------------------------------------------------------
@@ -85,7 +102,7 @@ Arguments      : event, rc, prc
 Return Type    : none
 ------------------------------------------------------------------------------------*/
 	function viewStudents( event, rc, prc ){
-		event.setView(view = "admin/viewStudents", layout = "adminFront" );
+		event.setView(view = "admin/viewStudents", layout = "commonLayout" );
 	}
 /*----------------------------------------------------------------------------------
 Function Name  : validateAddUser
@@ -95,8 +112,13 @@ Return Type    : struct
 ------------------------------------------------------------------------------------*/
 
 	function validateAddUser (event,rc,prc){
-		var status = userValidationService.validateInsertController(rc);
-		event.renderData(format = "json", data = serializeJSON(status));
+		if (event.isAjax()){
+			local.status = userValidationService.validateInsertController(rc);
+			event.renderData(format = "json", data = serializeJSON(local.status));
+		}
+		else{
+			event.norender();
+		}
 	}
 /*----------------------------------------------------------------------------------
 Function Name  : checkEmail
@@ -106,8 +128,14 @@ Return Type    : struct
 ------------------------------------------------------------------------------------*/
 
 	function checkEmail (event,rc,prc){
-		var status = userValidationService.validateEmail(rc.emailId);
-		event.renderData(format = "json", data = serializeJSON(status));
+		if (event.isAjax()){
+			local.status = userValidationService.validateEmail(rc.emailId);
+			structInsert(local.status,"elementId","error_email",false);
+		event.renderData(format = "json", data = serializeJSON(local.status));
+		}
+		else{
+			event.norender();
+		}
 	}
 /*----------------------------------------------------------------------------------
 Function Name  : checkSubject
@@ -117,8 +145,14 @@ Return Type    : struct
 ------------------------------------------------------------------------------------*/
 
 	function checkSubject (event,rc,prc){
-		var status = userValidationService.validateSubject(rc.name);
-		event.renderData(format = "json", data = serializeJSON(status));
+		if (event.isAjax()){
+			local.status = userValidationService.validateSubject(rc.name);
+			structInsert(local.status,"elementId","error_subject",false);
+			event.renderData(format = "json", data = serializeJSON(local.status));
+		}
+		else{
+			event.norender();
+		}
 	}
 /*----------------------------------------------------------------------------------
 Function Name  : getUser
@@ -128,8 +162,13 @@ Return Type    : struct
 ------------------------------------------------------------------------------------*/
 
 	function getUser(event,rc,prc){
-		var data = userDetailsService.getUserList(rc);
-		event.renderData(format = "json", data = serializeJSON(data));
+		if (event.isAjax()){
+			local.data = userDetailsService.getUserList(rc);
+			event.renderData(format = "json", data = serializeJSON(local.data));
+		}
+		else{
+			event.norender();
+		}
 	}
 /*----------------------------------------------------------------------------------
 Function Name  : populateStudentModel
@@ -138,9 +177,14 @@ Arguments      : event, rc, prc
 Return Type    : struct
 ------------------------------------------------------------------------------------*/
 
-	remote function populateModel(event,rc,prc){
-		var data = userDetailsService.getUserDetails(rc);
-		event.renderData(format = "json", data = serializeJSON(data));
+	function populateModel(event,rc,prc){
+		if (event.isAjax()){
+			local.data = userDetailsService.getUserDetails(rc);
+			event.renderData(format = "json", data = serializeJSON(local.data));
+		}
+		else{
+			event.norender();
+		}
 	}
 
 /*----------------------------------------------------------------------------------
@@ -151,7 +195,12 @@ Return Type    : struct
 ------------------------------------------------------------------------------------*/
 
 	function updateRow(event,rc,prc){
-		var data = userValidationService.updateUserInformationController(rc);
-		event.renderData(format = "json", data = serializeJSON(data));
+		if (event.isAjax()){
+			local.data = userValidationService.updateUserInformationController(rc);
+			event.renderData(format = "json", data = serializeJSON(local.data));
+		}
+		else{
+			event.norender();
+		}
 	}
 }

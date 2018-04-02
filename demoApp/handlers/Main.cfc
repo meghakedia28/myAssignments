@@ -1,4 +1,11 @@
-﻿<cfcomponent output="false" extends="coldbox.system.EventHandler">
+﻿<!----------------------------------------------------------------------------------------------------------
+							FileName    : Main.cfc
+							Created By  : Megha Kedia
+							DateCreated : 29-March-2018
+							Description : contains main level functions.
+------------------------------------------------------------------------------------------------------------>
+
+<cfcomponent output="false" extends="coldbox.system.EventHandler">
 
 	<!--- Default Action --->
 	<cffunction name="loginPage" returntype="void" output="false" hint="My main event">
@@ -55,8 +62,8 @@
 		<cfargument name="rc">
 		<cfargument name="prc">
 
-		<cfset var sessionScope = event.getValue("sessionReference")>
-		<cfset var applicationScope = event.getValue("applicationReference")>
+		<cfset local.sessionScope = event.getValue("sessionReference")>
+		<cfset local.applicationScope = event.getValue("applicationReference")>
 
 	</cffunction>
 
@@ -67,21 +74,49 @@
 
 		<cfscript>
 			//Grab Exception From private request collection, placed by ColdBox Exception Handling
-			var exception = prc.exception;
+			local.exception = prc.exception;
 			//Place exception handler below:
-
+			setNextEvent("main.fail");
 		</cfscript>
 	</cffunction>
-
+	<cffunction name="fail" returntype="void" output="false">
+		<cfargument name="event">
+		<cfargument name="rc">
+		<cfargument name="prc">
+		<!--- <cfscript> --->
+<!--- 			event.setView( view = "main/fail", layout = "commonLayout" ); --->
+<!--- 		</cfscript> --->
+	</cffunction>
+	<cffunction name="pageNotFound" returntype="void" output="false">
+		<cfscript>
+			event.renderData( data="<h1>Page Not Found</h1>", statusCode=404);
+			event.setView("main/pageNotFound").setHTTPHeader("404", "Page Not Found");
+		</cfscript>
+	</cffunction>
 	<cffunction name="onMissingTemplate" returntype="void" output="false">
 		<cfargument name="event">
 		<cfargument name="rc">
 		<cfargument name="prc">
 		<cfscript>
 			//Grab missingTemplate From request collection, placed by ColdBox
-			var missingTemplate = event.getValue("missingTemplate");
-
+			local.missingTemplate = event.getValue("missingTemplate");
+			event.renderData( data="<h1>Page Not Found</h1>", statusCode=404);
+			event.setView("main/pageNotFound").setHTTPHeader("404", "Page Not Found");
 		</cfscript>
 	</cffunction>
+	<cffunction name="onError" returntype="void" output="false">
+		<cfargument name="event">
+		<cfargument name="rc">
+		<cfargument name="prc">
+		<cfargument name="faultaction">
+		<cfargument name="exception">
+		<cfscript>
+			prc.response = getInstance("ResponseObject");
+			prc.response.setError(true);
+			prc.response.addMessage("Error executing resource #arguments.exception.message#");
 
+			arguments.event.setHTTPHeader(statusCode="500",
+				statusText="Error executing resource #arguments.exception.message#").renderData( data=prc.response.getDataPackage(), type="json");
+		</cfscript>
+	</cffunction>
 </cfcomponent>
