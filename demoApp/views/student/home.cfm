@@ -1,13 +1,11 @@
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 3>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : home.cfm
+		Created By  : Megha Kedia
+		DateCreated : 28-March-2018
+		Description : displays the student home page.
+
+-------------------------------------------------------------------------------------------------------------->
+
 	<div class = "home-slider">
 		<div class = "container">
 			<div class = "slider">

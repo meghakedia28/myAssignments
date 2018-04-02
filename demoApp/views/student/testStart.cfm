@@ -1,87 +1,116 @@
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 3>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
-		<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-			<div class="page-title">
-				<div class="container">
-					<h2>Add questions</h2>
+<!-------------------------------------------------------------------------------------------------------------
+		FileName    : testStart.cfm
+		Created By  : Megha Kedia
+		DateCreated : 28-March-2018
+		Description : displays the test questions
+
+-------------------------------------------------------------------------------------------------------------->
+
+		<link rel = "stylesheet" type = "text/css"
+			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<link rel = "stylesheet"
+			href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel = "stylesheet"
+			href = "../../includes/css/testStyle.css">
+			<div class = "page-title">
+				<div class = "container">
 				</div>
 			</div>
 		</header>
 	</div>
-	<cfif structKeyExists(session,"stQuizStarts") >
-		<cfif !(#session.stQuizStarts.endTime# GT #now()# && #session.stQuizStarts.startTime# LT #now()#)  >
-			<cfset killSession = createObject("component","demoApplication.components.onTestSubmit").destroySession() >
-			<cflocation url = "tests.cfm?noaccess">
+	<cfif (structKeyExists(prc.results,"quizStructExists") AND (prc.results.quizStructExists  EQ  "true"))>
+		<cfif (structKeyExists(prc.results, "relocate") AND (prc.results.relocate  EQ  "true"))>
+			<cfscript>
+				setNextEvent(event = "student.tests?noaccess");
+			</cfscript>
 		</cfif>
-		<cfset testScore = createObject("component","demoApplication.components.getQuizDetails").getScore(#session.stLoggedInUser.userId# , #session.stQuizStarts.quizId#)>
-		<cfif (#session.stQuizStarts.endTime# LT #now()# || (#testScore.recordCount# NEQ 0))  >
-			<div id="testEndMsg" name="testEndMsg"><h1> Test time has ended, please come back in the next test </h1></div>
+		<cfif (structKeyExists(prc.results, "endTest") AND (prc.results.endTest  EQ  "true"))>
+			<div id = "testEndMsg" name = "testEndMsg">
+				<h1> Test has ended, please come back in the next test
+				</h1>
+			</div>
 		<cfelse>
-		<main class="main-content">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-10">
-						<h3>NOTE:<br/>
-							The test will end on : <cfoutput>#DateTimeFormat(session.stQuizStarts.endTime, "dd MMMMM,yyyy hh:nn tt")#</cfoutput><br />
-							You can submit the test only once.<br />
-							It is a MCQ based test, and one correct answer for each question.<br />
-							Donot navigate while you are giving the test.<br />
-							Please submit before the time ends.</h3>
-							<h3 style="color:#FF0000" align="center">
- 								The test will end in : <span id="timer"></span>
+			<main class = "main-content">
+				<div class = "container">
+					<div class = "row">
+						<div class = "col-md-10">
+							<h3>NOTE:<br/>
+								The test will end on :
+								<cfoutput>#dateTimeFormat(session.stQuizStarts.endTime, "dd MMMMM,yyyy hh:nn tt")#
+								</cfoutput><br />
+								You can submit the test only once.<br />
+								It is a MCQ based test, and one correct answer for each question.<br />
+								Donot navigate while you are giving the test.<br />
+								Please submit before the time ends.
+							</h3>
+							<h3 class = "endTest">
+ 								The test will end in : <span id = "timer"></span>
  							</h3>
-					</div><!---col-md-10--->
-					<div class="col-md-12">
-						<div class="boxed-section request-form">
-						<h2 class="section-title text-center">Questions:</h2>
-								<cfform name="startTest" id="startTest" action="">
-									<p class="section-title text-center">
-										<cfinput name="startTime" id="startTime" type="hidden" value="#DateTimeFormat(session.stQuizStarts.startTime,'yyyy/mm/dd HH:nn:ss')#">
-										<cfinput name="endTime" id="endTime" type="hidden" value="#DateTimeFormat(session.stQuizStarts.endTime,'yyyy/mm/dd HH:nn:ss')#">
-										<cfinput name="nowTime" id="nowTime" type="hidden" value="#DateTimeFormat(now(),'yyyy/mm/dd HH:nn:ss')#">
-										<cfset object =  createObject("component","demoApplication.components.getQuizQuestions") />
-										<cfset questions = object.quizQuestions(#session.stQuizStarts.quizId#)>
-										<cfset questionNumber = 0>
-											<table class="table" id="questions" name="questions">
-												<thead>
-													<tr>
-														<th>Sl No.</th>
-														<th>questions</th>
-														<th>option1</th>
-														<th>option2</th>
-														<th>option3</th>
-														<th>option4</th>
-													</tr>
-												</thead>
-												<tbody>
-													<cfoutput query="questions">
-														<tr>
-															<cfset questionNumber = questionNumber + 1 />
-															<td>#questionNumber#</td>
-														 	<td>#encodeForHtml(question)#</td>
-														 	<td><cfinput type="radio" name="#quizQuestionId#" id="option1" value= "option1">#encodeForHtml(option1)#</td>
-													 		<td><cfinput type="radio" name="#quizQuestionId#" id="option2" value= "option2">#encodeForHtml(option2)#</td>
-															<td><cfinput type="radio" name="#quizQuestionId#" id="option3" value= "option3">#encodeForHtml(option3)#</td>
-															<td><cfinput type="radio" name="#quizQuestionId#" id="option4" value= "option4">#encodeForHtml(option4)#</td>
-														</tr>
-													</cfoutput>
-												</tbody>
-											</table><br>
-											<div class="field no-label">
-												<div class="control  text-center">
-													<button type="submit" class="button text-center" id="submitTest" name="submitTest" value="">Submit test</button>
+						</div><!---col-md-10--->
+						<div class = "col-md-12">
+							<div class = "boxed-section request-form">
+								<h2 class = "section-title text-center">Questions:</h2>
+								<form name = "startTest" id = "startTest" action = "">
+									<p class = "section-title text-center">
+										<cfoutput>
+											<input name = "userId" id = "userId" type = "hidden"
+												value = "#session.stLoggedInUser.userId#">
+											<input name = "quizId" id = "quizId" type = "hidden"
+												value = "#session.stQuizStarts.quizId#">
+											<input name = "startTime" id = "startTime" type = "hidden"
+												value = "#dateTimeFormat(session.stQuizStarts.startTime,'yyyy/mm/dd HH:nn:ss')#">
+											<input name = "endTime" id = "endTime" type = "hidden"
+												value = "#dateTimeFormat(session.stQuizStarts.endTime,'yyyy/mm/dd HH:nn:ss')#">
+											<input name = "nowTime" id = "nowTime" type = "hidden"
+												value = "#dateTimeFormat(now(),'yyyy/mm/dd HH:nn:ss')#">
+										</cfoutput>
+										<div class = "questionHeader">
+											<div><label for = "question" >Question:</label>
+												<div class = "answers"><span id = "questionNumber"></span>
+													<span class = "questions" id = "question" name = "question" >
+													</span>
 												</div>
 											</div>
-									</cfform>
+										</div>
+										<div class = "answerBlock">
+											<div class = "options">
+												<input type = "radio" name = "answer" id = "answer1"
+													value = "option1">
+												<span class = "answers" id = "optionAName" name = "optionAName" >
+												</span>
+											</div>
+											<div class = "options">
+												<input type = "radio" name = "answer" id = "answer2"
+													value = "option2">
+												<span class = "answers" id = "optionBName" name = "optionBName" >
+												</span>
+											</div>
+											<div class = "options">
+												<input type = "radio" name = "answer" id = "answer3"
+													value = "option3">
+												<span class = "answers" id = "optionCName" name = "optionCName" >
+												</span>
+											</div>
+											<div class = "options">
+												<input type = "radio" name = "answer" id = "answer4"
+													value = "option4">
+												<span class = "answers" id = "optionDName" name = "optionDName" >
+												</span>
+											</div>
+										</div>
+										<input type = "hidden" id = "total" name = "total" value = "">
+										<div class = "field no-label">
+											<div class = "control naviButton text-center" id = "navigationButton">
+												<input type = "button" class = "button text-center"
+													id = "nextQuestion" name = "nextQuestion" value = "Next"
+													onclick = "return getNextQuestions()">
+												<button type = "submit" class = "button text-center"
+													id = "submitTest" name = "submitTest" value = "">Submit test</button>
+											</div>
+										</div>
+									</form>
+									<div id = "info" name = "info">
+									</div>
 								</div> <!---.boxed-section .request-form --->
 							</div><!---col-md-12--->
 						</div><!---row--->
@@ -89,15 +118,20 @@
 				</main>
 			</cfif>
 		<cfelse>
-			<cflocation url = "tests.cfm?noaccess">
+		<cfdump var = #prc.results#>
+			<cfabort>
+			<cfscript>
+				setNextEvent(event = "student.tests?noaccess");
+			</cfscript>
 		</cfif>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-	<script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="../../includes/js/testStartValidation.js"></script>
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+	<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+	<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+	<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src = "../../includes/js/testStartValidation.js"></script>
+	<script type = "text/javascript" src = "../../includes/js/common.js"></script>
