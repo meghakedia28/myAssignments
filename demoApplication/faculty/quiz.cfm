@@ -76,10 +76,10 @@
 										<tr>
 											<th></th>
 											<th>Questions</th>
-											<th>Option1</th>
-											<th>Option2</th>
-											<th>Option3</th>
-											<th>Option4</th>
+											<th>Option A</th>
+											<th>Option B</th>
+											<th>Option C</th>
+											<th>Option D</th>
 											<th>Answer</th>
 										</tr>
 									</thead>
@@ -87,10 +87,10 @@
 										<tr>
 											<th></th>
 											<th>Questions</th>
-											<th>Option1</th>
-											<th>Option2</th>
-											<th>Option3</th>
-											<th>Option4</th>
+											<th>Option A</th>
+											<th>Option B</th>
+											<th>Option C</th>
+											<th>Option D</th>
 											<th>Answer</th>
 										</tr>
 									</tfoot>
@@ -106,6 +106,7 @@
 	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 	<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 	<script src = "../js/quizValidation.js"></script>

@@ -34,6 +34,7 @@
 			<div class = "container">
 				<div class = "row">
 					<div class = "col-md-12">
+					<h2 class = "section-title text-center">Quiz Questions:</h2>
 						<div class = "export" id = "buttons"></div>
 						<div class = "boxed-section">
 							<cfoutput><input type = "hidden" id = "userId" value = "#session.stLoggedInUser.userId#">

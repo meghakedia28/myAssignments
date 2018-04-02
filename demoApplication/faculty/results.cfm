@@ -22,6 +22,7 @@
 	<div class = "container">
 		<div class = "row">
 			<div class = "col-md-12">
+			<h2 class = "section-title text-center">Students results:</h2>
 			<!---modal to select quiz--->
 				<cfoutput><input type = "hidden" id = "userId" name = "userId" value = "#session.stLoggedinUser.userId#"></cfoutput>
 				<div class = "dropdown filter">
