@@ -22,7 +22,6 @@
 	<div class = "container">
 		<div class = "row">
 			<div class = "col-md-12">
-			<h2 class = "section-title text-center">Students profile:</h2>
 				<div class = "boxed-section request-form">
 					<cfset results = createObject("component","demoApplication.components.getUserDetailsService").getStudentsDetails() />
 					<cfset Slno = 0>
