@@ -130,26 +130,26 @@ USE: This is used for validating (and then passing values to enter data in datab
 		<cfargument name = "id" required = "false" default = "0" type = "numeric" >
 		<cfset role = 3>
 		<cfif StructKeyExists(url,"firstName")>
-			<cfset validateFirstName(url.firstName)>
+			<cfset validateFirstName(trim(url.firstName))>
 		</cfif>
 		<cfif StructKeyExists(url,"lastName")>
-			<cfset validateLastName(url.lastName)>
+			<cfset validateLastName(trim(url.lastName))>
 		</cfif>
 		<cfif StructKeyExists(url,"email")>
-			<cfset var checkEmailStatus = validateEmail(url.email)>
-			<cfset variables.errorStruct.elementId.email = url.email>
+			<cfset var checkEmailStatus = validateEmail(trim(url.email))>
+			<cfset variables.errorStruct.elementId.email = trim(url.email)>
 			<cfif local.checkEmailStatus.status EQ "error">
 				<cfset variables.errorStruct.errorId.error_email = local.checkEmailStatus.message>
 			</cfif>
 		</cfif>
 		<cfif StructKeyExists(url,"contactNumber")>
-			<cfset validatePhoneNumber(url.contactNumber)>
+			<cfset validatePhoneNumber(trim(url.contactNumber))>
 		</cfif>
 		<cfif StructKeyExists(url,"subject")>
-			<cfset var checkSubjectStatus = validateSubject(url.subject, arguments.id)>
+			<cfset var checkSubjectStatus = validateSubject(trim(url.subject), trim(arguments.id))>
 			<cfset role = 2>
 			<cfif local.checkSubjectStatus.status EQ "error">
-				<cfset variables.errorStruct.elementId.subject = url.subject>
+				<cfset variables.errorStruct.elementId.subject = trim(url.subject)>
 				<cfset variables.errorStruct.errorId.error_subject = local.checkSubjectStatus.message>
 			</cfif>
 		</cfif>
