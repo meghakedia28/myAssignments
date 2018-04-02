@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------------------------------------
-						FileName    : getQuestionsService.cfc
-						Created By  : Megha Kedia
-						DateCreated : 13-March-2018
-						Description : get services related to questions.
+FileName    : getQuestionsService.cfc
+Created By  : Megha Kedia
+DateCreated : 13-March-2018
+Description : get services related to questions.
 
 ------------------------------------------------------------------------------------------------------------*/
 
@@ -30,17 +30,26 @@ Return Type    : query
 		if (!(structKeyExists(arguments.data,"quizId"))){
 			arguments.data.quizId = 0;
 		}
-		var getQuestionService  = new query();
+		local.getQuestionService  = new query();
 		local.getQuestionService.setName("questions");
 		local.getQuestionService.addParam(name = "quizId",value = "#arguments.data.quizId#",
 			cfsqltype = "cf_sql_bigint");
 		local.getQuestionService.addParam(name = "userId",value = "#arguments.data.userId#",
 			cfsqltype = "cf_sql_bigint");
-		var sql = "SELECT questionId,question,option1,option2,option3,option4,
-						correctAnswer FROM [questionBank] WHERE [questionBank].[userId] = :userId
-						AND [questionBank].[questionId] NOT IN (SELECT [questionId]
-						FROM [quizQuestion] WHERE [quizQuestion].[quizId] = :quizId)
-						ORDER BY [questionBank].[questionId] DESC";
+		local.sql = "SELECT		questionId,
+								question,
+								option1,
+								option2,
+								option3,
+								option4,
+								correctAnswer
+					 FROM		[questionBank]
+					 WHERE 		[questionBank].[userId] = :userId
+					 AND		[questionBank].[questionId]
+					 NOT IN 	(SELECT [questionId]
+					 FROM 		[quizQuestion]
+					 WHERE  	[quizQuestion].[quizId] = :quizId)
+					 ORDER BY 	[questionBank].[questionId] DESC";
 		local.getQuestionService.setSQL(local.sql);
 		questions = local.getQuestionService.execute().getResult();
 		/** this subquery is written by keeping the folowing condition in mind:
@@ -59,13 +68,13 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function getAllQuestions(required struct data){
-		var questionList = fetchAllQuestions(arguments.data);
-		var dataArray = arrayNew(2);
-		var i = 1;
-		var result["data"] = {};
-		var answer = "";
+		local.questionList = fetchAllQuestions(arguments.data);
+		local.dataArray = arrayNew(2);
+		local.i = 1;
+		local.result["data"] = {};
+		local.answer = "";
 		for ( row in questionList ) {
-			var j = 1;
+			local.j = 1;
 			if ((structKeyExists(arguments.data, 'action')) && (arguments.data.action == "setQuiz")){
 				local.dataArray[i][j++] = "<input type = 'checkbox' class = 'question'
 												name = 'questionId'  id = 'questionId_#row.questionId#'
@@ -90,7 +99,7 @@ Return Type    : struct
 				local.dataArray[i][j++] = "Option D";
 			}
 			if ((structKeyExists(arguments.data, 'action')) && (arguments.data.action == "modify")){
-				var modifyQuestionService =
+				local.modifyQuestionService =
 					createObject("component","demoApp/models/faculty/modifyQuestionService");
 				if (local.modifyQuestionService.checkEditability(row.questionId)){
 					local.dataArray[i][j++] = "<button type = 'button' class = 'btn btn-success btn-sm'
@@ -127,13 +136,19 @@ Return Type    : query
 ------------------------------------------------------------------------------------------------------------*/
 
 	function fetchSingleQuestion(required numeric questionId){
-		var queryService  = new query();
+		local.queryService  = new query();
 		local.queryService.setName("questionDetails");
 		local.queryService.addParam(name = "questionId",value = "#arguments.questionId#",
 			cfsqltype = "cf_sql_varchar");
-		var result = queryService.execute(sql = "SELECT questionId,question,option1,option2,option3,option4,
-													correctAnswer FROM [questionBank]
-													WHERE [questionBank].[questionId] = :questionId");
+		local.result = queryService.execute(sql = "SELECT 	questionId,
+															question,
+															option1,
+															option2,
+															option3,
+															option4,
+															correctAnswer
+												  FROM  	[questionBank]
+												  WHERE     [questionBank].[questionId] = :questionId");
 		questionDetails = local.result.getResult();
 		return questionDetails;
 	}
@@ -146,8 +161,8 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function getSingleQuestion(required numeric questionId){
-		var getQuestionDetails = fetchSingleQuestion (arguments.questionId);
-		var data = {};
+		local.getQuestionDetails = fetchSingleQuestion (arguments.questionId);
+		local.data = {};
  	 	for ( row in getQuestionDetails ) {
  			local.data["question"] = row.question;
 	 		local.data["optiona"] = row.option1;
@@ -158,5 +173,107 @@ Return Type    : struct
 	 		local.data["questionId"] = row.questionId;
 	  	}
 	  	return data;
+	}
+
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : fetchQuizQuestion
+Description    : getAllQuestions for a perticular quiz.
+Arguments      : numeric questionId.
+Return Type    : struct
+------------------------------------------------------------------------------------------------------------*/
+
+	function fetchQuizQuestion(required numeric quizId, numeric rowNum = 0){
+		local.quizQuestionService  = new query();
+		local.quizQuestionService.setName("quizQuestions");
+		local.quizQuestionService.addParam(name = "quizId",value = "#arguments.quizId#",
+			cfsqltype = "cf_sql_varchar");
+		local.common = "SELECT 	[quizQuestion].[quizQuestionId],
+								[questionBank].[question],
+								[questionBank].[option1],
+								[questionBank].[option2],
+								[questionBank].[option3],
+								[questionBank].[option4],
+								ROW_NUMBER()
+					OVER        (ORDER BY [questionBank].[questionId] ASC ) AS RowNumber
+					FROM   		[questionBank]
+					INNER JOIN  [quizQuestion]
+			 				ON  [quizQuestion].[questionId] = [questionBank].[questionId]
+					WHERE       [quizQuestion].[quizId] = :quizId";
+		if (arguments.rowNum == 0){
+			local.sql = local.common & " ORDER BY    [questionBank].[questionId]";
+		}
+		else{
+			local.quizQuestionService.addParam(name = "row", value = "#arguments.rowNum#",
+				cfsqltype = "cf_sql_numeric");
+			local.sql = "SELECT * FROM (" & common & ") AS FOO WHERE RowNumber = :row";
+		}
+		local.quizQuestionService.setSQL(local.sql);
+		quizQuestions = local.quizQuestionService.execute().getResult();
+		return quizQuestions;
+	}
+
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : getQuizQuestion
+Description    : getAllQuestions for a perticular quiz.
+Arguments      : numeric questionId.
+Return Type    : struct
+------------------------------------------------------------------------------------------------------------*/
+
+	function getQuizQuestion(required numeric quizId){
+		local.questions = fetchQuizQuestion(arguments.quizId);
+		local.data = {};
+		local.flag = 0;
+ 	 	for ( row in questions ) {
+ 	 		if (local.flag == 0){
+	 			local.data["question"] = row.question;
+		 		local.data["optiona"] = row.option1;
+	 			local.data["optionb"] = row.option2;
+	 			local.data["optionc"] = row.option3;
+	  			local.data["optiond"] = row.option4;
+	  			local.data["total"] = questions.recordCount;
+	  			local.data["quizQuestionId"] = row.quizQuestionId;
+	  			local.flag = 1;
+ 	 		}
+ 	 		else{
+ 	 			break;
+ 	 		}
+	  	}
+	  	return data;
+	}
+
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : getNextQuizQuestion
+Description    : get next Questions for a perticular quiz.
+Arguments      : struct arg.
+Return Type    : struct
+------------------------------------------------------------------------------------------------------------*/
+
+	function getNextQuizQuestion(required struct arg){
+		local.testService = createObject("component","demoApp/models/student/testService");
+		local.insert = testService.generateInsertReport(quizQuestionId = arguments.arg.quizQuestionId,
+														quizId = arguments.arg.quizId,
+														userId = arguments.arg.userId,
+														userAnswer = arguments.arg.userAnswer);
+		if(insert){
+			if ((structKeyExists(arguments.arg,'quizId')) AND (structKeyExists(arguments.arg,'rowNumber'))){
+			local.questions = fetchQuizQuestion(quizId = arguments.arg.quizId,
+												rowNum = arguments.arg.rowNumber);
+			local.data = {};
+			for ( row in questions ) {
+	 	 			local.data["question"] = row.question;
+			 		local.data["optiona"] = row.option1;
+		 			local.data["optionb"] = row.option2;
+		 			local.data["optionc"] = row.option3;
+		  			local.data["optiond"] = row.option4;
+		  			local.data["total"] = questions.recordCount;
+		  			local.data["quizQuestionId"] = row.quizQuestionId;
+	 	 		}
+	 	 	return data;
+			}
+		return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

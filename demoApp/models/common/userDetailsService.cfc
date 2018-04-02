@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------------------------------------
-							FileName    : userDetailsService.cfc
-							Created By  : Megha Kedia
-							DateCreated : 18-March-2018
-							Description : the file gives services with respect to users.
+FileName    : userDetailsService.cfc
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : the file gives services with respect to users.
 
 ------------------------------------------------------------------------------------------------------------*/
 
@@ -27,22 +27,30 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function fetchUserList(required numeric role){
-		var userListService = new query();
+		local.userListService = new query();
 		local.userListService.setName("userList");
 		local.userListService.addParam(name = "roleId", value = "#arguments.role#",
 			cfsqltype = "cf_sql_bigint");
 		if (arguments.role == 2 || arguments.role == 3){
-			var sql = "SELECT [user].[userId], [user].[active], [user].[firstName],
-							[user].[lastName], [user].[emailid], [user].[contactNumber], [user].[roleId]";
+			local.sql = "SELECT [user].[userId],
+							    [user].[active],
+							    [user].[firstName],
+								[user].[lastName],
+								[user].[emailid],
+								[user].[contactNumber],
+								[user].[roleId]";
 			if (arguments.role == 2){
-				sql &= ", [subject].[name] FROM [user] JOIN [userSubject]
-								ON [user].[userId] = [userSubject].[userId]
-								JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
+				sql &= 		",  [subject].[name]
+						 FROM 	[user]
+						 JOIN   [userSubject]
+						 ON		[user].[userId] = [userSubject].[userId]
+						 JOIN 	[subject]
+						 ON		[userSubject].[subjectId] = [subject].[subjectId]";
 			}
 			else if (arguments.role == 3){
 				sql &= " FROM [user]";
 			}
-			sql &= " WHERE [user].[roleId] = :roleId";
+			sql &= 	   " WHERE [user].[roleId] = :roleId";
 		}
 		local.userListService.setSQL(local.sql);
 		userList = local.userListService.execute().getResult();
@@ -59,11 +67,11 @@ Return Type    : struct
 		if (structKeyExists (arguments.data,'role')){
 			getList = fetchUserList(arguments.data.role);
 		}
-		var result["data"] = {};
-		var dataArray = ArrayNew(2);
-		var i = 1;
+		local.result["data"] = {};
+		local.dataArray = ArrayNew(2);
+		local.i = 1;
 			for (row in getList){
-				var j = 1;
+				local.j = 1;
 				if (row.roleId == 2){
 					local.dataArray[i][j++] = encodeForHtml(row.name);
 				}
@@ -95,22 +103,30 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function fetchUserDetails(required numeric userId, required numeric role){
-		var userDetailsService = new query();
+		local.userDetailsService = new query();
 		local.userDetailsService.addParam(name = "userId", value = "#arguments.userId#",
 			cfsqltype = "cf_sql_bigint");
 		local.userDetailsService.setName("userDetails");
 		if (arguments.role == 2 || arguments.role == 3){
-			var sql = "SELECT [user].[userId], [user].[active], [user].[firstName],
-							[user].[lastName], [user].[emailid], [user].[contactNumber], [user].[roleId]";
+			local.sql =	"SELECT	 [user].[userId],
+								 [user].[active],
+								 [user].[firstName],
+								 [user].[lastName],
+								 [user].[emailid],
+								 [user].[contactNumber],
+								 [user].[roleId]";
 			if (arguments.role == 2){
-				sql &= ", [subject].[name]
-			       			 FROM [user] JOIN [userSubject] ON [user].[userId] = [userSubject].[userId]
-							JOIN [subject] ON [userSubject].[subjectId] = [subject].[subjectId]";
+				sql &= 		", 	[subject].[name]
+			       		FROM 	[user]
+			       		JOIN 	[userSubject]
+			       		ON		[user].[userId] = [userSubject].[userId]
+						JOIN 	[subject]
+						ON		[userSubject].[subjectId] = [subject].[subjectId]";
 			}
 			else if (arguments.role == 3){
-				sql &= " FROM [user]";
+				sql &=		 " FROM [user]";
 			}
-			sql &= " WHERE [user].[userId] = :userId";
+			sql &= 			 " WHERE [user].[userId] = :userId";
 		}
 		local.userDetailsService.setSQL(sql);
 		userDetails = local.userDetailsService.execute().getResult();
@@ -125,16 +141,17 @@ Return Type    : struct
 
 	function getUserDetails(required struct data){
 		if (structKeyExists(arguments.data,'userId')){
-			var getUserRoleService = new query();
+			local.getUserRoleService = new query();
 			local.getUserRoleService.addParam(name = "userId", value = "#arguments.data.userId#",
 				cfsqltype = "cf_sql_bigint");
 			local.getUserRoleService.setName("getUserRole");
 			local.getUserRoleService.setSQL("SELECT [user].[roleId]
-												FROM [user] WHERE [user].[userId] = :userId");
+											 FROM	[user]
+											 WHERE  [user].[userId] = :userId");
 			getUserRole = local.getUserRoleService.execute().getResult();
-			var userInformation = fetchUserDetails(arguments.data.userId, getUserRole.roleId);
+			local.userInformation = fetchUserDetails(arguments.data.userId, getUserRole.roleId);
 		}
-		var result = {};
+		local.result = {};
 		for(row in local.userInformation){
 			if (row.roleId == 2){
 				local.result["subject"] = row.name;
@@ -144,6 +161,7 @@ Return Type    : struct
  			local.result["emailId"] = row.emailId;
  			local.result["active"] = row.active;
   			local.result["contactNumber"] = row.contactNumber;
+  			local.result["userId"] = row.userId;
 		}
 		return local.result;
 	}
@@ -156,10 +174,10 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function getStudentsDetails(){
-		var studentsList = fetchUserList(3);
-		var dataArray = ArrayNew(2);
-		var result["data"] = {};
-		var i = 1;
+		local.studentsList = fetchUserList(3);
+		local.dataArray = ArrayNew(2);
+		local.result["data"] = {};
+		local.i = 1;
 		for (row in local.studentsList){
 			dataArray[i][1] = encodeForHTML(row.firstName) & " " & encodeForHTML(row.lastName);
 			dataArray[i][2] = encodeForHTML(row.emailId);

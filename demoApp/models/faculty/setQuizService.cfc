@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------------------------------------
-						FileName    : setQuizService.cfc
-						Created By  : Megha Kedia
-						DateCreated : 13-March-2018
-						Description : contains functions which is related to quiz services.
+FileName    : setQuizService.cfc
+Created By  : Megha Kedia
+DateCreated : 13-March-2018
+Description : contains functions which is related to quiz services.
 
 ------------------------------------------------------------------------------------------------------------*/
 
@@ -24,7 +24,7 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function checkStartDateTime(required struct data){
-		var stStatus = {status = {} , message = {}};
+		local.stStatus = {status = {} , message = {}};
 		if (!(structKeyExists(arguments.data,"quizId"))){
 			arguments.data.quizId = 0;
 		}
@@ -41,16 +41,17 @@ Return Type    : struct
  	 	}
  	   	else {
 	  		try {
-	   	 	 	var quizCountService  = new query();
+	   	 	 	local.quizCountService  = new query();
 	 	   	 	local.quizCountService.setName("quizCount");
 	 	   	 	local.quizCountService.addParam(name = "id",
 	 			value = "#arguments.data.quizId#",cfsqltype = "cf_sql_bigint");
 	   		 	local.quizCountService.addParam(name = "startDate",
 	   			value = "#arguments.data.startDateTime#",cfsqltype = "cf_sql_date");
-	  	   		local.quizCountService.setSQL("SELECT [quiz].[quizId] FROM [quiz]
-													WHERE ( CONVERT(VARCHAR(8), [quiz].[startDateTime], 1) ) =
-		 											( CONVERT(VARCHAR(8), :startDate , 1))
-	 	 		 									AND [quiz].[quizId] <> :id");
+	  	   		local.quizCountService.setSQL("SELECT	 [quiz].[quizId]
+	  	   									   FROM 	 [quiz]
+											   WHERE 	 ( CONVERT(VARCHAR(8), [quiz].[startDateTime], 1)) =
+		 												 ( CONVERT(VARCHAR(8), :startDate , 1))
+	 	 		 							   AND		 [quiz].[quizId] <> :id");
 	  	  		quizCount = local.quizCountService.execute().getResult();
 
 	  	  		if (quizCount.recordCount != 0){
@@ -63,7 +64,7 @@ Return Type    : struct
 	   		  		if (now() >= arguments.data.startDateTime){
 	  	   		 		local.stStatus.status = "error";
 		   		 		local.stStatus.message = "<p>The date selected is old.<br/>
-	 	   		 										please select a future date.</p>";
+	 	   		 									 Please select a future date.</p>";
 		  	 	 		return local.stStatus;
 		 	  	 	}//end of if
 		  	 	 	else {
@@ -74,13 +75,13 @@ Return Type    : struct
 	 			} //end of else
 	  		}//end  of try
   			catch (database db){
- 				application.errorLogService.(db,1);
+ 				application.errorLogService(db,1);
 	 			local.stStatus.status = "fail";
 	 			local.stStatus.message = "Some unexpected error has occured. Please try again later.";
 	 			return local.stStatus;
 	 		}
 			catch (any e){
-				application.errorLogService.(e);
+				application.errorLogService(e);
 		 		local.stStatus.status = "fail";
 		 		local.stStatus.message = "Some unexpected error has occured. Please try again later.";
 				return local.stStatus;
@@ -91,12 +92,12 @@ Return Type    : struct
 /*------------------------------------------------------------------------------------------------------------
 Function Name  : checkEndDateTime
 Description    : checks if the end time field is empty or not,
-Arguments      : string element.
+Arguments      : string element,
 Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function checkEndDateTime (required string element){
-		var stStatus = {status = {} , message = {}};
+		local.stStatus = {status = {} , message = {}};
 		if (arguments.element == ''){
 			local.stStatus.status = "error";
 			local.stStatus.message = "You can't leave this empty.";
@@ -116,7 +117,7 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function checkQuizName (required struct data){
-		var stStatus = {status = {} , message = {}};
+		local.stStatus = {status = {} , message = {}};
 		if (!(structKeyExists (arguments.data,"quizId"))){
 			arguments.data.quizId = 0;
 		}
@@ -133,14 +134,16 @@ Return Type    : struct
 		}
 		else {
 			try {
-				var quizNameService  = new query();
+				local.quizNameService  = new query();
 	 	   	 	local.quizNameService.setName("quizNameCount");
 	 	   	 	local.quizNameService.addParam(name = "id",value = "#arguments.data.quizId#",
 	 	   	 		cfsqltype = "cf_sql_bigint");
 	   		 	local.quizNameService.addParam(name = "name",value = "#arguments.data.quizName#",
 	   		 		cfsqltype = "cf_sql_varchar");
-	  	   		local.quizNameService.setSQL("SELECT [quiz].[quizId] FROM [quiz]
-												WHERE [quiz].[name] = :name AND [quiz].[quizId] <> :id");
+	  	   		local.quizNameService.setSQL("SELECT 	[quiz].[quizId]
+	  	   									  FROM		[quiz]
+											  WHERE 	[quiz].[name] = :name
+											  AND		[quiz].[quizId] <> :id");
 	  	  		quizNameCount = local.quizNameService.execute().getResult();
 
 	  	  		if (quizNameCount.recordCount != 0){
@@ -155,13 +158,13 @@ Return Type    : struct
 				}
 			}//end of try
 			catch (database db){
-				application.errorLogService.(db,1);
+				application.errorLogService(db,1);
 				local.stStatus.status = "fail";
 				local.stStatus.message = "Some unexpected error has occured.";
 				return local.stStatus;
 			}
 			catch (any e){
-				application.errorLogService.(e);
+				application.errorLogService(e);
 				local.stStatus.status = "fail";
 				local.stStatus.message = "Some unexpected error has occured.";
 				return local.stStatus;
@@ -178,15 +181,15 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function validateInsertController(required struct data, numeric id = 0 ){
-		var insertionStruct = {successfull = {}, message = {}};
-	 	try {
-	 		var errorStruct = validateAllFields(data);
-		 	 if ((structKeyExists(errorStruct,"errorId")) AND (structIsEmpty(local.errorStruct.errorId))){
-		 	 	if (structKeyExists(arguments.data,"quizId")){
-		 	 		var insertion = updateQuiz(arguments.data);
+		local.insertionStruct = {successfull = {}, message = {}};
+	 //	try {
+	 		local.errorStruct = validateAllFields(data);
+	 		 if ((structKeyExists(errorStruct,"errorId")) AND (structIsEmpty(local.errorStruct.errorId))){
+		 	 	if ((structKeyExists(arguments.data,"quizId")) && (arguments.data.quizId)) {
+		 	 		local.insertion = updateQuiz(arguments.data);
 		 	 	}
-		 	 	else{
-		 	 		var insertion = insertQuizDetails(arguments.data, arguments.id);
+		 	 	else {
+		 	 		local.insertion = insertQuizDetails(arguments.data, arguments.id);
 		 	 	}
 		 		if (insertion){
 		 			local.insertionStruct.successfull = "true";
@@ -195,17 +198,17 @@ Return Type    : struct
 			 	else {
 			 		local.insertionStruct.successfull = "false";
 			 		local.insertionStruct.message = "Error occured while insertion of data";
-			 	}//end of else
+			 	}
 			 	return local.insertionStruct;
-			}//end of if
+			}
 				return local.errorStruct;
-		}//end of try
-		catch (any e){
-			application.errorLogService.(e);
-			local.insertionStruct.successfull = "false";
-			local.insertionStruct.message = "Error occured while insertion of data";
-			return local.insertionStruct;
-		}//end of catch
+		//}
+//		catch (any e){
+//			application.errorLogService(e);
+//			local.insertionStruct.successfull = "false";
+//			local.insertionStruct.message = "Error occured while insertion of data";
+//			return local.insertionStruct;
+//		}
 	}
 /*------------------------------------------------------------------------------------------------------------
 Function Name  : validateAllFields
@@ -215,12 +218,12 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function validateAllFields (required struct data){
-		var errorStruct = {elementId = {},errorId = {}};
+		local.errorStruct = {elementId = {},errorId = {}};
 		if (!(structKeyExists(arguments.data,"quizId"))){
 			arguments.data.quizId = 0;
 		}
 		if (structKeyExists(arguments.data,"quizName")){
-			var checkQuizNameStatus = checkQuizName(arguments.data);
+			local.checkQuizNameStatus = checkQuizName(arguments.data);
 			if ((structKeyExists(checkQuizNameStatus, "status")) AND
 				(local.checkQuizNameStatus.status == "error")){
 				local.errorStruct.elementId.quizName = arguments.data.quizName;
@@ -228,7 +231,7 @@ Return Type    : struct
 			}//end of if
 		}//end of if
 		if (structKeyExists(arguments.data,"startDateTime")){
-			var checkStartDateTimeStatus = checkStartDateTime(arguments.data);
+			local.checkStartDateTimeStatus = checkStartDateTime(arguments.data);
 			if ((structKeyExists(checkStartDateTimeStatus,"status")) AND
 				(local.checkStartDateTimeStatus.status == "error")) {
 
@@ -237,7 +240,7 @@ Return Type    : struct
 			}//end of if
 		}//end of if
 		if (structKeyExists(arguments.data,"endDateTime")){
-			var checkEndDateTimeStatus = checkEndDateTime(arguments.data.endDateTime);
+			local.checkEndDateTimeStatus = checkEndDateTime(arguments.data.endDateTime);
 			if ((structKeyExists(checkEndDateTimeStatus,"status")) AND
 				(local.checkEndDateTimeStatus.status == "error")) {
 
@@ -248,7 +251,7 @@ Return Type    : struct
 		}//end of if
 		if (data.quizId == 0){
 			if (structKeyExists(arguments.data,"questionId")){
-				var checkQuestionListStatus = checkQuestionList(arguments.data.questionId);
+				local.checkQuestionListStatus = checkQuestionList(arguments.data.questionId);
 				if (local.checkQuestionListStatus.status == "error"){
 					local.errorStruct.elementId.questionId = "";
 					local.errorStruct.errorId.error_questions = local.checkQuestionListStatus.message;
@@ -270,7 +273,7 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function checkQuestionList (required string element){
-		var stStatus = {status = {} , message = {}};
+		local.stStatus = {status = {} , message = {}};
 		if (arguments.element == ''){
 			local.stStatus.status = "error";
 			local.stStatus.message =
@@ -293,7 +296,7 @@ Return Type    : boolean
 	function insertQuizDetails (required struct data, required numeric id){
 		try {
  			transaction {
- 				var insertService  = new query();
+ 				local.insertService  = new query();
 				local.insertService.addParam(name = "quizName",value = "#arguments.data.quizName#",
 					cfsqltype = "cf_sql_varchar");
 				local.insertService.addParam(name = "startDateTime",value = "#arguments.data.startDateTime#",
@@ -304,7 +307,7 @@ Return Type    : boolean
 												( :quizName, :startDateTime, :startDateTime, :id)");
 				local.insertService.execute().getResult();
 
-				var getQuizIdService = new query();
+				local.getQuizIdService = new query();
 				local.getQuizIdService.addParam(name = "quizName",value = "#arguments.data.quizName#",
 					cfsqltype = "cf_sql_varchar");
 				local.getQuizIdService.setName("getQuizId");
@@ -312,7 +315,7 @@ Return Type    : boolean
 				getQuizId = local.getQuizIdService.execute().getResult();
 
 				if (getQuizId.recordCount == 1){
-					var getEndDateTimeService = new query();
+					local.getEndDateTimeService = new query();
 					local.getEndDateTimeService.addParam(name = "quizName",value = "#arguments.data.quizName#",
 						cfsqltype = "cf_sql_varchar");
 					local.getEndDateTimeService.setName("getEndDateTime");
@@ -320,13 +323,14 @@ Return Type    : boolean
 															WHERE [name] = :quizName");
 					getEndDateTime = local.getEndDateTimeService.execute().getResult();
 
-					var addTimeService = new query();
+					local.addTimeService = new query();
 					local.addTimeService.setName("addEndDateTime");
 					local.addTimeService.setSQL("SELECT DATEADD (n, #arguments.data.endDateTime#,
 													'#getEndDateTime.endDateTime#') 'RESULT'");
 					addEndDateTime = local.addTimeService.execute().getResult();
 
-					var updateService = new query();
+
+					local.updateService = new query();
 					local.updateService.addParam(name = "result", value = "#addEndDateTime.RESULT#",
 						cfsqltype = "cf_sql_datetime");
 					local.updateService.addParam(name = "id", value = "#getQuizId.quizId#",
@@ -335,15 +339,15 @@ Return Type    : boolean
 													WHERE [quizId] = :id");
 					local.updateService.execute().getResult();
 
-					var idList = listToArray (data.questionId);
+					local.idList = listToArray (data.questionId);
 					for (ind in idList){
-						var insertQuizQuestionService = new query();
+						local.insertQuizQuestionService = new query();
 						local.insertQuizQuestionService.addParam(name = "ind", value = "#ind#",
 							cfsqltype = "cf_sql_numeric");
 						local.insertQuizQuestionService.addParam(name = "id", value = "#getQuizId.quizId#",
 							cfsqltype = "cf_sql_bigint");
 						local.insertQuizQuestionService.setSQL("INSERT INTO [quizQuestion]
-																	 VALUES ( :ind,:id )");
+																	   VALUES ( :ind,:id )");
 						local.insertQuizQuestionService.execute().getResult();
 					}//end of for
 				}//end of if
@@ -354,11 +358,11 @@ Return Type    : boolean
  			}//end transaction
 		}//end of try
 		catch (database db){
-			application.errorLogService.(db,1);
+			application.errorLogService(db,1);
 			return false;
 		}//end of catch
 		catch (any e){
-			application.errorLogService.(e);
+			application.errorLogService(e);
 			return false;
 		}//end of catch
 	}
@@ -370,14 +374,14 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function fetchQuizList (required numeric userId){
-		var quizListService = new query();
+		local.quizListService = new query();
 		local.quizListService.addParam(name = "userId",value = "#arguments.userId#",
 			cfsqltype = "cf_sql_bigint");
 		local.quizListService.setName("quizList");
 		local.quizListService.setSQL("SELECT [quiz].[quizId], [quiz].[name], [quiz].[startDateTime],
 										[quiz].[endDateTime], [quiz].[userId]
-										FROM [quiz] WHERE [quiz].[userId] = :userId
-										ORDER BY [quiz].[startDateTime] DESC");
+									  FROM [quiz] WHERE [quiz].[userId] = :userId
+								      ORDER BY [quiz].[startDateTime] DESC");
 		quizList = local.quizListService.execute().getResult();
 		return  quizList;
 	}
@@ -389,10 +393,10 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function getQuizList(required numeric userId){
-		var quizList = fetchQuizList(arguments.userId);
-		var dataArray = ArrayNew(2);
-		var result["data"] = {};
-		var count = 1;
+		local.quizList = fetchQuizList(arguments.userId);
+		local.dataArray = ArrayNew(2);
+		local.result["data"] = {};
+		local.count = 1;
 		for (row in quizList){
 			local.dataArray[count][1] = encodeForHTML(row.name);
 			local.dataArray[count][2] = dateFormat(row.startDateTime,'yyyy/mm/dd') &
@@ -426,6 +430,23 @@ Return Type    : struct
 		local.result.data = local.dataArray;
 		return local.result;
 	}
+
+/*------------------------------------------------------------------------------------------------------------
+Function Name  : addFilter
+Description    : formates quizList,
+Arguments      : numeric userId.
+Return Type    : struct
+------------------------------------------------------------------------------------------------------------*/
+
+	function addFilter(required numeric userId){
+		local.getList = fetchQuizList(arguments.userId);
+		local.dataStruct = {};
+		for (row in getList){
+			local.dataStruct["#row.quizId#"] = encodeForHTML(row.name);
+		}
+		return local.dataStruct;
+	}
+
 /*------------------------------------------------------------------------------------------------------------
 Function Name  : fetchQuizDetails
 Description    : executes query to get the quiz details,
@@ -433,14 +454,35 @@ Arguments      : struct formData.
 Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
-	function fetchQuizDetails (required numeric quizId){
-		var quizDetailsService = new query();
-		local.quizDetailsService.addParam(name = "quizId", value = "#arguments.quizId#",
-			cfsqltype = "cf_sql_bigint");
+	function fetchQuizDetails (numeric quizId = 0, string currentTime = 0){
+		local.quizDetailsService = new query();
 		local.quizDetailsService.setName("getDetails");
-		local.quizDetailsService.setSQL("SELECT [quiz].[quizId], [quiz].[name], [quiz].[startDateTime],
-											[quiz].[endDateTime], [quiz].[userId]
-											FROM [quiz]	WHERE [quiz].[quizId] = :quizId");
+		local.commonSelect = " ,[quiz].[quizId],
+					  		   [quiz].[startDateTime],
+					           [quiz].[endDateTime] FROM [quiz]";
+		if (arguments.quizId == 0 AND arguments.currentTime != 0){
+			local.quizDetailsService.addParam(name = "currentTime", value = "#arguments.currentTime#");
+			local.sql = "SELECT TOP(1) [quiz].[name] as quizName,
+									   [user].[firstName],
+ 									   [user].[lastName],
+ 									   [subject].[name] as subjectName"
+ 									   & local.commonSelect &
+ 									   " INNER JOIN [user]
+ 									   		ON [quiz].[userId] = [user].[userId]
+									   	 INNER JOIN [userSubject]
+									   	 	ON [user].[userId] = [userSubject].[userId]
+										 INNER JOIN [subject]
+										 	ON [userSubject].[subjectId] = [subject].[subjectId]
+										WHERE [quiz].[endDateTime] >= : currentTime
+											ORDER BY [quiz].[startDateTime]";
+		}
+		else {
+			local.quizDetailsService.addParam(name = "quizId", value = "#arguments.quizId#",
+			cfsqltype = "cf_sql_bigint");
+			local.sql = "SELECT [quiz].[name], [quiz].[userId]" & local.commonSelect &
+						 " WHERE [quiz].[quizId] = :quizId";
+		}
+		local.quizDetailsService.setSQL(local.sql);
 		getDetails = local.quizDetailsService.execute().getResult();
 		return getDetails;
 	}
@@ -452,8 +494,8 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function getQuizDetails(required numeric quizId){
-		var quizList = fetchQuizDetails(arguments.quizId);
-		var data = {};
+		local.quizList = fetchQuizDetails(arguments.quizId);
+		local.data = {};
 		for (row in quizList){
 			data["quizName"] = row.name;
 			data["startDateTime"] = dateTimeFormat(row.startDateTime, "yyyy/mm/dd HH:nn");
@@ -472,7 +514,7 @@ Return Type    : struct
 	function deleteQuiz (required numeric quizId){
 		try{
 			transaction{
-				var checkTimeService = new query();
+				local.checkTimeService = new query();
 				local.checkTimeService.addParam(name = "quizId", value = "#arguments.quizId#",
 					cfsqltype = "cf_sql_bigint");
 				local.checkTimeService.setName("check");
@@ -480,14 +522,14 @@ Return Type    : struct
 													WHERE [quiz].[quizId] = :quizId");
 				check = local.checkTimeService.execute().getResult();
 				if (check.startDateTime > now()){
-					var deleteQuestions = new query();
+					local.deleteQuestions = new query();
 					local.deleteQuestions.addParam(name = "quizId", value = "#arguments.quizId#",
 						cfsqltype = "cf_sql_bigint");
 					local.deleteQuestions.setSQL("DELETE FROM [quizQuestion]
 														WHERE [quizQuestion].[quizId] = :quizId");
 					local.deleteQuestions.execute().getResult();
 
-					var deleteQuiz = new query();
+					local.deleteQuiz = new query();
 					local.deleteQuiz.addParam(name = "quizId", value = "#arguments.quizId#",
 						cfsqltype = "cf_sql_bigint");
 					local.deleteQuiz.setSQL("DELETE FROM [quiz]	WHERE [quiz].[quizId] = :quizId");
@@ -500,13 +542,12 @@ Return Type    : struct
 			}//end of transaction
 		}//end of try
 		catch (database db){
-			application.errorLogService.(db,1);
-			return false;
+			application.errorLogService(db,1);
 		}
 		catch (any e){
-			application.errorLogService.(e);
-			return false;
+			application.errorLogService(e);
 		}
+		return false;
 	}
 /*------------------------------------------------------------------------------------------------------------
 Function Name  : updateQuiz
@@ -518,7 +559,7 @@ Return Type    : boolean
 	function updateQuiz(required struct data){
 		try{
 			transaction{
-				var queryDate = new Query();
+				local.queryDate = new Query();
 				local.queryDate.setName("addDateTime");
 				local.queryDate.addParam(name = "startDateTime",
 					value = "#arguments.data.startDateTime#", cfsqltype = "cf_sql_varchar");
@@ -528,7 +569,7 @@ Return Type    : boolean
 											'#arguments.data.startDateTime#') 'RESULT'");
 				addDateTime = local.queryDate.execute().getResult();
 
-				var updateQuizService = new query();
+				local.updateQuizService = new query();
 				local.updateQuizService.addParam(name = "quizName",
 					value = "#arguments.data.quizName#", cfsqltype = "cf_sql_varchar");
 				local.updateQuizService.addParam(name = "startDateTime",
@@ -538,21 +579,21 @@ Return Type    : boolean
 				local.updateQuizService.addParam(name = "quizId",
 					value = "#arguments.data.quizId#", cfsqltype = "cf_sql_varchar");
 				local.updateQuizService.setSQL("UPDATE [quiz]
-													SET [quiz].[name] = :quizName,
+												SET [quiz].[name] = :quizName,
 													[quiz].[startDateTime] = :startDateTime,
 													[quiz].[endDateTime] = :result
-													WHERE [quiz].[quizId] = :quizId");
+												WHERE [quiz].[quizId] = :quizId");
 				local.updateQuizService.execute().getResult();
 
 				return true;
 			}//end of transaction
 		}//end of try
 		catch (database db){
-			application.errorLogService.(db,1);
+			application.errorLogService(db,1);
 			return false;
 		}
 		catch (any e){
-			application.errorLogService.(e);
+			application.errorLogService(e);
 			return false;
 		}
 	}
@@ -566,7 +607,7 @@ Return Type    : boolean
 
 	function deleteQuizQuestion (required numeric questionId, required numeric quizId){
 		try {
-			var deleteQuizQuestionService = new query();
+			local.deleteQuizQuestionService = new query();
 			local.deleteQuizQuestionService.addParam(name = "quizId", value = "#arguments.quizId#",
 				cfsqltype = "cf_sql_bigint");
 			local.deleteQuizQuestionService.addParam(name = "questionId", value = "#arguments.questionId#",
@@ -577,11 +618,11 @@ Return Type    : boolean
 			local.deleteQuizQuestionService.execute().getResult();
 		}
 		catch (database db){
-			application.errorLogService.(db,1);
+			application.errorLogService(db,1);
 			return false;
 		}
 		catch (any e){
-			application.errorLogService.(e);
+			application.errorLogService(e);
 			return false;
 		}
 		return true;
@@ -595,7 +636,7 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function fetchQuizQuestions(required numeric quizId){
-		var questionListService = new Query();
+		local.questionListService = new Query();
 		local.questionListService.setName("questionList");
 		local.questionListService.addParam(name = "quizId",
 			value = "#arguments.quizId#", cfsqltype = "cf_sql_bigint");
@@ -618,18 +659,18 @@ Return Type    : struct
 ------------------------------------------------------------------------------------------------------------*/
 
 	function getQuizQuestions(required numeric quizId){
-		var quizQuestionList = fetchQuizQuestions(arguments.quizId);
-		var dataArray = ArrayNew(2);
-		var result["data"] = {};
-		var quizDetails = fetchQuizDetails(arguments.quizId);
-		var i = 1;
+		local.quizQuestionList = fetchQuizQuestions(arguments.quizId);
+		local.dataArray = ArrayNew(2);
+		local.result["data"] = {};
+		local.quizDetails = fetchQuizDetails(arguments.quizId);
+		local.i = 1;
 		for (row in quizQuestionList ){
 			local.dataArray[i][1] = encodeForHTML(row.question);
 			local.dataArray[i][2] = encodeForHTML(row.option1);
 			local.dataArray[i][3] = encodeForHTML(row.option2);
 			local.dataArray[i][4] = encodeForHTML(row.option3);
 			local.dataArray[i][5] = encodeForHTML(row.option4);
-			var answer = encodeForHtml(row.correctAnswer);
+			local.answer = encodeForHtml(row.correctAnswer);
 				if (local.answer EQ "option1"){
 					local.dataArray[i][6] = "Option A";
 				}
@@ -667,9 +708,9 @@ Return Type    : boolean
 
 	function addQuizQuestions (required struct data){
 			try{
-				var idList = listToArray (arguments.data.questionId);
+				local.idList = listToArray (arguments.data.questionId);
 				for (ind in idList){
-					var queryService = new query();
+					local.queryService = new query();
 					local.queryService.addParam(name = "questionId", value = "#ind#",
 						cfsqltype = "cf_sql_bigint");
 					local.queryService.addParam(name = "quizId", value = "#arguments.data.quizId#",
@@ -679,11 +720,11 @@ Return Type    : boolean
 				}//end of for
 			}
 			catch (database db){
-				application.errorLogService.(db,1);
+				application.errorLogService(db,1);
 				return false;
 			}
 			catch (any e){
-				application.errorLogService.(e);
+				application.errorLogService(e);
 				return false;
 			}
 		return true;

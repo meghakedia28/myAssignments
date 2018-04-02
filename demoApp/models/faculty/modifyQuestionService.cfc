@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------------------------------------
-						FileName    : modifyQuestionService.cfc
-						Created By  : Megha Kedia
-						DateCreated : 13-March-2018
-						Description : upadtes the changes made to the questions.
+FileName    : modifyQuestionService.cfc
+Created By  : Megha Kedia
+DateCreated : 13-March-2018
+Description : upadtes the changes made to the questions.
 
 ------------------------------------------------------------------------------------------------------------*/
 
@@ -26,14 +26,14 @@ Return Type    : boolean.
 ------------------------------------------------------------------------------------------------------------*/
 
 	function checkEditability(required numeric questionId){
-		var queryService  = new query();
+		local.queryService  = new query();
 		local.queryService.setName("editableQuestions");
 		local.queryService.addParam(name = "id",value = "#arguments.questionId#",cfsqltype = "cf_sql_bigint");
-		var result = local.queryService.execute(sql = "SELECT [questionBank].[questionId]
-															FROM [questionBank] JOIN [quizQuestion]
-															ON [questionBank].[questionId] =
-															[quizQuestion].[questionId]
-															WHERE [quizQuestion].[questionId] = :id");
+		local.result = local.queryService.execute(sql = "SELECT [questionBank].[questionId]
+														 FROM  	[questionBank]
+														 JOIN  	[quizQuestion]
+														 ON		[questionBank].[questionId] = [quizQuestion].[questionId]
+														 WHERE	[quizQuestion].[questionId] = :id");
 		editableQuestions = local.result.getResult();
 		if (editableQuestions.recordCount EQ 0){
 			return true;
@@ -52,18 +52,19 @@ Return Type    : boolean.
 
 	function deleteRecord(required numeric questionId){
 		try{
-			var queryService  = new query();
+			local.queryService  = new query();
 			local.queryService.addParam(name = "id",value = "#arguments.questionId#",
 				cfsqltype = "cf_sql_bigint");
-			var result = local.queryService.execute(sql = "DELETE FROM [questionBank]
-		 														 WHERE [questionBank].[questionId] = :id");
+			local.result = local.queryService.execute(sql = "DELETE
+															 FROM	 [questionBank]
+		 													 WHERE	 [questionBank].[questionId] = :id");
 		 	}//end of try
 	 	catch (database db){
-	 		application.errorLogService.(db,1);
+	 		application.errorLogService(db,1);
 			return false;
 	 	}//end of db catch
 	 	catch (any e){
-		 	application.errorLogService.(e);
+		 	application.errorLogService(e);
 			return false;
 	 	}//end of catch
 	 	return true;
@@ -81,50 +82,49 @@ Return Type    : boolean.
 			transaction{
 				validateAll(arguments.data);
 				if (structIsEmpty(variables.errorStruct.errorId)){
-					var unique = checkunique(data.optiona, data.optionb, data.optionc, data.optiond );
+					local.unique = checkunique(arguments.data.optiona, arguments.data.optionb,
+												arguments.data.optionc, arguments.data.optiond );
 					if (local.unique){
-						var updateQuestionsService  = new query();
+						local.updateQuestionsService  = new query();
 						local.updateQuestionsService.setName("result");
-						local.updateQuestionsService.addParam(name = "question",value = "#data.question#",
-						cfsqltype = "cf_sql_varchar");
-						local.updateQuestionsService.addParam(name = "optiona",value = "#data.optiona#",
-						cfsqltype = "cf_sql_varchar");
-						local.updateQuestionsService.addParam(name = "optionb",value = "#data.optionb#",
-						cfsqltype = "cf_sql_varchar");
-						local.updateQuestionsService.addParam(name = "optionc",value = "#data.optionc#",
-						cfsqltype = "cf_sql_varchar");
-						local.updateQuestionsService.addParam(name = "optiond",value = "#data.optiond#",
-						cfsqltype = "cf_sql_varchar");
-						local.updateQuestionsService.addParam(name = "answer",value = "#data.answer#",
-						cfsqltype = "cf_sql_varchar");
-						local.updateQuestionsService.addParam(name = "id",value = "#data.questionId#",
-						cfsqltype = "cf_sql_bigint");
-						var sql = "UPDATE [questionBank]
-										SET [questionBank].[question] = :question,
-										[questionBank].[option1] = :optiona,
-										[questionBank].[option2] = :optionb,
-										[questionBank].[option3] = :optionc,
-										[questionBank].[option4] = :optiond,
-										[questionBank].[correctAnswer] = :answer
-										WHERE [questionBank].[questionId] = :id";
+						local.updateQuestionsService.addParam(name = "question",value = "#trim(arguments.data.question)#",
+							cfsqltype = "cf_sql_varchar");
+						local.updateQuestionsService.addParam(name = "optiona",value = "#trim(arguments.data.optiona)#",
+							cfsqltype = "cf_sql_varchar");
+						local.updateQuestionsService.addParam(name = "optionb",value = "#trim(arguments.data.optionb)#",
+							cfsqltype = "cf_sql_varchar");
+						local.updateQuestionsService.addParam(name = "optionc",value = "#trim(arguments.data.optionc)#",
+							cfsqltype = "cf_sql_varchar");
+						local.updateQuestionsService.addParam(name = "optiond",value = "#trim(arguments.data.optiond)#",
+							cfsqltype = "cf_sql_varchar");
+						local.updateQuestionsService.addParam(name = "answer",value = "#trim(arguments.data.answer)#",
+							cfsqltype = "cf_sql_varchar");
+						local.updateQuestionsService.addParam(name = "id",value = "#arguments.data.questionId#",
+							cfsqltype = "cf_sql_bigint");
+						local.sql = "UPDATE 	[questionBank]
+									 SET 		[questionBank].[question] 	    = :question,
+												[questionBank].[option1] 	    = :optiona,
+												[questionBank].[option2]  	    = :optionb,
+												[questionBank].[option3] 	    = :optionc,
+												[questionBank].[option4]  		= :optiond,
+												[questionBank].[correctAnswer]  = :answer
+									WHERE		[questionBank].[questionId] 	= :id";
 						local.updateQuestionsService.setSQL(local.sql);
 						local.updateQuestionsService.execute().getResult();
 						variables.errorStruct.errorId.insert ("update", "successfull", true);
 					}
 				}//end of if
-			return variables.errorStruct;
 			}//end of transaction
 		}//end of try
 		catch (database db){
-			application.errorLogService.(db,1);
+			application.errorLogService(db,1);
 			variables.errorStruct.errorId.insert ("update", "fail", true);
-			return variables.errorStruct;
 		}//end of db catch
 		catch (any e){
-			application.errorLogService.(e);
+			application.errorLogService(e);
 			variables.errorStruct.errorId.insert ("update", "fail", true);
-			return variables.errorStruct;
 		}//end of any catch
+		return variables.errorStruct;
 	}//end of modifyRecord
 
 /*------------------------------------------------------------------------------------------------------------
@@ -136,22 +136,22 @@ Return Type    : none.
 
 	 function validateAll(required struct data){
 	 	if (structKeyExists(arguments.data,"question")){
-			validate("question", arguments.data.question, "error_question");
+			validate("question", trim(arguments.data.question), "error_question");
 		}
 		if (structKeyExists(arguments.data,"optiona")){
-			validate("optionA", arguments.data.optiona, "error_optionA" );
+			validate("optionA", trim(arguments.data.optiona), "error_optionA" );
 		}
 		if (structKeyExists(arguments.data,"optionb")){
-			validate("optionB", arguments.data.optionb, "error_optionB");
+			validate("optionB", trim(arguments.data.optionb), "error_optionB");
 		}
 		if (structKeyExists(arguments.data,"optionc")){
-			validate("optionC", arguments.data.optionc, "error_optionC");
+			validate("optionC", trim(arguments.data.optionc), "error_optionC");
 		}
 		if (structKeyExists(arguments.data,"optiond")){
-			validate("optionD", arguments.data.optiond, "error_optionD");
+			validate("optionD", trim(arguments.data.optiond), "error_optionD");
 		}
 		if (structKeyExists(arguments.data,"answer")){
-			validate("answer", arguments.data.answer, "error_answer");
+			validate("answer", trim(arguments.data.answer), "error_answer");
 		}
 	 }//end of validateAllFields
 }

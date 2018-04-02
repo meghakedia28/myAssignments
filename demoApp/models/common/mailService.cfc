@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------------------------------------
-							FileName    : mailService.cfc
-							Created By  : Megha Kedia
-							DateCreated : 25-March-2018
-							Description : sets mail service for whole application.
+FileName    : mailService.cfc
+Created By  : Megha Kedia
+DateCreated : 25-March-2018
+Description : sets mail service for whole application.
 
 ------------------------------------------------------------------------------------------------------------*/
 
@@ -32,7 +32,7 @@ Return Type    : none
 				mailerService.send(body = mailBody);
 			}
 			catch(any e){
-				application.errorLogService.(e);
+				application.errorLogService(e);
 				return false;
 			}
 			return true;

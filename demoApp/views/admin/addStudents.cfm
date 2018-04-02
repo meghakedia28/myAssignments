@@ -1,23 +1,11 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : addStudnets.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : Has a Form to add students.
+FileName    : addStudnets.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : Has a Form to add students.
 
 -------------------------------------------------------------------------------------------------------------->
-
-<cfset sessionExists = structKeyExists(session,'stLoggedInUser') />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 1>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
-	<link rel = "stylesheet" href =
-			"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel = "stylesheet" href =
 			"https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 		<div class = "page-title">
@@ -32,7 +20,7 @@
 		<div class = "mid-row">
 			<div class = "col-md-8">
 				<div class = "boxed-section request-form">
-					<h2 class = "section-title text-center">Student's information:</h2>
+					<h2 class = "section-title text-center">Student's Information</h2>
 					<cfform name = "addUserForm" id = "addUserForm" action = ""><!---form to add students--->
 						<div class = "field">
 							<label for = "firstName">First Name:</label>
