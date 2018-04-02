@@ -1,14 +1,22 @@
 /*----------------------------------------------------------------------------------------------------------
-						FileName    : quizValidation.cfc
-						Created By  : Megha Kedia
-						DateCreated : 15-March-2018
-						Description : does validation related to setting a quiz.
+FileName    : setQuiz.js
+Created By  : Megha Kedia
+DateCreated : 15-March-2018
+Description : does validation related to setting a quiz and
+	 		  then ajax call to submit the data .
 
 ------------------------------------------------------------------------------------------------------------*/
 
 jQuery(document).ready(function($){
+	var loaderUrl = location.protocol + '//' + location.host + '/demoApp/includes/images/ajax-loader.gif'; 
 	var id = $('#userId').val();
 	var table = $("#questions").DataTable({
+		"language": {
+			"sLoadingRecords": "<img src = '" + loaderUrl + "'> Loading.."
+		},
+		"search": {
+		    "smart": false
+		},
 		"columnDefs": [ {
 		      "targets"  : [0],
 		      "orderable": false,
@@ -43,7 +51,7 @@ jQuery(document).ready(function($){
 		$(this).next(".error-msg").text("");
 	});
 	$("#quizName").focusout(function(){
-		var quiz = $("#quizName").val();
+		var quiz = ($("#quizName").val()).trim();
 		var validate = quizName("#quizName","#error_quizname");
 		var url = "../?event=faculty.checkTestName";
 		var data = {quizName : quiz};
@@ -65,7 +73,7 @@ jQuery(document).ready(function($){
 		}
 	});
 	$("#endDateTime").focusout(function(){
-		var end = $("#endTime").val();
+		var end = $("#endDateTime").val();
 		if(end == "" || end == null){
 			showErrorMessage("#endDateTime", "#error_enddatetime", "You can't leave this empty." );
 			return false;

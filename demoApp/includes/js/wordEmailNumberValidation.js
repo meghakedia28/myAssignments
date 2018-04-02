@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------------------------------------------
-						FileName    : wordEmailNumberValidation.js
-						Created By  : Megha Kedia
-						DateCreated : 18-March-2018
-						Description : valiadtes a word, email address and phone number.
+FileName    : wordEmailNumberValidation.js
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : valiadtes a word, email address and phone number.
 
 -------------------------------------------------------------------------------------------------------------*/
 
@@ -15,7 +15,7 @@ Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
 
 function wordCheck(elementId,errorId){
-	var word = $(elementId).val();
+	var word = ($(elementId).val()).trim();
 	var regword = /^[a-zA-Z]{1,30}$/;
 	if ( word == "" || word == null){
 		showErrorMessage(elementId, errorId, "You can't leave this empty.");
@@ -40,7 +40,7 @@ Return Type    : boolean
 ----------------------------------------------------------------------------------------------*/
 
 function emailCheck(elementId,errorId){
-	var id = $(elementId).val();
+	var id = ($(elementId).val()).trim();
 	var regid = /^[a-zA-Z][a-zA-Z0-9\s,'-.!@#\$%\^&\*]{8,40}$/;
 	var atposition = id.indexOf("@");
 	var dotposition = id.lastIndexOf(".");
@@ -55,7 +55,7 @@ function emailCheck(elementId,errorId){
 		return false;
 	}
 	if (atposition < 1 || dotposition < atposition+2 || dotposition+2 >= id.length){
-		showErrorMessage(elementId, errorId, "It should be of the format 'abc@gmail.com'");
+		showErrorMessage(elementId, errorId, "It should be of the format 'abc@xyz.pqr'");
 		return false;
 	}
 	else 

@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------------------------------------
-						FileName    : quizValidation.cfc
-						Created By  : Megha Kedia
-						DateCreated : 15-March-2018
-						Description : does validation related to setting a quiz.
+FileName    : validateQuiz.js
+Created By  : Megha Kedia
+DateCreated : 15-March-2018
+Description : does validation related to setting a quiz.
 
 ------------------------------------------------------------------------------------------------------------*/
 
@@ -15,7 +15,7 @@ Return Type	   : boolean
 ------------------------------------------------------------------------------------------*/
 
 function quizName(elementId,errorId){
-	var word = $(elementId).val();
+	var word = ($(elementId).val().trim());
 	var regword = /^[a-zA-Z0-9 ]{1,30}$/;
 	if ( word == "" || word == null){
 		showErrorMessage(elementId, errorId, "You can't leave this empty.");
@@ -127,7 +127,7 @@ Return Type	   : boolean
 ------------------------------------------------------------------------------------------*/
 
 function checkEmpty(elementId,errorId){
-	var start = $(elementId).val();
+	var start = ($(elementId).val()).trim();
 	if(start == "" || start == null){
 		showErrorMessage(elementId, errorId, "You can't leave this empty.");
 		return false;

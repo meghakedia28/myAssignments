@@ -50,9 +50,9 @@ Return Type		: none
 			authentication.doLogout();
 		}
 		if (structkeyExists(form,"submitLogin")){
-			prc.aErrorMessages = authentication.userValidation(rc.email,rc.password);
+			prc.aErrorMessages = authentication.userValidation(trim(rc.email),trim(rc.password));
 			if (arrayisEmpty(prc.aErrorMessages)){
-				prc.isUserLoggedIn = authentication.doLogin(rc.email, rc.password);
+				prc.isUserLoggedIn = authentication.doLogin(trim(rc.email), trim(rc.password));
 			}
 		}
 		event.setView( view = "common/loginPage", layout = "commonLayout" );
@@ -90,7 +90,7 @@ Return Type		: none
 
 	function forgetPasswordController(event, rc, prc){
 		if (event.isAjax()){
-			local.data = forgetPasswordService.validateAndSendMailController(rc.emailId);
+			local.data = forgetPasswordService.validateAndSendMailController(trim(rc.emailId));
 			event.renderData(format = "json", data = serializeJSON(local.data));
 		}
 		else{
