@@ -1,0 +1,35 @@
+/*----------------------------------------------------------------------------------------------------------
+FileName    : testStyle.css
+Created By  : Megha Kedia
+DateCreated : 1-March-2018
+Description : added style for test to display.
+
+------------------------------------------------------------------------------------------------------------*/
+
+.endTest{
+	color: #FF0000;
+	align: center;
+}
+.questionHeader{
+	padding: 1% 1%;
+    background-color: hsl(150, 8%, 97%);
+}
+.questions{
+	font-size: 130%;
+    padding-left: 2%;
+}
+.answerBlock{
+	background-color: hsl(150, 8%, 97%);
+    padding: 1% 2%;
+    font-size: 110%;
+    margin-top: 2%;
+}
+.options{
+	padding: 0.5% 0.5%;
+}
+.answers{
+	padding: 1.5%;
+}
+.naviButton{
+	padding-left: 79%;
+}
