@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------------------------------------------
-						FileName    : validateQuestions.js
-						Created By  : Megha Kedia
-						DateCreated : 13-March-2018
-						Description : does validation for add questions.
+FileName    : validateQuestions.js
+Created By  : Megha Kedia
+DateCreated : 13-March-2018
+Description : does validation for add questions.
 
 --------------------------------------------------------------------------------------------------------------*/
 
@@ -14,7 +14,7 @@ Return Type	   : none
 ------------------------------------------------------------------------------------------*/
 
 function validate(elementId, errorId){
-	 var value = $(elementId).val();
+	 var value = ($(elementId).val()).trim();
 		if (value == "" || value == null ){
 			showErrorMessage(elementId, errorId, "You can't leave this empty.");
 			return false;
@@ -39,18 +39,18 @@ Return Type	   : boolean
 
 function checkUnique(optiona, optionb, optionc, optiond){
 	var error = 0;
-	if (optiond == optionc || optiond == optionb || optiond == optiona){
-		showErrorMessage("#optiond", "error_optiond",
+	if (optiond.trim() == optionc.trim() || optiond.trim() == optionb.trim() || optiond.trim() == optiona.trim()){
+		showErrorMessage("#optiond", "#error_optiond",
 				"This option is already selected. Please enter a different option.");
 		error = 1;
 	}
-	if (optionc == optionb || optionc == optiona){
-		showErrorMessage("#optionc", "error_optionc",
+	if (optionc.trim() == optionb.trim() || optionc.trim() == optiona.trim()){
+		showErrorMessage("#optionc", "#error_optionc",
 				"This option is already selected. Please enter a different option.");
 		error = 1;
 	}
-	if  (optionb == optiona){
-		showErrorMessage("#optionb", "error_optionb",
+	if  (optionb.trim() == optiona.trim()){
+		showErrorMessage("#optionb", "#error_optionb",
 				"This option is already selected. Please enter a different option.");
 		error = 1;
 	}

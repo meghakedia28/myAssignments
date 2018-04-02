@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : testStart.cfm
-		Created By  : Megha Kedia
-		DateCreated : 28-March-2018
-		Description : displays the test questions
+FileName    : testStart.cfm
+Created By  : Megha Kedia
+DateCreated : 28-March-2018
+Description : displays the test questions
 
 -------------------------------------------------------------------------------------------------------------->
 
@@ -34,7 +34,7 @@
 				<div class = "container">
 					<div class = "row">
 						<div class = "col-md-10">
-							<h3>NOTE:<br/>
+							<h4>RULES:<br/>
 								The test will end on :
 								<cfoutput>#dateTimeFormat(session.stQuizStarts.endTime, "dd MMMMM,yyyy hh:nn tt")#
 								</cfoutput><br />
@@ -42,14 +42,13 @@
 								It is a MCQ based test, and one correct answer for each question.<br />
 								Donot navigate while you are giving the test.<br />
 								Please submit before the time ends.
-							</h3>
-							<h3 class = "endTest">
+							</h4>
+							<h4 class = "endTest">
  								The test will end in : <span id = "timer"></span>
- 							</h3>
+ 							</h4>
 						</div><!---col-md-10--->
 						<div class = "col-md-12">
 							<div class = "boxed-section request-form">
-								<h2 class = "section-title text-center">Questions:</h2>
 								<form name = "startTest" id = "startTest" action = "">
 									<p class = "section-title text-center">
 										<cfoutput>
@@ -65,14 +64,17 @@
 												value = "#dateTimeFormat(now(),'yyyy/mm/dd HH:nn:ss')#">
 										</cfoutput>
 										<div class = "questionHeader">
-											<div><label for = "question" >Question:</label>
-												<div class = "answers"><span id = "questionNumber"></span>
+											<div>
+												<label for = "question" >Question:</label>
+												<div class = "answers">
+													<span id = "questionNumber"></span>
 													<span class = "questions" id = "question" name = "question" >
 													</span>
 												</div>
 											</div>
 										</div>
 										<div class = "answerBlock">
+											<label for = "options" >Select a correct option:</label>
 											<div class = "options">
 												<input type = "radio" name = "answer" id = "answer1"
 													value = "option1">

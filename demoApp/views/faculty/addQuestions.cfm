@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : addQuestions.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : has a form to add questions.
+FileName    : addQuestions.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : has a form to add questions.
 
 -------------------------------------------------------------------------------------------------------------->
 		<div class = "page-title">
@@ -62,10 +62,10 @@
 									<div class = "control">
 										<cfselect class = "inputField" id = "answer" name = "answer" >
 											<option value = "">Select the correct option</option>
-											<option value = "option1">option A</option>
-											<option value = "option2">option B</option>
-											<option value = "option3">option C</option>
-											<option value = "option4">option D</option>
+											<option value = "option1">Option A</option>
+											<option value = "option2">Option B</option>
+											<option value = "option3">Option C</option>
+											<option value = "option4">Option D</option>
 										</cfselect>
 										<div class = "error-msg" id = "error_answer"></div>
 									</div>

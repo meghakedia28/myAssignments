@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------------------------------------------------
-							FileName    : userValidation.js
-							Created By  : Megha Kedia
-							DateCreated : 18-March-2018
-							Description : does validation for the user details(faculties and students).
+FileName    : userValidation.js
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : does validation for the user details(faculties and students).
 
 --------------------------------------------------------------------------------------------------------------*/
 
@@ -15,7 +15,7 @@ $(document).ready(function(){
 			var url = "../?event=admin.validateAddUser";
 			gobalAjaxHandler(url, $("#addUserForm").serializeArray(), insertStatus);
 		}
-	}); //end of submit
+	});
 	$(".inputField").focus(function(){
 		$(this).css("border","");
 		$(this).next('.error-msg').text("");
@@ -27,7 +27,7 @@ $(document).ready(function(){
  		wordCheck('#lastName','#error_lastname');
  	});
  	$('#email').focusout(function(){
- 		var id = $('#email').val();
+ 		var id = ($('#email').val()).trim();
  		var validate = emailCheck('#email','#error_email');
  		var data = {emailId: id};
  		var url = "../?event=admin.checkEmail";
@@ -39,7 +39,7 @@ $(document).ready(function(){
  		numberCheck('#contactNumber','#error_contactnumber');
  	});
  	$('#subject').focusout(function(){
- 		var subjectVal = $('#subject').val();
+ 		var subjectVal = ($('#subject').val()).trim();
  		var validate = wordCheck('#subject','#error_subject');
  		var url = "../?event=admin.checkSubject";
  		var data = {name : subjectVal};
@@ -62,7 +62,7 @@ function successStatus(result){
 			return true;
 		}
 		else {
-			$("#error_email").html(obj.MESSAGE);
+			$("#"+obj.elementId).html(obj.MESSAGE);
 			return false;
 		}
 }
@@ -118,6 +118,7 @@ function validate(){
  	var lastName = wordCheck('#lastName','#error_lastname');
  	var email = emailCheck('#email','#error_email');
  	var phoneNumber = numberCheck('#contactNumber','#error_contactnumber');
+ 	//checks if the field with id "subject" exists or not
  	if ($('#subject').length != 0){
  		var sub = wordCheck('#subject','#error_subject');
  	}

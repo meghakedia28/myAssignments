@@ -1,9 +1,9 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : viewQuiz.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : displayes all the list of quiz, with factionality to edit
-					quiz information(only for the upcoming quiz).
+FileName    : viewQuiz.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : displayes all the list of quiz, with factionality to edit
+			  quiz information(only for the upcoming quiz).
 
 -------------------------------------------------------------------------------------------------------------->
 		<div class = "page-title">

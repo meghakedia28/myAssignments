@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : quizQuestions.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : displays all the questions associated with a quiz.
+FileName    : quizQuestions.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : displays all the questions associated with a quiz.
 
 -------------------------------------------------------------------------------------------------------------->
 		<link rel = "stylesheet" type = "text/css"
@@ -30,7 +30,9 @@
 			<div class = "container">
 				<div class = "row">
 					<div class = "col-md-12">
-						<div><a href = "../faculty/viewQuiz">Go back to View Quiz</a></div>
+					<cfoutput>
+						<div><a href = "#event.buildLink( 'faculty.viewQuiz')#">Go back to View Quiz</a></div>
+					</cfoutput>
 						<div class = "boxed-section">
 							<div class = "export" id = "exportButtons"></div>
 							<cfoutput>
@@ -143,26 +145,23 @@
 		</div><!---modal fade--->
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-<script type = "text/javascript"
-src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type = "text/javascript" src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script type = "text/javascript"
 	src = "https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-<script type = "text/javascript"
-	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
 <script type = "text/javascript"
 	src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-<script type = "text/javascript"
-	src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 <script type = "text/javascript"
 	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
 <script type="text/javascript" language="JavaScript">
-<cfoutput>
-var #toScript(quizName, "quizName")#;
-var #toScript(startTime, "startTime")#;
-var #toScript(endTime, "endTime")#;
-</cfoutput>
+	<cfoutput>
+		var #toScript(quizName, "quizName")#;
+		var #toScript(startTime, "startTime")#;
+		var #toScript(endTime, "endTime")#;
+	</cfoutput>
 </script>
 <script type = "text/javascript" src = "../../includes/js/viewQuizQuestions.js"></script>
 <script type = "text/javascript" src = "../../includes/js/common.js"></script>

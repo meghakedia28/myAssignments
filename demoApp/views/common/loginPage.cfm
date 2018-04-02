@@ -1,5 +1,11 @@
-<!---check if logout or not--->
-<!---form processing--->
+<!----------------------------------------------------------------------------------------------------------
+FileName    : loginPage.cfm
+Created By  : Megha Kedia
+DateCreated : 13-March-2018
+Description : form to login by the user.
+
+------------------------------------------------------------------------------------------------------------>
+
 <!DOCTYPE html>
 <html lang = "en" >
 <head>
@@ -66,7 +72,8 @@
 								<a href = "#event.buildLink( 'common.forgetPassword' )#">Forgot password?</a>
 							</cfoutput>
 						</div>
-						<button class = "add-space btn btn-primary btn-large btn-block" id = "submitLogin" name = "submitLogin" type = "submit">Login</button>
+						<button class = "add-space btn btn-primary btn-large btn-block" id = "submitLogin"
+							name = "submitLogin" type = "submit">Login</button>
 					</cfif>
 				</cfform>
 			</div>

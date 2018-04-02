@@ -1,9 +1,9 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : studentsProfile.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : displays all the students information along with view scores(
-						of the quiz set by the faculty(user) for each students.
+FileName    : studentsProfile.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : displays all the students information along with view scores(
+			  of the quiz set by the faculty(user) for each students.
 
 -------------------------------------------------------------------------------------------------------------->
 		<link rel = "stylesheet" type = "text/css"

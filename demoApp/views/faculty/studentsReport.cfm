@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : studentsReport.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : has datatable to show faculties information, with an edit functionality.
+FileName    : studentsReport.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : has datatable to show faculties information, with an edit functionality.
 
 -------------------------------------------------------------------------------------------------------------->
 		<link rel = "stylesheet" type = "text/css"
@@ -22,7 +22,9 @@
 		<div class = "container">
 			<div class = "row">
 				<div class = "col-md-12">
-					<div><a href = "../faculty/results">Go back to View Results</a></div>
+					<cfoutput>
+						<div><a href = "#event.buildLink( 'faculty.results')#">Go back to View Results</a></div>
+					</cfoutput>
 					<div class = "boxed-section">
 						<h2 class = "section-title text-center">Students report:</h2>
 						<div class = "export" id = "exportButtons"></div>

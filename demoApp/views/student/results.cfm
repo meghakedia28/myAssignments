@@ -1,16 +1,17 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : results.cfm
-		Created By  : Megha Kedia
-		DateCreated : 28-March-2018
-		Description : displays the student results.
+FileName    : results.cfm
+Created By  : Megha Kedia
+DateCreated : 28-March-2018
+Description : displays the student results.
 
 -------------------------------------------------------------------------------------------------------------->
 
-		<link rel = "stylesheet" type = "text/css" href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+		<link rel = "stylesheet" type = "text/css"
+			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
 		<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<div class = "page-title">
 			<div class = "container">
-				<h2>Performance report:</h2>
+				<h2>Performance Report</h2>
 				<cfset userName = "Student name: " &
 								  session.stLoggedInUser.userFirstName &
 								  " " &
@@ -24,7 +25,7 @@
 		<div class = "row">
 			<div class = "col-md-12">
 				<div class = "boxed-section request-form">
-					<h2 class = "section-title text-center">Performance report:</h2>
+					<h2 class = "section-title text-center">Performance Report</h2>
 					<div class = "export" id = "exportButtons"></div>
 					<table class = "table" id = "result" name = "result">
 						<thead>
@@ -71,5 +72,7 @@
 		var #toScript(userName, "userName")#;
 	</cfoutput>
 </script>
-<script type = "text/javascript" src = "../../includes/js/studentResult.js"></script>
-<script type = "text/javascript" src = "../../includes/js/common.js"></script>
+<cfoutput>
+	<script type = "text/javascript" src = "#base#/includes/js/studentResult.js"></script>
+	<script type = "text/javascript" src = "#base#/includes/js/common.js"></script>
+</cfoutput>

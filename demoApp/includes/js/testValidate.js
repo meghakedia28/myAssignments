@@ -1,9 +1,9 @@
 /*-------------------------------------------------------------------------------------------------------------
-						FileName    : testValidate.js
-						Created By  : Megha Kedia
-						DateCreated : 28-March-2018
-						Description : does validation for test information 
-									and display of start test button during the test .
+FileName    : testValidate.js
+Created By  : Megha Kedia
+DateCreated : 28-March-2018
+Description : does validation for test information 
+			  and display of start test button during the test .
 
 --------------------------------------------------------------------------------------------------------------*/
 

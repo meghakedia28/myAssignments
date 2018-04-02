@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------------------------------------
-						FileName    : resultService.cfc
-						Created By  : Megha Kedia
-						DateCreated : 23-March-2018
-						Description : contains functions which is related to result services.
+FileName    : resultService.cfc
+Created By  : Megha Kedia
+DateCreated : 23-March-2018
+Description : contains functions which is related to result services.
 
 ------------------------------------------------------------------------------------------------------------*/
 

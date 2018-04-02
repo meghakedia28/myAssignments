@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : home.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : home page for faculty portal.
+FileName    : home.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : home page for faculty portal.
 
 -------------------------------------------------------------------------------------------------------------->
 	<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

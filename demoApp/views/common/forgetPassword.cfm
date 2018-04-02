@@ -1,9 +1,9 @@
 <!-------------------------------------------------------------------------------------------------------------
-										FileName    : forgetPassword.cfm
-										Created By  : Megha Kedia
-										DateCreated : 28-March-2018
-										Description : Has a Form to enter user information
-													 as where the reser link will be sent.
+FileName    : forgetPassword.cfm
+Created By  : Megha Kedia
+DateCreated : 28-March-2018
+Description : Has a Form to enter user information
+			  as where the reser link will be sent.
 
 -------------------------------------------------------------------------------------------------------------->
 

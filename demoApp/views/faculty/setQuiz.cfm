@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : setQuiz.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : form to set quiz details and select questions from a list for the test.
+FileName    : setQuiz.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : form to set quiz details and select questions from a list for the test.
 
 -------------------------------------------------------------------------------------------------------------->
 	   <div class = "page-title">
@@ -23,7 +23,6 @@
 			<cfform action = "" name = "quizForm" id = "quizForm">
 				<div class = "col-md-12">
 				<h2 class = "section-title text-center">Quiz information:</h2>
-					<div class = "export" id = "buttons"></div>
 					<div class = "request-form">
 						<div class = "box">
 							<div class = "lineform">

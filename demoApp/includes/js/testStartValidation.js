@@ -1,8 +1,8 @@
 /*----------------------------------------------------------------------------------------------------------
-						FileName    : testStartValidation.cfc
-						Created By  : Megha Kedia
-						DateCreated : 13-March-2018
-						Description : validation for tests and displays questions.
+FileName    : testStartValidation.cfc
+Created By  : Megha Kedia
+DateCreated : 13-March-2018
+Description : validation for tests and displays questions.
 
 ------------------------------------------------------------------------------------------------------------*/
 
@@ -34,7 +34,8 @@ Return Type	   : none
     	var hours = parseInt( timer / 3600 ) % 24;
     	var minutes = parseInt( timer / 60 ) % 60;
     	var seconds = timer % 60;
-    	var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);       
+    	var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" +
+    				 (seconds  < 10 ? "0" + seconds : seconds);       
     	$('#timer').html(result);
         if(timer == 0 )
 		{
@@ -70,7 +71,7 @@ Return Type	   : string
 ------------------------------------------------------------------------------------------*/
 
     function unloadMessage() {
-        return 'You have started giving the test. If you navigate away from this page the changes made will be lost.';
+        return 'You have started giving the test. If you navigate away from this page the test will be submitted.';
    }
     $(':input').bind(
             'change', function() { setConfirmUnload(true); 
@@ -169,6 +170,7 @@ Return Type	   : boolean
 
 function getNextQuestionStatus (result){
 	var obj = $.parseJSON(result);
+	$("#questionNumber").text(count+".");
 	$("#question").text(obj.question);
 	$("#optionAName").text(obj.optiona);
 	$("#optionBName").text(obj.optionb);

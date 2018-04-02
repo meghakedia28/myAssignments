@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : results.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : displays the result of students for all the quiz set by a faculty(user).
+FileName    : results.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : displays the result of students for all the quiz set by a faculty(user).
 
 -------------------------------------------------------------------------------------------------------------->
 
@@ -41,7 +41,7 @@
 					</form>
 				</cfoutput>
 			<div class = "col-md-12">
-				<div class = "boxed-section request-form" id = "resultSets">
+				<div class = "boxed-section" id = "resultSets">
 					<h2 class = "section-title text-center">Results:</h2>
 					<div class = "export" id = "exportButtons"></div>
 					<table class = "table " id = "result" name = "result">

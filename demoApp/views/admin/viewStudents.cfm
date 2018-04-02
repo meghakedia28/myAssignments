@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : viewStudents.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : has datatable to show faculties information, with an edit functionality.
+FileName    : viewStudents.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : has datatable to show faculties information, with an edit functionality.
 
 -------------------------------------------------------------------------------------------------------------->
 <link rel = "stylesheet" type = "text/css" href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>

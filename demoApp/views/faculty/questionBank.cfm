@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : questionBank.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : displays the list of all questions and facility to edit and delete them.
+FileName    : questionBank.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : displays the list of all questions and facility to edit and delete them.
 
 -------------------------------------------------------------------------------------------------------------->
 		<link rel = "stylesheet" type = "text/css"

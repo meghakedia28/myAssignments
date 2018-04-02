@@ -1,3 +1,11 @@
+<!----------------------------------------------------------------------------------------------------------
+FileName    : resetPassword.cfm
+Created By  : Megha Kedia
+DateCreated : 13-March-2018
+Description : contains the password reset form.
+
+------------------------------------------------------------------------------------------------------------>
+
 <!DOCTYPE html>
 <html lang = "en">
 <head>

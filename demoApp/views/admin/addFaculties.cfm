@@ -1,8 +1,8 @@
 <!-------------------------------------------------------------------------------------------------------------
-		FileName    : addFaculties.cfm
-		Created By  : Megha Kedia
-		DateCreated : 18-March-2018
-		Description : Has a Form to add faculties.
+FileName    : addFaculties.cfm
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : Has a Form to add faculties.
 
 -------------------------------------------------------------------------------------------------------------->
 
