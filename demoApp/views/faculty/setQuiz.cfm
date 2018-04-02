@@ -5,18 +5,7 @@
 		Description : form to set quiz details and select questions from a list for the test.
 
 -------------------------------------------------------------------------------------------------------------->
-
-<cfset sessionExists = structKeyExists(session,"stLoggedInUser") />
-<cfif NOT(sessionExists)>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-<cfelseif session.stLoggedInUser.roleId NEQ 2>
-	<cfscript>
-		setNextEvent(event = "common.loginPage?noaccess");
-	</cfscript>
-</cfif>
- 	   <div class = "page-title">
+	   <div class = "page-title">
 			<div class = "container">
 				<h2>Set a quiz</h2>
 			</div>
@@ -74,11 +63,12 @@
 					</div><!---col-md-12--->
 					<div class = "col-md-12">
 						<div class = "boxed-section">
-							<cfoutput><input class="inputField" type = "hidden" id = "userId" name = "userId" value = "#session.stLoggedInUser.userId#"></input></cfoutput>
+							<cfoutput><input class="inputField" type = "hidden" id = "userId" name = "userId"
+								value = "#session.stLoggedInUser.userId#"></input></cfoutput>
 							<h2 class = "section-title text-center">Question Bank:</h2>
 							<div class = "error-msg text-center" id = "error_questions"></div>
 							<div >
-								<table class = "table" id = "questions" name = "questions">
+								<table class = "table " id = "questions" name = "questions">
 									<thead>
 										<tr>
 											<th></th>
@@ -119,8 +109,7 @@
 			src = "//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	<script type = "text/javascript"
 			src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-	<script type = "text/javascript" src =
-		"https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.14/jquery.datetimepicker.full.min.js">
+	<script type = "text/javascript" src = "../../includes/js/plugins/jquery.datetimepicker.js">
 	</script>
 	<script type = "text/javascript"
 			src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
