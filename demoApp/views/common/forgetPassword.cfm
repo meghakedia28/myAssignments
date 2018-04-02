@@ -1,12 +1,21 @@
+<!-------------------------------------------------------------------------------------------------------------
+										FileName    : forgetPassword.cfm
+										Created By  : Megha Kedia
+										DateCreated : 28-March-2018
+										Description : Has a Form to enter user information
+													 as where the reser link will be sent.
+
+-------------------------------------------------------------------------------------------------------------->
+
 <!DOCTYPE html>
 <html lang = "en" >
 <head>
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
-	<title>Login Form</title>
+	<title>Forget password</title>
     <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
-	<link rel = "stylesheet" href = "../freeTemplateFile/css/logInStyle.css">
-	<link rel = "stylesheet" href = "../includes/css/error.css">
+	<link rel = "stylesheet" href = "../../freeTemplateFiles/css/logInStyle.css">
+	<link rel = "stylesheet" href = "../../includes/css/error.css">
 </head>
 <body>
 	<div class = "login">
@@ -19,11 +28,12 @@
 					<div class = "control-group">
 						<h3>Find your account:</h3>
 						<label class = "login-field-icon fui-user" for = "email"></label>
-						<h5>Enter the Email Id to search for the account and send the password reset link:</h5>
+						<h5>Enter the Email address to search for the account and send the password reset link:</h5>
 						<div class = "error" id = "error_email" name = "error_email" ></div>
 						<cfinput type = "text" class = "login-field" id = "email" name = "email" placeholder = "Email Id">
 					</div>
-					<button class = "btn btn-primary btn-large btn-block" id = "submitLogin" name = "submitLogin" type =  "submit">Search</button>
+					<button class = "btn btn-primary btn-large btn-block" id = "submitLogin" name = "submitLogin"
+						type =  "submit">Search</button>
 				</cfform>
 			</div>
 		</div>
