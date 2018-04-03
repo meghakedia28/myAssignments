@@ -9,23 +9,23 @@ Description : Has a Form to enter user information
 
 <!DOCTYPE html>
 <html lang = "en" >
-<head>
-	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
-	<title>Forget password</title>
-    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
-	<cfoutput>
-		<link rel = "stylesheet" href = "#base#/freeTemplateFiles/css/logInStyle.css">
-		<link rel = "stylesheet" href = "#base#/includes/css/error.css">
-	</cfoutput>
-</head>
-<body>
-	<div class = "login">
-		<div class = "login-screen">
-			<div class = "app-title">
-				<h1>Quiz Center</h1>
-			</div>
-			<cfform class = "login-form" name = "forgetPasswordForm" id = "forgetPasswordForm" preservedata = "true" >
+	<head>
+		<meta name = "viewport" content = "width = device-width, initial-scale = 1">
+		<title>Forget password</title>
+	    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+		<cfoutput>
+			<link rel = "stylesheet" href = "#base#/freeTemplateFiles/css/logInStyle.css">
+			<link rel = "stylesheet" href = "#base#/includes/css/error.css">
+		</cfoutput>
+	</head>
+	<body>
+		<div class = "login">
+			<div class = "login-screen">
+				<div class = "app-title">
+					<h1>Quiz Center</h1>
+				</div>
+				<cfform class = "login-form" name = "forgetPasswordForm" id = "forgetPasswordForm" preservedata = "true" >
 					<!---enter userId --->
 					<div class = "control-group">
 						<h3>Find your account:</h3>
