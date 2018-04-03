@@ -37,11 +37,11 @@ Return Type    : boolean.
 		editableQuestions = local.result.getResult();
 		if (editableQuestions.recordCount EQ 0){
 			return true;
-		}//end of if
+		}
 		else{
 			return false;
-		}//end of else
-	}//end of checkEditability
+		}
+	}
 
 /*------------------------------------------------------------------------------------------------------------
 Function Name  : deleteRecord
@@ -58,17 +58,17 @@ Return Type    : boolean.
 			local.result = local.queryService.execute(sql = "DELETE
 															 FROM	 [questionBank]
 		 													 WHERE	 [questionBank].[questionId] = :id");
-		 	}//end of try
+		 	}
 	 	catch (database db){
 	 		application.errorLogService(db,1);
 			return false;
-	 	}//end of db catch
+	 	}
 	 	catch (any e){
 		 	application.errorLogService(e);
 			return false;
-	 	}//end of catch
+	 	}
 	 	return true;
-	}//end of deleteRecord
+	}
 
 /*------------------------------------------------------------------------------------------------------------
 Function Name  : modifyRecord
@@ -113,19 +113,19 @@ Return Type    : boolean.
 						local.updateQuestionsService.execute().getResult();
 						variables.errorStruct.errorId.insert ("update", "successfull", true);
 					}
-				}//end of if
-			}//end of transaction
-		}//end of try
+				}
+			}
+		}
 		catch (database db){
 			application.errorLogService(db,1);
 			variables.errorStruct.errorId.insert ("update", "fail", true);
-		}//end of db catch
+		}
 		catch (any e){
 			application.errorLogService(e);
 			variables.errorStruct.errorId.insert ("update", "fail", true);
-		}//end of any catch
+		}
 		return variables.errorStruct;
-	}//end of modifyRecord
+	}
 
 /*------------------------------------------------------------------------------------------------------------
 Function Name  : validateAll
@@ -153,5 +153,5 @@ Return Type    : none.
 		if (structKeyExists(arguments.data,"answer")){
 			validate("answer", trim(arguments.data.answer), "error_answer");
 		}
-	 }//end of validateAllFields
+	 }
 }

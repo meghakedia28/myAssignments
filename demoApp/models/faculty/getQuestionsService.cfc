@@ -58,7 +58,7 @@ Return Type    : query
 		only those question which are not set for the quiz,
 		hence the query is filtered by quizId also in this case only */
 		return questions;
-	}//end of fetchAllQuestions
+	}
 
 /*------------------------------------------------------------------------------------------------------------
 Function Name  : getAllQuestions
