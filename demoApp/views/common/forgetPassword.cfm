@@ -39,14 +39,14 @@ Description : Has a Form to enter user information
 				</cfform>
 			</div>
 		</div>
+		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+		<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+		<cfoutput>
+			<script src = "#base#/includes/js/forgetPassword.js"></script>
+			<script type = "text/javascript" src = "#base#/includes/js/common.js"></script>
+			<script src = "#base#/includes/js/wordEmailNumberValidation.js"></script>
+		</cfoutput>
 	</body>
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	<cfoutput>
-		<script src = "#base#/includes/js/forgetPassword.js"></script>
-		<script type = "text/javascript" src = "#base#/includes/js/common.js"></script>
-		<script src = "#base#/includes/js/wordEmailNumberValidation.js"></script>
-	</cfoutput>
 </html>
