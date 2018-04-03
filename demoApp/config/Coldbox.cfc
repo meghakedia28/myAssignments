@@ -22,12 +22,12 @@
 			applicationEndHandler	= "",
 			sessionStartHandler 	= "",
 			sessionEndHandler		= "",
-			missingTemplateHandler	= "",
+			missingTemplateHandler	= "main.missingTemplate",
 
 			//Extension Points
 			applicationHelper 			= "includes/helpers/ApplicationHelper.cfm",
 			viewsHelper					= "",
-			modulesExternalLocation		= [],
+			modulesExternalLocation		= ["/models"],
 			viewsExternalLocation		= "",
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
@@ -37,8 +37,8 @@
 			//Error/Exception Handling
 			invalidHTTPMethodHandler 	= "",
 			exceptionHandler			= "main.onException",
-			invalidEventHandler			= "",
-			customErrorTemplate			= "/coldbox/system/includes/BugReport.cfm",
+			invalidEventHandler			= "main.pageNotFound",
+			customErrorTemplate			= "common/gobalErrorHandler.cfm",
 
 			//Application Aspects
 			handlerCaching 			= false,

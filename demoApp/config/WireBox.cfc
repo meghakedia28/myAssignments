@@ -8,58 +8,62 @@ Description :
 	Your WireBox Configuration Binder
 ----------------------------------------------------------------------->
 <cfcomponent output="false" hint="The default WireBox Injector configuration object" extends="coldbox.system.ioc.config.Binder">
-<cfscript>
+	<cfscript>
 
-	/**
-	* Configure WireBox, that's it!
-	*/
-	function configure(){
+		/**
+		* Configure WireBox, that's it!
+		*/
+		function configure(){
 
-		// The WireBox configuration structure DSL
-		wireBox = {
-			// Scope registration, automatically register a wirebox injector instance on any CF scope
-			// By default it registeres itself on application scope
-			scopeRegistration = {
-				enabled = true,
-				scope   = "application", // server, cluster, session, application
-				key		= "wireBox"
-			},
+			// The WireBox configuration structure DSL
+			wireBox = {
+				// Scope registration, automatically register a wirebox injector instance on any CF scope
+				// By default it registeres itself on application scope
+				scopeRegistration = {
+					enabled = true,
+					scope   = "application", // server, cluster, session, application
+					key		= "wireBox"
+				},
 
-			// DSL Namespace registrations
-			customDSL = {
-				// namespace = "mapping name"
-			},
+				// DSL Namespace registrations
+				customDSL = {
+					// namespace = "mapping name"
+				},
 
-			// Custom Storage Scopes
-			customScopes = {
-				// annotationName = "mapping name"
-			},
+				// Custom Storage Scopes
+				customScopes = {
+					// annotationName = "mapping name"
+				},
 
-			// Package scan locations
-			scanLocations = [],
+				// Package scan locations
+				scanLocations = [],
 
-			// Stop Recursions
-			stopRecursions = [],
+				// Stop Recursions
+				stopRecursions = [],
 
-			// Parent Injector to assign to the configured injector, this must be an object reference
-			parentInjector = "",
+				// Parent Injector to assign to the configured injector, this must be an object reference
+				parentInjector = "",
 
-			// Register all event listeners here, they are created in the specified order
-			listeners = [
-				// { class="", name="", properties={} }
-			]
-		};
+				// Register all event listeners here, they are created in the specified order
+				listeners = [
+					// { class="", name="", properties={} }
+				]
+			};
 
-		// Map Bindings below
-		map("authentication").to("models.common.authentication");
-		map("enterQuestionsService").to("models.faculty.enterQuestions");
-		map("getQuestionsService").to("models.faculty.getQuestionsService");
-		map("modifyQuestionService").to("models.faculty.modifyQuestionService");
-		map("quizService").to("models.faculty.setQuizService");
-		map("resultService").to ("models.faculty.resultService");
-		map("userDetailsService").to("models.common.userDetailsService");
-		map("userValidationService").to("models.admin.addUserValidationService");
-		map("enterDataService").to("models.admin.enterDataService");
-	}
-</cfscript>
+			// Map Bindings below
+			map("authentication").to("models.common.authentication");
+			map("enterQuestionsService").to("models.faculty.enterQuestions");
+			map("getQuestionsService").to("models.faculty.getQuestionsService");
+			map("modifyQuestionService").to("models.faculty.modifyQuestionService");
+			map("quizService").to("models.faculty.setQuizService");
+			map("resultService").to ("models.faculty.resultService");
+			map("userDetailsService").to("models.common.userDetailsService");
+			map("userValidationService").to("models.admin.addUserValidationService");
+			map("enterDataService").to("models.admin.enterDataService");
+			map("testService").to("models.student.testService");
+			map("studentResultService").to("models.student.studentResultService");
+			map("forgetPasswordService").to("models.common.forgetPasswordService");
+			map("resetPasswordService").to("models.common.resetPasswordService");
+		}
+	</cfscript>
 </cfcomponent>
