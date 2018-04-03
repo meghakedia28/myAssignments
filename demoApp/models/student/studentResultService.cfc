@@ -29,13 +29,17 @@ Return Type    : none.
 	function fetchStudentsResults(){
 		local.resultsService = new query();
 		local.resultsService.setName("results");
-		local.resultsService.setSQL ("SELECT sd.[quizId], sd.[score], sd.[userId],
-											 quiz.[name], quiz.[startDateTime],
-											 RANK() OVER (PARTITION BY sd.[quizId]
-											 ORDER BY sd.[score] DESC) AS rank
-											 FROM [scoreDetails] AS sd
-											 JOIN [quiz] AS quiz
-											 ON sd.[quizId] = quiz.[quizId]");
+		local.resultsService.setSQL ("SELECT 			sd.[quizId],
+														sd.[score],
+											 			sd.[userId],
+											 			quiz.[name],
+											 			quiz.[startDateTime],
+									  RANK() OVER
+									  (PARTITION BY 	sd.[quizId]
+									  ORDER BY 			sd.[score] DESC) AS rank
+									  FROM 				[scoreDetails] AS sd
+									  JOIN 				[quiz] AS quiz
+									  ON 				sd.[quizId] 	= quiz.[quizId]");
 		results = local.resultsService.execute().getResult();
 		return results;
 	}
@@ -55,8 +59,12 @@ Return Type    : struct.
 		local.resultsService.setName("results");
 		local.resultsService.setDBType("query");
 		local.resultsService.setAttributes(sourceQuery = getAllResults);
-		local.sql = "SELECT [score], [name], [startDateTime], rank FROM sourceQuery
-						WHERE [userId] = :studentId";
+		local.sql = "SELECT 	[score],
+								[name],
+								[startDateTime],
+								rank
+					 FROM 		sourceQuery
+					 WHERE 		[userId] 	= :studentId";
 		local.resultsService.setSQl(local.sql);
 		results = local.resultsService.execute().getresult();
 		return results;

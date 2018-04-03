@@ -123,7 +123,7 @@ Return Type    : struct
 			local.scoreIdService.addParam (name = "quizId", value = "#arguments.quizId#",
 				cfsqltype = "cf_sql_bigint");
 			local.sql &= " WHERE [scoreDetails].[userId] = :userId
-						   AND	 [quiz].[quizId] = :quizId";
+						   AND	 [quiz].[quizId] 		 = :quizId";
 
 		}
 		local.scoreIdService.setSQL(local.sql);
@@ -191,7 +191,7 @@ Return Type    : struct
 														        [correctAnswer]
 				  									FROM        [questionBank]
 				  									RIGHT JOIN  [quizQuestion]
-				  									ON			[questionBank].[questionId] = [quizQuestion].[questionId]
+				  									ON			[questionBank].[questionId] 	= [quizQuestion].[questionId]
 				  									WHERE		[quizQuestion].[quizQuestionId] = :id");
 				fetchReportDetails = local.reportDetailsService.execute().getResult();
 

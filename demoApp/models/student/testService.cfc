@@ -90,9 +90,9 @@ Return Type    : boolean.
 				}
 				else{
 					if (local.checkScoreExists.recordCount == 0){
-						session.stQuizStarts = {"quizId" = testDetails.quizId ,
+						session.stQuizStarts = {"quizId"    = testDetails.quizId ,
 												"startTime" = testDetails.startDateTime,
-												"endTime" = testDetails.endDateTime };
+												"endTime"   = testDetails.endDateTime };
 					}
 				}
 			return true;
@@ -175,7 +175,7 @@ Return Type    : boolean
 			local.reportService.setSQL ("SELECT [questionBank].[correctAnswer]
 										 FROM	[questionBank]
 										 JOIN 	[quizQuestion]
-										 ON		[questionBank].[questionId] = [quizQuestion].[questionId]
+										 ON		[questionBank].[questionId] 	= [quizQuestion].[questionId]
 										 WHERE	[quizQuestion].[quizQuestionId] = :quizQuestionId");
 			getAnswer = local.reportService.execute().getResult();
 
@@ -299,7 +299,7 @@ Return Type    : boolean
 												 FROM   [quizQuestion]
 												 JOIN	[questionBank]
 												 ON		[questionBank].[questionId] = [quizQuestion].[questionId]
-												 WHERE  [quizQuestion].[quizId] = :quizId");
+												 WHERE  [quizQuestion].[quizId] 	= :quizId");
 				getIds = local.getQuizQuestionIds.execute().getResult();
 
 				local.getReportService =  new query();
@@ -338,8 +338,8 @@ Return Type    : boolean
 					local.updateReportService.addparam (name = "newReport", value = "local.report",
 						cfsqltype = "cf_sql_varchar");
 					local.updateReportService.setSQL("UPDATE [scoreDetails]
-													  SET [answerReport] = :newReport
-													  WHERE [scoreDetails].[scoreId] = :scoreId");
+													  SET 	 [answerReport] 		  = :newReport
+													  WHERE  [scoreDetails].[scoreId] = :scoreId");
 					local.updateReportService.execute().getResult();
 				}
 			return true;

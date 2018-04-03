@@ -14,7 +14,7 @@ Description : displays all the questions associated with a quiz.
 			<div class = "page-title">
 				<div class = "container">
 					<cfoutput>
-					<h2>View quiz Questions:</h2>
+					<h2>View quiz Questions</h2>
 					<h6 class = "user">Quiz Name: #prc.quizDetails.name#</h6>
 					<h6 class = "user">Start Time: #prc.quizDetails.startDateTime#</h6>
 					<h6 class = "user">End Time: #prc.quizDetails.endDateTime#</h6>
@@ -36,18 +36,19 @@ Description : displays all the questions associated with a quiz.
 						<div class = "boxed-section">
 							<div class = "export" id = "exportButtons"></div>
 							<cfoutput>
-								<h2 class = "section-title text-center">#prc.quizDetails.name# questions:</h2>
+								<h2 class = "section-title text-center">#prc.quizDetails.name# Questions</h2>
 							<input type = "hidden" id = "userId" value = "#session.stLoggedInUser.userId#">
 								<cfif (#prc.quizDetails.startDateTime# GT now())>
-								<div><button type = "button" class = "btn btn-success btn-md"
-								id = "addButton" name = "addButton" data-toggle = "modal"
-								data-target = "##selectQuestions" ><i class = "glyphicon glyphicon-plus">
+								<div class = "addPadding">
+									<button type = "button" class = "btn btn-success btn-md"
+									id = "addButton" name = "addButton" data-toggle = "modal"
+									data-target = "##selectQuestions" ><i class = "glyphicon glyphicon-plus">
 																	</i>Add Questions</button></div>
 								</cfif>
 							</cfoutput>
 							<div class = "error-msg text-center" id = "error_questions"
 								name = "error_questions"></div>
-							<table class = "table table-sm" id = "questions" name = "questions" >
+							<table class = "table table-sm tableSize" id = "questions" name = "questions" >
 								<thead>
 									<tr>
 										<th>Questions</th>
@@ -163,5 +164,7 @@ Description : displays all the questions associated with a quiz.
 		var #toScript(endTime, "endTime")#;
 	</cfoutput>
 </script>
-<script type = "text/javascript" src = "../../includes/js/viewQuizQuestions.js"></script>
-<script type = "text/javascript" src = "../../includes/js/common.js"></script>
+<cfoutput>
+	<script type = "text/javascript" src = "#base#/includes/js/viewQuizQuestions.js"></script>
+	<script type = "text/javascript" src = "#base#/includes/js/common.js"></script>
+</cfoutput>

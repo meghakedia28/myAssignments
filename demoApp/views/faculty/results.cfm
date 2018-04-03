@@ -30,7 +30,7 @@ Description : displays the result of students for all the quiz set by a faculty(
 				  			<div>
 					  			<select class="selectpicker" multiple="" title = "Filter by quiz name" name="filter" id = "filter"
 					  				data-live-search="true" multiple data-selected-text-format="count > 2"
-					  				data-size="10">
+					  				data-size="10" data-actions-box="true">
 				               		<cfloop collection = "#prc.quizFilter#" item = "key">
 					            		<option value = "#key#">#prc.quizFilter[key]#</option>
 				             		</cfloop>
@@ -42,9 +42,9 @@ Description : displays the result of students for all the quiz set by a faculty(
 				</cfoutput>
 			<div class = "col-md-12">
 				<div class = "boxed-section" id = "resultSets">
-					<h2 class = "section-title text-center">Results:</h2>
+					<h2 class = "section-title text-center">Results</h2>
 					<div class = "export" id = "exportButtons"></div>
-					<table class = "table " id = "result" name = "result">
+					<table class = "table tableSize" id = "result" name = "result">
 						<thead>
 							<tr>
 								<th>Quiz Name</th>
@@ -82,4 +82,6 @@ Description : displays the result of students for all the quiz set by a faculty(
 <script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script type = "text/javascript" src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type = "text/javascript" src = "../../includes/js/facultyResultSet.js"></script>
+<cfoutput>
+	<script type = "text/javascript" src = "#base#/includes/js/facultyResultSet.js"></script>
+</cfoutput>
