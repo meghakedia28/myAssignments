@@ -1,8 +1,8 @@
 ﻿<!----------------------------------------------------------------------------------------------------------
-							FileName    : Main.cfc
-							Created By  : Megha Kedia
-							DateCreated : 29-March-2018
-							Description : contains main level functions.
+FileName    : Main.cfc
+Created By  : Megha Kedia
+DateCreated : 29-March-2018
+Description : contains main level functions.
 ------------------------------------------------------------------------------------------------------------>
 
 <cfcomponent output="false" extends="coldbox.system.EventHandler">
@@ -76,7 +76,7 @@
 			//Grab Exception From private request collection, placed by ColdBox Exception Handling
 			local.exception = prc.exception;
 			//Place exception handler below:
-			setNextEvent("main.fail");
+			//setNextEvent("main.fail");
 		</cfscript>
 	</cffunction>
 	<cffunction name="fail" returntype="void" output="false">
@@ -84,7 +84,7 @@
 		<cfargument name="rc">
 		<cfargument name="prc">
 		<!--- <cfscript> --->
-<!--- 			event.setView( view = "main/fail", layout = "commonLayout" ); --->
+<!--- 			event.setView( view = "main/fail", layout = "failLayout" ); --->
 <!--- 		</cfscript> --->
 	</cffunction>
 	<cffunction name="pageNotFound" returntype="void" output="false">
@@ -114,7 +114,9 @@
 			prc.response = getInstance("ResponseObject");
 			prc.response.setError(true);
 			prc.response.addMessage("Error executing resource #arguments.exception.message#");
-
+			fileObj = fileOpen("D:\Assignments\myAssignments\logs\demoApp.txt","append");
+			fileWriteLine(fileObj, prc);
+			fileClose( fileObj );
 			arguments.event.setHTTPHeader(statusCode="500",
 				statusText="Error executing resource #arguments.exception.message#").renderData( data=prc.response.getDataPackage(), type="json");
 		</cfscript>
