@@ -38,6 +38,16 @@ component extends="coldbox.system.EventHandler"{
 	function onInvalidHTTPMethod( event, rc, prc, faultAction, eventArguments ){
 	}
 	*/
+/*----------------------------------------------------------------------------------
+Function Name : home
+Description   : set the view for home.
+Arguments     : event, rc, prc
+Return Type   : none
+------------------------------------------------------------------------------------*/
+
+	function home( event, rc, prc ){
+		event.setView(view = "common/home", layout = "commonLayout" );
+	}
 
 /*----------------------------------------------------------------------------------
 Function Name	: loginPage
