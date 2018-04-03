@@ -10,8 +10,10 @@ Description : displays the test questions
 			href = "//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
 		<link rel = "stylesheet"
 			href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel = "stylesheet"
-			href = "../../includes/css/testStyle.css">
+		<cfoutput>
+			<link rel = "stylesheet"
+				href = "#base#/includes/css/testStyle.css">
+		</cfoutput>
 			<div class = "page-title">
 				<div class = "container">
 				</div>
@@ -135,5 +137,7 @@ Description : displays the test questions
 	<script type = "text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
 	<script type = "text/javascript" src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src = "../../includes/js/testStartValidation.js"></script>
-	<script type = "text/javascript" src = "../../includes/js/common.js"></script>
+	<cfoutput>
+		<script type = "text/javascript" src = "#base#/includes/js/testStartValidation.js"></script>
+		<script type = "text/javascript" src = "#base#/includes/js/common.js"></script>
+	</cfoutput>

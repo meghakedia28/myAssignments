@@ -7,7 +7,7 @@ Description : layout of login page, admin pottal,
 
 -------------------------------------------------------------------------------------------------------------->
 
-<cfset base = "https://localhost/demoApp">
+<cfset base = "https://172.16.9.18/demoApp">
 <cfif NOT(structKeyExists(session,'stLoggedInUser'))>
 	<cfoutput>#renderView()#</cfoutput>
 <cfelse>
@@ -37,18 +37,18 @@ Description : layout of login page, admin pottal,
 			<header class = "site-header">
 				<div class = "primary-header">
 					<div class = "container">
-						<a href = "home.cfm" id = "branding">
-							<cfoutput>
-							<img src = "#base#/freeTemplateFiles/images/logo.png" alt = "Lincoln high School">
-							</cfoutput>
-							<h1 class = "site-title">St. Joseph's High School</h1>
-						</a> <!-- #branding -->
+						<cfoutput>
+							<a href = "#event.buildLink( 'common.home' )#" id = "branding">
+								<img src = "#base#/freeTemplateFiles/images/logo.png" alt = "Lincoln high School">
+								<h1 class = "site-title">St. Joseph's High School</h1>
+							</a>
+						</cfoutput>
 						<cfif session.stLoggedInUser.roleId EQ 1>
 							<div class = "main-navigation">
 								<button type = "button" class = "menu-toggle"><i class = "fa fa-bars"></i></button>
 								<ul class = "menu">
 								<cfoutput>
-									<li class = "menu-item"><a href = "#event.buildLink( 'faculty.home' )#">Home</a></li>
+									<li class = "menu-item"><a href = "#event.buildLink( 'common.home' )#">Home</a></li>
 									<li class = "menu-item dropbtn"><a href = "##">Faculties</a>
 										<ul class = "dropdown-content">
 										   	 <li class = "dropdown"><a href = "#event.buildLink( 'admin.addFaculties' )#">
@@ -75,7 +75,7 @@ Description : layout of login page, admin pottal,
 								<button type = "button" class = "menu-toggle"><i class = "fa fa-bars"></i></button>
 								<ul class = "menu">
 								<cfoutput>
-									<li class = "menu-item"><a href = "#event.buildLink( 'faculty.home' )#">Home</a></li>
+									<li class = "menu-item"><a href = "#event.buildLink( 'common.home' )#">Home</a></li>
 									<li class = "menu-item dropbtn"><a href = "##">Questions</a>
 										<ul class = "dropdown-content">
 											<li class = "dropdown"><a href = "#event.buildLink( 'faculty.addQuestions')#">
@@ -102,7 +102,7 @@ Description : layout of login page, admin pottal,
 								<button type = "button" class = "menu-toggle"><i class = "fa fa-bars"></i></button>
 								<ul class = "menu">
 									<cfoutput>
-										<li class = "menu-item"><a href = "#event.buildLink( 'student.home' )#">
+										<li class = "menu-item"><a href = "#event.buildLink( 'common.home' )#">
 											Home</a></li>
 										<li class = "menu-item"><a href = "#event.buildLink( 'student.tests' )#">
 											Tests</a></li>
