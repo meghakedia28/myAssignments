@@ -60,7 +60,6 @@ Return Type    : struct
 						variables.insertionStruct.successfull = "false";
 						variables.insertionStruct.message = "Error occured while insertion of data1";
 					}
-				return variables.insertionStruct;
 				}
 			}
 		}
@@ -68,7 +67,7 @@ Return Type    : struct
 			application.errorLogService(e);
 			variables.insertionStruct.successfull = "false";
 			variables.insertionStruct.message = "Error occured while insertion of data2";
-		}//end of catch
+		}
 		return variables.insertionStruct;
 	}
 
@@ -146,12 +145,11 @@ Return Type    : boolean
 		}
 		catch(database db){
 			application.errorLogService(db,1);
-			return false;
 		}
 		catch(any e){
 			application.errorLogService(e);
-			return false;
 		}
+		return false;
 	}
 
 /*------------------------------------------------------------------------------------------------------------

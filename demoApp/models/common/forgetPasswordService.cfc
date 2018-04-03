@@ -31,12 +31,10 @@ Return Type    : struct
 		if (arguments.emailId == ''){
 			local.stStatus.status = "error";
 			local.stStatus.message = "You can't leave this empty.";
-			return local.stStatus;
 		}
 		else if (!(isValid("eMail", arguments.emailId))){
 			local.stStatus.status = "error";
 			local.stStatus.message = "Please use only letters(a-z) or (A-Z)\nbetween 1 and 30 characters.";
-			return local.stStatus;
 		}
 		try{
 			local.userExistsService  = new query();
@@ -59,17 +57,17 @@ Return Type    : struct
 			local.stStatus.status = "error";
 			local.stStatus.message =  "Some unexpected error has occured, Please try again later.";
 		}
-			if (userExists.recordCount != 0){
-				local.stStatus.status = "success";
-				local.stStatus.message = "User exists";
-			}
-			else{
-				local.stStatus.status = "fail";
-				local.stStatus.message = "Your search didn't return any result,
-										Please try again with correct information.";
-			}
-			return local.stStatus;
+		if (userExists.recordCount != 0){
+			local.stStatus.status = "success";
+			local.stStatus.message = "User exists";
 		}
+		else{
+			local.stStatus.status = "fail";
+			local.stStatus.message = "Your search didn't return any result,
+									Please try again with correct information.";
+		}
+		return local.stStatus;
+	}
 
 /*----------------------------------------------------------------------------------------------------------
 Function Name  : validateAndSendMailController
