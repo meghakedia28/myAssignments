@@ -1,8 +1,11 @@
-﻿/**
-* Copyright 2005-2007 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-* www.ortussolutions.com
-* ---
-*/
+﻿/*-------------------------------------------------------------------------------------------------------------
+FileName    : Application.cfc
+Created By  : Megha Kedia
+DateCreated : 18-March-2018
+Description : application level settings.
+
+--------------------------------------------------------------------------------------------------------------*/
+
 component{
 	// Application properties
 	this.name = "demoApp";
@@ -65,18 +68,47 @@ component{
 		arguments.appScope.cbBootStrap.onSessionEnd( argumentCollection=arguments );
 	}
 
-	public boolean function onMissingTemplate( template ){
-		return application.cbBootstrap.onMissingTemplate( argumentCollection=arguments );
-	}
-	public function logError(required any errors, numeric dbError = 0){
-		if (arguments.dbError == 1){
-			dbFileObj = fileOpen("D:\Assignments\myAssignments\logs\dbError.txt","append");
-			fileWrite(dbFileObj, "#errors.message# #errors.detail# #errors.ExtendedInfo#");
-			fileWrite(dbFileObj, "#errors.queryError#");
-			fileClose( dbFileObj );
+	public boolean function onMissingTemplate(required string targetPage){
+		try{
+			local.text = "Missing template: "&arguments.targetPage;
+			application.errorLogService(text = local.text);
+			include "gobalErrorHandler.cfm";
 		}
-		fileObj = fileOpen("D:\Assignments\myAssignments\logs\error.txt","append");
-		fileWrite(fileObj, "#errors.message# #errors.detail# #errors.ExtendedInfo#");
+		catch(any e){
+			return false;
+		}
+   		return true;
+	}
+	public void function OnError (required exception, required string eventName){
+		local.text = "Event Name: " & arguments.Eventname;
+		fileObj = fileOpen("D:\Assignments\myAssignments\logs\demoApp.txt","append");
+		fileWriteLine(fileObj, local.text);
 		fileClose( fileObj );
+		local.text = "Message: " & arguments.Exception;
+		fileObject = fileOpen("D:\Assignments\myAssignments\logs\demoApp.txt","append");
+		fileWriteLine(fileObject, local.text);
+		fileClose( fileObject );
+		if (!(arguments.EventName IS "onSessionEnd") || (arguments.EventName IS "onApplicationEnd")){
+ 			writeOutput("<h2>An unexpected error occurred.</h2>" &
+ 						"<p>Please wait for some time and try again</p>");
+		}
+	}
+
+	public function logError(any errors, numeric dbError = 0, string text = ""){
+		if (arguments.text == ""){
+			if (arguments.dbError == 1){
+				dbFileObj = fileOpen("D:\Assignments\myAssignments\logs\dbError.txt","append");
+				fileWriteLine(dbFileObj, "#errors.message# #errors.detail# #errors.ExtendedInfo#");
+				fileClose( dbFileObj );
+			}
+			fileObj = fileOpen("D:\Assignments\myAssignments\logs\error.txt","append");
+			fileWriteLine(fileObj, "#errors.message# #errors.detail# #errors.ExtendedInfo#");
+			fileClose( fileObj );
+		}
+		else{
+			fileObj = fileOpen("D:\Assignments\myAssignments\logs\demoApp.txt","append");
+			fileWriteLine(fileObj, arguments.text);
+			fileClose( fileObj );
+		}
 	}
 }
