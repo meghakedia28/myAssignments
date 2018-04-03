@@ -12,7 +12,7 @@ Description : form to login by the user.
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
   	<title>Login Form</title>
 	<cfoutput>
-	<link rel = "stylesheet" href = "#base#/freeTemplateFiles/css/logInStyle.css">
+		<link rel = "stylesheet" href = "#base#/freeTemplateFiles/css/logInStyle.css">
 	</cfoutput>
 </head>
 	<body>
@@ -26,7 +26,7 @@ Description : form to login by the user.
 						<p class = "error" id = "error">You need to login first.</p>
 					</cfif>
 					<!---check if any error message--->
-					<cfif structKeyExists(prc, "aErrorMessages") AND NOT ArrayIsEmpty(prc.aErrorMessages) >
+					<cfif structKeyExists(prc, "aErrorMessages") AND NOT arrayIsEmpty(prc.aErrorMessages) >
 						<cfoutput>
 							<cfloop array = "#prc.aErrorMessages#" index = "message">
 								<p class = "error" id = "error">#message#</p>
@@ -36,25 +36,13 @@ Description : form to login by the user.
 						<!---check if the user is logged in--->
 					<cfif structKeyExists(prc,"isUserLoggedIn") AND prc.isUserLoggedIn EQ false>
 						<p class = "error" id = "error">The User Id and the Password did not match.
-							 Please try again or click forget password to reset your password".</p>
+							 Please try again or click forgot password to reset your password".</p>
 					</cfif>
 					<!---redirect to the page according to their roles--->
 					<cfif structKeyExists(session,"stLoggedInUser")>
-						<cfif session.stLoggedInUser.roleId EQ 1>
 							<cfscript>
-								setNextEvent(event = "admin.home");
+								setNextEvent(event = "common.home");
 							</cfscript>
-						</cfif>
-						<cfif session.stLoggedInUser.roleId EQ 2>
-							<cfscript>
-								setNextEvent(event = "faculty.home");
-							</cfscript>
-						</cfif>
-						<cfif session.stLoggedInUser.roleId EQ 3>
-							<cfscript>
-								setNextEvent(event = "student.home");
-							</cfscript>
-						</cfif>
 					<cfelse>
 						<!---enter userId and password--->
 						<div class = "control-group">

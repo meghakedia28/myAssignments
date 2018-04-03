@@ -24,10 +24,10 @@ Description : displays the student results.
 	<div class = "container">
 		<div class = "row">
 			<div class = "col-md-12">
-				<div class = "boxed-section request-form">
+				<div class = "boxed-section">
 					<h2 class = "section-title text-center">Performance Report</h2>
 					<div class = "export" id = "exportButtons"></div>
-					<table class = "table" id = "result" name = "result">
+					<table class = "table tableSize" id = "result" name = "result">
 						<thead>
 							<tr>
 								<th>Quiz Name</th>

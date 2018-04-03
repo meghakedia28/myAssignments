@@ -25,9 +25,9 @@ Description : displays the list of all questions and facility to edit and delete
 				<div class = "boxed-section">
 					<cfoutput><input type = "hidden" id = "userId" name = "userId"
 								value = "#session.stLoggedInUser.userId#"></cfoutput>
-					<h2 class = "section-title text-center">Question Bank:</h2>
+					<h2 class = "section-title text-center">Question Bank</h2>
 					<div class = "export" id = "exportButtons"></div><!---export buttons--->
-					<table class = "table" id = "questions" name = "questions" >
+					<table class = "table tableSize" id = "questions" name = "questions" >
 						<thead>
 							<tr>
 								<th>Questions</th>
@@ -161,9 +161,11 @@ Description : displays the list of all questions and facility to edit and delete
 			src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type = "text/javascript"
 			src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	<script type = "text/javascript"
-			src = "../../includes/js/questionBankEditDelete.js"></script>
-	<script type = "text/javascript"
-			src = "../../includes/js/common.js"></script>
-	<script type = "text/javascript"
-			src = "../../includes/js/validateQuestions.js"></script>
+	<cfoutput>
+		<script type = "text/javascript"
+				src = "#base#/includes/js/questionBankEditDelete.js"></script>
+		<script type = "text/javascript"
+				src = "#base#/includes/js/common.js"></script>
+		<script type = "text/javascript"
+				src = "#base#/includes/js/validateQuestions.js"></script>
+	</cfoutput>

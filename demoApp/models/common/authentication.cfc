@@ -50,7 +50,7 @@ Return Type    : string
 					local.passwordHased =  hash(arguments.password & getPasswordSalt.salt,"SHA-512" );
 					if (local.passwordHased != getPasswordSalt.hashPassword){
 						arrayAppend (local.aErrorMessage,"The User Id and the Password did not match.
-							Please try again or click forget password to reset your password.");
+							Please try again or click forgot password to reset your password.");
 					}
 				}
 			}
@@ -117,10 +117,10 @@ Return Type    : string
 				sessionRotate();
 				session.stLoggedInUser = { "userFirstName" = #loginUser.firstName#,
 											"userLastName" = #loginUser.LastName#,
-											"userEmailId" = #loginUser.emailid#,
-											"userId" = #loginUser.userId#,
-											"roleId" = #loginUser.roleId#,
-											"userRole" = #loginUser.role# };
+											"userEmailId"  = #loginUser.emailid#,
+											"userId" 	   = #loginUser.userId#,
+											"roleId" 	   = #loginUser.roleId#,
+											"userRole" 	   = #loginUser.role# };
 											//end of session.stLoggedInUser
 				local.isUserLoggedIn = true;
 			}

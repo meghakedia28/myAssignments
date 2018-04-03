@@ -28,9 +28,9 @@ Description : displayes all the list of quiz, with factionality to edit
 				<div class = "boxed-section">
 					<cfoutput><input type = "hidden" id = "userId" name = "userId"
 						value = "#session.stLoggedinUser.userId#"></cfoutput>
-					<h2 class = "section-title text-center">View Quiz:</h2>
+					<h2 class = "section-title text-center">View Quiz</h2>
 					<div class = "export" id = "exportButtons"></div>
-					<table class = "table" id = "quiz" name = "quiz">
+					<table class = "table tableSize" id = "quiz" name = "quiz">
 						<thead>
 							<tr>
 								<th>Quiz name</th>
@@ -138,10 +138,12 @@ Description : displayes all the list of quiz, with factionality to edit
 		src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script type = "text/javascript"
 	src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-<script type = "text/javascript" src = "../../includes/js/plugins/jquery.datetimepicker.js">
-	</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type = "text/javascript" src = "../../includes/js/listOfQuiz.js"></script>
-<script type = "text/javascript" src = "../../includes/js/validateQuiz.js"></script>
-<script type = "text/javascript" src = "../../includes/js/common.js"></script>
+<cfoutput>
+	<script type = "text/javascript" src = "#base#/includes/js/plugins/jquery.datetimepicker.js">
+		</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+	<script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type = "text/javascript" src = "#base#/includes/js/listOfQuiz.js"></script>
+	<script type = "text/javascript" src = "#base#/includes/js/validateQuiz.js"></script>
+</cfoutput>
+<script type = "text/javascript" src = "#base#/includes/js/common.js"></script>

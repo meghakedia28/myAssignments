@@ -22,7 +22,7 @@ Description : form to set quiz details and select questions from a list for the 
 		<div class = "export" id = "buttons"></div>
 			<cfform action = "" name = "quizForm" id = "quizForm">
 				<div class = "col-md-12">
-				<h2 class = "section-title text-center">Quiz information:</h2>
+				<h2 class = "section-title text-center">Quiz Information</h2>
 					<div class = "request-form">
 						<div class = "box">
 							<div class = "lineform">
@@ -64,10 +64,10 @@ Description : form to set quiz details and select questions from a list for the 
 						<div class = "boxed-section">
 							<cfoutput><input class="inputField" type = "hidden" id = "userId" name = "userId"
 								value = "#session.stLoggedInUser.userId#"></input></cfoutput>
-							<h2 class = "section-title text-center">Question Bank:</h2>
+							<h2 class = "section-title text-center">Question Bank</h2>
 							<div class = "error-msg text-center" id = "error_questions"></div>
 							<div >
-								<table class = "table " id = "questions" name = "questions">
+								<table class = "table tableSize" id = "questions" name = "questions">
 									<thead>
 										<tr>
 											<th></th>
@@ -112,6 +112,8 @@ Description : form to set quiz details and select questions from a list for the 
 	</script>
 	<script type = "text/javascript"
 			src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	<script type = "text/javascript" src = "../../includes/js/setQuiz.js"></script>
-	<script type = "text/javascript" src = "../../includes/js/validateQuiz.js"></script>
-	<script type = "text/javascript" src = "../../includes/js/common.js"></script>
+	<cfoutput>
+		<script type = "text/javascript" src = "#base#/includes/js/setQuiz.js"></script>
+		<script type = "text/javascript" src = "#base#/includes/js/validateQuiz.js"></script>
+		<script type = "text/javascript" src = "#base#/includes/js/common.js"></script>
+	</cfoutput>

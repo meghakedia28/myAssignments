@@ -23,10 +23,10 @@ Description : displays all the students information along with view scores(
 	<div class = "container">
 		<div class = "row">
 			<div class = "col-md-12">
-				<div class = "boxed-section request-form">
-					<h2 class = "section-title text-center">Students profile:</h2>
+				<div class = "boxed-section">
+					<h2 class = "section-title text-center">Students Profile</h2>
 					<div class = "export" id = "exportButtons"></div><!---export buttons--->
-					<table class = "display" id = "allResult" name = "allResult">
+					<table class = "table tableSize" id = "allResult" name = "allResult">
 						<thead>
 							<tr>
 								<th>Name</th>
@@ -60,7 +60,7 @@ Description : displays all the students information along with view scores(
 			<div class = "modal-body">
 				<cfoutput><input type = "hidden" id = "userId" name = "userId"
 				value = "#session.stLoggedInUser.userId#"></cfoutput>
-				<table class = "table table-md" id = "resultScore" name = "resultScore">
+				<table class = "table table-md " id = "resultScore" name = "resultScore">
 					<thead>
 						<tr>
 							<th>Quiz Name</th>
@@ -101,4 +101,6 @@ Description : displays all the students information along with view scores(
 	src = "https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-<script type = "text/javascript" src = "../../includes/js/studentsProfile.js"></script>
+<cfoutput>
+	<script type = "text/javascript" src = "#base#/includes/js/studentsProfile.js"></script>
+</cfoutput>

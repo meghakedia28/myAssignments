@@ -10,7 +10,7 @@ Description : has datatable to show faculties information, with an edit function
 <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 	<div class = "page-title">
 			<div class = "container">
-				<h2>List of students:</h2>
+				<h2>List of students</h2>
 			</div>
 		</div>
 	</header>
@@ -20,9 +20,9 @@ Description : has datatable to show faculties information, with an edit function
 		<div class = "row">
 			<div class = "col-md-12">
 				<div class = "boxed-section">
-					<h2 class = "section-title text-center">List of students:</h2>
+					<h2 class = "section-title text-center">List Of Students</h2>
 					<div class = "export" id = "exportButtons"></div>
-					<table class = "table" id = "listOfStudents" name = "listOfStudents">
+					<table class = "table tableSize" id = "listOfStudents" name = "listOfStudents">
 						<thead>
 							<tr>
 								<th>Name</th>
@@ -52,7 +52,7 @@ Description : has datatable to show faculties information, with an edit function
 		<!--- Modal content--->
       <div class = "modal-content">
 	        <div class = "modal-header">
-		    	<h4 class = "modal-title">Student details:</h4>
+		    	<h4 class = "modal-title">Student Information</h4>
 	         	<button type = "button" class = "close" data-dismiss = "modal">&times;</button>
 	        </div><!---modal-header--->
 			<div class = "modal-body request-form">
@@ -115,9 +115,11 @@ Description : has datatable to show faculties information, with an edit function
 	src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type = "text/javascript"
 	src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-<script type = "text/javascript"
-	src = "../../includes/js/listOfStudent.js"></script>
-<script type = "text/javascript"
-	src = "../../includes/js/common.js"></script>
-<script type = "text/javascript"
-	src = "../../includes/js/wordEmailNumberValidation.js"></script>
+<cfoutput>
+	<script type = "text/javascript"
+		src = "#base#/includes/js/listOfStudent.js"></script>
+	<script type = "text/javascript"
+		src = "#base#/includes/js/common.js"></script>
+	<script type = "text/javascript"
+		src = "#base#/includes/js/wordEmailNumberValidation.js"></script>
+</cfoutput>

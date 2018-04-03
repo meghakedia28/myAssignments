@@ -13,7 +13,7 @@ Description : has datatable to show faculties information, with an edit function
 			href = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 			<div class = "page-title">
 				<div class = "container">
-					<h2>View Students Report:</h2>
+					<h2>View Students Report</h2>
 				</div>
 			</div>
 		</header>
@@ -26,16 +26,16 @@ Description : has datatable to show faculties information, with an edit function
 						<div><a href = "#event.buildLink( 'faculty.results')#">Go back to View Results</a></div>
 					</cfoutput>
 					<div class = "boxed-section">
-						<h2 class = "section-title text-center">Students report:</h2>
+						<h2 class = "section-title text-center">Students Report</h2>
 						<div class = "export" id = "exportButtons"></div>
 						<cfoutput>
-						<h6 >Name: #prc.scoreDetails.firstName# #prc.scoreDetails.lastName#</h6>
+						<h6 >Student Name: #prc.scoreDetails.firstName# #prc.scoreDetails.lastName#</h6>
 	 					<h6 >Quiz Name: #prc.scoreDetails.name#</h6>
 	 					<cfset studentName = "Student name:	" & #prc.scoreDetails.firstName# &
 	 											" " & #prc.scoreDetails.lastName#>
 	 					<cfset quizName = "Quiz name: " & #prc.scoreDetails.name#>
 	 					</cfoutput>
-						<table class = "table table-sm" id = "studentsReportTable" name = "studentsReportTable">
+						<table class = "table table-sm tableSize" id = "studentsReportTable" name = "studentsReportTable">
 							<thead>
 								<tr>
 									<th>Questions</th>
@@ -79,4 +79,6 @@ Description : has datatable to show faculties information, with an edit function
 		var #toScript(quizName, "quizName")#;
 		</cfoutput>
 	</script>
- 	<script type = "text/javascript" src = "../../includes/js/studentsReportForFaculty.js"></script>
+	<cfoutput>
+ 		<script type = "text/javascript" src = "#base#/includes/js/studentsReportForFaculty.js"></script>
+	</cfoutput>

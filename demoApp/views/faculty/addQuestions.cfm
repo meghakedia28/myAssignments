@@ -7,7 +7,7 @@ Description : has a form to add questions.
 -------------------------------------------------------------------------------------------------------------->
 		<div class = "page-title">
 			<div class = "container">
-				<h2>Add questions:</h2>
+				<h2>Add questions</h2>
 			</div>
 		</div>
 	</header>
@@ -23,7 +23,7 @@ Description : has a form to add questions.
 				<div class = "mid-row">
 					<div class = "col-md-8">
 						<div class = "boxed-section request-form">
-							<h2 class = "section-title text-center">Question Details:</h2>
+							<h2 class = "section-title text-center">Question Details</h2>
 							<!---form to add questions--->
 							<cfform name = "questionsForm" id = "questionsForm" action = "">
 								<div class = "field">
@@ -102,8 +102,10 @@ Description : has a form to add questions.
 			src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type = "text/javascript"
 			src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
-	<script type = "text/javascript"
-			src = "../../includes/js/addQuestions.js"></script>
+	<cfoutput>
+		<script type = "text/javascript"
+				src = "#base#/includes/js/addQuestions.js"></script>
+	</cfoutput>
 	<script type = "text/javascript"
 			src = "../../includes/js/common.js"></script>
 	<script type = "text/javascript"
