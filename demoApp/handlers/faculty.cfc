@@ -56,17 +56,9 @@ function preHandler(event,action,eventArguments,rc,prc){
 		setNextEvent(event = "common.loginPage?noaccess");
 	}
 }
-/*----------------------------------------------------------------------------------
-Function Name  : home
-Description    : call view for faculty home.
-Arguments      : event, rc, prc
-Return Type    : none
-------------------------------------------------------------------------------------*/
-
-	function home( event, rc, prc ){
-		event.setView( view = "faculty/home", layout = "commonLayout" );
+function te( event, rc, prc ){
+		event.setView( view = "faculty/te", layout = "commonLayout" );
 	}
-
 /*----------------------------------------------------------------------------------
 Function Name  : addQuestions
 Description    : call view for faculty add question.

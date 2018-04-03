@@ -56,16 +56,6 @@ function preHandler(event,action,eventArguments,rc,prc){
 }
 
 /*----------------------------------------------------------------------------------
-Function Name  : home
-Description    : call view for student home.
-Arguments      : event, rc, prc
-Return Type    : none
-------------------------------------------------------------------------------------*/
-	function home( event, rc, prc ){
-		event.setView(view = "student/home", layout = "commonLayout" );
-	}
-
-/*----------------------------------------------------------------------------------
 Function Name  : tests
 Description    : call view for student tests.
 Arguments      : event, rc, prc

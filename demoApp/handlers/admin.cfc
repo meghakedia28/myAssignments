@@ -55,17 +55,6 @@ function preHandler(event,action,eventArguments,rc,prc){
 }
 
 /*----------------------------------------------------------------------------------
-Function Name : home
-Description   : set the view for admin home.
-Arguments     : event, rc, prc
-Return Type   : none
-------------------------------------------------------------------------------------*/
-
-	function home( event, rc, prc ){
-		event.setView(view = "admin/home", layout = "commonLayout" );
-	}
-
-/*----------------------------------------------------------------------------------
 Function Name  : addFaculties
 Description    : set the view for addFaculties.
 Arguments      : event, rc, prc
