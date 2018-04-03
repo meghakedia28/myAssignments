@@ -5,7 +5,7 @@ DateCreated : 03-March-2018
 Description : provides all services related to enter of data in database
 
 ------------------------------------------------------------------------------------------------------------*/
-component singleton = "true" accessors="true"{
+component accessors="true"{
 
 	// Properties
 
@@ -36,7 +36,6 @@ Return Type    : boolean
 																   (name)
 													   VALUES 	   (:subject )");
 					local.insertSubjectService.execute().getResult();
-					writeDump(1);
 					local.getSubjectIdService = new query();
 					local.getSubjectIdService.addParam(name = "subject", value = "#trim(arguments.data.subject)#",
 						cfsqltype = "cf_sql_varchar");
@@ -46,7 +45,6 @@ Return Type    : boolean
 													  WHERE		 [name] = :subject");
 					getSubjectId = local.getSubjectIdService.execute().getResult();
 				}
-				writeDump(2);
 				local.insertUserService = new query();
 				local.insertUserService.addParam(name = "firstName", value = "#trim(arguments.data.firstName)#",
 					cfsqltype = "cf_sql_varchar");
@@ -74,7 +72,6 @@ Return Type    : boolean
 															  :role,
 															  :active)");
 				local.insertUserService.execute().getResult();
-				writeDump(3);
 				local.getUserIdService = new query();
 				local.getUserIdService.addParam(name = "email",  value = "#trim(arguments.data.email)#",
 					cfsqltype = "cf_sql_varchar");
@@ -93,7 +90,7 @@ Return Type    : boolean
 					cfsqltype = "cf_sql_bigint");
 				local.updateUserSaltService.setSQL("UPDATE [user]
 												    SET    salt = :code
-												    WHERE [userId] = :userId");
+												    WHERE  [userId] = :userId");
 				local.updateUserSaltService.execute().getResult();
 				if (structKeyExists(arguments.data,'subject')){
 					local.insertUserSubjectService = new query();

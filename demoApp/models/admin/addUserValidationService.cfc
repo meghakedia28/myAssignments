@@ -21,7 +21,6 @@ component singleton = "true" accessors="true" extends = "enterDataService"{
 
 variables.errorStruct = {elementId = {},errorId = {}};
 variables.insertionStruct = {successfull = {},message = {}};
-variables.role = 3;
 
 /*----------------------------------------------------------------------------------------------------------
 Function Name  : validateInsertController()
@@ -33,6 +32,7 @@ Return Type    : struct
 
 	function validateInsertController(required struct data){
 		try{
+			variables.role = 3;
 			validateAllFields(arguments.data);
 			if (structIsEmpty(variables.errorStruct.errorId)){
 				local.insertion = insertData(arguments.data, variables.role);
@@ -43,7 +43,7 @@ Return Type    : struct
 				else{
 					variables.insertionStruct.successfull = "false";
 					variables.insertionStruct.message = "Some unexpected error has occured,
-						Please try again later.";
+													 	Please try again later.";
 				}
 			}
 			else{
@@ -227,13 +227,11 @@ Return Type    : struct
 	  	 		application.errorLogService(db,1);
 		   		local.stStatus.status = "error" ;
 		 		local.stStatus.message =  "Some unexpected error has occured, Please try again later." ;
-		 	 	return local.stStatus;
 		 	}
 		 	catch (any e){
  				application.errorLogService.logError(e,1);
  				local.stStatus.status = "error" ;
  				local.stStatus.message =  "Some unexpected error has occured, Please try again later." ;
- 				return local.stStatus;
  			}
  			if (subjectCount.recordCount != 0){
  				local.stStatus.status = "error" ;
