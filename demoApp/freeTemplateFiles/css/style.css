@@ -10,6 +10,14 @@
 .dropdown-menu{
 	z-index:1051;
 }
+.tableSize{
+	margin: 0 auto;
+    width: 100%;
+    clear: both;
+    border-collapse: collapse;
+    table-layout: fixed;
+    word-wrap: break-word;
+}
 .filter{
 	display: inline-block;
 }
@@ -34,8 +42,12 @@ ul {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-.dropdownbtn-content {background-color: white}
-
+.addPadding {
+	padding-bottom: 1%;
+}
+.dropdownbtn-content {
+	background-color: white
+}
 .dropdown:hover .dropdownbtn-content {
     display: block;
 }
@@ -71,10 +83,6 @@ ul {
 .box{
 	border-style: groove;
 	}
-#questions, #addQuestions {
-  table-layout: fixed;
-  width: 100% !important;
-}
 #questions td, #addQuestions td,
 #questions th, #addQuestions th {
   width: auto !important;
