@@ -82,43 +82,6 @@ function quizNameStatus(result){
 }
 
 /*--------------------------------------------------------------------------------------
-Function Name  : submitQuizStatus
-Description    : success call after quiz form submission.
-Arguments	   : result
-Return Type	   : none
-------------------------------------------------------------------------------------------*/
-
-function submitQuizStatus(result){
-	var obj = $.parseJSON(result);
-	if (obj.SUCCESSFULL != null){						
-		if(obj.SUCCESSFULL){
-			$.confirm({
-                title: 'Success!',
-                content: obj.MESSAGE,
-                buttons: {
-                    Ok : function () {
-                    		$("#quizForm").trigger('reset');
-							$(".error-msg").text("");
-						}
-                    }
-				});	
-		}
-		else {
-			$.confirm({
-                title: 'Error!',
-                content: obj.MESSAGE
-			});
-		}
-	}
-	if (obj.ERRORID != null){
-		for (keys in obj.ERRORID){
-			var id = '#'+(keys.toLowerCase());
-			$(id).html(obj.ERRORID[keys]);
-		}
-	}
-}
-
-/*--------------------------------------------------------------------------------------
 Function Name  : checkEmpty
 Description    : checks if any of the required fields are left empty.
 Arguments	   : elementId,

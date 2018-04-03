@@ -7,10 +7,11 @@ Description : does validation related to setting a quiz and
 
 ------------------------------------------------------------------------------------------------------------*/
 
+var setQuizTable;
 jQuery(document).ready(function($){
 	var loaderUrl = location.protocol + '//' + location.host + '/demoApp/includes/images/ajax-loader.gif'; 
 	var id = $('#userId').val();
-	var table = $("#questions").DataTable({
+	setQuizTable = $("#questions").DataTable({
 		"language": {
 			"sLoadingRecords": "<img src = '" + loaderUrl + "'> Loading.."
 		},
@@ -80,6 +81,44 @@ jQuery(document).ready(function($){
 		}
 	});
 });
+
+/*--------------------------------------------------------------------------------------
+Function Name  : submitQuizStatus
+Description    : success call after quiz form submission.
+Arguments	   : result
+Return Type	   : none
+------------------------------------------------------------------------------------------*/
+
+function submitQuizStatus(result){
+	var obj = $.parseJSON(result);
+	if (obj.SUCCESSFULL != null){						
+		if(obj.SUCCESSFULL){
+			$.confirm({
+                title: 'Success!',
+                content: obj.MESSAGE,
+                buttons: {
+                    Ok : function () {
+                    		$("#quizForm").trigger('reset');
+							$(".error-msg").text("");
+							setQuizTable.ajax.reload();
+						}
+                    }
+				});	
+		}
+		else {
+			$.confirm({
+                title: 'Error!',
+                content: obj.MESSAGE
+			});
+		}
+	}
+	if (obj.ERRORID != null){
+		for (keys in obj.ERRORID){
+			var id = '#'+(keys.toLowerCase());
+			$(id).html(obj.ERRORID[keys]);
+		}
+	}
+}
 
 /*--------------------------------------------------------------------------------------
 Function Name  : checkBoxEmpty
